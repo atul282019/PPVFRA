@@ -1,0 +1,269 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<div th:fragment="publish_to_pvj">
+<span th:if="${PublishToPVJ != null && PublishToPVJ == 'PublishToPVJ' }"> 
+ 
+<form class="form-horizontal" role="form" th:action="@{/publishtopvj}" th:object="${publishtopvj}" method="post">   
+												<div class="panel panel-success">
+												<div class="panel-heading">Publish to PVJ</div>
+												<div class="panel-body">
+													<div class="form-group">
+		                                                <label class="col-md-2 control-label" > </label>
+		                                                <div class="col-md-10">
+		                                 				<input type="text" id="applicationid" th:name="applicationid"  th:value="${applicationid}" readonly="readonly" hidden="true" />
+		                                                </div>
+		                                                </div>
+													
+													
+													<div class="form-group">
+														<label class="col-md-3 control-label">Select Journal <span style="color:red">*</span></label>
+														<div class="col-md-6">
+															<select th:field="*{journal_id}"class="form-control">
+																<option th:value="-1">Select</option>
+																<option th:each="dropDownItem : ${journaltitle}"
+              														  th:value="${dropDownItem.id}"
+                  													  th:text="${dropDownItem.title}" />
+															</select>
+															<span id="journal_iderror" style="color:red"></span>
+														</div>
+														<div class="col-sm-3">
+															<a href="javascript:void(0)" type="submit" data-toggle="modal" data-target="#myModal" class="btn btn-danger waves-effect waves-light">+</a>
+														</div>
+														
+													</div>
+													
+													<div class="form-group">
+														<label class="col-md-3 control-label">Purpose <span style="color:red">*</span></label>
+														<div class="col-md-6">
+															<select th:field="*{purpose}"class="form-control">
+																<option th:value="-1">Select</option>
+																<option  th:value="PreGrantOpposition">Pre Grant Opposition ( 90Days)</option>
+																<option  th:value="BenefitSharing">Benefit Sharing (6 Months)</option>
+															</select>
+															<span id="purposeerror" style="color:red"></span>
+														</div>
+													</div>
+													
+													<div class="form-group">
+														<label class="col-md-3 control-label">Passport Data of Variety <span style="color:red">*</span></label>
+														<div class="col-md-6">
+															<textarea th:field="*{passport_data_of_variety}"class="form-control" rows="5"></textarea>
+															<span id="passport_data_of_varietyerror" style="color:red"></span>
+														</div>
+													</div>
+													
+													
+													
+													
+													
+													<div class="form-group m-b-0">
+														<label class="col-md-3 control-label">&nbsp;</label>
+														<div class="col-sm-7">
+														<span th:if="${role_granted != 'Super Administrator' && role_granted != 'PPVFRA Admin'}">
+														<span th:if="${sub10 == 'addpresent'}">
+															<button type="submit" class="btn btn-info waves-effect waves-light" onclick="return validatePvjForm();">Submit</button>
+														</span>
+														</span>
+														</div>
+														
+													</div>
+													<br>    
+													</div>
+													</div>
+													
+</form>
+											
+ <script>
+      function validatePvjForm() {
+           if( document.getElementById("journal_id").value =="-1") {
+          	 document.getElementById("journal_iderror").innerHTML="Please select journal";
+          	 document.getElementById("journal_id").focus() ;
+              return false;
+           }
+           else{
+        	   document.getElementById("journal_iderror").innerHTML="";
+           }
+           if( document.getElementById("purpose").value =="-1") {
+            	 document.getElementById("purposeerror").innerHTML="Please select purpose";
+            	 document.getElementById("purpose").focus() ;
+                return false;
+             }
+             else{
+          	   document.getElementById("purposeerror").innerHTML="";
+             }
+           if( document.getElementById("passport_data_of_variety").value =="" || document.getElementById("passport_data_of_variety").value ==null) {
+          	 document.getElementById("passport_data_of_varietyerror").innerHTML="Please enter remarks";
+          	 document.getElementById("passport_data_of_variety").focus() ;
+              return false;
+           }
+           else{
+        	   document.getElementById("passport_data_of_varietyerror").innerHTML="";
+           }
+         return( true );
+      }
+</script>
+
+<script>
+      function validate_add_journal_form() {
+           if( document.getElementById("journal_title").value =="") {
+          	 document.getElementById("journal_title_error").innerHTML="Please enter title";
+          	 document.getElementById("journal_title").focus() ;
+              return false;
+           }
+           else{
+        	   document.getElementById("journal_title_error").innerHTML="";
+           }
+           if( document.getElementById("journal_year").value =="-1") {
+            	 document.getElementById("journal_year_error").innerHTML="Please select year";
+            	 document.getElementById("journal_year").focus() ;
+                return false;
+             }
+             else{
+          	   document.getElementById("journal_year_error").innerHTML="";
+             }
+             if( document.getElementById("journal_month").value =="-1") {
+            	 document.getElementById("journal_month_error").innerHTML="Please select month";
+            	 document.getElementById("journal_month").focus() ;
+                return false;
+             }
+             else{
+          	   document.getElementById("journal_month_error").innerHTML="";
+             }
+           if( document.getElementById("journal_issue").value =="" || document.getElementById("journal_issue").value ==null) {
+          	 document.getElementById("journal_issue_error").innerHTML="Please enter issue";
+          	 document.getElementById("journal_issue").focus() ;
+              return false;
+           }
+           else{
+        	   document.getElementById("journal_issue_error").innerHTML="";
+           }
+           if( document.getElementById("journal_volume").value =="" || document.getElementById("journal_volume").value ==null) {
+            	 document.getElementById("journal_volume_error").innerHTML="Please enter volume";
+            	 document.getElementById("journal_volume").focus() ;
+                return false;
+             }
+             else{
+          	   document.getElementById("journal_volume_error").innerHTML="";
+             }
+         return( true );
+      }
+</script>
+
+
+</span>
+<span th:unless="${PublishToPVJ != null && PublishToPVJ == 'PublishToPVJ' }">
+ <label>YOU ARE NOT AUTHORISED TO VIEW THIS PAGE.PLEASE CONTACT ADMINISTRATOR</label>
+ </span>
+	
+<div class="modal" id="myModal">
+			<div class="modal-dialog">
+				<div class="modal-content">
+					<div class="modal-header">
+					  <h4 class="modal-title">Add Journal</h4>
+					  
+					</div>
+					<div class="modal-body">
+					<form class="form-horizontal" role="form" th:action="@{/journal}" th:object="${journal}" method="post">   
+						<div class="form-group">
+                          <label class="col-md-2 control-label" > </label>
+                          <div class="col-md-10">
+           				  <input type="text" id="applicationid" th:name="applicationid"  th:value="${applicationid}" readonly="readonly" hidden="true" />
+                          </div>
+                          </div>
+						
+						<div class="form-group">
+							<label class="col-md-3 control-label">Title <span style="color:red">*</span></label>
+							<div class="col-md-6">
+								<input type="text" id="journal_title" th:field="*{title}" class="form-control" value="">
+								<span id="journal_title_error" style="color:red"></span>
+							</div>
+						</div>
+						
+						<div class="form-group">
+							<label class="col-md-3 control-label">Year <span style="color:red">*</span></label>
+							<div class="col-md-6">
+								<select id="journal_year" th:field="*{journal_year}" class="form-control">
+									<option th:value="-1">Select</option>
+									<option th:value="2011">2011</option>
+									<option th:value="2012">2012</option>
+									<option th:value="2013">2013</option>
+									<option th:value="2014">2014</option>
+									<option th:value="2015">2015</option>
+									<option th:value="2016">2016</option>
+									<option th:value="2017">2017</option>
+									<option th:value="2018">2018</option>
+									<option th:value="2019">2019</option>
+									<option th:value="2020">2020</option>
+									<option th:value="2021">2021</option>
+									<option th:value="2022">2022</option>
+									<option th:value="2023">2023</option>
+									<option th:value="2024">2024</option>
+									<option th:value="2025">2025</option>
+								</select>
+								<span id="journal_year_error" style="color:red"></span>
+							</div>
+						</div>
+						<div class="form-group">
+							<label class="col-md-3 control-label">Month <span style="color:red">*</span></label>
+							<div class="col-md-6">
+								<select id="journal_month" th:field="*{journal_month}" class="form-control">
+									<option th:value="-1">Select</option>
+									<option th:value="1">January</option>
+									<option th:value="2">February</option>
+									<option th:value="3">March</option>
+									<option th:value="4">April</option>
+									<option th:value="5">May</option>
+									<option th:value="6">June</option>
+									<option th:value="7">July</option>
+									<option th:value="8">August</option>
+									<option th:value="9">September</option>
+									<option th:value="10">October</option>
+									<option th:value="11">November</option>
+									<option th:value="12">December</option>
+								</select>
+								<span id="journal_month_error" style="color:red"></span>
+							</div>
+						</div>
+						
+						<div class="form-group">
+							<label class="col-md-3 control-label">Issue <span style="color:red">*</span> </label>
+							<div class="col-md-6">
+								<input type="text" id="journal_issue" th:field="*{journal_issue}" class="form-control" value="">
+								<span id="journal_issue_error" style="color:red"></span>
+							</div>
+						</div>
+						
+						<div class="form-group">
+							<label class="col-md-3 control-label">Volume No. <span style="color:red">*</span> </label>
+							<div class="col-md-6">
+								<input type="text" id="journal_volume" th:field="*{journal_volume_no}" class="form-control" value="">
+								<span id="journal_volume_error" style="color:red"></span>
+							</div>
+						</div>
+						<div class="form-group m-b-0">
+							<label class="col-md-3 control-label">&nbsp;</label>
+							<div class="col-sm-7">
+							<span th:if="${sub10 == 'addpresent'}">
+								<button type="submit" class="btn btn-info waves-effect waves-light" onclick="return validate_add_journal_form();">Submit</button>
+							</span>	
+						</div>
+							
+						</div>
+						<br>    
+
+						<div class="form-group">
+							
+						</div>
+					</form>
+					</div>
+					<div class="modal-footer">
+					  <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+					</div>
+				
+				</div>
+			</div>
+		 </div>
+</div> 
+	
+</html>

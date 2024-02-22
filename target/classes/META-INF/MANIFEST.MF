@@ -1,0 +1,10 @@
+Manifest-Version: 1.0
+Built-By: Atul Kumar yadav
+Build-Jdk: 16.0.2
+Implementation-Title: PPVFRA
+Implementation-Version: 1.0-SNAPSHOT
+Implementation-Vendor-Id: com.ppvfra
+Implementation-URL: https://projects.spring.io/spring-boot/#/spring-boot
+ -starter-parent/PPVFRA
+Created-By: Maven Integration for Eclipse
+

@@ -1,0 +1,253 @@
+  
+  <!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+	<head>
+	  <th:block th:include="adminfragment/headerlibs.html :: headerlibs"></th:block> 
+	</head>
+
+    <body  class="fixed-left">
+        <!-- Begin page -->
+        <div id="wrapper">
+        
+            <!-- Top Bar Start -->
+           <header th:insert="adminfragment/header.html :: header"> </header>
+            <!-- Top Bar End -->
+
+
+            <!-- ========== Left Sidebar Start ========== -->
+			<header th:insert="adminfragment/sidenav.html :: sidevav"> </header>
+            <!-- Left Sidebar End --> 
+
+  
+            <!-- Start right Content here -->  
+        <!-- ============================================================== -->                      
+            <div class="content-page">
+                <!-- Start content -->
+                <div class="content">
+                    <div class="container">
+
+                        <!-- Page-Title -->
+                        <div class="row">
+                            <div class="col-sm-12">
+                                <h4 class="pull-left page-title">Master</h4>
+                                <ol class="breadcrumb pull-right">
+                                    <li><a href="/admin">Home</a></li>
+                                    <li class="active">Add Crops</li>
+                                    <li>
+                                            <a href="getcrops" class="btn btn-purple waves-effect waves-light btn-xs m-b-5"><b>Back</b></a>
+                                    </li>
+                                </ol>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-sm-12">
+                                <div class="panel panel-default">
+                                    <div class="panel-heading"><h3 class="panel-title">Add Crops</h3></div>
+                                 
+                                   <span th:if="${actd_viewtrue != null && actd_viewtrue == 'valpresent' }">
+									
+									 <div class="panel-body">
+                                        <form  class="form-horizontal" role="form"  th:action="@{/editcrops}" th:object="${addcrops}" method="post" id="register-form2">                                    		
+                                              
+                                              <div class="form-group">
+                                                <label class="col-md-2 control-label" > </label>
+                                                <div class="col-md-10">
+                                                    <input type="text" th:field="*{id}" readonly="readonly" hidden="true" />
+                                                    
+                                                </div>
+                                                </div>
+                                                
+                                              
+                                             <div class="form-group">
+                                                <label class="col-sm-2 control-label">Crop Group Name</label>
+                                                <div class="col-sm-6">
+                                                <div th:if="${Crop_Group != null}">
+                                                    <select th:field="*{cropgroupid}" class="form-control">
+       														 <option th:value="-1">Select</option>
+          													  <option th:each="dropDownItem : ${Crop_Group}"
+              														  th:value="${dropDownItem.id}"
+                  													  th:text="${dropDownItem.crop_group}" />
+       										 			</select>
+       										  <div class="error" th:if="${#fields.hasErrors('cropgroupid')}" th:errors="*{cropgroupid}"></div>
+       										   </div>
+                                            </div>
+                                            </div>
+                              
+                                            <div class="form-group">
+                                                <label class="col-md-2 control-label"> Crop Name</label>
+                                                <div class="col-md-6">
+                                                    <input id="cropname" type="text" th:field="*{crop_common_name}" class="form-control" placeholder="Enter the crop name">
+                                                <div class="error" th:if="${#fields.hasErrors('crop_common_name')}" th:errors="*{crop_common_name}">CropName Error</div>
+                                                </div>
+                                            </div>
+											
+										
+											<TABLE id="dataTable" class="table table-bordered">
+											
+                                                        <tr>
+                                                            <th></th>
+															<th>Botanical Name</th>
+                                                            <th>Family</th>
+                                                            <th>Initials</th>
+                                                        </tr>
+                                                   
+                                                    
+                                                        <tr th:each="data :${botanicalname}">
+                                                        <td> <div><input  type="hidden" id="cropidhidden" th:text="${data[0]}"  th:value="${data[0]}"  th:name="cropidhidden" /></div></td>
+                                                        
+                                                        <td>
+                                                            <div class="col-sm-6">
+                                                               <!-- <input type="text" th:name="BotanicalName"  th:field="*{BotanicalName}" class="form-control" placeholder="Enter the botanical name"> -->
+                                                            <textarea type="text"  class="form-control tchk" th:name="crop_botanical_name" placeholder="Enter the botanical name" th:text="${data[3]}"></textarea>
+                                                              <!-- <div class="error" th:if="${#fields.hasErrors('BotanicalName')}" th:errors="*{BotanicalName}">BotanicalName Error</div> -->
+                                                            </div>
+                                                        </td>  
+                                                                       
+                                                        <td>
+                                                           <div class="col-sm-6">
+                                                              <!--  <input type="text"  th:field="*{Family}" class="form-control" placeholder="Enter the family name"> -->
+                                                                <textarea type="text"  class="form-control" th:name="family" placeholder="Enter the family name" th:text="${data[4]}"></textarea>
+                                                           <!-- <div class="error" th:if="${#fields.hasErrors('Family')}" th:errors="*{Family}">Family Error</div> --> 
+                                                           </div>
+                                                        </td> 
+                                                        
+                                                         <td>
+                                                           <div class="col-sm-6">
+                                                              <!--  <input type="text"  th:field="*{Family}" class="form-control" placeholder="Enter the family name"> -->
+                                                                <textarea type="text"  class="form-control" th:name="initials" placeholder="Enter the initials" th:text="${data[5]}"></textarea>
+                                                           <!-- <div class="error" th:if="${#fields.hasErrors('Family')}" th:errors="*{Family}">Family Error</div> --> 
+                                                           </div>
+                                                        </td> 
+                                                        </tr>
+											</TABLE>
+                                            <INPUT type="button" value="Add Row" onclick="addRow('dataTable')" />
+											<INPUT type="button" value="Delete Row" onclick="deleteRow('dataTable')" />
+                                                                          
+								              
+								              <div class="form-group">
+								                <label class="col-sm-2 control-label">Status</label>
+								                <div class="col-sm-6">
+								                  <select class="form-control" th:field="*{active}">
+								                 <option th:value="1" th:text = "Active"></option>
+								                 <option th:value="0" th:text="Inactive"></option>
+								             </select>
+								                </div>
+								            </div> 
+								                                                       
+                                               <div class="form-group m-b-0">
+                                                <div class="col-sm-offset-2 col-sm-9">
+                                                <span th:each="sec_chk : ${actd}">
+												<span th:if="${sec_chk == 'Edit'}">
+                                                    <button id="btnsubmitcgp" type="submit" class="btn btn-info waves-effect waves-light">Submit</button>
+                                                </span>
+                                                </span>
+                                                
+                                                </div>
+                                            </div>
+                                                                       
+                                        </form>
+                                    </div> <!-- panel-body -->
+                                    
+                                    </span>
+                                    <span th:unless="${actd_viewtrue != null && actd_viewtrue == 'valpresent' }">
+									<label>YOU ARE NOT AUTHORISED TO VIEW THIS PAGE.PLEASE CONTACT ADMINISTRATOR</label>
+									</span>
+                                </div> <!-- panel -->
+                            </div> <!-- col -->
+                        </div> <!-- End row -->
+
+                    </div> <!-- container -->
+                               
+                </div> <!-- content -->
+
+            <!--     <footer class="footer text-right">
+                    2019 © PPVFRA.
+                </footer> -->
+
+            </div>
+            <!-- ============================================================== -->
+             
+            <!-- End Right content here -->
+          <div th:replace="adminfragment/footer.html :: footer"></div>
+           </div> <!-- container -->
+                               
+                <!-- content -->
+
+			<!-- start footer content here -->
+			
+			<!-- end footer content here -->
+
+      
+        <!-- END wrapper -->
+
+<!-- footer lib start here-->
+
+<div th:replace="adminfragment/footerlibs.html :: footerlibs"></div>
+<!-- end footer lib -->
+
+
+<SCRIPT type="text/javascript">	
+function addRow(tableID) {
+
+	var table = document.getElementById(tableID);
+
+	var rowCount = table.rows.length;
+	var row = table.insertRow(rowCount);
+
+	var cell1 = row.insertCell(0);
+	var element1 = document.createElement("input");
+	element1.type = "checkbox";
+	element1.name="chkbox[]";
+	cell1.appendChild(element1);
+
+
+	var cell2 = row.insertCell(1);
+	var element2 = document.createElement("textarea");
+	element2.type = "text";
+	element2.name = "crop_botanical_name";
+	element2.setAttribute('class',"form-control tchk");
+	cell2.appendChild(element2);
+	
+	var cell3 = row.insertCell(2);
+	var element3 = document.createElement("input");
+	element3.type = "text";
+	element3.name = "family";
+	element3.setAttribute('class',"form-control");
+	cell3.appendChild(element3);
+	
+	
+	var cell4 = row.insertCell(3);
+	var element4 = document.createElement("input");
+	element4.type = "text";
+	element4.name = "initials";
+	element4.setAttribute('class',"form-control");
+	cell4.appendChild(element4);
+
+
+}
+
+function deleteRow(tableID) {
+	try {
+	var table = document.getElementById(tableID);
+	var rowCount = table.rows.length;
+
+	for(var i=0; i<rowCount; i++) {
+		var row = table.rows[i];
+		var chkbox = row.cells[0].childNodes[0];
+		if(null != chkbox && true == chkbox.checked) {
+			table.deleteRow(i);
+			rowCount--;
+			i--;
+		}
+
+
+	}
+	}catch(e) {
+		alert(e);
+	}
+}
+
+</script>
+</body>
+</html>

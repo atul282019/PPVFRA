@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+	<div th:fragment="formeleven">
+
+
+<form class="form-horizontal" role="form" id="form_11" name="form_11"  th:action="@{/saveapplicationformxi}" th:object="${applications}" onsubmit = "return validateform11()" method="post"><!--form_11 start -->
+													<div class="form-group">
+															<label class="col-md-12"><h4>11. In case exotic germplasm was used in the derivation of the variety or hybrid, give details:<span style="color:red">*</span></h4></label>
+															</div>
+															<div class="form-group">
+																<label class="col-md-3 control-label"></label>
+															<div class="col-md-9">
+																<textarea class="form-control" th:field="*{exotic_germplasm}" maxlength="250" size="250"></textarea>
+															    <span id="exoticgermplasmerror" style="color:red"></span>
+															</div>
+														</div>
+													     <hr/>
+                                                     	<div class="form-group" th:if="${appstatus ==1}">
+															<div class="col-sm-offset-10 col-sm-12">
+															    <input type="hidden" id="applicationidfromxi" name="applicationidfromxi" th:value="*{id}">
+																<input type="hidden" id="applicantidformxi" name="applicantidformxi"  th:value="${userapplicant[0]}">
+																<input type="hidden" id="applicanttypeidformxi" name="applicanttypeidformxi" th:value="*{applicanttypeid}" />
+																<input type="hidden" id="f11_id" name="f11_id" th:value="${f11_id}">
+																
+																<button type="submit" class="btn btn-info waves-effect waves-light">Save</button>
+															</div>
+														</div>
+														
+														
+													</form>
+	<script type = "text/javascript">
+      function validateform11() {
+         if( document.form_11.exotic_germplasm.value == "" ) {
+        	 document.getElementById("exoticgermplasmerror").innerHTML="Please enter exotic germplasm";
+            document.form_11.exotic_germplasm.focus() ;
+            return false;
+         }
+         return( true );
+      }
+</script>												
+													</div>
+													</html>

@@ -1,0 +1,189 @@
+  <!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+	<head>
+	  <th:block th:include="applicationfragment/headerlibs.html :: headerlibs"></th:block> 
+        <style>
+            .dashboard_enrollment{
+              background: #f7f7f7;
+              padding: 40px 15px;
+              min-height: 200px;
+              font-size: 20px;
+              text-align: center;
+              border: 1px solid #3e7205;
+              color: #3e7205;
+              margin: 5px;
+            }
+			hr {
+			margin-top: 1rem;
+			margin-bottom: 1rem;
+			border: 0;
+			border-top: 1px solid rgba(0, 0, 0, 0.4);
+			}
+            
+            .dashboard_enrollment:hover{
+              -moz-box-shadow: 0 1px 20px 3px #A39EA0; 
+              -webkit-box-shadow: 0 1px 20px 3px #A39EA0;
+              box-shadow: 0 1px 20px 3px #a29ea0;
+              border: 1px solid rgba(154, 151, 152, 0.18);
+            }
+            .tab-content{
+			color:#0a4816;
+		
+			}
+			
+            .hover_effect{
+              border-color:none !important;
+              -moz-transition:all 0.2s ease-in;
+              -webkit-transition:all 0.2s ease-in;
+              transition:all 0.2s ease-in;
+            }
+			
+          
+            .dashboard_enrollment:hover .hover_effect{
+              /* background-color:#0b9292; */
+              background-color:#92620E;
+             
+            }
+          
+            .padding-top-50{
+              padding-top:50px;
+            }
+          
+            .padding-top-prcb{
+              padding-top:84px;
+            }
+			
+			 .radio-btn-position{
+				position: relative;
+				top: 3px;
+			}
+			.variety-knowledge{
+				display:none;
+			}
+			.variety-knowledge-1{
+				display:none;
+			}
+			.badge {
+				text-transform: lowercase;
+				font-weight: normal;
+				padding: 3px 5px;
+				font-size: 16px;
+				margin-top: 1px;
+				width: 20px;
+				height: 20px;
+				background-color: #4b7c16;
+			}
+			.other-textbox{
+				display:none;
+			}
+			
+          </style>
+		  
+    </head>
+    <body class="fixed-left">
+        
+        <!-- Begin page -->
+        <div id="wrapper">
+        
+            <!-- Top Bar Start -->  
+        		 <header th:insert="applicationfragment/header.html :: header"> </header>
+                    <!-- ========== Left Sidebar Start ========== -->
+        
+                    <header th:insert="applicationfragment/sidenav.html :: sidevav"> </header>
+                    <!-- Left Sidebar End --> 
+
+                    <div class="content-page">
+                        <!-- Start content -->
+                        <div class="content">
+                        
+                              <!-- Page-Title -->
+                               <div class="card sub-header">
+                                <div class="row">
+                                    <div class="col-sm-12">
+                                        <h4 class="pull-left">Applications</h4>
+                                        <ol class="breadcrumb pull-right">
+                                            <li><a href="/admin">Home</a></li>
+                                            <li class="active">Applications</li>
+                                            <li><a href="/savedapplication" class="btn btn-purple waves-effect waves-light btn-xs m-b-5">Back</a></li>
+                                        </ol>
+                                    </div>
+                                </div>
+                                   </div>
+                            <div class="container">
+        
+                           <div class="row">
+                                 <div class="col-lg-12">
+                                  <div class="card">
+                                  <div class="card-header">
+                                        <div class="text-center">
+                                            <h3>FORM II</h3>
+                                           <h5>APPLICATION FOR REGISTRATION OF ESSENTIALLY DERIVED
+                                              VARIETY (EDV) UNDER PROTECTION OF PLANT VARIETY AND
+                                              FARMERS' RIGHTS ACT, 2001.
+                                              </h5>     
+                                          </div>
+                                     </div>
+                                      
+                               <div class="card-body">
+                                  <div class="row">
+                                    <div class="col-lg-12"> 
+                                  <!--  start main tab menu include -->
+                                    <div th:insert="applicationfragment/tabmenu2.html :: tabmenu"> </div>
+                                   		 <!--  end  main tab menu include -->
+											<hr style="width:10;">			
+                                            <div class="tab-content" > 
+                                            <div class="tab-pane active" id="home-21" style="padding: 0px;border: 1px solid rgb(241, 237, 237);">
+                                            
+                                            <!-- start sub  tab menu include -->
+                                             <div th:insert="applicationfragment/formtabmenu2.html :: formtabmenu"> </div>
+                                            <!-- end main tab menu include -->
+                                                
+											</div>
+										 </div> 	
+                                        </div> 
+                                    </div> 
+                                 </div>
+                             </div>
+                               </div>
+                                 </div>   
+                                
+                                
+ <div th:if="${message != null}">
+ <div id="myModal" class="modal fade">
+   <div class="modal-dialog">
+    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+        <div class="modal-content">
+         <div class="modal-body">
+				<p align="center" th:text="${message}" />
+            </div>
+             <div align="right">
+          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        </div>
+        </div>
+    </div>
+</div>
+</div>
+                                 <!-- end row -->
+         
+                            </div> <!-- container -->
+                                       
+                        </div> <!-- content -->
+				                        
+				                 <footer class="footer text-right">
+				                    2019 © PPVFRA.
+				                </footer>
+				 		
+            </div>
+            <!-- ============================================================== -->
+            <!-- End Right content here -->
+            <!-- ============================================================== -->
+		<!-- <div th:replace="applicationfragment/footer.html :: footer"></div> -->
+
+        </div>
+        <!-- END wrapper -->
+    
+       <div th:replace="applicationfragment/applicationfooterlibform2.html :: applicationfooterlibs"></div>
+	</body>
+
+   
+</html>

@@ -1,0 +1,43 @@
+
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+	<div th:fragment="formtwelve">
+
+	<form class="form-horizontal" role="form" id="form_12" name="form_12" th:action="@{/saveapplicationformxii}" th:object="${applications}" onsubmit = "return validateform12()" method="post">
+													<div class="form-group">
+															<label class="col-md-12"><h4>12. Expected performance of the variety under the given conditions as per the Proforma specified by the Authority for respective crop species in its Journal.<span style="color:red">*</span></h4></label>
+															</div>
+															<div class="form-group">
+																<label class="col-md-3 control-label"></label>
+															<div class="col-md-9">
+																<textarea class="form-control" th:field="*{expected_performance}"></textarea>
+																<span id="expectedperformanceerror" style="color:red"></span>
+															</div>
+														</div>
+													     <hr/>
+                                                     	<div class="form-group ">
+															<div class="col-sm-offset-10 col-sm-12">
+															    <input type="hidden" id="applicationidfromxii" name="applicationidfromxii" th:value="*{id}">
+																<input type="hidden" id="applicantidformxii" name="applicantidformxii"  th:value="${userapplicant[0]}">
+																<input type="hidden" id="applicanttypeidformxii" name="applicanttypeidformxii" th:value="*{applicanttypeid}" />
+																
+																<button type="submit" class="btn btn-info waves-effect waves-light">Save</button>
+																<button type="submit" class="btn btn-info waves-effect waves-light">Next</button>
+															</div>
+														</div>
+														
+														
+													</form>
+													<script type = "text/javascript">
+      function validateform12() {
+         if( document.form_12.expected_performance.value == "" ) {
+        	 document.getElementById("expectedperformanceerror").innerHTML="name can't be blank";
+            document.form_12.expected_performance.focus() ;
+            return false;
+         }
+         return( true );
+      }
+</script>	
+													</div>
+													</html>

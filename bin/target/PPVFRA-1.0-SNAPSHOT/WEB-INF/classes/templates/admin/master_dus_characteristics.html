@@ -1,0 +1,373 @@
+
+  <!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+	<head>
+	  <th:block th:include="adminfragment/headerlibs.html :: headerlibs"></th:block> 
+	</head>
+
+    <body class="fixed-left">
+        <!-- Begin page -->
+        <div id="wrapper">
+        
+            <!-- Top Bar Start -->
+           <header th:insert="adminfragment/header.html :: header"> </header>
+            <!-- Top Bar End -->
+
+
+            <!-- ========== Left Sidebar Start ========== -->
+			<header th:insert="adminfragment/sidenav.html :: sidevav"> </header>
+            <!-- Left Sidebar End -->
+            
+            
+
+            <!-- ============================================================== -->
+            <!-- Start right Content here -->
+            <!-- ============================================================== -->                      
+            <div class="content-page">
+                <!-- Start content -->
+                <div class="content">
+                    <div class="container">
+
+                        <!-- Page-Title -->
+                        <div class="row">
+                            <div class="col-sm-12">
+                                <h4 class="pull-left page-title">DUS Characteristics</h4>
+                                <ol class="breadcrumb pull-right">
+                                    <li><a href="/admin">Home</a></li>
+                                    <li>
+                                        <a href="addduscharacteristics" class="btn btn-purple waves-effect waves-light btn-xs m-b-5"><b>Add DUS Characteristics</b></a>
+                                    </li>
+                                </ol>
+                            </div>
+                        </div>
+						<span th:if="${actd_viewtrue != null && actd_viewtrue == 'valpresent' }">
+							
+						<div class="row">
+                            <div class="col-sm-12">
+                                <div class="panel panel-default">
+                                   <!-- <div class="panel-heading"><h3 class="panel-title">Add Company</h3></div>-->
+                                    <div class="panel-body">
+                                        <form class="form-horizontal" role="form">                                    
+										
+                                              <div class="form-group">
+                                                <label class="col-sm-2 control-label">Crop Group Name</label>
+                                                <div class="col-sm-6">
+                                                <div th:if="${Crop_Group != null}">
+                                                    <select onchange="GetCropName();" id="cropgroupname" class="form-control">
+       														 <option th:value="-1">Select</option>
+          													  <option th:each="dropDownItem : ${Crop_Group}"
+              														  th:value="${dropDownItem.id}"
+                  													  th:text="${dropDownItem.crop_group}" />
+       										 			</select>
+       										 	</div>
+                                            </div>
+                                            </div>
+                                                     <div class="form-group">
+                                                <label class="col-sm-2 control-label">Crop Name</label>
+                                                <div class="col-sm-6">
+                                                <div th:if="${Crop != null}">
+                                                     <select id="cname" onchange="duscharacteristics()"  class="form-control">
+       														 <option th:value="-1">Select</option>
+          													  <option th:each="dropDownItem : ${Crop}"
+              														  th:value="${dropDownItem.id}"
+                  													  th:text="${dropDownItem.crop_common_name}" />
+       										 			</select>
+                                                </div>
+                                            </div>	
+                                            </div>	       
+                                                     
+                                                                                                               
+                                            
+                                            <br>                                                            
+                                        </form>
+                                    </div> <!-- panel-body -->
+                                </div> <!-- panel -->
+                            </div> <!-- col -->
+                        </div>
+                        </span>
+                        <span th:unless="${actd_viewtrue != null && actd_viewtrue == 'valpresent' }">
+												<label>YOU ARE NOT AUTHORISED TO VIEW THIS PAGE.PLEASE CONTACT ADMINISTRATOR</label>
+												</span>
+
+                       <span th:if="${actd_viewtrue != null && actd_viewtrue == 'valpresent' }">
+							
+							 <div class="row">
+                            <div class="col-md-12">
+                                <div class="panel panel-default">
+                                    <div class="panel-heading">
+                                        <h3 class="panel-title">Table of Characteristics</h3>
+                                    </div>
+                                    <div class="panel-body">
+                                        <div class="row">
+                                            <div class="col-md-12 col-sm-12 col-xs-12">
+                                                <table id="tabledata" class="table table-hover table-bordered">
+                                                    <thead>
+                                                        <tr>
+                                                            <th>Sr. No.</th>
+                                                           <!--   <th>Crop</th>  -->
+                                                            <th>Characteristics</th>
+                                                            <th>State</th>
+                                                            <th>Note</th>
+															<th>Example Valuation</th>
+															<th> Stage of observation</th>
+															<th>Type of Assessment</th>
+															<span th:if="${actd_editvaluetrue == 'editpresent'}">
+															<th>Action</th>
+															</span>
+                                                        </tr>
+                                                    </thead>
+													
+                                                    <tbody>
+                                   
+                                                    
+                                              <!--     
+                                              <tr th:each="duscharacteristicslist,serial : ${addduscharacteristicslist}">
+											            <td th:text="${serial.count}"></td> 
+											        <td th:text="${duscharacteristicslist[1]}"> </td> 
+											            <td th:text="${duscharacteristicslist[1]}">  </td>  
+											            <td th:text="${duscharacteristicslist[2]}"></td> 
+														<td th:text="${duscharacteristicslist[3]}"></td>
+														<td th:text="${duscharacteristicslist[4]}"></td>
+														<td th:text="${duscharacteristicslist[5]}"></td>
+														<td th:text="${duscharacteristicslist[6]}"></td>
+														<td>EDIT</td>
+										      </tr>   -->
+										            
+										            
+										            
+										            
+                                                    </tbody>
+                                                   
+                                                </table>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div> <!-- End Row -->
+                        </span>
+                        <span th:unless="${actd_viewtrue != null && actd_viewtrue == 'valpresent' }">
+												<label>YOU ARE NOT AUTHORISED TO VIEW THIS PAGE.PLEASE CONTACT ADMINISTRATOR</label>
+												</span>
+
+
+                    </div> <!-- container -->
+                               
+                </div> <!-- content -->
+
+                <footer class="footer text-right">
+                    2019 © PPVFRA.
+                </footer>
+
+            </div>
+           
+
+<div th:replace="adminfragment/footer.html :: footer"></div>
+           </div> <!-- container -->
+                               
+                <!-- content -->
+
+			<!-- start footer content here -->
+			
+			<!-- end footer content here -->
+
+      
+        <!-- END wrapper -->
+
+<!-- footer lib start here-->
+
+<div th:replace="adminfragment/footerlibs.html :: footerlibs"></div>
+<!-- end footer lib -->
+   <script type="text/javascript">
+   function GetCropName()
+  {
+       var cropgroup= document.getElementById("cropgroupname");
+       var cropname=document.getElementById("cname");
+       var cropname1=$("#cname");
+       if(cropgroup.value != null)	
+       	$.ajax({
+               type: "POST",
+               url: "/ppvfra/getCropName",
+               data: 'cropgroupname='+cropgroup.value,
+               dataType:"json",
+               success: function (response) {
+               	
+              cropname1.empty().append('<option selected="selected" value="">Please select</option>');
+                for(var k=0;k<response.length;k++)
+     	  {
+     	  var opt = response[k];
+     	   var el = document.createElement("option");
+     	   el.textContent = opt[1];
+     	   el.value = opt[0];
+     	   cropname.appendChild(el);
+     	}
+               },
+               failure: function (response) {
+                   alert(response.responseText);
+               },
+               error: function (response) {
+                   alert(response.responseText);
+               }
+      });
+   	
+   }
+ </script>  
+ 
+ <script type="text/javascript" th:inline="javascript">
+ function duscharacteristics() {
+    var crop= document.getElementById("cname");
+    var acp = [[${actd_editvaluetrue}]];
+  
+    	     var tabledata=$("#tabledata");
+	        if(crop.value != null)		 
+	        	$.ajax({
+	                type: "POST",
+	                url: "/ppvfra/duscharacteristics",
+	                data: 'cname='+crop.value,
+	                success: function (response) {
+	                 
+	                	
+	                	$("#tabledata tbody").html(''); 
+	                	 {
+	                		
+        	for (var i=0;i<response.length;i++)
+           	{
+        		var a = response[i];
+        		var b= null;
+        		b= a[0];
+        		
+        		var count= i+1;
+        		
+        		var hold1,hold2,hold3;
+        		if(a[3]!=null)
+        			{
+        			 hold1=a[3].split('~')
+        			}
+        		if(a[4]!=null)
+    			{
+        			 hold2=a[4].split('~')
+    			}
+        		if(a[5]!=null)
+    			{
+        			 hold3=a[5].split('~')
+    			}
+        		
+        		var tag="";
+        		var rowcount=hold2.length;
+        		var html_data ;
+        		var count1=0;
+        		for( var k=0;k<hold2.length;k++){
+        			tag="<td th:name='state'>"+hold1[k]+"</td><td th:name='note'>"+
+        			hold2[k]+"</td><td th:name='example_valuation'>"+hold3[k]+"</td>"; 
+        		
+        			var msg;
+            		var bgcolor;
+            		//if(a[10]!="" || a[11] !="")
+            		if(a[8]=="Y")	
+            		{
+            				bgcolor="success";
+            				if(a[9]=="Y" && a[10]!="")
+            					{
+            						msg="(*)(+)";
+            						
+            					}
+            				else if(a[10]!="" && a[9]!="Y")
+            					{
+            						msg="(+)";
+            					}
+            				else if(a[10]=="" && a[9] =="Y" )
+            					{
+            					msg="(*)";
+            					}
+            				else
+            					{
+            						msg="";
+            					}
+            			
+            			}
+            		else
+            			{
+            			bgcolor="default";
+            			if(a[10] != "" && a[9] =="Y")
+    							{
+    							msg="(*) (+)";	 
+    							}
+    						else if(a[9]!="Y" && a[10]!="")
+    						{
+    						msg	="(+)";
+    						}
+    						else if(a[9] =="Y" && a[10]=="")
+    						{
+    						msg	="(*)";
+    						}
+    					
+    				else
+    					{
+    					msg="";
+    					}
+    			
+            			}
+            		if(count1==0)
+            			{
+            				if(acp=="editnotpresent")
+            					{
+            						html_data = '<tr class="'+bgcolor+'"><td rowspan='+rowcount+'>'+count+' '+msg+'<input type="hidden" th:name="id" th:value='+a[0]+'/></td><td rowspan='+rowcount+' th:text='+a[2]+' th:name="characteristics">'+a[2]+'</td>'+
+                        			tag+'<td rowspan='+rowcount+'  th:name="stages_observation">'+a[6]+'</td><td rowspan='+rowcount+' th:name="type_assessment">'+a[7]+'</td></tr>';                        					
+            					}
+            				else
+            					{
+            					html_data = '<tr class="'+bgcolor+'"><td rowspan='+rowcount+'>'+count+' '+msg+'<input type="hidden" th:name="id" th:value='+a[0]+'/></td><td rowspan='+rowcount+' th:text='+a[2]+' th:name="characteristics">'+a[2]+'</td>'+
+                        		tag+'<td rowspan='+rowcount+'  th:name="stages_observation">'+a[6]+'</td><td rowspan='+rowcount+' th:name="type_assessment">'+a[7]+'</td><td rowspan='+rowcount+'><a href="/editduscharachterstics/'+a[0]+'">Edit</a></td></tr>';                        		
+            					
+            					}
+            			}
+            		else
+            			{
+            				html_data+='<tr class='+bgcolor+'>'+tag+'</tr>'
+            			}
+            		count1++;
+        		}      
+        		
+                
+        	
+        		
+        		 $("#tabledata tbody").append(html_data);
+           	}
+     		}
+        
+	                },
+	                    failure: function (response) {
+	                    alert(response.responseText);
+	                },
+	                error: function (response) {
+	                    alert(response.responseText);
+	                }
+			});
+}
+  </script>  
+   
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
+
+  <div th:if="${message != null}">
+ <div id="myModal1" class="modal fade">
+   <div class="modal-dialog">
+    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+        <div class="modal-content">
+         <div class="modal-body">
+				<p align="center" th:text="${message}" />
+            </div>
+        </div>
+    </div>
+</div>
+</div>
+
+    <script type="text/javascript">
+	      $(document).ready(function(){
+		  $("#myModal1").modal('show');
+	     });
+        </script>
+ 
+ 
+</body>
+</html>

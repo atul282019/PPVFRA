@@ -1,0 +1,383 @@
+  
+  <!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+	<head>
+	  <th:block th:include="adminfragment/headerlibs.html :: headerlibs"></th:block> 
+	</head>
+
+    <body  class="fixed-left">
+        <!-- Begin page -->
+        <div id="wrapper">
+        
+            <!-- Top Bar Start -->
+           <header th:insert="adminfragment/header.html :: header"> </header>
+            <!-- Top Bar End -->
+
+
+            <!-- ========== Left Sidebar Start ========== -->
+			<header th:insert="adminfragment/sidenav.html :: sidevav"> </header>
+            <!-- Left Sidebar End --> 
+
+  
+            <!-- Start right Content here -->  
+        
+          <!-- ============================================================== -->                      
+            <div class="content-page">
+                <!-- Start content -->
+                <div class="content">
+                    <div class="container">
+
+                        <!-- Page-Title -->
+                        <div class="row">
+                            <div class="col-sm-12">
+                                <h4 class="pull-left page-title">Master</h4>
+                                <ol class="breadcrumb pull-right">
+                                    <li><a href="/admin">Home</a></li>
+                                    <li class="active">Add Registrar Jurisdiction</li>
+                                    <li>
+                                            <button type="button" onclick="history.go(-1);" class="btn btn-purple waves-effect waves-light btn-xs m-b-5">Back</button>
+                                    </li>
+                                </ol>
+                            </div>
+                        </div>
+
+                        <div class="row">
+							<div class="col-md-12"> 
+							
+							
+							<div class="form-group"  >
+                                                <label class="col-md-2 control-label">Role</label>
+                                                <div class="col-md-6">
+                                                    <!-- <input type="text" class="form-control" value="Registrar"> -->
+                                              <div  th:if="${roleid != null}">
+        												<select  th:field="*{roleid}" id="roleid1" onchange="GetUser();getroleid(),getroleid2();"   class="form-control">
+       														 <option th:value="-1">---Select---</option>
+          													  <option th:each="dropDownItem : ${roleid}"
+              														  th:value="${dropDownItem.id}"
+                  													  th:text="${dropDownItem.name}" />
+       										 			</select>
+       										 	<span id="roleiderror" style="color:red"></span>
+       										 	<div class="error" th:if="${#fields.hasErrors('roleid')}" th:errors="*{roleid}">User Error</div>
+       										  </div>                                                  
+                                             </div>
+                                            </div>
+                                 <br>
+                                 <br>
+                                              <div class="form-group">
+                                                <label class="col-sm-2 control-label">User</label>
+                                                <div class="col-sm-6">
+                                            <div th:if="${userid != null}">
+        												<select th:field="*{userid}" id="userid1" onchange="getuserid(),getuserid2(),fetchcropval(),fetchofficeval();" class="form-control">
+       														 <option th:value="-1">---Select---</option>
+          													  <option th:each="dropDownItem : ${userid}"
+              														  th:value="${dropDownItem.id}"
+                  													  th:text="${dropDownItem.username}" />
+       										 			</select>	
+       										 			<span id="useriderror" style="color:red"></span>
+       										 			<div class="error" th:if="${#fields.hasErrors('userid')}" th:errors="*{userid}">User Error</div>
+												 </div>
+										        </div>
+											</div>	
+                                            
+							<br><br>
+							
+										<!-- Nav tabs -->
+										<div class="card">
+											<ul class="nav nav-tabs" role="tablist">
+												<li role="presentation" class="active">
+													<a href="#licence" aria-controls="home" role="tab" data-toggle="tab" id="license">
+														<i class="fa fa-id-card"></i>&nbsp; <span>Registrar Jurisdiction Crops</span>
+													</a>
+												</li>
+												<li role="presentation">
+													<a href="#staff" aria-controls="staff" id="tech_staff" role="tab" data-toggle="tab">
+														<i class="fa fa-id-card"></i>&nbsp; <span>Registrar Jurisdiction Office </span>
+													</a>
+												</li>
+											</ul>
+											<!-- Tab panes -->
+											<div class="tab-content">
+											 
+											<div role="tabpanel" class="tab-pane active table-responsive" id="licence">		
+											<form class="form-horizontal"  role="form" id="registrarjurisdiction" th:name="registrarjurisdiction" th:action="@{/addregistrarjurisdiction}" th:object="${registrarjurisdiction}" method="post" onsubmit = "return validate_reg_jur_crop()">                                    
+                                            
+                                            <div class="form-group">
+                                               <div class="col-sm-6">
+                                                    <input type="text" th:field="*{roleid}" id="roleid2" hidden="true"/>
+                                                 </div>
+                                            </div>
+                                            
+                                            <div class="form-group">
+                                               <div class="col-sm-6">
+                                                    <input type="text" th:field="*{userid}" id="userid2" hidden="true"/>
+                                                 </div>
+                                            </div>
+                                            
+                                            
+										   <div class="form-group">
+										   <label class="col-md-3 control-label">Crops</label>
+										   <div class="col-md-9">
+										   <th:block th:each="bindcrop : ${bindcrops}">
+										   <input  th:field="*{crops}" type="checkbox" class="checkmark" th:text="${bindcrop.crop_common_name}" th:value="${bindcrop.id}" /><br>
+										   </th:block>
+										   <div class="error" th:if="${#fields.hasErrors('crops')}" th:errors="*{crops}">crop Error</div>
+									       </div>		
+										   </div>
+											
+											<div class="form-group m-b-0">
+                                               <div class="col-sm-offset-2 col-sm-9">
+                                                 <button type="submit" class="btn btn-info waves-effect waves-light">Submit</button>
+                                               </div>
+                                            </div>
+
+  <script type="text/javascript">									
+      function validate_reg_jur_crop() {
+	  
+			 //alert("inside date");
+			 var userid = document.getElementById("userid1").value;
+			 var roleid = document.getElementById("roleid1").value;
+			 
+			//alert("inside chk="+userid+" and role id = "+roleid);
+			 if (userid == "" || userid ==null || userid =="-1")
+ 	    		 {
+ 	    		  document.getElementById("useriderror").innerHTML="Please select userid";
+                  document.getElementById("userid1").focus() ;
+                  return false;
+ 	    		 }
+	        	  else{
+	        	    	 document.getElementById("useriderror").innerHTML="";
+					 } 
+
+			 if (roleid == "" || roleid ==null || roleid =="-1")
+	    		 {
+	    		  document.getElementById("roleiderror").innerHTML="Please select roleid";
+             	  document.getElementById("roleid1").focus() ;
+             	  return false;
+	    		 }
+        	  else{
+        	    	 document.getElementById("roleiderror").innerHTML="";
+				  } 
+
+
+	      
+			return true;
+	   	     // return false;
+						 
+						 
+	
+	}
+	</script>
+	
+                                         </form>
+										</div>
+												
+												<div role="tabpanel" class="tab-pane table-responsive" id="staff">
+												<form class="form-horizontal"  role="form" th:action="@{/registrarjurisdictionoffice}" th:object="${registrarjurisdictionoffice}" method="post">                                    
+                                                   
+                                                   <div class="form-group">
+                                               <div class="col-sm-6">
+                                                    <input type="text" th:field="*{roleid}" id="roleid3" hidden="true" />
+                                                 </div>
+                                            </div>
+                                            
+                                            <div class="form-group">
+                                               <div class="col-sm-6">
+                                                    <input type="text" th:field="*{userid}" id="userid3" hidden="true"/>
+                                                 </div>
+                                            </div>
+                                                   
+                                                   
+                                                   
+                                                   <div class="form-group">
+												      <label class="col-md-3 control-label">Branch office</label>
+													      <div class="col-md-9">
+														     <th:block th:each="bindlocation : ${bindlocations}">
+											                 <input  th:field="*{office}" type="checkbox" th:text="${bindlocation.location}" th:value="${bindlocation.id}" /><br>
+											                 </th:block>	
+											               <div class="error" th:if="${#fields.hasErrors('office')}" th:errors="*{office}">Location Error</div>	
+													       </div>
+											       </div>
+                                            
+                                        
+                                          
+                                                   <div class="form-group m-b-0">
+                                                	  <div class="col-sm-offset-2 col-sm-9">
+                                                         <button type="submit" class="btn btn-info waves-effect waves-light">Submit</button>
+                                                      </div>
+                                                   </div>
+                                                                       
+                                        </form>
+		 										
+												</div>
+											
+											
+											
+																			
+											
+											
+											</div>
+										</div>
+										
+                                                
+									</div>	  
+							
+							
+                     
+
+            <!-- ============================================================== -->     
+            <!-- End Right content here -->
+          </div> <!-- End Row -->
+
+                    </div> <!-- container -->
+                  
+
+            </div>
+          <div th:replace="adminfragment/footer.html :: footer"></div>
+           </div> <!-- container -->
+                               
+                </div> <!-- content -->
+
+			
+      
+        
+
+<!-- footer lib start here-->
+
+<div th:replace="adminfragment/footerlibs.html :: footerlibs"></div>
+<!-- end footer lib -->
+  
+ <script type="text/javascript">
+ function getroleid() {
+	    document.getElementById('roleid2').value = document.getElementById('roleid1').value;
+	}
+ </script> 
+ 
+ <script type="text/javascript">
+ function getuserid() {
+	    document.getElementById('userid2').value = document.getElementById('userid1').value;
+	}
+ </script>    
+ 
+ 
+ <script type="text/javascript">
+ function getroleid2() {
+	    document.getElementById('roleid3').value = document.getElementById('roleid1').value;
+	}
+ </script> 
+ 
+ <script type="text/javascript">
+ function getuserid2() {
+	    document.getElementById('userid3').value = document.getElementById('userid1').value;
+	}
+ </script>
+ <script type="text/javascript">
+   function GetUser()
+  {
+       var role= document.getElementById("roleid1");
+       var user=document.getElementById("userid1");
+       var user1=$("#userid1");
+       if(role.value != null)	
+       	$.ajax({
+               type: "POST",
+               url: "/ppvfra/getuser",
+               data: 'roleid1='+role.value,
+               dataType:"json",
+               success: function (response) {
+               	
+              user1.empty().append('<option selected="selected" value="">Please select</option>');
+                for(var k=0;k<response.length;k++)
+     	  {
+     	  var opt = response[k];
+     	   var el = document.createElement("option");
+     	   el.textContent = opt[1];
+     	   el.value = opt[0];
+     	  user.appendChild(el);
+     	}
+               },
+               failure: function (response) {
+                   alert(response.responseText);
+               },
+               error: function (response) {
+                   alert(response.responseText);
+               }
+      });
+   	
+   }
+ </script>
+ <script type="text/javascript">
+   function fetchcropval() 
+   {    	  
+     var data= document.getElementById("userid1").value;
+     var data2 = document.getElementsByName("crops");
+     for (var unchk=0; unchk< data2.length; unchk++)
+    {
+    	 data2[unchk].checked=false;
+    }
+       if(data != null)		 
+       $.ajax(
+    {
+    	 type: "POST",
+    	 url: "/ppvfra/fetchcropval",
+    	 data: 'userid1='+data,
+    	 success: function (response){
+    	   if(response.length != null)
+    	     {  
+    	        for (var i=0;i<response.length;i++)
+    	          {
+    	             var str = response[i].toString();
+    	               for (var k=0; k<data2.length; k++)	 
+ 	                	   {
+    	                       var val = data2[k].value;
+    	                       if (str == val)
+    	                    	{
+    	                    	   data2[k].checked = true;
+    	                    	}
+    	                   }
+    	           }
+    	      } 
+    	                	
+    	}
+    });
+    }
+</script> 
+ 
+ <script type="text/javascript">
+   function fetchofficeval() 
+   {    	  
+     var data= document.getElementById("userid1").value;
+     var data2 = document.getElementsByName("office");
+     for (var unchk=0; unchk< data2.length; unchk++)
+    {
+    	 data2[unchk].checked=false;
+    }
+       if(data != null)		 
+       $.ajax(
+    {
+    	 type: "POST",
+    	 url: "/ppvfra/fetchofficeval",
+    	 data: 'userid1='+data,
+    	 success: function (response){
+    	   if(response.length != null)
+    	     {  
+    	        for (var i=0;i<response.length;i++)
+    	          {
+    	             var str = response[i].toString();
+    	               for (var k=0; k<data2.length; k++)	 
+ 	                	   {
+    	                       var val = data2[k].value;
+    	                       if (str == val)
+    	                    	{
+    	                    	   data2[k].checked = true;
+    	                    	}
+    	                   }
+    	           }
+    	      } 
+    	                	
+    	}
+    });
+    }
+</script> 
+ 
+ 
+</body>
+</html>

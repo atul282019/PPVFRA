@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<div th:fragment="application_scrutiny">
+<span th:if="${ApplicationScrutiny != null && ApplicationScrutiny == 'ApplicationScrutiny' }"> 
+
+<form class="form-horizontal" role="form" th:action="@{/applicationscrutiny}" th:object="${applicationscrutiny}" method="post" >   
+		<div class="panel panel-success">
+		<div class="panel-heading">Application Scrutiny</div>
+		<div class="panel-body">
+				
+	<div class="form-group">
+    <label class="col-md-2 control-label" > </label>
+    <div class="col-md-10">
+	<input type="text" id="applicationid" th:name="applicationid"  th:value="${applicationid}" readonly="readonly" hidden="true" />
+    </div>
+    </div>
+															
+															
+	<div class="form-group">
+	<label class="col-md-2 control-label">Category <span style="color:red">*</span></label>
+	<div class="col-md-6">
+	<select id="objcategory"  name="category" th:field="*{category}"   class="form-control">
+	 <option th:value="-1">Select Category Type</option>
+	 <option th:each="dropDownItem : ${category_data}"
+	 th:value="${dropDownItem.section_name}"
+	 th:text="${dropDownItem.section_name}" />
+	 </select>
+	 <span id="objcategoryerror" style="color:red"></span>
+	</div>
+	
+	
+			
+	</div>
+	<div class="form-group">
+	<label class="col-md-2 control-label">Observation <span style="color:red">*</span></label>
+	<div class="col-md-6">
+		<input id="objid" type="text" th:field="*{observation}" class="form-control" >
+		<span id="objiderror" style="color:red"></span>
+	</div>
+	<div class="col-md-2">
+	<span th:if="${role_granted != 'Super Administrator' && role_granted != 'PPVFRA Admin'}">
+	<span th:if="${sub2 == 'addpresent'}">
+	<span th:if = "${data_scr ==null}">
+		<button type="submit" id="btnsubmit1" name="btnsubmit1" onclick="return validateApplicationScrutinyObservation();" value="btnsubmit1"class="btn btn-danger pull-right" style="display: block;  border-radius:5px;height: 32px; padding: 5px; position:relative; right:14px; border-left: none;">Add</button>
+	</span>
+	</span>
+	</span>
+	</div>
+	</div>
+	<div class="table-responsive">
+	<table class="table table-striped  table-bordered table-hover">
+		<!--Table head-->
+		<thead>
+			<tr>
+				<th>Sr. no.</th>
+				<th>Category</th>
+				<th>Observation</th>
+				<span  th:if = "${data_scr ==null}">
+				<th>Action</th>
+				</span>
+			</tr>
+		</thead>
+		<!--Table head-->
+
+		<!--Table body-->
+		<tbody>
+			<tr class="table-info" th:each="list,serial : ${applicationscrutinydata}">
+				
+				<td th:text="${serial.count}"></td>
+				<td th:text="${list.category}"></td>
+				<td th:text="${list.observation}"></td>
+				<!-- <td><button  class="btn btn-purple waves-effect waves-light">Delete</button></td> -->
+				<span th:if = "${data_scr ==null}">
+				<td>
+				<input type="text"  hidden="true" name="applicationid" th:value="${list.applicationid}"/>
+				<a th:href="@{'/editapplicationscrutiny/'+${list.id}}">Edit
+				</a>&nbsp;&nbsp;<a onclick="javascript:if (confirm('Are you sure, you want to remove this application scrutiny?')) return true; else return false;" th:href="@{'/deleteapplicationscrutiny/'+${list.id}+'/'+${list.applicationid}}">Delete</a>
+				</td>
+				</span>
+				
+			</tr>
+			
+		</tbody>
+	<!--Table body-->
+	</table>
+	<!--Table-->
+	
+	</div>
+	<div class="form-group">
+		<label class="col-md-2 control-label">Last Date of Deficiency Submission <span style="color:red">*</span> </label>
+		<div class="col-md-6">
+		<span th:if = "${data_scr !=null}"><input class="form-control" type="date" id="dateof_submission" name="dateof_submission" th:value="${data_scr[0]}" /></span>
+		<span th:unless = "${data_scr !=null}"><input type="date" th:field="*{dateof_submission}" class="form-control" value=""></span>
+		<span id="dateof_submissionerror" style="color:red"></span>
+		</div>
+	</div>
+	
+	<div class="form-group">
+		<label class="col-md-2 control-label">Remarks <span style="color:red">*</span></label>
+		<div class="col-md-6">
+		<span th:if = "${data_scr !=null}">
+		<textarea class="form-control" type="text" name="remarks_doc_scrutiny" id="remarks_doc_scrutiny"  th:text="${data_scr[1]}" pattern="[A-Za-z]+" ></textarea>
+		<!-- <input class="form-control" type="text" name="remarks_doc_scrutiny" id="remarks_doc_scrutiny"  th:value="${data_scr[1]}" /> -->
+		</span>
+		<span th:unless = "${data_scr !=null}">
+		<textarea class="form-control" th:field="*{remarks_doc_scrutiny}" pattern="[A-Za-z]+" ></textarea>
+		<!-- <input class="form-control" type="text" th:field="*{remarks_doc_scrutiny}"> -->
+		</span>
+		<span id="remarks_doc_scrutinyerror" style="color:red"></span>
+		</div>
+	</div>
+	
+	<div class="form-group">
+		<div class="col-md-12 text-center">
+		<span th:if="${role_granted != 'Super Administrator' && role_granted != 'PPVFRA Admin'}">
+		<span th:if="${sub2 == 'addpresent'}">
+		<span  th:if = "${data_scr ==null}">
+			<button type="submit" id="btnsubmit2" name="btnsubmit2" onclick="return validateApplicationScrutinyObservationButton2();" value="btnsubmit2" class="btn btn-info waves-effect waves-light">Submit</button>
+		</span>	
+		</span>
+		</span>
+		</div>
+	</div>
+	</div>
+ 	</div>
+
+	<br>
+	
+	
+	 <script>
+      function validateApplicationScrutinyObservation() {
+           if( document.getElementById("objcategory").value =="-1") {
+          	 document.getElementById("objcategoryerror").innerHTML="Please select category";
+          	 document.getElementById("objcategory").focus() ;
+              return false;
+           }
+           else{
+        	   document.getElementById("objcategoryerror").innerHTML="";
+           }
+           if( document.getElementById("objid").value =="" || document.getElementById("objid").value ==null) {
+            	 document.getElementById("objiderror").innerHTML="Please enter observation";
+            	 document.getElementById("objid").focus() ;
+                return false;
+             }
+             else{
+          	   document.getElementById("objiderror").innerHTML="";
+             }
+         return( true );
+      }
+</script>
+
+<script>
+      function validateApplicationScrutinyObservationButton2() {
+           if( document.getElementById("dateof_submission").value =="" || document.getElementById("dateof_submission").value ==null) {
+          	 document.getElementById("dateof_submissionerror").innerHTML="Please enter last date of submission";
+          	 document.getElementById("dateof_submission").focus() ;
+              return false;
+           }
+           else{
+        	   document.getElementById("dateof_submissionerror").innerHTML="";
+           }
+           if( document.getElementById("remarks_doc_scrutiny").value =="" || document.getElementById("remarks_doc_scrutiny").value ==null) {
+            	 document.getElementById("remarks_doc_scrutinyerror").innerHTML="Please enter remarks";
+            	 document.getElementById("remarks_doc_scrutiny").focus() ;
+                return false;
+             }
+             else{
+          	   document.getElementById("remarks_doc_scrutinyerror").innerHTML="";
+             }
+         return( true );
+      }
+</script>
+	    
+	</form>
+	</span>
+	<span th:unless="${ApplicationScrutiny != null && ApplicationScrutiny == 'ApplicationScrutiny' }">
+	 <label>YOU ARE NOT AUTHORISED TO VIEW THIS PAGE.PLEASE CONTACT ADMINISTRATOR</label>
+	 </span>
+
+</div>
+</html>

@@ -1,0 +1,1307 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+	<div th:fragment="question">
+ 									 <form class="form-horizontal" id="tq" name="technical" th:action="@{/saveapplicationquestionnair}" method="post" th:object="${applications}" onsubmit = "return validatequestion()" role="form" enctype="multipart/form-data" > 
+                                                  <div th:if="${editmode == 1}"> 
+													<div th:object="${technicalquestion}">
+                                                    <div class="form-group">
+                                                        <label class="col-md-3 control-label">1. Name of the Applicant/breeder/company</label>
+                                                        <div class="col-md-9">
+                                                            <textarea class="form-control" name="companyname" th:text="${detailofcomapnytype[3]}"></textarea>
+                                                        </div>
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label class="col-md-3 control-label">2. Year of Establishment</label>
+                                                        <div class="col-md-9">
+                                                            <input type="text" class="form-control" name="establishment" th:value="${detailofcomapnytype[5]}"value="">
+                                                        </div>
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label class="col-md-3 control-label">3. If registered company under Company’s Act 1956 (Give details)</label>
+                                                        <div class="col-md-9">
+                                                            <textarea class="form-control" th:field="*{registered_address}" id="registeredact"></textarea>
+                                                        </div>
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label class="col-md-3 control-label">4. Location of corporate office and address</label>
+                                                        <div class="col-md-6">
+                                                            <textarea class="form-control" name="companylocation" th:text="${detailofcomapnytype[6]}"></textarea>
+                                                        </div>
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label class="col-md-3 control-label">5.1 Telephone</label>
+                                                         <div class="col-md-1">
+                                                            <input type="text" class="form-control"  th:field="*{telephone_std}" maxlength="4" >
+                                                            <span id="telephone_stdcode_error" style="color:red"></span>
+                                                        </div>
+                                                        <div class="col-md-8">
+                                                            <input type="text" class="form-control" name="telephone" th:value="${detailofcomapnytype[8]}" maxlength="8"  />
+                                                        </div>
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label class="col-md-3 control-label">5.2 Fax<span style="color:red"></span></label>
+                                                         <div class="col-md-1">
+                                                            <input type="text" class="form-control" th:field="*{fax_std}" maxlength="3" >
+                                                            <span id="telephone_stdcode_error" style="color:red"></span>
+                                                        </div>
+                                                        <div class="col-md-8">
+                                                            <input type="text" class="form-control" id="fax" th:field="*{fax}" maxlength="8">
+                                                        </div>
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label class="col-md-3 control-label">5.3 Email<span style="color:red">*</span></label>
+                                                        <div class="col-md-9">
+                                                           
+                                                           <!--  <input type="text"  required pattern="/^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/" id="emailid" class="form-control" th:field="*{email}" name="email" th:value="${detailofcomapnytype[7]}" /> -->
+                                                            <input type="text" id="emailid" onchange="emailchk();" class="form-control" th:field="*{email}" name="email" th:value="${detailofcomapnytype[7]}" />
+                                                            
+                                                       		<span id="emailiderror" style="color:red"></span>
+                                                        </div>
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label class="col-md-3 control-label">6. Name of candidate variety<span style="color:red"></span></label>
+                                                        <div class="col-md-9">
+                                                            <input type="text" class="form-control" th:field="*{candidatevariety}">
+                                                        </div>
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label class="col-md-3 control-label">(a). Has it been released in any Convention Country earlier<span style="color:red">*</span></label>                                               
+                                                        <div th:object="${applications}">
+															   Yes <input type="radio" th:field="*{is_convention_applicable}" value="true" class="radio-btn-position"> &nbsp; &nbsp; 
+															   No  <input type="radio" th:field="*{is_convention_applicable}" value="false" class="radio-btn-position">                                                        <br>
+															   <span id="radioerrors" style="color:red"></span>
+														</div><sub>If yes give complete details in column number 13</sub>          
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label class="col-md-3 control-label">(b). Pedigree/genealogy<span style="color:red">*</span></label>
+                                                        <div class="col-md-9">
+                                                            <textarea class="form-control" id="pedigree" name="pedigree" th:text="*{pedigree}"></textarea>
+                                                            <span id="pedigreeerror" style="color:red"></span>
+                                                            <sub>(Include schematic diagram giving details of varieties, lines, or clones used in the breeding of candidate variety)</sub> 
+															<input type="file" id="pedigreefile"  name="pedigreefile"  th:onchange="'javascript:uploadfile_pedigre(),validatePDF(this)'">
+															<a th:href="'/ppvfra/download/formvnotification/'+*{pedigree_imagename}" target="_blank">
+															<span id="file_pedigree_tq" th:text="*{pedigree_imagename}"></span></a>
+                                                        	 <span id="pedigreefileerror" style="color:red"></span>
+                                                        	 <input type="hidden" id="file_pedigree" name="file_pedigree" th:value="*{pedigree_imagename}">
+                                                        </div>
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label class="col-md-12">(c). Breeding of Candidate Variety<span style="color:red">*</span></label>
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label class="col-md-3 control-label">(i) Origination<span style="color:red">*</span> </label>
+                                                        <div class="col-md-9">
+                                                            <input type="radio" th:field="*{origination}" value="1"> Controlled pollination 
+                                                            <input type="radio" th:field="*{origination}" value="2"> open pollination    
+                                                            <input type="radio" th:field="*{origination}" value="3"> induced mutation
+                                                            <input type="radio" th:field="*{origination}" value="4"> spontaneous mutation
+                                                            <input type="radio" th:field="*{origination}" value="5"> introduction
+                                                            <input type="radio" th:field="*{origination}" value="6"> selection
+                                                            <input type="radio" th:field="*{origination}" value="7"> seedling selection
+                                                            <input type="radio" th:field="*{origination}" value="8"> any other (specify)
+                                                            <span id="typeeerror" style="color:red"></span>
+                                                        </div>
+                                                     </div>
+                                                    <div class="form-group">
+                                                        <label class="col-md-12">(ii) Parental material (name of the parental material, characteristics of the parental material,distinguishable from the candidate variety). If the variety was developed by selection, then the number of selection cycles completed before fixing it.<span style="color:red">*</span></label>
+                                                    </div>
+												
+                                                    <div class="form-group">
+                                                        <label class="col-md-3 control-label"></label>
+                                                        <div class="col-md-6">
+                                                            <textarea class="form-control" id="parentalmaretial" name="parentalmaretial" th:text="*{parental_material}"></textarea>
+                                                       		<span id="parentalmaretialerror" style="color:red"></span>
+                                                        </div>
+														<div class="col-md-3" >
+													    <div th:with="serialNumber=1">
+													    <a th:href="@{'/tocform/'+${applications.id}+'/'+${serialNumber}}" class="btn btn-primary-1 waves-effect waves-light">Table of Characteristics</a>
+                                                        </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label class="col-md-3 control-label">(I). Breeding technique/procedure used<span style="color:red">*</span></label>
+                                                        <div class="col-md-9">
+                                                            <textarea class="form-control" id="breedingtechnique" name="technique" th:text="*{technique}"></textarea>
+                                                            <span id="breedingtechniqueerror" style="color:red"></span>
+                                                        </div>
+														
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label class="col-md-3 control-label">(II). Selection criteria used<span style="color:red">*</span></label>
+                                                        <div class="col-md-9">
+                                                            <textarea class="form-control" id="selectioncriteria" name="selectioncriteria" th:text="*{selectioncriteria}"></textarea>
+                                                            <span id="selectioncriteriaerror" style="color:red"></span>
+                                                        </div>
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label class="col-md-3 control-label">(III). Stage of selection and multiplication<span style="color:red">*</span></label>
+                                                        <div class="col-md-9">
+                                                            <textarea class="form-control" id="selectionstage" name="selectionstage" th:text="*{selectionstage}"></textarea>
+                                                            <span id="selectionstageerror" style="color:red"></span>
+                                                        </div>
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label class="col-md-3 control-label">(IV). Location where breeding was conducted<span style="color:red">*</span></label>
+                                                        <div class="col-md-9">
+                                                            <textarea class="form-control" id="breedinglocation" name="breedinglocation" th:text="*{breeding_location}"></textarea>
+                                                            <span id="breedinglocationerror" style="color:red"></span>
+                                                        </div>
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label class="col-md-8">7. Particulars of comparative trial conducted by the applicant, if any.<span style="color:red">*</span></label>
+														<div class="col-md-4">
+															<input type="file" id="trialfile" name="trialfile"  th:onchange="'javascript:uploadfile_trial(),validatePDF(this)'">
+															<a th:href="'/ppvfra/download/formvnotification/'+*{comparative_trial_filename}" target="_blank">
+															<span id="file_trial_tq" th:text="*{comparative_trial_filename}"></span></a>
+															<span id="trialfileerror" style="color:red"></span>
+															<input type="hidden" id="file_trial" name="file_trial" th:value="*{comparative_trial_filename}">
+														</div>
+													</div>
+													<div class="form-group">
+                                                        <label class="col-md-12">Information on the location, place, period and year/month of comparative trial conducted method of cultivation such as open field, facilities, planting, potting etc., scale of cultivation, reference varieties used, criteria for choice of the reference varieties, design of experiment, method of analysis of variance experimental error where applicable, and other details.</label>
+                                                        <label class="col-md-12">NOTE: Applicant may, furnish data, tables, copy (ies) of publication(s) related to the details of breeding, comparative trial and comparative data in addition to table of characteristics of candidate and reference varieties. This information provided under this item will not be published by the Authority but will be used to facilitate examination of candidate variety.</label>
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label class="col-md-3 control-label">i. Location<span style="color:red">*</span></label>
+                                                        <div class="col-md-6">
+                                                            <input type="text" class="form-control" id="cllocation" th:field="*{comparative_location}">
+                                                            <span id="cllocationerror" style="color:red"></span>
+                                                        </div>
+                                                    </div>
+													<div class="form-group">
+                                                        <label class="col-md-3 control-label">ii. Place<span style="color:red">*</span></label>
+                                                        <div class="col-md-6">
+                                                            <input type="text" class="form-control" id="cpplace" th:field="*{comparative_place}">
+                                                            <span id="cpplaceerror" style="color:red"></span>
+                                                        </div>
+                                                    </div>
+													<div class="form-group">
+                                                        <label class="col-md-3 control-label">iii. Period<span style="color:red">*</span></label>
+                                                        <div class="col-md-6">
+                                                           <input type="text" class="form-control" id="cpperiod" th:field="*{comparative_period}">
+                                                           <span id="cpperioderror" style="color:red"></span>
+                                                        </div>
+                                                    </div>
+													
+													<div class="form-group">
+                                                        <label class="col-md-3 control-label">iv. Year and month of comparative trial<span style="color:red">*</span></label>
+                                                        <div class="col-md-3">
+                                                           <select class="form-control" id="cmmonth" th:field="*{comparative_month}" >
+															<option value="select">Select Month</option>
+															<option value="January">January</option>
+															<option value="February">February</option>
+															<option value="March">March</option>
+															<option value="April">April</option>
+															<option value="May">May</option>
+															<option value="June">June</option>
+															<option value="July">July</option>
+															<option value="August">August</option>
+															<option value="September">September</option>
+															<option value="October">October</option>
+															<option value="November">November</option>
+															<option value="December">December</option>
+														   </select>
+														   <span id="cmmontherror" style="color:red"></span>
+                                                        </div>
+														<div class="col-md-3">
+                                                           <select class="form-control" id="cyyear" th:field="*{comparative_year}">
+															<option value="select">Select Year</option>
+															<option value="2011">2011</option>
+															<option value="2012">2012</option>
+															<option value="2013">2013</option>
+															<option value="2014">2014</option>
+															<option value="2015">2015</option>
+															<option value="2016">2016</option>
+															<option value="2017">2017</option>
+															<option value="2018">2018</option>
+															<option value="2019">2019</option>
+															<option value="2020">2020</option>
+															<option value="2021">2021</option>
+															<option value="2022">2022</option>
+															<option value="2023">2023</option>
+															<option value="2024">2024</option>
+															<option value="2025">2025</option>
+															<option value="2026">2026</option>
+															<option value="2027">2027</option>
+															<option value="2028">2028</option>
+															<option value="2029">2029</option>
+															<option value="2030">2030</option>
+														   </select>
+														   <span id="cyyearerror" style="color:red"></span>
+                                                        </div>
+                                                    </div>
+													<div class="form-group">
+                                                        <label class="col-md-3 control-label">v. Conducted method of cultivation<span style="color:red">*</span> </label>
+                                                        <div class="col-md-6">
+                                                           <select class="form-control" id="cccultivation" th:field="*{comparative_cultivation}">
+															<option value="select">Select</option>
+															<option value="Open Field">Open Field</option>
+															<option value="Facilities">Facilities</option>
+															<option value="Planting">Planting</option>
+															<option value="Potting">Potting</option>
+															<option value="others">others</option>
+														   </select>
+														   <span id="cccultivationerror" style="color:red"></span>
+                                                        </div>
+                                                    </div>
+													<div class="form-group">
+                                                        <label class="col-md-3 control-label">vi. Scale of Cultivation<span style="color:red">*</span></label>
+                                                        <div class="col-md-6">
+                                                            <input type="text" class="form-control" id="csscale" th:field="*{comparative_scale}">
+                                                            <span id="csscaleerror" style="color:red"></span>
+                                                        </div>
+                                                    </div>
+													<div class="form-group">
+                                                        <label class="col-md-3 control-label">vii. Reference Varieties Used<span style="color:red">*</span> </label>
+                                       
+                                                         <div class="col-sm-5">
+                                                         
+                                                        <TABLE id="dataTable" class="table">
+                                                        <spam th:if="${tqreference !=1}">
+													    <tr th:each="reference, serial : ${tqreference}">
+                                                        <td> <input type="hidden" id="tqreferenceid" name="tqreferenceid" th:value="${reference[0]}" /> </td>
+                                                         <td>
+                                                            <input type="text" class="form-control" id="crreference" name="comparative_reference" th:value="${reference[3]}">
+															<span id="crreferenceerror" style="color:red"></span>
+                                                        </td>  
+                                                        </tr></spam>
+                                                        <tr th:if="${tqreference ==1}">
+                                                        <td><input type="hidden" id="tqreferenceid" name="tqreferenceid" th:value="0" /> </td>
+                                                         <td>
+                                                            <input type="text" class="form-control" id="crreference" th:field="*{comparative_reference}">
+															<span id="crreferenceerror" style="color:red"></span>
+                                                        </td>  
+                                                        </tr>
+											</TABLE>
+											</div>
+											<div class="col-md-2 add_del_bt" th:if="${appstatus ==1}">
+                                           <span>
+										   <INPUT type="button" class="btn btn-danger pull-right" style="display: block;  border-radius:5px;height: 32px; width: 50px; padding: 5px; position:relative; right:14px; border-left: none;" value="Delete " onclick="deleteRow('dataTable')" /></span>
+                                          
+										  <span>
+										  <INPUT type="button" class="btn btn-danger pull-right" style="display: block;  border-radius:5px;height: 32px; width: 50px; padding: 5px; position:relative; right:20px; border-left: none;" value="Add " onclick="addRow('dataTable')" />
+											</span>
+                                           
+                                             </div>                            
+                                                        
+                                                    </div>
+													<div class="form-group">
+                                                        <label class="col-md-3 control-label">viii.	Criteria for Choice of the reference varieties<span style="color:red">*</span></label>
+                                                        <div class="col-md-6">
+                                                           <select class="form-control" id="cccriteria" th:field="*{comparative_criteria}">
+															<option value="-1">Select</option>
+															<option value="Option">Option</option>
+														   </select>
+														   <span id="cccriteriaerror" style="color:red"></span>
+                                                        </div>
+                                                    </div>
+													<div class="form-group">
+                                                        <label class="col-md-3 control-label">ix. Design of experiment<span style="color:red">*</span></label>
+                                                        <div class="col-md-6">
+                                                            <input type="text" class="form-control" id="cddesign" th:field="*{comparative_design}">
+                                                            <span id="cddesignerror" style="color:red"></span>
+                                                        </div>
+                                                    </div>
+													<div class="form-group">
+                                                        <label class="col-md-3 control-label">x. Method of Analysis of variance experimental error<span style="color:red">*</span></label>
+                                                        <div class="col-md-6">
+                                                            <input type="text" class="form-control" id="caanalysis" th:field="*{comparative_analysis}">
+                                                            <span id="caanalysiserror" style="color:red"></span>
+                                                        </div>
+                                                    </div>
+													<div class="form-group">
+                                                        <label class="col-md-3 control-label">xi. Other Details<span style="color:red">*</span></label>
+                                                        <div class="col-md-6">
+                                                            <input type="text" class="form-control" id="coother" th:field="*{comparative_other}">
+                                                            <span id="coothererror" style="color:red"></span>
+                                                        </div>
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label class="col-md-12">8. Characteristics of the candidate variety</label>
+                                                        <label class="col-md-12">Please describe characteristics of the variety in the subheadings: Plant, Stem, Leaf, Inflorescence, Flower and flower parts, Fruit and fruit parts, Seed etc. Describe characters within subheadings generally in the following order: habit, height, length, width, size, shape, colour (RHS colour chart reference with edition). Refer the specific guideline wherever necessary for clarity of description.</label>
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label class="col-md-3 control-label">(a) (i) Give group characters.<span style="color:red">*</span></label>
+                                                        <div class="col-md-6">
+                                                            <textarea class="form-control" name="chargroup" id="cggroup" th:text="*{characteristics_group}"></textarea>
+                                                            <span id="cggrouperror" style="color:red"></span>
+														</div>
+														<div class="col-md-3" >
+													    <div th:with="serialNumber=2">
+													    <a th:href="@{'/tocform/'+${applications.id}+'/'+${serialNumber}}" class="btn btn-primary-1 waves-effect waves-light">Table of Characteristics</a>
+                                                        </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label class="col-md-3 control-label">(ii) Distinguishing characteristics (descriptive or elaborate)<span style="color:red">*</span></label>
+                                                        <div class="col-md-6">
+                                                            <textarea class="form-control" name="characteristicsdist" id="cddisting" th:text="*{characteristics_distinguishing}"></textarea>
+                                                             <span id="cddistingerror" style="color:red"></span>
+                                                        </div>
+														<div class="col-md-3" >
+													    <div th:with="serialNumber=3">
+													    <a th:href="@{'/tocform/'+${applications.id}+'/'+${serialNumber}}" class="btn btn-primary-1 waves-effect waves-light">Table of Characteristics</a>
+                                                        </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label class="col-md-12">(b) Table of characteristics between candidate denomination and reference variety<span style="color:red">*</span></label>
+                                                        <label class="col-md-12">Please give replicated values for all of its distinguishing and other description for important characteristics along with the corresponding average values of the references varieties. <br> NOTE: Two or more reference varieties should be compared with the candidate variety in the characteristics table, including one deemed to be the most similar variety and other(s) as obvious/similar as possible. If you provide this information it will facilitate the Authority in their DUS test further in examination of the candidate variety.</label>
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label class="col-md-3 control-label"></label>
+                                                        <div class="col-md-6">
+                                                            <textarea class="form-control" name="cd" id="cddenominia" th:text="*{characteristics_denomination}"></textarea>
+                                                             <span id="cddenominiaerror" style="color:red"></span>
+                                                        </div>
+														<div class="col-md-3" >
+													    <div th:with="serialNumber=4">
+													    <a th:href="@{'/tocform/'+${applications.id}+'/'+${serialNumber}}" class="btn btn-primary-1 waves-effect waves-light">Table of Characteristics</a>
+                                                        </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label class="col-md-12">9. Characteristics of the reference varieties</label>
+                                                        <label class="col-md-12">(a) Most similar variety<span style="color:red">*</span></label>
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label class="col-md-3 control-label">(i) Denomination<span style="color:red">*</span></label>
+                                                        <div class="col-md-8">
+                                                            <textarea class="form-control" id="cvddeno" th:field="*{characteristics_variety_denomination}"></textarea>
+                                                            <span id="cvddenoerror" style="color:red"></span>
+                                                        </div>
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label class="col-md-3 control-label">(ii) Basis of choice of this variety for comparison<span style="color:red">*</span></label>
+                                                        <div class="col-md-9">
+                                                            <textarea class="form-control" id="cvcchoice" th:field="*{characteristics_variety_choice}" ></textarea>
+                                                            <span id="cvcchoiceerror" style="color:red"></span>
+                                                        </div>
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label class="col-md-3 control-label">(iii) Distinguishable Characteristics<span style="color:red">*</span></label>
+                                                        <div class="col-md-6">
+                                                            <textarea class="form-control" id="cbdguisable" th:field="*{characteristics_variety_distinguishable}"></textarea>
+                                                            <span id="cbdguisableerror" style="color:red"></span>
+                                                        </div>
+														<div class="col-md-3" >
+													    <div th:with="serialNumber=5">
+													    <a th:href="@{'/tocform/'+${applications.id}+'/'+${serialNumber}}" class="btn btn-primary-1 waves-effect waves-light">Table of Characteristics</a>
+                                                        </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label class="col-md-12">(b) Other reference variety</label>
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label class="col-md-3 control-label">(i) Denomination<span style="color:red">*</span></label>
+                                                        <div class="col-md-9">
+                                                            <textarea class="form-control" id="cbrddenomination" th:field="*{characteristics_variety_referencedenomination}"></textarea>
+                                                            <span id="cbrddenominationerror" style="color:red"></span>
+                                                        </div>
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label class="col-md-3 control-label">(ii) Basis of choice of this variety for comparison<span style="color:red">*</span></label>
+                                                        <div class="col-md-9">
+                                                            <textarea class="form-control" id="cvccc"  th:field="*{characteristics_variety_choice}"></textarea>
+                                                            <span id="cvcccerror" style="color:red"></span>
+                                                        </div>
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label class="col-md-3 control-label">(iii) Distinguishable Characteristics<span style="color:red">*</span></label>
+                                                        <div class="col-md-6">
+                                                            <textarea class="form-control" id="distchar" th:field="*{characteristics_basic_distinguishable}"></textarea>
+                                                            <span id="distcharerror" style="color:red"></span>
+                                                        </div>
+														<div class="col-md-3" >
+													    <div th:with="serialNumber=6">
+													    <a th:href="@{'/tocform/'+${applications.id}+'/'+${serialNumber}}" class="btn btn-primary-1 waves-effect waves-light">Table of Characteristics</a>
+                                                        </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label class="col-md-12">10. Statement of distinctiveness of candidate variety</label>
+                                                        <label class="col-md-12">Please give a distinctiveness statement covering a brief summary of the characteristics that distinguish the candidate variety from all varieties of common knowledge. The Distinctiveness statement should include, (i) names of reference variety (ies) that have been observed most similar to the candidate variety, and (ii) salient comparison for major distinguishing characteristics between the candidate variety and the similar/reference variety (ies).<span style="color:red">*</span></label>
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label class="col-md-3 control-label"></label>
+                                                        <div class="col-md-6">
+                                                            <textarea class="form-control" id="distsstatement" name="diststatement" th:text="*{statement_distinctiveness}"></textarea>
+                                                            <span id="distsstatementerror" style="color:red"></span>
+                                                        </div>
+														<div class="col-md-3" >
+													    <div th:with="serialNumber=7">
+													    <a th:href="@{'/tocform/'+${applications.id}+'/'+${serialNumber}}" class="btn btn-primary-1 waves-effect waves-light">Table of Characteristics</a>
+                                                        </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label class="col-md-12">11. Statement on uniformity and stability of candidate variety</label>
+                                                        <label class="col-md-12">Please give a brief statement describing any variation in the variety that may be regarded as part of its  normal uniform or stable expression, which is predictable, capable of being described in clear terms and commercially acceptable. This should include description and frequency of any off-types, variants or mutations. In your opinion what should be the frequency of off types or any other describable variation beyond which the candidate variety shall be deem to be non-uniform. Also please point out which are the traits that may be particularly referred to as indicators to determine an unstable expression of the phenotype of candidate variety.</label>
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label class="col-md-3 control-label">(i) Uniformity <span style="color:red">*</span></label>
+                                                        <div class="col-md-6">
+                                                            <textarea class="form-control" id="uuniformity" name="uniformitystatement" th:text="*{statement_uniformity}"></textarea>
+                                                            <span id="uuniformityerror" style="color:red"></span>
+                                                        </div>
+                                                    </div>
+													<div class="form-group">
+                                                        <label class="col-md-3 control-label">(ii)Stability <span style="color:red">*</span></label>
+                                                        <div class="col-md-6">
+                                                            <textarea class="form-control" id="ssstability" name="statmentstability" th:text="*{statement_stability}"></textarea>
+                                                            <span id="ssstabilityerror" style="color:red"></span>
+                                                        </div>
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label class="col-md-12">12. Methods for maintaining the candidate variety<span style="color:red">*</span></label>
+                                                        <label class="col-md-12">Please provide in a brief statement as to how the propagating material will be maintained throughout the duration of the plant breeder’s right, and complete address where the variety will be maintained. This should include status of varieties that are not propagated by seeds including place and method of maintenance and storage of their vegetative material.<br>NOTE: The holder of a plant breeder’s right is responsible for ensuring that propagating material representative of the variety is maintained for the duration of the right.</label>
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label class="col-md-3 control-label"></label>
+                                                        <div class="col-md-9">
+                                                            <textarea class="form-control" id="sssmethod" name="statementmethod" th:text="*{methods_candidate}"></textarea>
+                                                            <span id="sssmethoderror" style="color:red"></span>
+                                                        </div>
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label class="col-md-12">13. Information on variety registered in Convention Countries.</label>
+                                                        <label class="col-md-12">a. What were the grouping characters in that application for this candidate variety?<span style="color:red">*</span></label>
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label class="col-md-3 control-label"></label>
+                                                        <div class="col-md-9">
+                                                            <textarea class="form-control" id="cccinformation" name="conventioninformation" th:text="*{grouping_characters}"></textarea>
+                                                            <span id="cccinformationerror" style="color:red"></span>
+                                                        </div>
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label class="col-md-12">b. What was the Distinctiveness Uniformity and Stability parameter on which it was registered?<span style="color:red">*</span></label>
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label class="col-md-3 control-label"></label>
+                                                        <div class="col-md-9">
+                                                            <textarea class="form-control" id="uniparameter" name="uniformityparameter" th:text="*{stability_parameter}"></textarea>
+                                                            <span id="uniparametererror" style="color:red"></span>
+                                                        </div>
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label class="col-md-12">c. What is the variation in important trait with respect to first filing and the present one (Attach photograph)?<span style="color:red">*</span></label>
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label class="col-md-3 control-label"></label>
+                                                        <div class="col-md-9">
+                                                            <input type="file" class="form-control" id="cittrait" name="variation_important_trait" th:onchange="'javascript:uploadfile_cittrait(),validatePDF(this)'">
+                                                           <a th:href="'/ppvfra/download/formvnotification/'+*{variation_important_trait_filename}" target="_blank">
+                                                           <span id="file_variation_tq"  th:text="*{variation_important_trait_filename}"></span></a>
+                                                            <span id="file4error" style="color:red"></span>
+                                                            <input type="hidden" id="file_variation" name="file_variation"  th:value="*{variation_important_trait_filename}">
+                                                        </div>
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label class="col-md-12">d. Has the Variety been withdrawn in the first filed country from cultivation or banned or from any of the subsequently released country?<span style="color:red">*</span></label>
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label class="col-md-3 control-label"></label>
+                                                        <div class="col-md-9">
+                                                            <input type="radio" th:field="*{variety_withdrawn}" value="true"> Yes 
+                                                            <input type="radio" th:field="*{variety_withdrawn}" value="false"> No
+                                                            <span id="cwnerror" style="color:red"></span>
+                                                        </div>
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label class="col-md-3 control-label">If so, the reasons (supplement with information)?<span style="color:red">*</span></label>
+                                                        <div class="col-md-9">
+                                                            <input type="file" name="withdrawfile" id="filelast" class="form-control"  th:onchange="'javascript:uploadfile_filelast(),validatePDF(this)'">
+                                                            <a th:href="'/ppvfra/download/formvnotification/'+*{supplement_information_name}" target="_blank">
+                                                            <span id="file_sup_tq" th:text="*{supplement_information_name}"></span></a>
+                                                            <span id="filelasterror" style="color:red"></span>
+                                                            <input type="hidden" id="file_sup" name="file_sup" th:value="*{supplement_information_name}">
+                                                        </div>
+                                                    </div>
+                                                    <div class="form-group m-b-0" th:if="${appstatus ==1}">
+                                                        <div class="col-sm-offset-3 col-sm-9">
+                                                        <input type="hidden" id="tqapplicationid" name="tqapplicationid" th:value="${applications.id}" />
+                                                        <input type="hidden" id="f15_id" name="f15_id" th:value="${f15_id}">
+                                                        
+                                                        <div th:object="${technicalquestion}">
+                                                        <input type="hidden" id="tqid" name="tqid" th:value="${technicalquestion.id}" />
+                                                        </div>
+                                                            <button type="submit" onclick ="return validateFiels13()" class="btn btn-info waves-effect waves-light">Submit</button>
+                                                        </div>
+                                                    </div>
+                                                   </div>
+                                                    </div>
+                                                    
+                                                </form>    
+
+  <script type = "text/javascript">
+      function validatequestion() {  
+          if (document.getElementById("origination1").checked == true) {
+             return true;
+        	  }
+         else if (document.getElementById("origination2").checked == true) {
+        	     return true;
+        	  }
+         else if (document.getElementById("origination3").checked == true) {
+    	     return true;
+    	  }
+         else if (document.getElementById("origination4").checked == true) {
+    	     return true;
+    	  }
+         else if (document.getElementById("origination5").checked == true) {
+    	     return true;
+    	  }
+         else if (document.getElementById("origination6").checked == true) {
+    	     return true;
+    	  }
+         else if (document.getElementById("origination6").checked == true) {
+    	     return true;
+    	  }
+         else if (document.getElementById("origination8").checked == true) {
+    	     return true;
+    	  }
+          else {
+       		     document.getElementById("typeeerror").innerHTML="Please select one option";
+                 
+       	    return false;
+       	  }
+      }
+</script>
+
+<SCRIPT type="text/javascript">	
+function addRow(tableID) {
+
+	var table = document.getElementById(tableID);
+
+	var rowCount = table.rows.length;
+	var row = table.insertRow(rowCount);
+
+	var cell1 = row.insertCell(0);
+	var element1 = document.createElement("input");
+	element1.type = "checkbox";
+	element1.name="chkbox[]";
+	cell1.appendChild(element1);
+	
+	var element3 = document.createElement("input");
+	element3.type = "hidden";
+	element3.name="tqreferenceid";
+	element3.value="0";
+	cell1.appendChild(element3);
+	
+
+	var cell2 = row.insertCell(1);
+	var element2 = document.createElement("input");
+	element2.type = "text";
+	element2.name = "comparative_reference";
+	element2.setAttribute('class',"form-control");
+	cell2.appendChild(element2);
+
+}
+
+function deleteRow(tableID) {
+	try {
+	var table = document.getElementById(tableID);
+	var rowCount = table.rows.length;
+	for(var i=0; i<rowCount; i++) {
+		var row = table.rows[i];
+		var chkbox = row.cells[0].childNodes[0];
+		if(null != chkbox && true == chkbox.checked) {
+			table.deleteRow(i);
+			rowCount--;
+			i--;
+		}
+
+
+	}
+	}catch(e) {
+		alert(e);
+	}
+}
+
+</script>
+ <script type = "text/javascript">
+      function validateFiels13() {
+         if (document.getElementById("is_convention_applicable1").checked == true) 
+         {
+
+      	   if(document.getElementById("pedigree").value == "" )
+       	  {
+            	 document.getElementById("pedigreeerror").innerHTML="Please enter Pedigree/genealogy";
+                document.getElementById("pedigree").focus() ;
+                return false;
+             }
+      	   
+      	  if( document.getElementById("pedigreefile").value == "" || document.getElementById("pedigreefile").value ==null ) 
+   	    {
+       	    var ped_file= $('#file_pedigree_tq').text();
+       	    if(ped_file.length>0 && !(ped_file =="" || ped_file ==null))
+       	    	{
+       	    	document.getElementById("pedigreefileerror").innerHTML="";
+       	        }else{
+       	        document.getElementById("pedigreefile").focus();
+       	        document.getElementById("pedigreefileerror").innerHTML="Please upload file";
+       	        return false;
+       	    	}
+       	    }
+           
+          
+      	if( document.getElementById("trialfile").value == "" || document.getElementById("trialfile").value == null ) 
+ 	    {
+  		  var ftrail =$('#file_trial_tq').text();
+ 	      if(ftrail.length>0 && !(ftrail =="" || ftrail == null))
+ 	    	{
+ 	    	document.getElementById("trialfileerror").innerHTML="";
+ 	        }
+ 	      else{
+     	    document.getElementById("trialfile").focus();
+     	    document.getElementById("trialfileerror").innerHTML="Please upload file";
+     	    return false;
+     	    }
+       }
+      	
+      	 if(document.getElementById("parentalmaretial").value == "" )
+      	  {
+           	 document.getElementById("parentalmaretialerror").innerHTML="Please enter parental material";
+               document.getElementById("parentalmaretial").focus() ;
+               return false;
+            }
+       	  if(document.getElementById("breedingtechnique").value == "" ) 
+       	  {
+             	  document.getElementById("breedingtechniqueerror").innerHTML="Please enter breeding technique/procedure used";
+                 document.getElementById("breedingtechnique").focus();
+                 return false;
+              }
+       	
+       	  if( document.getElementById("selectioncriteria").value == "" )
+       	  {
+              	   document.getElementById("selectioncriteriaerror").innerHTML="Please enter selection criteria used";
+                  document.getElementById("selectioncriteria").focus() ;
+                  return false;
+              }
+       	  if( document.getElementById("selectionstage").value == "" )
+       	  {
+               	 document.getElementById("selectionstageerror").innerHTML="Please enter stage of selection and multiplication";
+                    document.getElementById("selectionstage").focus();
+                    return false;
+                }
+       	  if( document.getElementById("breedinglocation").value == "" ) 
+       	  {
+            	 document.getElementById("breedinglocationerror").innerHTML="Please enter location where breeding was conducted";
+                document.getElementById("breedinglocation").focus();
+                return false;
+             }
+       	  if( document.getElementById("cllocation").value == "" ) 
+       	  {
+            	 document.getElementById("cllocationerror").innerHTML="Please enter location";
+                document.getElementById("cllocation").focus();
+                return false;
+             }
+       	  if( document.getElementById("cpplace").value == "" ) 
+       	  {
+            	 document.getElementById("cpplaceerror").innerHTML="Please enter place";
+                document.getElementById("cpplace").focus();
+                return false;
+             }
+       	  if( document.getElementById("cpperiod").value == "" ) 
+       	  {
+            	 document.getElementById("cpperioderror").innerHTML="Please enter period";
+                document.getElementById("cpperiod").focus();
+                return false;
+             }
+       	  if( document.getElementById("cmmonth").value == "select" ) 
+       	  {
+            	 document.getElementById("cmmontherror").innerHTML="Please select month";
+                document.getElementById("cmmonth").focus();
+                return false;
+             }
+       	  if( document.getElementById("cyyear").value == "select" ) 
+       	  {
+            	 document.getElementById("cyyearerror").innerHTML="Please select year";
+                document.getElementById("cyyear").focus();
+                return false;
+             }
+       	  if( document.getElementById("cccultivation").value == "select" ) 
+       	  {
+            	 document.getElementById("cccultivationerror").innerHTML="Please select conducted method of cultivation";
+                document.getElementById("cccultivation").focus();
+                return false;
+             }
+       	  if( document.getElementById("csscale").value == "" ) 
+       	  {
+            	 document.getElementById("csscaleerror").innerHTML="Please select scale of cultivation";
+                document.getElementById("csscale").focus();
+                return false;
+             }
+       	  if( document.getElementById("crreference").value == "" ) 
+       	  {
+            	 document.getElementById("crreferenceerror").innerHTML="Please enter reference varieties Used";
+                document.getElementById("crreference").focus();
+                return false;
+             }
+       	  if(document.getElementById("cccriteria").value == "-1") 
+       	  {
+       		  //alert("test");
+            	document.getElementById("cccriteriaerror").innerHTML="Please select criteria";
+                document.getElementById("cccriteria").focus();
+                return false;
+             }
+       	  if( document.getElementById("cddesign").value == "" ) 
+       	  {
+            	 document.getElementById("cddesignerror").innerHTML="Please enter design of experiment";
+                document.getElementById("cddesign").focus();
+                return false;
+             }
+       	  if( document.getElementById("caanalysis").value == "" ) 
+       	  {
+            	 document.getElementById("caanalysiserror").innerHTML="Please enter method of analysis";
+                document.getElementById("caanalysis").focus();
+                return false;
+             }
+       	  if( document.getElementById("coother").value == "" ) 
+       	  {
+            	 document.getElementById("coothererror").innerHTML="Please enter other details";
+                document.getElementById("coother").focus();
+                return false;
+             }
+       	  if( document.getElementById("cggroup").value == "" ) 
+       	  {
+            	 document.getElementById("cggrouperror").innerHTML="Please enter group characters";
+                document.getElementById("cggroup").focus();
+                return false;
+             }
+       	  if( document.getElementById("cddisting").value == "" ) 
+       	  {
+            	 document.getElementById("cddistingerror").innerHTML="Please enter distinguishing characteristics";
+                document.getElementById("cddisting").focus();
+                return false;
+             }
+       	  if( document.getElementById("cddenominia").value == "" ) 
+       	  {
+            	 document.getElementById("cddenominiaerror").innerHTML="Please enter replicated values";
+                document.getElementById("cddenominia").focus();
+                return false;
+             }
+       	  if( document.getElementById("cvddeno").value == "" ) 
+       	  {
+            	 document.getElementById("cvddenoerror").innerHTML="Please enter denomination";
+                document.getElementById("cvddeno").focus();
+                return false;
+             }
+       	  if( document.getElementById("cvcchoice").value == "" ) 
+       	  {
+            	 document.getElementById("cvcchoiceerror").innerHTML="Please enter basis of choice";
+                document.getElementById("cvcchoice").focus();
+                return false;
+             }
+       	  if( document.getElementById("cbdguisable").value == "" ) 
+       	  {
+            	 document.getElementById("cbdguisableerror").innerHTML="Please enter distinguishable characteristics";
+                document.getElementById("cvcchoice").focus();
+                return false;
+             }
+             if( document.getElementById("cbrddenomination").value == "" ) 
+       	  {
+            	 document.getElementById("cbrddenominationerror").innerHTML="Please enter denomination";
+                document.getElementById("cbrddenomination").focus();
+                return false;
+             }
+             if( document.getElementById("cvccc").value == "" ) 
+       	  {
+            	 document.getElementById("cvcccerror").innerHTML="Please enter basis of choice ";
+                document.getElementById("cvccc").focus();
+                return false;
+             }
+             if( document.getElementById("distchar").value == "" ) 
+       	  {
+            	 document.getElementById("distcharerror").innerHTML="Please enter distinguishable characteristics";
+                document.getElementById("distchar").focus();
+                return false;
+             }
+             if( document.getElementById("distsstatement").value == "" ) 
+       	  {
+            	 document.getElementById("distsstatementerror").innerHTML="Please enter distinctiveness statement";
+                document.getElementById("distsstatement").focus();
+                return false;
+             }
+             if( document.getElementById("uuniformity").value == "" ) 
+       	  {
+            	 document.getElementById("uuniformityerror").innerHTML="Please enter uniformity";
+                document.getElementById("uuniformity").focus();
+                return false;
+             }
+             if( document.getElementById("ssstability").value == "" ) 
+       	  {
+            	 document.getElementById("ssstabilityerror").innerHTML="Please enter stability";
+                document.getElementById("ssstability").focus();
+                return false;
+             }
+             if( document.getElementById("sssmethod").value == "" ) 
+       	  {
+            	 document.getElementById("sssmethoderror").innerHTML="Please enter brief statement";
+                document.getElementById("sssmethod").focus();
+                return false;
+             }
+            
+         if( document.getElementById("cccinformation").value == "" ) 
+       	  {
+            	document.getElementById("cccinformationerror").innerHTML="Please enter grouping characters";
+                document.getElementById("cccinformation").focus();
+                return false;
+             }
+             if( document.getElementById("uniparameter").value == "" ) 
+       	    {
+            	 document.getElementById("uniparametererror").innerHTML="Please enter distinctiveness uniformity";
+                document.getElementById("uniparameter").focus();
+                return false;
+             }
+             
+             if( document.getElementById("cittrait").value == "" ||document.getElementById("cittrait").value ==null ) 
+        	    {
+            	    var file_vary=$('#file_variation_tq').text();
+            	    if(file_vary.length>0 && !(file_vary =="" || file_vary==null))
+            	    	{document.getElementById("file4error").innerHTML="";
+            	        }else{
+	 					document.getElementById("cittrait").focus();
+            	        document.getElementById("file4error").innerHTML="Please upload file";
+            	        return false;
+            	    }
+              }
+             
+             if( document.getElementById("filelast").value == "" || document.getElementById("filelast").value == null ) 
+     	    {
+         	    var filesup =$('#file_sup_tq').text();
+         	    if(filesup.length>0 && !(filesup =="" || filesup ==null))
+         	    	{ 
+         	    	document.getElementById("filelasterror").innerHTML="";
+         	       }else{
+         	        document.getElementById("filelast").focus();
+         	        document.getElementById("filelasterror").innerHTML="Please upload file";
+         	        return false;
+         	       }
+         	 }
+             
+				return true;
+        	  }else {
+        	   if(document.getElementById("pedigree").value == "" )
+            	  {
+                 	 document.getElementById("pedigreeerror").innerHTML="Please enter  pedigree/genealogy";
+                     document.getElementById("pedigree").focus() ;
+                     return false;
+                  }
+           	   
+
+        	   if( document.getElementById("pedigreefile").value == "" || document.getElementById("pedigreefile").value ==null ) 
+        	     	    {
+        	         	    var ped_file= $('#file_pedigree_tq').text();
+        	         	    if(ped_file.length>0 && !(ped_file =="" || ped_file ==null))
+        	         	    	{
+        	         	    	document.getElementById("pedigreefileerror").innerHTML="";
+        	         	        }else{
+        	         	        document.getElementById("pedigreefile").focus();
+        	         	        document.getElementById("pedigreefileerror").innerHTML="Please upload file";
+        	         	        return false;
+        	         	    	}
+        	         	    }
+        	   
+        	   
+        	   if( document.getElementById("trialfile").value == "" || document.getElementById("trialfile").value == null ) 
+        	    {
+         		  var ftrail =$('#file_trial_tq').text();
+        	      if(ftrail.length>0 && !(ftrail =="" || ftrail == null))
+        	    	{
+        	    	document.getElementById("trialfileerror").innerHTML="";
+        	        }
+        	      else{
+            	    document.getElementById("trialfile").focus();
+            	    document.getElementById("trialfileerror").innerHTML="Please upload file";
+            	    return false;
+            	    }
+              }
+        	   
+        	   
+        	   if(document.getElementById("parentalmaretial").value == "" )
+         	  {
+              	 document.getElementById("parentalmaretialerror").innerHTML="Please enter parental material";
+                  document.getElementById("parentalmaretial").focus() ;
+                  return false;
+               }
+         	  if(document.getElementById("breedingtechnique").value == "" ) 
+         	  {
+               	  document.getElementById("breedingtechniqueerror").innerHTML="Please enter breeding technique/procedure used";
+                   document.getElementById("breedingtechnique").focus();
+                   return false;
+                }
+         	
+         	  if( document.getElementById("selectioncriteria").value == "" )
+         	  {
+                	   document.getElementById("selectioncriteriaerror").innerHTML="Please enter selection criteria used";
+                    document.getElementById("selectioncriteria").focus() ;
+                    return false;
+                }
+         	  if( document.getElementById("selectionstage").value == "" )
+         	  {
+                 	 document.getElementById("selectionstageerror").innerHTML="Please enter stage of selection and multiplication";
+                      document.getElementById("selectionstage").focus();
+                      return false;
+                  }
+         	  if( document.getElementById("breedinglocation").value == "" ) 
+         	  {
+              	 document.getElementById("breedinglocationerror").innerHTML="Please enter location where breeding was conducted";
+                  document.getElementById("breedinglocation").focus();
+                  return false;
+               }
+         	  if( document.getElementById("cllocation").value == "" ) 
+         	  {
+              	 document.getElementById("cllocationerror").innerHTML="Please enter location";
+                  document.getElementById("cllocation").focus();
+                  return false;
+               }
+         	  if( document.getElementById("cpplace").value == "" ) 
+         	  {
+              	 document.getElementById("cpplaceerror").innerHTML="Please enter place";
+                  document.getElementById("cpplace").focus();
+                  return false;
+               }
+         	  if( document.getElementById("cpperiod").value == "" ) 
+         	  {
+              	 document.getElementById("cpperioderror").innerHTML="Please enter period";
+                  document.getElementById("cpperiod").focus();
+                  return false;
+               }
+         	  if( document.getElementById("cmmonth").value == "select" ) 
+         	  {
+              	 document.getElementById("cmmontherror").innerHTML="Please select month";
+                  document.getElementById("cmmonth").focus();
+                  return false;
+               }
+         	  if( document.getElementById("cyyear").value == "select" ) 
+         	  {
+              	 document.getElementById("cyyearerror").innerHTML="Please select year";
+                  document.getElementById("cyyear").focus();
+                  return false;
+               }
+         	  if( document.getElementById("cccultivation").value == "select" ) 
+         	  {
+              	 document.getElementById("cccultivationerror").innerHTML="Please select conducted method of cultivation";
+                  document.getElementById("cccultivation").focus();
+                  return false;
+               }
+         	  if( document.getElementById("csscale").value == "" ) 
+         	  {
+              	 document.getElementById("csscaleerror").innerHTML="Please select scale of cultivation";
+                  document.getElementById("csscale").focus();
+                  return false;
+               }
+         	  if( document.getElementById("crreference").value == "" ) 
+         	  {
+              	 document.getElementById("crreferenceerror").innerHTML="Please enter reference varieties Used";
+                  document.getElementById("crreference").focus();
+                  return false;
+               }
+         	  if( document.getElementById("cccriteria").value == "-1" ) 
+         	  {
+         		  //alert("test2");
+              	 document.getElementById("cccriteriaerror").innerHTML="Please select criteria";
+                  document.getElementById("cccriteria").focus();
+                  return false;
+               }
+         	  if( document.getElementById("cddesign").value == "" ) 
+         	  {
+              	 document.getElementById("cddesignerror").innerHTML="Please enter design of experiment";
+                  document.getElementById("cddesign").focus();
+                  return false;
+               }
+         	  if( document.getElementById("caanalysis").value == "" ) 
+         	  {
+              	 document.getElementById("caanalysiserror").innerHTML="Please enter method of analysis";
+                  document.getElementById("caanalysis").focus();
+                  return false;
+               }
+         	  if( document.getElementById("coother").value == "" ) 
+         	  {
+              	 document.getElementById("coothererror").innerHTML="Please enter other details";
+                  document.getElementById("coother").focus();
+                  return false;
+               }
+         	  if( document.getElementById("cggroup").value == "" ) 
+         	  {
+              	 document.getElementById("cggrouperror").innerHTML="Please enter group characters";
+                  document.getElementById("cggroup").focus();
+                  return false;
+               }
+         	  if( document.getElementById("cddisting").value == "" ) 
+         	  {
+              	 document.getElementById("cddistingerror").innerHTML="Please enter distinguishing characteristics";
+                  document.getElementById("cddisting").focus();
+                  return false;
+               }
+         	  if( document.getElementById("cddenominia").value == "" ) 
+         	  {
+              	 document.getElementById("cddenominiaerror").innerHTML="Please enter replicated values";
+                  document.getElementById("cddenominia").focus();
+                  return false;
+               }
+         	  if( document.getElementById("cvddeno").value == "" ) 
+         	  {
+              	 document.getElementById("cvddenoerror").innerHTML="Please enter denomination";
+                  document.getElementById("cvddeno").focus();
+                  return false;
+               }
+         	  if( document.getElementById("cvcchoice").value == "" ) 
+         	  {
+              	 document.getElementById("cvcchoiceerror").innerHTML="Please enter basis of choice";
+                  document.getElementById("cvcchoice").focus();
+                  return false;
+               }
+         	  if( document.getElementById("cbdguisable").value == "" ) 
+         	  {
+              	 document.getElementById("cbdguisableerror").innerHTML="Please enter Distinguishable characteristics";
+                  document.getElementById("cvcchoice").focus();
+                  return false;
+               }
+               if( document.getElementById("cbrddenomination").value == "" ) 
+         	  {
+              	 document.getElementById("cbrddenominationerror").innerHTML="Please enter denomination";
+                  document.getElementById("cbrddenomination").focus();
+                  return false;
+               }
+               if( document.getElementById("cvccc").value == "" ) 
+         	  {
+              	 document.getElementById("cvcccerror").innerHTML="Please enter basis of choice";
+                  document.getElementById("cvccc").focus();
+                  return false;
+               }
+               if( document.getElementById("distchar").value == "" ) 
+         	  {
+              	 document.getElementById("distcharerror").innerHTML="Please enter distinguishable characteristics";
+                  document.getElementById("distchar").focus();
+                  return false;
+               }
+               if( document.getElementById("distsstatement").value == "" ) 
+         	  {
+              	 document.getElementById("distsstatementerror").innerHTML="Please enter distinctiveness statement";
+                  document.getElementById("distsstatement").focus();
+                  return false;
+               }
+               if( document.getElementById("uuniformity").value == "" ) 
+         	  {
+              	 document.getElementById("uuniformityerror").innerHTML="Please enter uniformity";
+                  document.getElementById("uuniformity").focus();
+                  return false;
+               }
+               if( document.getElementById("ssstability").value == "" ) 
+         	  {
+              	 document.getElementById("ssstabilityerror").innerHTML="Please enter stability";
+                  document.getElementById("ssstability").focus();
+                  return false;
+               }
+               if( document.getElementById("sssmethod").value == "" ) 
+         	  {
+              	 document.getElementById("sssmethoderror").innerHTML="Please enter brief statement";
+                  document.getElementById("sssmethod").focus();
+                  return false;
+               }
+              
+         	  return true;
+        	  } 
+      }
+</script>
+
+<script type="text/javaScript">
+
+var formOK = false;
+function validatePDF(objFileControl){
+ var file = objFileControl.value;
+ var len = file.length;
+ var ext = file.slice(len - 4, len);
+ if(ext.toUpperCase() == ".PDF" || ext.toUpperCase() == ".PNG" || ext.toUpperCase() == ".JPG" || ext.toUpperCase() == ".GIF"){
+   formOK = true;
+ }
+ else{
+	 $("#gotosubattach").attr("disabled", true);
+	 formOK = false;
+   objFileControl.value =null;
+   alert("Only PDF/PNG/JPG/GIF files allowed.");
+ }
+}
+</script>
+<script type="text/javascript">
+function emailchk()
+{
+	var inputmail = document.getElementById("emailid");
+	//alert("input email = "+inputmail.value);
+	
+	var mailformat = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
+	if(inputmail.value.match(mailformat))
+	{
+	document.getElementById("emailiderror").innerHTML="";
+	return true;
+	}
+	else{
+		document.getElementById("emailiderror").innerHTML="Please enter correct mail id.";
+        document.getElementById("emailid").focus();
+        return false;
+	}
+	
+}
+</script>
+
+<script type="text/javascript">
+        function uploadfile_pedigre()  {
+        	var file_id = document.getElementById("pedigreefile").value;
+        	 {
+            var	filename = file_id;    
+            //alert(filename);
+			
+			var iFileSize = document.getElementById("pedigreefile").files[0].size;
+           // alert(iFileSize);
+            
+            $.ajax({
+                type: "POST",
+                url: "/ppfvra/api/filesizecheck",
+                data:'filename='+filename+'&filesize='+iFileSize,
+               
+                success: function (data) {
+
+               if(data == false)
+				{ 
+            	  
+        document.getElementById("pedigreefileerror").innerHTML = " <font color='red'>File size is greater than maximum allowed size of 500 KB.</font>";
+        var tst=document.getElementById("pedigreefile");
+        //$("#subform6").attr("disabled", true);
+
+        		tst.value='';
+         return false;
+                }
+			else if (data == true) {
+		       // $("#subform6").attr("disabled", false);
+ 				document.getElementById("pedigreefileerror").innerHTML = " ";
+			     return true;
+                    }
+                   
+                }
+            }); 
+            }
+  }
+</script>
+
+<script type="text/javascript">
+        function uploadfile_trial()  {
+        	var file_id = document.getElementById("trialfile").value;
+        	 {
+            var	filename = file_id;    
+            //alert(filename);
+			
+			var iFileSize = document.getElementById("trialfile").files[0].size;
+           // alert(iFileSize);
+            
+            $.ajax({
+                type: "POST",
+                url: "/ppfvra/api/filesizecheck",
+                data:'filename='+filename+'&filesize='+iFileSize,
+               
+                success: function (data) {
+
+               if(data == false)
+				{ 
+            	  
+        document.getElementById("trialfileerror").innerHTML = " <font color='red'>File size is greater than maximum allowed size of 500 KB.</font>";
+        var tst=document.getElementById("trialfile");
+        //$("#subform6").attr("disabled", true);
+
+        		tst.value='';
+         return false;
+                }
+			else if (data == true) {
+		       // $("#subform6").attr("disabled", false);
+ 				document.getElementById("trialfileerror").innerHTML = " ";
+			     return true;
+                    }
+                   
+                }
+            }); 
+            }
+  }
+</script>
+
+<script type="text/javascript">
+        function uploadfile_cittrait()  {
+        	var file_id = document.getElementById("cittrait").value;
+        	 {
+            var	filename = file_id;    
+            //alert(filename);
+			
+			var iFileSize = document.getElementById("cittrait").files[0].size;
+           // alert(iFileSize);
+            
+            $.ajax({
+                type: "POST",
+                url: "/ppfvra/api/filesizecheck",
+                data:'filename='+filename+'&filesize='+iFileSize,
+               
+                success: function (data) {
+
+               if(data == false)
+				{ 
+            	  
+        document.getElementById("file4error").innerHTML = " <font color='red'>File size is greater than maximum allowed size of 500 KB.</font>";
+        var tst=document.getElementById("cittrait");
+        //$("#subform6").attr("disabled", true);
+
+        		tst.value='';
+         return false;
+                }
+			else if (data == true) {
+		       // $("#subform6").attr("disabled", false);
+ 				document.getElementById("file4error").innerHTML = " ";
+			     return true;
+                    }
+                   
+                }
+            }); 
+            }
+  }
+</script>
+
+<script type="text/javascript">
+        function uploadfile_filelast()  {
+        	var file_id = document.getElementById("filelast").value;
+        	 {
+            var	filename = file_id;    
+            //alert(filename);
+			
+			var iFileSize = document.getElementById("filelast").files[0].size;
+           // alert(iFileSize);
+            
+            $.ajax({
+                type: "POST",
+                url: "/ppfvra/api/filesizecheck",
+                data:'filename='+filename+'&filesize='+iFileSize,
+               
+                success: function (data) {
+
+               if(data == false)
+				{ 
+            	  
+        document.getElementById("filelasterror").innerHTML = " <font color='red'>File size is greater than maximum allowed size of 500 KB.</font>";
+        var tst=document.getElementById("filelast");
+        //$("#subform6").attr("disabled", true);
+
+        		tst.value='';
+         return false;
+                }
+			else if (data == true) {
+		       // $("#subform6").attr("disabled", false);
+ 				document.getElementById("filelasterror").innerHTML = " ";
+			     return true;
+                    }
+                   
+                }
+            }); 
+            }
+  }
+</script>
+
+</div>   
+</html>

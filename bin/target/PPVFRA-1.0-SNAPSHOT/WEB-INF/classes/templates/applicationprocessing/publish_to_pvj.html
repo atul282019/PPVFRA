@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<div th:fragment="publish_to_pvj">
+<span th:if="${PublishToPVJ != null && PublishToPVJ == 'PublishToPVJ' }"> 
+ 
+<form class="form-horizontal" role="form" th:action="@{/publishtopvj}" th:object="${publishtopvj}" method="post">   
+												<div class="panel panel-success">
+												<div class="panel-heading">Publish to PVJ</div>
+												<div class="panel-body">
+													<div class="form-group">
+		                                                <label class="col-md-2 control-label" > </label>
+		                                                <div class="col-md-10">
+		                                 				<input type="text" id="applicationid" th:name="applicationid"  th:value="${applicationid}" readonly="readonly" hidden="true" />
+		                                                </div>
+		                                                </div>
+													
+													
+													<div class="form-group">
+														<label class="col-md-3 control-label">Select Journal</label>
+														<div class="col-md-6">
+															<select th:field="*{journal_id}"class="form-control">
+																<option th:value="-1">Select</option>
+																<option th:each="dropDownItem : ${journaltitle}"
+              														  th:value="${dropDownItem.id}"
+                  													  th:text="${dropDownItem.title}" />
+															</select>
+														</div>
+														<div class="col-sm-3">
+															<a href="javascript:void(0)" type="submit" data-toggle="modal" data-target="#myModal" class="btn btn-danger waves-effect waves-light">+</a>
+														</div>
+														
+													</div>
+													
+													<div class="form-group">
+														<label class="col-md-3 control-label">Purpose</label>
+														<div class="col-md-6">
+															<select th:field="*{purpose}"class="form-control">
+																<option th:value="-1">Select</option>
+																<option  th:value="PreGrantOpposition">Pre Grant Opposition ( 90Days)</option>
+																<option  th:value="BenefitSharing">Benefit Sharing (6 Months)</option>
+															</select>
+														</div>
+													</div>
+													
+													<div class="form-group">
+														<label class="col-md-3 control-label">Passport Data of Variety</label>
+														<div class="col-md-6">
+															<textarea th:field="*{passport_data_of_variety}"class="form-control" rows="5"></textarea>
+														</div>
+													</div>
+													
+													
+													
+													
+													
+													<div class="form-group m-b-0">
+														<label class="col-md-3 control-label">&nbsp;</label>
+														<div class="col-sm-7">
+															<button type="submit" class="btn btn-info waves-effect waves-light">Submit</button>
+														</div>
+														
+													</div>
+													<br>    
+													</div>
+													</div>
+													
+											</form>
+</span>
+<span th:unless="${PublishToPVJ != null && PublishToPVJ == 'PublishToPVJ' }">
+ <label>YOU ARE NOT AUTHORISED TO VIEW THIS PAGE.PLEASE CONTACT ADMINISTRATOR</label>
+ </span>
+	
+										
+
+
+<div class="modal" id="myModal">
+			<div class="modal-dialog">
+				<div class="modal-content">
+					<div class="modal-header">
+					  <h4 class="modal-title">Add Journal</h4>
+					  
+					</div>
+					<div class="modal-body">
+					<form class="form-horizontal" role="form" th:action="@{/journal}" th:object="${journal}" method="post">   
+						<div class="form-group">
+		                                                <label class="col-md-2 control-label" > </label>
+		                                                <div class="col-md-10">
+		                                 				<input type="text" id="applicationid" th:name="applicationid"  th:value="${applicationid}" readonly="readonly" hidden="true" />
+		                                                </div>
+		                                                </div>
+						
+						<div class="form-group">
+							<label class="col-md-3 control-label">Title</label>
+							<div class="col-md-6">
+								<input type="text" th:field="*{title}" class="form-control" value="">
+							</div>
+						</div>
+						
+						<div class="form-group">
+							<label class="col-md-3 control-label">Year</label>
+							<div class="col-md-6">
+								<select th:field="*{journal_year}" class="form-control">
+									<option th:value="-1">Select</option>
+									<option th:value="2011">2011</option>
+									<option th:value="2012">2012</option>
+									<option th:value="2013">2013</option>
+									<option th:value="2014">2014</option>
+									<option th:value="2015">2015</option>
+									<option th:value="2016">2016</option>
+									<option th:value="2017">2017</option>
+									<option th:value="2018">2018</option>
+									<option th:value="2019">2019</option>
+									<option th:value="2020">2020</option>
+									<option th:value="2021">2021</option>
+									<option th:value="2022">2022</option>
+									<option th:value="2023">2023</option>
+									<option th:value="2024">2024</option>
+									<option th:value="2025">2025</option>
+								</select>
+							</div>
+						</div>
+						<div class="form-group">
+							<label class="col-md-3 control-label">Month</label>
+							<div class="col-md-6">
+								<select th:field="*{journal_month}" class="form-control">
+									<option th:value="-1">Select</option>
+									<option th:value="1">January</option>
+									<option th:value="2">February</option>
+									<option th:value="3">March</option>
+									<option th:value="4">April</option>
+									<option th:value="5">May</option>
+									<option th:value="6">June</option>
+									<option th:value="7">July</option>
+									<option th:value="8">August</option>
+									<option th:value="9">September</option>
+									<option th:value="10">October</option>
+									<option th:value="11">November</option>
+									<option th:value="12">December</option>
+								</select>
+							</div>
+						</div>
+						
+						<div class="form-group">
+							<label class="col-md-3 control-label">Issue</label>
+							<div class="col-md-6">
+								<input type="text" th:field="*{journal_issue}" class="form-control" value="">
+							</div>
+						</div>
+						
+						<div class="form-group">
+							<label class="col-md-3 control-label">Volume No.</label>
+							<div class="col-md-6">
+								<input type="text" th:field="*{journal_volume_no}" class="form-control" value="">
+							</div>
+						</div>
+						
+						
+						
+						
+						
+						<div class="form-group m-b-0">
+							<label class="col-md-3 control-label">&nbsp;</label>
+							<div class="col-sm-7">
+								<button type="submit" class="btn btn-info waves-effect waves-light">Submit</button>
+							</div>
+							
+						</div>
+						<br>    
+
+						<div class="form-group">
+							
+						</div>
+					</form>
+					</div>
+					<div class="modal-footer">
+					  <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+					</div>
+				
+				</div>
+			</div>
+		 </div>
+
+
+</div> 
+
+
+
+</html>

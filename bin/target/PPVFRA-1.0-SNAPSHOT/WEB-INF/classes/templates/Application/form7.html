@@ -1,0 +1,308 @@
+
+
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+	<div th:fragment="formseven">
+
+
+<form class="form-horizontal" role="form" id="form_7" name="form_7"  th:action="@{/saveapplicationformvii}" th:object="${contact}" onsubmit = "return validateform7()" method="post">   <!--form_7 start --> 
+														<div class="form-group">
+															<label class="col-md-12 "><h4>7.Names and Addresses of Breeder(s) who had/have bred the candidate Variety*:<h4></label>
+														</div>
+													<div class="form-group">
+                                                        <label class="col-md-3 control-label">Name<span style="color:red">*</span></label>
+                                                        <div class="col-md-6">
+                                                            <input type="text" class="form-control" th:field="*{name}" name="breedername" value="">
+                                                            <span id="breedernameerror" style="color:red"></span>
+                                                        </div>
+                                                    </div>
+													<div class="form-group">
+														<label class="col-md-3 control-label">Address<span style="color:red">*</span></label>
+														<div class="col-md-6">
+															<textarea class="form-control"  th:field="*{address}"  name="breederaddress"></textarea>
+														    <span id="breederaddresserror" style="color:red"></span>
+														</div>
+													</div>
+													<div class="form-group">
+														<label class="col-md-3 control-label">Country<span style="color:red">*</span></label>
+														   <div class="col-md-6 col-sm-6 col-xs-12">
+														    <div th:if="${Country != null}">
+														        <select id="ddlcountry" class="form-control col-md-7 col-xs-12" th:field="*{countryid}" name="breedercountry">
+														        <option th:value="-1" >---Select---</option>
+														            <option th:each="dropDownItem : ${Country}"
+														               th:value="${dropDownItem.id}"
+														               th:text="${dropDownItem.country}" />
+														        </select>
+														        <span id="breedercountryerror" style="color:red"></span>
+														       
+												     	</div>
+													   	</div>
+														</div> 
+						
+												
+											     <div class="form-group">
+														<label class="col-md-3 control-label">State<span style="color:red">*</span></label>
+														   <div class="col-md-6 col-sm-6 col-xs-12">
+														    <div th:if="${State != null}">
+														        <select onchange="GetDistricts();" id="statecode" th:field="*{stateid}" class="form-control col-md-7 col-xs-12" name="breederstate">
+														        <option th:value="-1" >Select</option>
+														            <option th:each="dropDownItem : ${State}"
+														               th:value="${dropDownItem.statecode}"
+														               th:text="${dropDownItem.statename_inenglish}" />
+														        </select>
+														       <span id="breederstateerror" style="color:red"></span>
+														        	</div>
+														   	
+														   	</div>
+														</div> 
+
+														 <div class="form-group">
+														<label class="col-md-3 control-label">District<span style="color:red">*</span></label>
+														   <div class="col-md-6 col-sm-6 col-xs-12">
+														    <div  th:if="${District != null}">
+														        <select id="districtcode" class="form-control col-md-7 col-xs-12" th:field="*{districtid}" name="breederdistrict">
+														        <option th:value="-1" >Select</option>
+														            <option th:each="dropDownItem : ${District}"
+														               th:value="${dropDownItem.districtcode}"
+														               th:text="${dropDownItem.districtname_inenglish}" />
+														        </select>
+														      <span id="breederdistricterror" style="color:red"></span>
+														    </div>
+														   	
+														   	</div>
+														</div> 													
+													
+														<div class="form-group">
+																<label class="control-label col-md-3 col-sm-3 col-xs-12">
+															Pincode/ZipCode<span style="color:red">*</span>
+															</label>
+																<div class="col-md-6">
+																	<input type="text" class="form-control" th:field="*{pincode}" name="breederpincode" value="">
+																    <span id="breederpincodeerror" style="color:red"></span>
+																</div>
+															</div>
+														
+														<div class="form-group"> 
+															<label class="control-label col-md-3 col-sm-3 col-xs-12">
+															City<span style="color:red">*</span>
+															</label>
+															<div class="col-md-6">
+																	<input type="text" class="form-control" th:field="*{city}" name="breedercity" value="">
+																    <span id="breedercityerror" style="color:red"></span>
+																</div>
+															</div>													
+												
+													
+													<div class="form-group">
+                                                        <label class="col-md-3 control-label">Telephone<span style="color:red">*</span></label>
+                                                        <div class="col-md-1">
+                                                            <input type="text" id="formseventelcode" class="form-control" th:field="*{telephone_stdcode}" name="formseventelcode">
+                                                            <span id="telephone_stdcode_error" style="color:red"></span>
+                                                        </div>
+                                                        <div class="col-md-5">
+                                                            <input type="text" class="form-control" th:field="*{telephone_number}" name="breedertelephone" value="">
+                                                            <span id="breedertelephoneerror" style="color:red"></span>
+                                                        </div>
+                                                    </div>
+													<div class="form-group">
+                                                        <label class="col-md-3 control-label">Fax<span style="color:red">*</span></label>
+                                                        <div class="col-md-1">
+                                                            <input type="text" class="form-control" th:field="*{fax_stdcode}" id="formsevenfaxcode" name="formseventelcode" >
+                                                            <span id="fax_stdcode_error" style="color:red"></span>
+                                                        </div>
+                                                        <div class="col-md-5">
+                                                            <input type="text" class="form-control" th:field="*{fax_number}" name="breederfax" value="">
+                                                        	<span id="breederfaxerror" style="color:red"></span>
+                                                        </div>
+                                                    </div>
+													<div class="form-group">
+                                                        <label class="col-md-3 control-label">Email<span style="color:red">*</span></label>
+                                                        <div class="col-md-6">
+                                                            <input type="email" class="form-control" th:field="*{emailid}" name="breederemail" value="">
+                                                            <span id="breederemailerror" style="color:red"></span>
+                                                        </div>
+                                                    </div>
+													<div class="form-group">
+                                                        <label class="col-md-3 control-label">Nationality<span style="color:red">*</span></label>
+                                                        <div class="col-md-6">
+                                                            
+                                                            <select class="form-control" name="breedernationality" th:field="*{nationality}">
+                                                                <option th:value="-1" >---Select---</option>
+														        <option th:each="dropDownItem : ${nationality}"
+														               th:value="${dropDownItem.id}"
+														               th:text="${dropDownItem.name}" />
+														        </select>
+                                                            <span id="breedernationalityerror" style="color:red"></span>
+                                                             
+                                                             <input type="hidden" id="applicationidfromvii" name="applicationidfromvii" th:value="${applications.id}">
+                                                         	 <input type="hidden" id="contactid" name="contactid" th:value="*{id}" />
+														     <input type="hidden" id="applicantidformvii" name="applicantidformvii"  th:value="${userapplicant[0]}">
+														</div>
+                                                    </div>
+													<hr/>
+													 
+													
+													<div class="form-group ">
+															<div class="col-sm-offset-10 col-sm-12">
+																<button type="submit" class="btn btn-info waves-effect waves-light">Save</button>
+															<!-- 	<button type="submit" class="btn btn-info waves-effect waves-light">Next</button>
+														 -->	</div>
+													</div>
+													<!--Table-->
+													<div class="table-responsive" th:if="${breadercontact !=1}">
+														<table class="table table-striped  table-bordered w-auto table-hover" >
+													<!--Table head-->
+													<thead>
+														<tr>
+															<th>S.No.</th>
+															<th>Name</th>
+															<th>Address</th>
+															<th>Telephone</th>
+															<th>Fax</th>
+															<th>Email</th>
+															<th>Nationality</th>
+															<th>Action</th>
+														</tr>
+													</thead>
+													<!--Table head-->
+													<!--Table body-->
+													<tbody>
+														<tr role="row" class="table-info" th:each="contactlist,serial : ${breadercontact}">
+											            <td th:text="${serial.count}"></td> 
+											            <td th:text="${contactlist[2]}"></td>   
+											            <td th:text="${contactlist[5]}"></td>
+											            <td th:text="${contactlist[6]}"></td> 
+											            <td th:text="${contactlist[7]}"></td> 
+											            <td th:text="${contactlist[8]}"></td> 
+											            <td th:text="${contactlist[9]}"></td>
+											             <td>
+											               <a th:href="@{'/editapplicationcontact/'+${contactlist[1]}+'/'+${contactlist[0]}}" >
+											           Edit</a>
+											            <!--  <a onclick="javascript:if (confirm('Are you sure, you want to Remove this row?')) return true; else return false;" th:href="@{'/updaterow_form1_subform/'+${contactlist[0]}+'/'+${contactlist[1]}}" >
+											            Delete</a> -->
+											             </td> 	
+													</tr>
+												</tbody>
+												<!--Table body-->
+												</table>
+													</div>
+													
+												<!--Table-->
+												</form>
+<script type = "text/javascript">
+      function validateform7() {
+         if( document.form_7.name.value == "" ) {
+        	 document.getElementById("breedernameerror").innerHTML="name can't be blank";
+            document.form_7.name.focus() ;
+            return false;
+         }
+         if( document.form_7.address.value == "" ) {
+        	 document.getElementById("breederaddresserror").innerHTML="address can't be blank";
+        	 document.form_7.address.focus() ;
+            return false;
+         }
+         
+          if( document.form_7.countryid.value == "-1" ) {
+        	 document.getElementById("breedercountryerror").innerHTML="please select country";
+        	 document.form_7.countryid.focus() ;
+            return false;
+         }
+          if( document.form_7.stateid.value == "-1" ) {
+         	 document.getElementById("breederstateerror").innerHTML="please select state";
+         	 document.form_7.stateid.focus() ;
+             return false;
+          }
+          if( document.form_7.districtid.value == "-1" ) {
+         	 document.getElementById("breederdistricterror").innerHTML="please select district";
+         	 document.form_7.districtid.focus() ;
+             return false;
+          }
+          if( document.form_7.pincode.value == "" || isNaN( document.form_7.pincode.value ) || document.form_7.pincode.value.length != 6 ) {
+              	 document.getElementById("breederpincodeerror").innerHTML="please enter a valid format";
+              	document.form_7.pincode.focus() ;
+                  return false;
+               }
+          if( document.form_7.city.value == "" ) {
+         	    document.getElementById("breedercityerror").innerHTML="city can't be blank";
+         		document.form_7.city.focus() ;
+             return false;
+          } 
+          if( document.form_7.telephone_stdcode.value == "" || isNaN( document.form_7.telephone_stdcode.value ) || document.form_7.telephone_stdcode.value.length != 3 ) {
+            	 document.getElementById("telephone_stdcode_error").innerHTML="please enter a valid std code";
+            	document.form_7.telephone_stdcode.focus() ;
+                return false;
+             }
+          if( document.form_7.telephone_number.value == "" || isNaN( document.form_7.telephone_number.value ) || document.form_7.telephone_number.value.length != 8 ) {
+           	 document.getElementById("breedertelephoneerror").innerHTML="please enter a valid telephone";
+           	document.form_7.telephone_number.focus() ;
+               return false;
+            }
+          if( document.form_7.fax_stdcode.value == "" || isNaN( document.form_7.fax_stdcode.value ) || document.form_7.fax_stdcode.value.length != 3 ) {
+         	 document.getElementById("fax_stdcode_error").innerHTML="please enter a valid fax std code";
+         	document.form_7.fax_stdcode.focus() ;
+             return false;
+          }
+          if( document.form_7.fax_number.value == "" || isNaN( document.form_7.fax_number.value ) || document.form_7.fax_number.value.length != 8 ) {
+            	 document.getElementById("breederfaxerror").innerHTML="please enter a valid faxno";
+            	document.form_7.fax_number.focus() ;
+                return false;
+             }
+          if( document.form_7.emailid.value == "" ) {
+         	 document.getElementById("breederemailerror").innerHTML="please enter a valid email";
+         	document.form_7.emailid.focus() ;
+             return false;
+          }
+          if( document.form_7.nationality.value == "-1" ) {
+          	 document.getElementById("breedernationalityerror").innerHTML="please select nationality";
+          	document.form_7.bnationality.focus() ;
+              return false;
+           }
+         return( true );
+      }
+</script>
+
+<script type="text/javascript">
+   function GetDistricts()
+  {
+       var ddlState= document.getElementById("statecode");
+       var district=document.getElementById("districtcode");
+       var district1=$("#districtcode");
+       if(ddlState.value != null)	
+       	$.ajax({
+               type: "POST",
+               url: "/ppvfra/getDistricts",
+               data: 'stateCode='+ddlState.value,
+               dataType:"json",
+               success: function (response) {
+               	
+              district1.empty().append('<option selected="selected" value="-1">Please select</option>');
+                for(var k=0;k<response.length;k++)
+     	  {
+     	  var opt = response[k];
+     	   var el = document.createElement("option");
+     	   el.textContent = opt[1];
+     	   el.value = opt[0];
+     	   district.appendChild(el);
+																	 
+     	}
+ 
+ 
+               },
+               failure: function (response) {
+                   alert(response.responseText);
+					  
+               },
+               error: function (response) {
+                   alert(response.responseText);
+					   
+										  
+														
+               }
+      });
+   	
+   }
+</script>
+
+</div>
+</html>

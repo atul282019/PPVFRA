@@ -1,0 +1,578 @@
+
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+	<head>
+	  <th:block th:include="adminfragment/headerlibs.html :: headerlibs"></th:block> 
+	</head>
+
+    <body class="fixed-left">
+    
+        <!-- Begin page -->
+        <div id="wrapper">
+        
+            <!-- Top Bar Start -->
+           <header th:insert="adminfragment/header.html :: header"> </header>
+            <!-- Top Bar End -->
+
+
+            <!-- ========== Left Sidebar Start ========== -->
+			<header th:insert="adminfragment/sidenav.html :: sidevav"> </header>
+            <!-- Left Sidebar End -->
+            
+
+
+
+            <!-- ============================================================== -->
+            <!-- Start right Content here -->
+            <!-- ============================================================== -->                      
+            <div class="content-page">
+                <!-- Start content -->
+                <div class="content">
+                    <div class="container">
+
+                        <!-- Page-Title -->
+                        <div class="row">
+                            <div class="col-sm-12">
+                                <h4 class="pull-left page-title">DUS Characteristics</h4>
+                                <ol class="breadcrumb pull-right">
+                                   <li><a href="/admin">Home</a></li>
+                                    <li>
+                                        <button type="button" onclick="history.go(-1);" class="btn btn-purple waves-effect waves-light btn-xs m-b-5">Back</button>
+                                    </li>
+                                </ol>
+                            </div>
+                        </div>
+						
+						<div class="row">
+                            <div class="col-sm-12">
+                                <div class="panel panel-default">
+                                   <!-- <div class="panel-heading"><h3 class="panel-title">Add Company</h3></div>-->
+                                    <div class="panel-body">
+                                        <form th:action="@{/saveduscharacteristics}" th:object="${duscharacteristics}" id="form" name="form"role="form" method="post" onsubmit = "return validateform(),validateform1()" class="form-horizontal"  enctype="multipart/form-data">     
+											
+											<div class="form-group">
+											<label class="col-md-1 control-label">1.</label>
+                                                <label class="col-md-2 control-label">Crop Group</label>
+                                                <div class="col-md-6">
+                                                <div th:if="${Crop_Group != null}">
+                                                    <select onchange="GetCropName();" id="cropgroupname" class="form-control">
+       														 <option th:value="-1">Select</option>
+          													  <option th:each="dropDownItem : ${Crop_Group}"
+              														  th:value="${dropDownItem.id}"
+                  													  th:text="${dropDownItem.crop_group}" />
+       										 			</select>
+                                                </div>
+                                            </div>
+                                            </div>
+                                              <div class="form-group">
+                                              <label class="col-md-1 control-label">2.</label>
+                                                <label class="col-md-2 control-label">Crop Name</label>
+                                                <div class="col-md-6">
+                                                <div th:if="${Crop != null}">
+                                                     <select id="cname" name="cropid" th:field="*{cropid}" class="form-control">
+       														 <option th:value="-1">Select</option>
+          													  <option th:each="dropDownItem : ${Crop}"
+              														  th:value="${dropDownItem.id}"
+                  													  th:text="${dropDownItem.crop_common_name}" />
+       										 			</select>
+       										 			<div class="error" th:if="${#fields.hasErrors('cropid')}" th:errors="*{cropid}">cropid Error</div>
+                                                </div>
+                                            </div>	
+                                            </div>											
+
+										 	<div class="form-group">
+												<label class="col-md-1 control-label">3.</label>
+                                                <label class="col-md-2 control-label">Serial Number</label>
+                                                <div class="col-md-6">
+                                                     <input th:field="*{serial_number}"  type="text" class="form-control">
+                                                     <div class="error" th:if="${#fields.hasErrors('serial_number')}" th:errors="*{serial_number}">serial_number Error</div>
+                                                </div>
+                                            </div>
+                                            
+								               <div class="form-group">
+                                              <label class="col-md-1 control-label">4.</label>
+                                                <label class="col-md-2 control-label">Characteristic Group</label>
+                                                <div class="col-md-6">
+                                                <div th:if="${Group != null}">
+                                                     <select  th:field="*{characteristics_group}" class="form-control">
+       														 <option th:value="-1">Select</option>
+          													  <option th:each="dropDownItem : ${Group}"
+              														  th:value="${dropDownItem.id}"
+                  													  th:text="${dropDownItem.group_name}" />
+       										 			</select>
+       										 			<div class="error" th:if="${#fields.hasErrors('characteristics_group')}" th:errors="*{characteristics_group}">characteristics_group Error </div>                                              </div>
+                                            </div>	
+                                            </div>											
+								
+											
+											<div class="form-group">
+												<label class="col-md-1 control-label">5.</label>
+                                                <label class="col-md-2 control-label">Characteristic</label>
+                                                <div class="col-md-6">
+                                                     <input th:field="*{characteristics}"  type="text" class="form-control">
+                                                     <div class="error" th:if="${#fields.hasErrors('characteristics')}" th:errors="*{characteristics}">characteristics Error</div>
+                                                </div>
+                                            </div>
+											
+											<div class="form-group">
+												<label class="col-md-1 control-label">6.</label>
+                                                <label class="col-md-2 control-label">States</label>
+                                                <div class="col-md-9">	
+
+											<table id="dataTable" class="table table-hover table-bordered">
+											
+                                                        <tr>
+                                                            <th></th>
+															<th>State</th>
+															<th>Note</th>
+														    <th>Example Varieties</th>
+															<th>Diagram</th>
+                                                        </tr>
+                                                        <tr>
+                                                        <td> </td>
+                                                        <td>                                                            
+                                                          <input type="text"  class="form-control" th:name="State">
+                                                        </td>                    
+                                                        <td>                                                    
+                                                           <select id="new" th:name="Note">
+																	<option th:value="1" th:text = "1"></option>
+			                                                        <option th:value="2" th:text = "2"></option>
+			                                                        <option th:value="3" th:text = "3"></option>
+			                                                        <option th:value="4" th:text = "4"></option>
+			                                                        <option th:value="5" th:text = "5"></option>
+			                                                        <option th:value="6" th:text = "6"></option>
+			                                                        <option th:value="7" th:text = "7"></option>
+			                                                        <option th:value="8" th:text = "8"></option>
+			                                                        <option th:value="9" th:text = "9"></option>
+														   </select>                                                  
+                                                        </td> 
+                                                        <td>                                                                                                                   
+                                                          <input th:name="ExampleVariety" type="text" class="form-control">                                                
+                                                        </td> 
+                                                        <td>                                                      
+                                                          <input  type="file" id="fname" name="fileUpload" th:onchange="'javascript:uploadfilechk1(),validatePDF(this)'" >                                               
+                                                        <div class="help-block with-errors" id="docuploaderror2"></div> 
+                                                        </td>
+                                                        </tr>
+											</table>
+                                            <INPUT type="button" value="Add Row" onclick="addRow('dataTable')" />
+											<INPUT type="button" value="Delete Row" onclick="deleteRow('dataTable')" />
+                                                </div>
+                                            </div>                          
+											<div class="form-group">
+												<label class="col-md-1 control-label">7.</label>
+                                                <label class="col-md-2 control-label">Stage of observation</label>
+                                                <div class="col-md-6">
+                                                     <input th:field="*{stages_observation}" type="text" class="form-control" value="">
+                                                     <div class="error" th:if="${#fields.hasErrors('stages_observation')}" th:errors="*{stages_observation}">stages_observation Error</div>
+                                                </div>
+                                            </div>
+											
+											<div class="form-group">
+                                                <label class="col-md-1 control-label">8.</label>
+                                                <label class="col-md-2 control-label">Type of Assessment</label>
+                                                <div class="col-md-6">
+                                                     <select th:field="*{type_assessment}" class="form-control">
+                                                        <option th:value="-1" th:text = "Select"></option>
+                                                        <option th:value="MG" th:text = "MG">MG</option>
+                                                        <option th:value="MS" th:text = "MS">MS</option>
+                                                        <option th:value="VG" th:text = "VG">VG</option>
+                                                        <option th:value="VS" th:text = "VS">VS</option>
+                                                    </select>
+                                                  <!--   <div class="error" th:if="${#fields.hasErrors('type_assessment')}" th:errors="*{type_assessment}">type_assessment Error</div> -->
+                                                </div>
+                                            </div>
+											
+											<div class="form-group">
+                                                <label class="col-md-1 control-label">9.</label>
+                                                <label class="col-md-2 control-label">Is Group Characteristics</label>
+                                                <div class="col-md-6">
+													<div class="form-check-inline">
+														<label class="form-check-label" >
+															<input th:field="*{IsGroupCharacteristics}" type="radio" class="form-check-input" id="radio1" name="optradio" value="Y">Yes
+														</label>
+													</div>
+													<div class="form-check-inline">
+														<label class="form-check-label" >
+															<input th:field="*{IsGroupCharacteristics}" type="radio" class="form-check-input" id="radio2" name="optradio" value="N">No
+														</label>
+													</div>
+													<span id="radiocheckerror" style="color:red"></span>
+                                                </div>
+                                            </div>
+											
+											<div class="form-group">
+                                                <label class="col-md-1 control-label">10.</label>
+                                                <label class="col-md-2 control-label">Is Required</label>
+                                                <div class="col-md-6">
+													<div class="form-check-inline">
+														<label class="form-check-label">
+															<input th:field="*{IsRequired}" type="radio" class="form-check-input" id="radio3" name="optradio2" value="Y">Yes
+														</label>
+													</div>
+													<div class="form-check-inline">
+														<label class="form-check-label" >
+															<input th:field="*{IsRequired}" type="radio" class="form-check-input" id="radio4" name="optradio2" value="N">No
+														</label>
+													</div>
+													<span id="radiocheckerror2" style="color:red"></span>
+                                                </div>
+                                            </div>
+											
+											<div class="form-group">
+												<label class="col-md-1 control-label">11.</label>
+                                                <label class="col-md-2 control-label">Explanation</label>
+                                                <div class="col-md-6">
+                                                     <textarea  th:field="*{Explanation}" class="form-control" rows="5"></textarea>
+                                                <div class="error" th:if="${#fields.hasErrors('Explanation')}" th:errors="*{Explanation}">Explanation Error</div>
+                                                </div>
+                                            </div>
+                                            
+                                           <div class="form-group">
+                                             <label class="col-md-1 control-label">12.</label>
+					                         <label class="col-md-2 control-label">Status</label>
+					                           <div class="col-md-6">
+					                               <select class="form-control" th:field="*{active}">
+					                                   <option th:value="1" th:text = "Active"></option>
+					                                   <option th:value="0" th:text="Inactive"></option>
+					                               </select>
+					                           </div>
+					                       </div> 
+                                                                                                                  
+                                            <div class="form-group m-b-0">
+                                                <div class="col-sm-7" style="float: right;">
+                                                    <button type="submit" id ="gotosub1" name="gotosub1" class="btn btn-info waves-effect waves-light">Save</button>
+                                                </div>
+												
+                                            </div>
+                                            <br>                                                            
+                                        </form>
+                                    </div> <!-- panel-body -->
+                                </div> <!-- panel -->
+                            </div> <!-- col -->
+                        </div>
+
+                        <!-- End Row -->
+
+
+                    </div> <!-- container -->
+                               
+                </div> <!-- content -->
+
+                <footer class="footer text-right">
+                    2019 © PPVFRA.
+                </footer>
+
+            </div>
+            
+
+          
+ <div th:replace="adminfragment/footer.html :: footer"></div>
+           </div> <!-- container -->
+                               
+                <!-- content -->
+
+			<!-- start footer content here -->
+			
+			<!-- end footer content here -->
+
+      
+        <!-- END wrapper -->
+
+<!-- footer lib start here-->
+
+<div th:replace="adminfragment/footerlibs.html :: footerlibs"></div>
+<!-- end footer lib -->
+    
+    
+
+<SCRIPT type="text/javascript">	
+var i = 0;
+var option;
+function addRow(tableID) {
+
+	var table = document.getElementById(tableID);
+
+	var rowCount = table.rows.length;
+	var row = table.insertRow(rowCount);
+
+	var cell1 = row.insertCell(0);
+	var element1 = document.createElement("input");
+	element1.type = "checkbox";
+	element1.name="chkbox[]";
+	cell1.appendChild(element1);
+
+
+	var cell2 = row.insertCell(1);
+	var element2 = document.createElement("input");
+	element2.type = "text";
+	element2.name = "State";
+	element2.setAttribute('class',"form-control");
+	cell2.appendChild(element2);
+	
+	
+	var cell3 = row.insertCell(2);
+    var element3 = document.createElement("select");
+    element3.setAttribute("name", "mySelect" + i);
+    element3.setAttribute("id", "mySelect" + i);
+    
+    option = document.createElement("option");
+    option.setAttribute("value", "1");
+    option.innerHTML = "1";
+    element3.appendChild(option);
+
+    option = document.createElement("option");
+    option.setAttribute("value", "2");
+    option.innerHTML = "2";
+    element3.appendChild(option);
+    
+    option = document.createElement("option");
+    option.setAttribute("value", "3");
+    option.innerHTML = "3";
+    element3.appendChild(option);
+    
+    option = document.createElement("option");
+    option.setAttribute("value", "4");
+    option.innerHTML = "4";
+    element3.appendChild(option);
+    
+    option = document.createElement("option");
+    option.setAttribute("value", "5");
+    option.innerHTML = "5";
+    element3.appendChild(option);
+    
+    option = document.createElement("option");
+    option.setAttribute("value", "6");
+    option.innerHTML = "6";
+    element3.appendChild(option);
+    
+    option = document.createElement("option");
+    option.setAttribute("value", "7");
+    option.innerHTML = "7";
+    element3.appendChild(option);
+    
+    option = document.createElement("option");
+    option.setAttribute("value", "8");
+    option.innerHTML = "8";
+    element3.appendChild(option);
+    
+    option = document.createElement("option");
+    option.setAttribute("value", "9");
+    option.innerHTML = "9";
+    element3.name="Note";
+    element3.appendChild(option);
+    
+    cell3.appendChild(element3);
+    
+    
+	var cell4 = row.insertCell(3);
+	var element4 = document.createElement("input");
+	element4.type = "text";
+	element4.name = "ExampleVariety";
+	element4.setAttribute('class',"form-control");
+	cell4.appendChild(element4);
+	
+	var cell5 = row.insertCell(4);
+	var element5 = document.createElement("input");
+	element5.id='fname'+(rowCount-1);
+	var el = element5.id;
+	element5.type = "file";
+	element5.name = "fileUpload";
+	element5.setAttribute('class',"form-control validateFile");
+	cell5.appendChild(element5);
+
+	 
+}
+$(document).on('change','.validateFile',function(){
+	var id = this.id;
+	uploadfilechk2(id);
+    validatePDF(this);
+	//console.log(filename);
+});
+
+function deleteRow(tableID) {
+	try {
+	var table = document.getElementById(tableID);
+	var rowCount = table.rows.length;
+
+	for(var i=0; i<rowCount; i++) {
+		var row = table.rows[i];
+		var chkbox = row.cells[0].childNodes[0];
+		if(null != chkbox && true == chkbox.checked) {
+			table.deleteRow(i);
+			rowCount--;
+			i--;
+		}
+
+
+	}
+	}catch(e) {
+		alert(e);
+	}
+}
+
+</script>
+  
+    <script type="text/javascript">
+   function GetCropName()
+  {
+       var cropgroup= document.getElementById("cropgroupname");
+       var cropname=document.getElementById("cname");
+       var cropname1=$("#cname");
+       if(cropgroup.value != null)	
+       	$.ajax({
+               type: "POST",
+               url: "/ppvfra/getCropName",
+               data: 'cropgroupname='+cropgroup.value,
+               dataType:"json",
+               success: function (response) {
+               	
+              cropname1.empty().append('<option selected="selected" value="">Please select</option>');
+                for(var k=0;k<response.length;k++)
+     	  {
+     	  var opt = response[k];
+     	   var el = document.createElement("option");
+     	   el.textContent = opt[1];
+     	   el.value = opt[0];
+     	   cropname.appendChild(el);
+     	}
+               },
+               failure: function (response) {
+                   alert(response.responseText);
+               },
+               error: function (response) {
+                   alert(response.responseText);
+               }
+      });
+   	
+   }
+ </script>
+ 
+ <script type="text/javascript">
+        function uploadfilechk2(argument) {
+        	filename = document.getElementById(argument).files[0].name;    
+             //alert(filename);
+			
+			var iFileSize =  document.getElementById(argument).files[0].size;
+        //alert(iFileSize);
+          
+      
+        	
+            $.ajax({
+                type: "POST",
+                url: "/ppfvra/api/filesizecheck",
+                data:'filename='+filename+'&filesize='+iFileSize,
+               
+                success: function (data) {
+
+               if(data == false)
+				{ 
+            	   //errName.html("
+        //document.getElementById("docuploaderror2").innerHTML = " <font color='red'>File size is greater than maximum allowed size of 500 KB.</font>";
+        alert("File size is greater than maximum allowed size of 500 KB.");
+        var tst=document.getElementById(argument);
+        		tst.value='';
+        $("#gotosub1").attr("disabled", true);
+         return false;
+                }
+			else if (data == true) {
+				document.getElementById("docuploaderror2").innerHTML = " ";
+				$("#gotosub1").attr("disabled", false);
+				return true;
+                    }
+                   
+                }
+            }); 
+                }         
+    </script>
+     
+  <script type="text/javascript">
+        function uploadfilechk1() {
+           var filename = document.getElementById('fname').files[0].name;    
+            //alert(filename);
+			
+			var iFileSize = document.getElementById('fname').files[0].size;
+           // alert(iFileSize);
+            
+            $.ajax({
+                type: "POST",
+                url: "/ppfvra/api/filesizecheck",
+                data:'filename='+filename+'&filesize='+iFileSize,
+               
+                success: function (data) {
+
+               if(data == false)
+				{ 
+        document.getElementById("docuploaderror2").innerHTML = " <font color='red'>File size is greater than maximum allowed size of 500 KB.</font>";
+        var tst=document.getElementById('fname');
+        		tst.value='';
+        $("#gotosub1").attr("disabled", true);
+         return false;
+                }
+			else if (data == true) {
+				document.getElementById("docuploaderror2").innerHTML = " ";
+				$("#gotosub1").attr("disabled", false);
+			     return true;
+                    }
+                   
+                }
+            }); 
+            
+  }
+    </script>
+    
+    <script>
+var formOK = false;
+
+function validatePDF(objFileControl){
+ var file = objFileControl.value;
+ var len = file.length;
+ var ext = file.slice(len - 4, len);
+ if(ext.toUpperCase() == ".PDF" || ext.toUpperCase() == ".PNG" || ext.toUpperCase() == ".JPG" || ext.toUpperCase() == ".GIF"){
+   formOK = true;
+ }
+ else{
+   formOK = false;
+   objFileControl.value =null;
+   alert("Only PDF/PNG/JPG/GIF files allowed.");
+ }
+}
+</script>
+
+
+
+ <script type = "text/javascript">
+      function validateform() {
+         if (document.getElementById("radio1").checked == true) {
+				return true;
+        	  }
+         else if(document.getElementById("radio2").checked == true) {
+        	    return true;
+        	  }
+         else {
+        		  document.getElementById("radiocheckerror").innerHTML="Must select a option";
+                  document.getElementById("radio1").focus() ;
+        	    return false;
+        	  }
+      }
+</script>
+
+
+<script type = "text/javascript">
+      function validateform1() {
+         if (document.getElementById("radio3").checked == true) {
+				return true;
+        	  }
+         else if(document.getElementById("radio4").checked == true) {
+        	    return true;
+        	  }
+         else {
+        		  document.getElementById("radiocheckerror2").innerHTML="Must select a option";
+                  document.getElementById("radio3").focus() ;
+        	    return false;
+        	  }
+      }
+</script>
+
+</body>
+</html>

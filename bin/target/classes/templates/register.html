@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+	<head>
+		 <th:block th:include="fragments/headerlibs.html :: headerlibs"> </th:block> 
+		
+		<style>
+				.dashboard_enrollment{
+				  background: #f7f7f7;
+				  padding: 40px 15px;
+				  min-height: 200px;
+				  font-size: 24px;
+				  text-align: center;
+				  border: 1px solid #3e7205;
+				  color: #3e7205;
+				}
+			  
+				.dashboard_enrollment:hover{
+				  -moz-box-shadow: 0 1px 20px 3px #A39EA0; 
+				  -webkit-box-shadow: 0 1px 20px 3px #A39EA0;
+				  box-shadow: 0 1px 20px 3px #a29ea0;
+				  border: 1px solid rgba(154, 151, 152, 0.18);
+				}
+			  
+				.hover_effect{
+				  border-color:none !important;
+				  -moz-transition:all 0.2s ease-in;
+				  -webkit-transition:all 0.2s ease-in;
+				  transition:all 0.2s ease-in;
+				}
+			  
+				.dashboard_enrollment:hover .hover_effect{
+				  /* background-color:#0b9292; */
+				  background-color:#92620E;
+				 
+				}
+			  
+				.padding-top-50{
+				  padding-top:50px;
+				}
+			  
+				.padding-top-prcb{
+				  padding-top:84px;
+				}
+			  </style>	
+	</head>
+	
+	<body>
+		<header th:insert="fragments/header.html :: header"> </header>
+
+			<br>
+			<br>
+			<div class="container">
+					<div class="row">
+							<div class="col-md-12">
+							  <div class="col-md-4 col-sm-4 col-xs-12">
+								<div class="pricing">
+								  <div class="x_content">
+									<div class="">
+									  <div class=" dashboard_enrollment">
+										   <strong>Company Registration</strong>
+										   <div class="padding-top-50">
+										   <a href="/CompanyRegistration" class="btn btn-success waves-effect waves-light w-lg m-b-5 hover_effect"> Register </a>
+										   </div>
+										  
+									  </div>
+									</div>
+								  </div>
+								</div>
+							  </div>
+							  
+							  <div class="col-md-4 col-sm-4 col-xs-12">
+								<div class="pricing">
+								  <div class="x_content">
+									<div class="">
+									  <div class=" dashboard_enrollment">
+										   <strong> Institution Registration</strong>
+										   <div class="padding-top-50">
+											<a href="/InstitutionRegistration" class="btn btn-success waves-effect waves-light w-lg m-b-5 hover_effect"> Register </a>
+										   </div>
+										  
+									  </div>
+									</div>
+								  </div>
+								</div>
+							  </div>
+							  
+							  <div class="col-md-4 col-sm-4 col-xs-12">
+								<div class="pricing">
+								  <div class="x_content">
+									<div class="">
+									  <div class=" dashboard_enrollment">
+										   <strong> Applicant Registration</strong>
+										  <div class="padding-top-50">
+											<a href="/ApplicantRegistration" class="btn btn-success waves-effect waves-light w-lg m-b-5 hover_effect"> Register </a>
+										  </div>
+										   
+									  </div>
+									</div>
+								  </div>
+								</div>
+							  </div>
+							  
+							</div>
+						  </div>
+			</div>
+	
+
+	<section class="p_40" data-bg-color="#eee">
+		<div class="container">
+			<div class="row">
+				<div class="col-md-12">
+					<div class="clients-carousel owl-carousel owl-theme">
+						<div class="item">
+							<div class="img-box">
+								<img src="img/clients/logo-1.png" alt="">
+							</div>
+						</div>
+						<div class="item">
+							<div class="img-box">
+								<img src="img/clients/logo-2.png" alt="">
+							</div>
+						</div>
+						<div class="item">
+							<div class="img-box">
+								<img src="img/clients/logo-3.png" alt="">
+							</div>
+						</div>
+						<div class="item">
+							<div class="img-box">
+								<img src="img/clients/logo-4.png" alt="">
+							</div>
+						</div>
+						<div class="item">
+							<div class="img-box">
+								<img src="img/clients/logo-5.png" alt="">
+							</div>
+						</div>
+						<div class="item">
+							<div class="img-box">
+								<img src="img/clients/logo-6.png" alt="">
+							</div>
+						</div>
+						<div class="item">
+							<div class="img-box">
+								<img src="img/clients/logo-7.png" alt="">
+							</div>
+						</div>
+						<div class="item">
+							<div class="img-box">
+								<img src="img/clients/logo-8.png" alt="">
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</section>
+	
+	<!--  Include footer -->
+	<div th:replace="fragments/footer.html :: footer"></div>
+	<div th:replace="fragments/footerlibs.html :: footerlibs"></div>
+</body>
+</html>

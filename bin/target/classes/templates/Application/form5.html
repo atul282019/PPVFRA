@@ -1,0 +1,186 @@
+
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+	<div th:fragment="formfive">
+
+	
+<form class="form-horizontal" role="form" name="formv" th:action="@{/saveapplicationformv}" th:object="${applications}" method="post" enctype="multipart/form-data" onsubmit = "return validateformv()" ><!--form_5 start -->  
+														<div class="form-group">
+															<label><h4>5.Type of variety(see in chapter III of the protection of plant varieties and farmers' Right Authority,2003):</h4></label>
+														</div>
+														<div class="form-group">
+															<label class="col-md-3 control-label"></label>
+															<div class="col-md-9">
+																<input class="other-12" type="radio" th:field="*{varirtytypeid}" value="1">NEW VARIETY<br>
+																<input type="radio" class="extant" th:field="*{varirtytypeid}" value="2">EXTANT VARIETY<br>
+															<span id="radio1error" style="color:red"></span>
+															</div>
+															
+														</div>
+														<div class="form-group variety-knowledge" style="margin-left:35px;">
+															<label class="col-md-3 control-label"></label>
+															<div class="col-md-9">
+																<input class="" type="radio"  th:field="*{subvarietytypeid}" value="1">Notified Under Section 5 of Seeds Act, 1966
+															</div>
+														</div>
+														<div class="form-group other-1 variety-knowledge" style="margin-left:35px;">
+															<label class="col-md-3 control-label"></label>
+															<div class="col-md-9">
+																<input type="radio" th:field="*{subvarietytypeid}" value="2">VCK (Variety of Common Knowledge)
+															<span id="notifiederror" style="color:red"></span>
+															</div>
+														</div>
+														<hr/>
+														<div class="variety-knowledge-1">
+														<div class="form-group">
+															<label class="col-md-3 control-label">Date of Notification</label>
+															<div class="col-md-6">
+																<input type="date" class="form-control" name="date_notification" th:value="*{#dates.format(date_notification,'yyyy-MM-dd')}">
+															     <span id="notificationdateerror" style="color:red"></span>
+															
+															</div>
+														</div>
+														
+														<div class="form-group">
+															<label class="col-md-3 control-label">Notification Number </label>
+															<div class="col-md-6">
+																<input type="text" class="form-control"  th:field="*{notification_number}" value="">
+																<span id="notificationnoerror" style="color:red"></span>
+															</div>
+														</div>
+														
+														<div class="form-group">
+															<label class="col-md-3 control-label">Upload Copy of Notification </label>
+															<div class="col-md-6">
+																<input type="file" id="file1" name="notificationfile" class="form-control" th:onchange="'validatePDF(this)'">
+																<span id="file1error" style="color:red"></span>
+															</div>
+														</div>
+														
+														<div class="form-group">
+															<label class="col-md-3 control-label">Upload Release Proposal</label>
+															<div class="col-md-6">
+																<input type="file" id="fileupload2" name="proposalfile" class="form-control" th:onchange="'validatePDF(this)'">
+																 <span id="file2_uploaderror" style="color:red"></span>
+															</div>
+														</div>
+														</div>
+														
+														<div class="form-group" th:if="${appstatus ==1}">
+															<div class="col-sm-offset-10 col-sm-12">
+															
+															    <input type="hidden" id="applicationidfromv" name="applicationidfromv" th:value="*{id}">
+																<input type="hidden" id="applicantidformv" name="applicantidformv"  th:value="${userapplicant[0]}">
+																<input type="hidden" id="applicanttypeidformv" name="applicanttypeidformv" th:value="*{applicanttypeid}" />
+																
+																<button type="submit" id="btnsave" class="btn btn-info waves-effect waves-light">Save</button>
+																<button type="submit" id="btnnext" class="btn btn-info waves-effect waves-light">Next</button>
+															</div>
+														</div>
+														
+													</form>
+<script type = "text/javascript">
+      function validateformv() {  
+         if (document.getElementById("varirtytypeid1").checked == true) {
+             return true;
+        	  }
+         else if (document.getElementById("varirtytypeid2").checked == true) {
+        	     if (document.getElementById("subvarietytypeid1").checked == true) {
+        	    	 if (document.formv.date_notification.value == "")
+        	    		 {
+        	    		 document.getElementById("notificationdateerror").innerHTML="please select date";
+                         document.formv.date_notification.focus() ;
+                         return false;
+        	    		 }
+	        	    	 else if(document.formv.notification_number.value == ""){
+	        	    		 document.getElementById("notificationnoerror").innerHTML="notification can't be null";
+	                         document.formv.notification_number.focus() ;
+	                         return false;
+	        	    	 }
+	        	    	 else if( document.getElementById("file1").value == "" ) 
+		             	    {
+		                 	    if(document.getElementById("file1").files.length === 0){
+		                 	        document.getElementById("file1").focus();
+		                 	        document.getElementById("file1error").innerHTML="field can't be blank";
+		                 	        return false;
+		                 	    }
+		                     
+		                      return false;
+		                   }
+	        	    	 else if( document.getElementById("fileupload2").value == "" ) 
+		             	    {
+		                 	    if(document.getElementById("fileupload2").files.length === 0){
+		                 	        document.getElementById("fileupload2").focus();
+		                 	        document.getElementById("file2_uploaderror").innerHTML="field can't be blank";
+		                 	        return false;
+		                 	    }
+		                     
+		                      return false;
+		                   }
+	        	    	/*  else if(document.getElementById("file2").value == "" ) 
+	             	    {
+	        	    		 alert("test"+document.getElementById("file2").value == "");
+	                 	    if(document.getElementById("file2").files.length === 0){
+	                 	    	alert("test"+document.getElementById("file2").files.length === 0);
+	                 	        document.getElementById("file2").focus();
+	                 	      document.getElementById("file2error").innerHTML="field can't be blank"; 
+	                 	        return false;
+	                 	    }
+	                     
+	                      return false;
+	                   } */
+	        	    	 else{
+	             	    	 	document.getElementById("notifiederror").innerHTML="";
+		             	    	document.getElementById("notificationdateerror").innerHTML="";
+		             	    	document.getElementById("radio1error").innerHTML="";
+		             	    	document.getElementById("notificationnoerror").innerHTML="";
+		                        
+	               	    		return true;
+	               	    		
+	             	    } 
+                    return true;
+                    }
+        	    
+        	    else if(document.getElementById("subvarietytypeid2").checked == true){
+        	    	return true;
+        	    }
+        	    else{
+        	    	document.getElementById("notifiederror").innerHTML="please select one";
+                    document.getElementById("varirtytypeid1").focus() ;
+          	    return false;
+        	    }
+        	    return true;
+        	  }
+           else {
+        		  document.getElementById("radio1error").innerHTML="please select Variety";
+                  document.getElementById("subvarietytypeid1").focus() ;
+        	    return false;
+        	  }
+      }
+</script>
+
+<script type="text/javaScript">
+
+var formOK = false;
+function validatePDF(objFileControl){
+ var file = objFileControl.value;
+ var len = file.length;
+ var ext = file.slice(len - 4, len);
+ if(ext.toUpperCase() == ".PDF" || ext.toUpperCase() == ".PNG" || ext.toUpperCase() == ".JPG" || ext.toUpperCase() == ".GIF"){
+   formOK = true;
+ }
+ else{
+	 $("#gotosubattach").attr("disabled", true);
+	 formOK = false;
+   objFileControl.value =null;
+   alert("Only PDF/PNG/JPG/GIF files allowed.");
+ }
+}
+</script>
+
+
+
+
+	</div>
+	</html>

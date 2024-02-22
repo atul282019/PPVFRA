@@ -1,0 +1,1130 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<div th:fragment="short_term_storage">
+<span th:if="${ShortTermStorage != null && ShortTermStorage == 'ShortTermStorage' }"> 
+
+<div role="tabpanel" class="form-group table-responsive" id="drug">
+	 <div class="table-responsive">
+	 <div class="panel panel-success">
+	<div class="panel-heading">Short-term Storage Seeds/ Planting Details</div>
+	<div class="panel-body">
+		
+		<div class="form-group">
+          <label class="col-md-2 control-label" ></label>
+         </div>
+                  
+         <div class="form-group">
+			<label class="col-md-2 control-label" > </label>
+				<div class="col-md-10">
+				<input type="text" id="applicationid" th:name="applicationid"  th:value="${applicationid}"  hidden="true" />
+       			</div>
+		</div>         
+                                 
+		<div class="form-group">
+		<div class="table-responsive col-sm-12">
+		
+	<table id="tdata" class="table table-striped  table-bordered table-hover">
+<!--Table head-->
+<thead>
+   <tr>
+     <th>S.No</th>
+     <th>Line Type</th>
+     <th>SeedOrPlant</th>
+     <th>Date of Submission</th>
+	<th>Seeds Requirement as per guidelines</th>
+    <th>Approx weight of packet</th>
+    <th>Quantity of seeds(g)</th>
+    <th>Number of packets</th>
+	<th>Moisture %</th>
+	<th>Germination %</th>
+	<th>Purity %</th>
+	<!-- <th>Action</th> -->
+	<th>PDF Uploaded</th>
+ </tr>
+    </thead>
+						
+						
+						
+	<tbody>
+
+	<tr class="table-info">
+	</tr>
+	</tbody>
+	</table> 
+		
+		</div>
+		</div>
+	</div>
+	</div>
+	<script src="https://code.jquery.com/jquery-1.9.1.min.js"></script>
+	 <script type="text/javascript"  th:inline="javascript">
+	 $(document).ready(function() {
+		 var applicationid = ''+[[${applicationid}]]+''; 
+		 //alert(applicationid);
+		populatedata(applicationid);	 
+	});
+ </script> 
+ <script>
+   function populatedata(applicationid) {  
+  var tabledata=$("#tdata");
+  if(applicationid != null)		 
+  	$.ajax({
+          type: "POST",
+          url: "/ppvfra/getdatasaved",
+          data:applicationid,
+          success: function (response) {
+
+        	  $("#tdata tbody").html(''); 
+              for (var i=0;i<response.length;i++)
+          	{
+              	
+            	  if(response[i][1] !=null)
+            	  var str = response[i][1].toString();
+              	
+              	if(response[i][8] !=null)
+              	var linetype = response[i][8].toString();
+              	if(linetype !=null)
+              		{
+              	if(linetype =="4"){linetype ="Candidate Variety";}
+              	else if(linetype =="3"){linetype ="R Line";}
+              	else if(linetype =="1"){linetype ="A Line";}
+              	else if(linetype =="2"){linetype ="B Line";}
+              		}
+              	
+              	var count= i+1;
+               
+              	if(response[i][0] !=null)
+                var zerof = response[i][0].toString();
+              	else var zerof ='';
+              	
+              	if(response[i][2] !=null)
+              	var secondf = response[i][2].toString();
+            	else var secondf ='';
+              	
+              	if(response[i][9] !=null)
+                var ninef = response[i][9].toString();
+              	else var ninef ='';
+              	
+              	if(response[i][3] !=null)
+                var thirdf = response[i][3].toString();
+              	else var thirdf ='';
+              	
+              	
+              	if(response[i][4] !=null)
+                var fourf = response[i][4].toString();
+              	else var fourf ='';
+              	
+              	if(response[i][5] !=null)
+                var fivef = response[i][5].toString();
+              	else var fivef ='';
+              	
+              	if(response[i][6] !=null)
+                var sixf = response[i][6].toString();
+              	else var sixf ='';
+              	
+              	if(response[i][7] !=null)
+                var sevenf = response[i][7].toString();
+              	else var sevenf ='';
+              	
+              	if(response[i][10] !=null)
+                 var tenf = response[i][10].toString();
+              	else var tenf ='';
+              	
+              	if(response[i][11] !=null && response[i][11] !="" && response[i][11] !="undefined")
+                    var elevenf = response[i][11].toString();
+              	else var elevenf ='';
+              	
+              	//var html_data = '<tr><td>'+count+'</td><td>'+linetype+'</td><td>'+tenf+'</td><td>'+str+'</td><td>'+secondf+'</td><td>'+ninef+'</td><td>'+thirdf+'</td><td>'+fourf+'</td><td>'+fivef+'</td><td>'+sixf+'</td><td>'+sevenf+'</td><td><a href="/editseedplantdetails/'+zerof+'">Edit</a></td><td><a href="/ppvfra/download/'+elevenf+'" target="_blank">'+elevenf+'</a></td></tr>';
+              	var html_data = '<tr><td>'+count+'</td><td>'+linetype+'</td><td>'+tenf+'</td><td>'+str+'</td><td>'+secondf+'</td><td>'+ninef+'</td><td>'+thirdf+'</td><td>'+fourf+'</td><td>'+fivef+'</td><td>'+sixf+'</td><td>'+sevenf+'</td><td><a href="/ppvfra/download/'+elevenf+'" target="_blank">'+elevenf+'</a></td></tr>';
+              	$("#tdata tbody").append(html_data);
+              	
+          	}    
+
+    },
+        failure: function (response) {
+        alert(response.responseText);
+    },
+    error: function (response) {
+        alert(response.responseText);
+    }
+});
+}
+ </script>
+													
+												
+	 </div>
+</div>
+ 
+
+<form class="form-horizontal" role="form" th:action="@{/shorttermstorage}" th:object="${shorttermstorage}" method="post">  
+	<input type="text" id="id" th:name="id"  th:value="0"  hidden="true" />
+   			<input type="text" id="secondid" th:name="secondid" th:value="0" hidden="true" />
+   			
+		<div class="panel panel-success">
+		<div class="panel-heading">Short Term Storage</div>
+			<div class="panel-body">
+	
+		<div class="form-group">
+         <label class="col-md-2 control-label" > </label>
+          <div class="col-md-10">
+			<input type="text" id="applicationid" th:name="applicationid"  th:value="${applicationid}" readonly hidden="true" />
+          </div>
+         </div>
+		<div class="form-group">
+		<label class="col-md-3 control-label">Test Type <span style="color:red">*</span></label>
+		<div class="col-md-6">
+		<select id="test"  th:name="testtype" class="form-control" th:onchange="'javascipt:removetypelineval(this)'">
+		 <option th:value="-1" >Select</option>
+		 <option th:value="DUS">DUS Test</option>
+		<option class="test" th:value="Hybridity">Test for Hybridity</option>
+		</select>
+		<span id="test_error" style="color:red"></span>
+		</div>
+		</div>
+					
+					
+					<div class="form-group">
+						<label class="col-md-3 control-label"> Line Type <span style="color:red">*</span></label>
+						<div class="col-md-6">
+							<select onchange="getdiv();" class="form-control" name="type_line" id="type_line">
+						    <option th:value="-1" >Select</option>
+				            <option th:each="dropDownItem : ${TypeLine}"
+				               th:value="${dropDownItem.id}"
+				               th:text="${dropDownItem.code}" />
+				        	</select>
+				        	<span id="type_line_error" style="color:red"></span>
+						</div>
+					</div>
+			
+			<div class="form-group">
+				<label class="col-md-3 control-label"><!--Select DUS Test Center 1--> Year <span style="color:red">*</span></label>
+				<div class="col-md-6">
+					<select th:field="*{year}" class="form-control" th:onchange="'typelinetransfersts(\''+${applicationid}+'\',this)'">
+						<option th:value="-1" >Select</option>
+						<option th:value="2011">2011</option>
+						<option th:value="2012">2012</option>
+						<option th:value="2013">2013</option>
+						<option th:value="2014">2014</option>
+						<option th:value="2015">2015</option>
+						<option th:value="2016">2016</option>
+						<option th:value="2017">2017</option>
+						<option th:value="2018">2018</option>
+						<option th:value="2019">2019</option>
+						<option th:value="2020">2020</option>
+						<option th:value="2021">2021</option>
+						<option th:value="2022">2022</option>
+						<option th:value="2023">2023</option>
+						<option th:value="2024">2024</option>
+						<option th:value="2025">2025</option>
+						<option th:value="2026">2026</option>
+						<option th:value="2027">2027</option>
+					</select>
+					<span id="year_error" style="color:red"></span>
+				</div>
+			</div>
+
+		<div class="form-group">
+			<label class="col-md-3 control-label">Season <span style="color:red">*</span></label>
+			<div class="col-md-6">
+				<select th:field="*{season}" class="form-control">
+					<option th:value="1">Kharif Crops</option>
+					<option th:value="2">Rabi Crops</option>
+					<option th:value="3">Summer/Spring</option>
+				</select>
+				<span id="season_error" style="color:red"></span>
+			</div>
+		</div>
+		
+		<div class="form-group">
+						<label class="col-md-3 control-label"> Lead center <span style="color:red">*</span></label>
+						<div class="col-md-6">
+							<select  th:field="*{lead_center}" class="form-control">
+						    <option th:value="-1" >Select</option>
+				            <option th:each="dropDownItem : ${lc_center}"
+				               th:value="${dropDownItem[0]}"
+				               th:text="${dropDownItem[1]}" />
+				        	</select>
+				        	<span id="lead_center_error" style="color:red"></span>
+						</div>
+					</div>
+		<div class="test-hybridity">
+																
+			<div class="form-group">
+				<label class="col-md-3 control-label">Seed sent <span style="color:red">*</span></label>
+				<div class="col-md-6">
+					<input type="text" name="seed_sent_to_leadcenter" id="seed_sent_to_leadcenter" class="form-control" value="">
+					<span id="seed_sent_to_leadcenter_error" style="color:red"></span>
+				</div>
+			</div>
+			
+				<div class="form-group">
+						<label class="col-md-3 control-label">  COP Center <span style="color:red">*</span></label>
+						<div class="col-md-6">
+							<select  th:field="*{coopcenter}"  class="form-control">
+						    <option th:value="-1" >Select</option>
+				            <option th:each="dropDownItem : ${cnc_center}"
+				               th:value="${dropDownItem[0]}"
+				               th:text="${dropDownItem[1]}" />
+				        	</select>
+				        	<span id="coopcenter_error" style="color:red"></span>
+						</div>
+					</div>
+			
+			<div class="form-group">
+				<label class="col-md-3 control-label">Seed sent <span style="color:red">*</span></label>
+				<div class="col-md-6">
+					<input type="text" id="seed_sent_to_coopcenter"  th:name="seed_sent_to_coopcenter" class="form-control" value="">
+					<span id="seed_sent_to_coopcenter_error" style="color:red"></span>
+				</div>
+			</div>
+		</div>
+		
+		 <div class="test-dus">
+			<div class="form-group">
+				<label class="col-md-3 control-label">Seed sent <span style="color:red">*</span></label>
+				<div class="col-md-6"  id="id_div1">
+					<!-- <span>A Line (female) </span> -->
+					<input type="text" class="form-control" name="seed_sent_to_leadcenter1" id="seed_sent_to_leadcenter1" value="">
+					<span id="seed_sent_to_leadcenter1_error" style="color:red"></span>
+				</div>
+			</div>
+		</div> <!-- sample -->
+		
+		<div class="form-group">
+			<label class="col-md-3 control-label">Cell/Location <span style="color:red">*</span></label>
+			<div class="col-md-6">
+				<input type="text" th:field="*{cell_location}" name="cell_location" class="form-control" value="">
+				<span id="cell_location_error" style="color:red"></span>
+			</div>
+		</div>
+			
+			
+	
+		
+		<div class="form-group">
+			<label class="col-md-3 ">Mode of Delivery <span style="color:red">*</span> </label>
+			<div class="col-md-6">
+				<input class="received" type="radio" th:field="*{mode_of_delivery}" name="radio" value="manual" onclick="delivery_mode(this.value);">Manual &nbsp;
+				<input class="oppositionn-1" type="radio" th:field="*{mode_of_delivery}" name="radio" value="speed_post" onclick="delivery_mode(this.value);">Speed Post
+				<span id="mode_of_delivery_error" style="color:red"></span>
+			</div>
+		</div>
+
+		
+		<div class="speed_post-select">
+		
+			 <div class="form-group">
+				<label class="col-md-3 control-label">Speed post no <span style="color:red">*</span> </label>
+				<div class="col-md-6">
+					<input type="text" id="speedpost_no"  th:name="speedpost_no" class="form-control">
+					<span id="speedpost_no_error" style="color:red"></span>
+				</div>
+			</div> 
+														
+			
+			
+			 <div class="form-group">
+				<label class="col-md-3 control-label">Tracking <span style="color:red">*</span> </label>
+				<div class="col-md-6">
+					<input type="text" id="tracking"  th:name="tracking" class="form-control">
+					<span id="tracking_error" style="color:red"></span>
+				</div>
+			</div> 
+		
+		</div>
+		
+		<div class="form-group">
+			<label class="col-md-3 control-label">Date of seed sent <span style="color:red">*</span> </label>
+			<div class="col-md-6">
+				<input type="date" id="dateof_seadsent" th:name="dateof_seadsent" class="form-control" value="">
+				<span id="dateof_seadsent_error" style="color:red"></span>
+			</div>
+		</div>
+		<div  class="test-hybridity">
+		<div class="form-group">
+			<label class="col-md-3 control-label">Additional seed <span style="color:red">*</span> </label>
+			<div class="col-md-6">
+				<input type="text" id="additional_seed"  th:name="additional_seed" class="form-control" >
+				<span id="additional_seed_error" style="color:red"></span>
+			</div>
+		</div>
+		</div>
+		 <div class="test-dus">
+			<div class="form-group">
+				<label class="col-md-3 control-label">Additional Seed <span style="color:red">*</span> </label>
+				<div class="col-md-6"  id="id_div11">
+					<!-- <span>A Line (female) </span> -->
+					<input type="text" class="form-control"  name="additional_seed1" id="additional_seed1" value="">
+					<span id="additional_seed1_error" style="color:red"></span>
+				</div>
+				
+			</div>
+		</div> 
+		
+		<div class="form-group">
+			<label class="col-md-3 ">Date of Additional Seed Sent <span style="color:red">*</span> </label>
+			<div class="col-md-6">
+				<input type="date"  name="dateof_additional_seadsent" id="dateof_additional_seadsent" class="form-control" value="">
+				<span id="dateof_additional_seadsent_error" style="color:red"></span>
+			</div>
+		</div>
+		
+													
+	
+	<!--dicard-->
+	
+	<div class="test-hybridity">
+															
+		<div class="form-group">
+			<label class="col-md-3 control-label">Seeds Discarded <span style="color:red">*</span></label>
+			<div class="col-md-6">
+				<input type="text"  name="seed_discarded" id="seed_discarded" class="form-control" value="">
+				<span id="seed_discarded_error" style="color:red"></span>
+			</div>
+		</div>
+		
+		 <div class="form-group">
+			<label class="col-md-3 control-label">Date of Discard <span style="color:red">*</span></label>
+			<div class="col-md-6">
+				<input type="date" name="date_of_discard" id="date_of_discard" class="form-control"  >
+				<span id="date_of_discard_error" style="color:red"></span>
+			</div>
+		</div> 
+		
+		<div class="form-group">
+			<label class="col-md-3 control-label">Reasons <span style="color:red">*</span> </label>
+			<div class="col-md-6">
+				<input type="text"  name="reason_of_discard" id="reason_of_discard" class="form-control"  >
+				<span id="reason_of_discard_error" style="color:red"></span>
+			</div>
+		</div>
+		
+	</div>
+	
+
+			<div class="test-dus">
+		<div class="form-group">
+			<label class="col-md-3 control-label">Seeds Discarded <span style="color:red">*</span></label>
+			<div class="col-md-6" id="id_div111">
+				<!-- <span>A Line (female) </span> -->
+				<input type="text" class="form-control" name="seed_discarded1" id="seed_discarded1" value="">
+				<span id="seed_discarded1_error" style="color:red"></span>
+			</div>
+		</div>
+		
+		<div class="form-group">
+			<label class="col-md-3 control-label">Date of Discard <span style="color:red">*</span></label>
+			<div class="col-md-6" id="id_div1111">
+				<!-- <span>A Line (female) </span> -->
+				<input type="date" class="form-control" name="date_of_discard1" id="date_of_discard1" value="">
+				<span id="date_of_discard1_error" style="color:red"></span>
+			</div>
+					 
+		</div>
+		
+		<div class="form-group">
+			<label class="col-md-3 control-label">Reasons <span style="color:red">*</span> </label>
+			<div class="col-md-6"  id="id_div11111">
+				<!-- <span>A Line (female) </span> -->
+				<input type="text" class="form-control" th:name="reason_of_discard1" th:id="reason_of_discard1" value="">
+				<span id="reason_of_discard1_error" style="color:red"></span>
+			</div>
+		
+		</div>
+	</div>	
+		
+		<!--dicard-->
+		
+		
+		<div class="form-group">
+		<!-- <span th:if="${role_granted != 'Super Administrator' && role_granted != 'PPVFRA Admin'}">
+		 -->
+		 <span>
+		 <span th:if="${sub7 == 'addpresent'}">
+			<button type="submit" id="btnsubmit1" name="btnsubmit1" onclick = "return validate_short_terms_storage_Form();" value="btnsubmit1" class="btn btn-danger pull-right" style="display: block;  border-radius:5px;height: 32px; padding: 5px; position:relative; right:14px; border-left: none;">Add</button>
+		</span>
+		</span>
+		</div>
+		
+		<div class="table-responsive">
+			<table class="table table-striped  table-bordered table-hover">
+				<!--Table head-->
+				<thead>
+					<tr>
+						<th>Sr. no.</th>
+						<th>Test type</th>
+						<th>Year</th>
+						<th>Season</th>
+						<th>Lead center</th>
+						<th>Seed sent</th>
+						<th>COP Center</th>
+						<th>Seed sent</th>
+						<th>Date of seed sent</th>
+						<th>Speed post no</th>
+						<th>Tracking</th>
+						<th>Additional seed</th>
+						<th>Action</th>
+					</tr>
+				</thead>
+				<!--Table head-->
+
+				<!--Table body-->
+				<tbody>
+					<tr class="table-info" th:each="data,serial : ${details}">
+						 
+						<td th:text="${serial.count}"></td>
+						<td th:text="${data[4]}"></td>
+						<td th:text="${data[5]}"></td>
+						<td th:text="${data[6]}"></td>
+						<td th:text="${data[16]}"></td>
+						<td th:text="${data[8]}"></td>
+						<td th:text="${data[17]}"></td>
+						<td th:text="${data[10]}"></td>
+						<td th:text="${#dates.format(data[11],'yyyy-MM-dd')}"></td>
+						<td th:text="${data[12]}"></td>
+						<td th:text="${data[13]}"></td>
+						<td th:text="${data[14]}"></td> 
+						  
+						<div th:if="${data[4] == 'DUS'}">
+						<td><a th:href="@{'/editshorttermstorage/'+${data[0]}+'/'+${applicationid}+'/'+${data[1]}}">Edit</a></td>
+						</div>
+						<div th:unless="${data[4] == 'DUS'}">
+						<!-- <div th:if="${data[4] == 'Hybridity'}"> -->
+						<td><a th:href="@{'/editshort_termstorage_hybrid/'+${data[0]}+'/'+${applicationid}+'/'+${data[1]}}">Edit</a></td>
+						</div>
+					</tr>
+					
+				</tbody>
+			<!--Table body-->
+			</table>
+			<!--Table-->
+			
+		</div>
+		
+		<hr>
+		
+		<div class="form-group">
+			<label class="col-md-3 control-label">No of Final Packets <span style="color:red">*</span></label>
+			
+			<div th:if="${ssp != null}" class="col-md-6">
+				<input type="text" th:value="${sumpackets}" name="no_of_final_packets" id="no_of_final_packets" class="form-control" >
+				<span id="no_of_final_packets_error" style="color:red"></span>
+			</div>
+			<div th:unless="${ssp != null}" class="col-md-6">
+				<input type="text" value="" th:field ="*{no_of_final_packets}" name="no_of_final_packets" id="no_of_final_packets" class="form-control" >
+			</div>
+			
+		</div>
+		
+		
+		<div class="form-group m-b-0">
+			<div class="col-sm-12">
+			<!-- <span th:if="${role_granted != 'Super Administrator' && role_granted != 'PPVFRA Admin'}">
+			 -->
+			 <span>
+			 <span th:if="${sub7 == 'addpresent'}">
+				<button type="submit" id="btnsubmit2" name="btnsubmit2" onclick="return validate_short_term_packet();" value="btnsubmit2" class="btn btn-info waves-effect waves-light">Save</button>
+			</span>
+			</span>
+			</div>
+		</div>
+		
+		
+		<br>    
+			
+		</div>
+		</div>
+		
+		
+		
+		
+		<script type="text/javascript">
+		function removetypelineval(that)
+		  {
+		       var typeline= document.getElementById("test");
+		       var tval = that.value;
+		       var tpl1=$("#type_line");
+		       var tpl=document.getElementById("type_line");
+		       if(that.value != null)	
+		       	$.ajax({
+		               type: "POST",
+		               url: "/ppvfra/gettypeline",
+		               data: 'typeline='+tval,
+		               dataType:"json",
+		               success: function (response) {
+		               	
+		         tpl1.empty().append('<option selected="selected" value="-1">Please select</option>');
+		      for(var k=0;k<response.length;k++)
+		     	  {
+		     	  var opt = response[k];
+		     	   var el = document.createElement("option");
+		     	   el.textContent = opt[1];
+		     	   el.value = opt[0];
+		     	  tpl.appendChild(el);
+																			 
+		     	}
+		 
+		 
+		               },
+		               failure: function (response) {
+		                   alert(response.responseText);
+							  
+		               },
+		               error: function (response) {
+		                   alert(response.responseText);
+							   
+												  
+																
+		               }
+		      });
+		   	
+		   }
+		 </script>		
+		
+   <script type="text/javascript">
+		function getdiv()
+		{
+			var typelineselected = document.getElementById("type_line");
+			var selectedtext = $("#type_line option:selected");
+		//alert("Selected value is ="+typelineselected.value);
+		//alert("Selected text is ="+selectedtext.text());
+		if(typelineselected.value ==1 || typelineselected.value ==2 || typelineselected.value ==3)
+			{
+			$("#id_div1").show();
+			$("#id_div11").show();
+			$("#id_div111").show();
+			$("#id_div1111").show();
+			$("#id_div11111").show();
+			}
+			else
+			{
+				$("#id_div1").hide();
+				$("#id_div11").hide();
+				$("#id_div111").hide();
+				$("#id_div1111").hide();
+				$("#id_div11111").hide();
+			}
+		 
+		
+		}
+		</script>
+		
+		
+		
+		 <script type="text/javascript"  th:inline="javascript">
+   var dataval = [[${dataintab_sts}]];
+	function typelinetransfersts(Obj,that){
+
+// $(that).closest('form').find('input[type=submit]').attr("disabled", false);
+   $(that).closest('form').find('#btnsubmit1').attr("disabled", false);
+   $(that).closest('form').find('#btnsubmit2').attr("disabled", false);
+   
+    var typelinedata= document.getElementById("type_line");
+    var testtype= document.getElementById("test");
+    var yearsel = document.getElementById("year");
+  //  var seasonsel = document.getElementById("season");
+    
+  //  alert(""+typelinedata.value);
+  //  alert(""+testtype.value);
+  //  alert(""+yearsel.value);
+  //  alert(""+seasonsel.value);
+    
+    var response1 =null;
+  	//DOES NOT WORK
+  	//var text= typelinedata.options[typelinedata.selectedIndex].text;
+    //ENDS
+  	//var selected = $(that).val();
+  
+    var selected = $(that).closest('form').find("#type_line").val();
+
+    //	var selected = $(that).closest('form').find("#type_line  option:selected").text();
+	var text=selected;
+  
+ 
+   
+    if(Obj != null)		 
+      	$.ajax({
+              type: "POST",
+              url: "/ppvfra/getdatasaved_forsts",
+              data:Obj,
+              success: function (response) {
+
+            	for(var k=0; k< response.length ; k++)
+            		{
+            	//alert(""+k);
+            		var a = response[k][0];
+            		var b = response[k][1];
+            		var c = response[k][2];
+            		var d = response[k][3];
+            	//	alert("Printing type"+a);
+            	//	alert("Printing year"+b);
+            	////	alert("Printing season"+c);
+            	//	alert("Printing linetype"+d);
+            		if(testtype.value == a && typelinedata.value == d && yearsel.value == b)// && seasonsel.value == c)
+            			{
+            			alert("Value Already Exists.Please Select another Field Or Edit The Value Present in Table.");
+            			/*  $("#submitseedmodal").attr("disabled", true); */
+            			$(that).closest('form').find('#btnsubmit1').attr("disabled", true);
+   						$(that).closest('form').find('#btnsubmit2').attr("disabled", true);
+   						//curElement.closest('form').find(':submit');
+            			return false;
+            			}
+            		 
+            			
+            		}
+          	},
+            failure: function (response) {
+            alert(response.responseText);
+        },
+        error: function (response) {
+            alert(response.responseText);
+        }
+      	});           
+         
+    
+                  
+    
+}
+</script>
+
+	<script>
+	    function validate_short_terms_storage_Form() {
+           if( document.getElementById("test").value =="-1") {
+          	 document.getElementById("test_error").innerHTML="Please select test type";
+          	 document.getElementById("test").focus() ;
+              return false;
+           }
+           else{
+        	   document.getElementById("test_error").innerHTML="";
+           }
+           if( document.getElementById("type_line").value =="-1") {
+            	 document.getElementById("type_line_error").innerHTML="Please select line type";
+            	 document.getElementById("type_line").focus() ;
+                return false;
+             }
+             else{
+          	   document.getElementById("type_line_error").innerHTML="";
+             }
+           if( document.getElementById("year").value =="-1") {
+          	 document.getElementById("year_error").innerHTML="Please select year";
+          	 document.getElementById("year").focus() ;
+              return false;
+           }
+           else{
+        	   document.getElementById("year_error").innerHTML="";
+           }
+           if( document.getElementById("season").value =="-1") {
+            	 document.getElementById("season_error").innerHTML="Please select session";
+            	 document.getElementById("season").focus() ;
+                return false;
+             }
+             else{
+          	   document.getElementById("season_error").innerHTML="";
+             }
+           if( document.getElementById("lead_center").value =="-1") {
+          	 document.getElementById("lead_center_error").innerHTML="Please select lead center";
+          	 document.getElementById("lead_center").focus() ;
+              return false;
+           }
+           else{
+        	   document.getElementById("lead_center_error").innerHTML="";
+           }
+           
+           if(document.getElementById("test").value == "DUS")
+        	   {
+        	   
+        	   
+           if( document.getElementById("seed_sent_to_leadcenter").value =="" || document.getElementById("seed_sent_to_leadcenter").value =="") {
+          	 document.getElementById("seed_sent_to_leadcenter_error").innerHTML="Please enter seed sent to lead center";
+          	 document.getElementById("seed_sent_to_leadcenter").focus() ;
+              return false;
+           }
+           else{
+        	   document.getElementById("seed_sent_to_leadcenter_error").innerHTML="";
+           }
+           
+           if( document.getElementById("coopcenter").value =="-1") {
+          	 document.getElementById("coopcenter_error").innerHTML="Please select COP center";
+          	 document.getElementById("coopcenter").focus() ;
+              return false;
+           }
+           else{
+        	   document.getElementById("coopcenter_error").innerHTML="";
+           }
+           
+           
+           if( document.getElementById("seed_sent_to_coopcenter").value =="" || document.getElementById("seed_sent_to_coopcenter").value =="") {
+          	 document.getElementById("seed_sent_to_coopcenter_error").innerHTML="Please enter seed sent to COP center";
+          	 document.getElementById("seed_sent_to_coopcenter").focus() ;
+              return false;
+           }
+           else{
+        	   document.getElementById("seed_sent_to_coopcenter_error").innerHTML="";
+           }
+           
+           if( document.getElementById("cell_location").value =="" || document.getElementById("cell_location").value =="") {
+           	 document.getElementById("cell_location_error").innerHTML="Please enter cell location";
+           	 document.getElementById("cell_location").focus() ;
+               return false;
+            }
+            else{
+         	   document.getElementById("cell_location_error").innerHTML="";
+            }
+
+           
+           //mode of delevery manual
+           if(document.getElementById("mode_of_delivery1").checked == true || 
+        		   document.getElementById("mode_of_delivery2").checked == true)
+           {
+          
+        	   if(document.getElementById("mode_of_delivery1").checked == true) {
+          	 
+        	   if( document.getElementById("dateof_seadsent").value =="" || document.getElementById("dateof_seadsent").value ==null) {
+                	 document.getElementById("dateof_seadsent_error").innerHTML="Please select date";
+                	 document.getElementById("dateof_seadsent").focus() ;
+                    return false;
+                 }
+                 else{
+              	   document.getElementById("dateof_seadsent_error").innerHTML="";
+                 }
+        	   
+        	   if( document.getElementById("additional_seed").value =="" || document.getElementById("additional_seed").value ==null) {
+              	 document.getElementById("additional_seed_error").innerHTML="Please enter additional seed";
+              	 document.getElementById("additional_seed").focus() ;
+                  return false;
+               }
+               else{
+            	   document.getElementById("additional_seed_error").innerHTML="";
+               } 
+        	   
+        	   if( document.getElementById("dateof_additional_seadsent").value =="" ||
+        			   document.getElementById("dateof_additional_seadsent").value ==null) {
+                	 document.getElementById("dateof_additional_seadsent_error").innerHTML="Please enter date of additional seed sent";
+                	 document.getElementById("dateof_additional_seadsent").focus() ;
+                    return false;
+                 }
+                 else{
+              	   document.getElementById("dateof_additional_seadsent_error").innerHTML="";
+                 } 
+        	  
+        	   if( document.getElementById("seed_discarded").value =="" || document.getElementById("seed_discarded").value ==null) {
+              	 document.getElementById("seed_discarded_error").innerHTML="Please enter seeds discarded";
+              	 document.getElementById("seed_discarded").focus() ;
+                  return false;
+               }
+               else{
+            	   document.getElementById("seed_discarded_error").innerHTML="";
+               } 
+        	   
+        	   if( document.getElementById("date_of_discard").value =="" || document.getElementById("date_of_discard").value ==null) {
+              	 document.getElementById("date_of_discard_error").innerHTML="Please enter date of discard";
+              	 document.getElementById("date_of_discard").focus() ;
+                  return false;
+               }
+               else{
+            	   document.getElementById("date_of_discard_error").innerHTML="";
+               } 
+        	   
+        	   if( document.getElementById("reason_of_discard").value =="" || 
+        			   document.getElementById("reason_of_discard").value ==null) 
+        	   {
+                	 document.getElementById("reason_of_discard_error").innerHTML="Please enter region of discard";
+                	 document.getElementById("reason_of_discard").focus() ;
+                    return false;
+                 }
+                 else{
+              	   document.getElementById("reason_of_discard_error").innerHTML="";
+                 }
+        	   
+             }
+        	
+        	 //mode of delevery manual
+               
+               //start mode of delevery speed post
+                if(document.getElementById("mode_of_delivery2").checked == true) {
+             	   if( document.getElementById("speedpost_no").value =="" || document.getElementById("speedpost_no").value ==null) {
+                     	 document.getElementById("speedpost_no_error").innerHTML="Please enter speed post no";
+                     	 document.getElementById("speedpost_no").focus() ;
+                         return false;
+                      }
+                      else{
+                   	   document.getElementById("speedpost_no_error").innerHTML="";
+                      }
+             	   if( document.getElementById("tracking").value =="" || document.getElementById("tracking").value ==null) {
+                   	 document.getElementById("tracking_error").innerHTML="Please enter tracking";
+                   	 document.getElementById("tracking").focus() ;
+                       return false;
+                    }
+                    else{
+                 	   document.getElementById("tracking_error").innerHTML="";
+                    } 
+             	   if( document.getElementById("dateof_seadsent").value =="" || document.getElementById("dateof_seadsent").value ==null) {
+                     	 document.getElementById("dateof_seadsent_error").innerHTML="Please enter date seed sent";
+                     	 document.getElementById("dateof_seadsent").focus() ;
+                         return false;
+                      }
+                      else{
+                   	   document.getElementById("dateof_seadsent_error").innerHTML="";
+                      } 
+             	   if( document.getElementById("additional_seed").value =="" || document.getElementById("additional_seed").value ==null) {
+                   	 document.getElementById("additional_seed_error").innerHTML="Please enter additional seed";
+                   	 document.getElementById("additional_seed").focus() ;
+                       return false;
+                    }
+                    else{
+                 	   document.getElementById("additional_seed_error").innerHTML="";
+                    } 
+             	   if( document.getElementById("dateof_additional_seadsent").value =="" || document.getElementById("dateof_additional_seadsent").value ==null) {
+                   	 document.getElementById("dateof_additional_seadsent_error").innerHTML="Please enter additional seed sent date";
+                   	 document.getElementById("dateof_additional_seadsent").focus() ;
+                       return false;
+                    }
+                    else{
+                 	   document.getElementById("dateof_additional_seadsent_error").innerHTML="";
+                    } 
+             	   
+             	   if( document.getElementById("seed_discarded").value =="" || document.getElementById("seed_discarded").value ==null) {
+                     	 document.getElementById("seed_discarded_error").innerHTML="Please enter seed discarded";
+                     	 document.getElementById("seed_discarded").focus() ;
+                         return false;
+                      }
+                      else{
+                   	   document.getElementById("seed_discarded_error").innerHTML="";
+                      }
+             	   
+             	   if( document.getElementById("date_of_discard").value =="" || document.getElementById("date_of_discard").value ==null) {
+                   	 document.getElementById("date_of_discard_error").innerHTML="Please enter date of discard";
+                   	 document.getElementById("date_of_discard").focus() ;
+                       return false;
+                    }
+                    else{
+                 	   document.getElementById("date_of_discard_error").innerHTML="";
+                    }
+             	   if( document.getElementById("reason_of_discard").value =="" || document.getElementById("reason_of_discard").value ==null) {
+                     	 document.getElementById("reason_of_discard_error").innerHTML="Please enter resion of discard";
+                     	 document.getElementById("reason_of_discard").focus() ;
+                         return false;
+                      }
+                      else{
+                   	   document.getElementById("reason_of_discard_error").innerHTML="";
+                      }
+                  }
+                }
+                else{
+             	   document.getElementById("mode_of_delivery_error").innerHTML="Please select mode of delivery";
+             	   return false;
+                }
+
+          
+       }else
+       {
+        	    if( document.getElementById("seed_sent_to_leadcenter1").value =="" || document.getElementById("seed_sent_to_leadcenter1").value =="") {
+        	          	 document.getElementById("seed_sent_to_leadcenter1_error").innerHTML="Please enter seed sent to lead center";
+        	          	 document.getElementById("seed_sent_to_leadcenter1").focus() ;
+        	              return false;
+        	           }
+        	           else{
+        	        	   document.getElementById("seed_sent_to_leadcenter1_error").innerHTML="";
+        	           }
+        	    
+        	    if( document.getElementById("cell_location").value =="" || document.getElementById("cell_location").value =="") {
+                 	 document.getElementById("cell_location_error").innerHTML="Please enter cell location";
+                 	 document.getElementById("cell_location").focus() ;
+                     return false;
+                  }
+                  else{
+               	   document.getElementById("cell_location_error").innerHTML="";
+                  }
+
+        	    
+        	    
+        	    //mode of delevery manual
+                if(document.getElementById("mode_of_delivery1").checked == true || 
+             		   document.getElementById("mode_of_delivery2").checked == true)
+                {
+               
+             	   if(document.getElementById("mode_of_delivery1").checked == true) {
+               	 
+             	   if( document.getElementById("dateof_seadsent").value =="" || document.getElementById("dateof_seadsent").value ==null) {
+                     	 document.getElementById("dateof_seadsent_error").innerHTML="Please select date";
+                     	 document.getElementById("dateof_seadsent").focus() ;
+                         return false;
+                      }
+                      else{
+                   	   document.getElementById("dateof_seadsent_error").innerHTML="";
+                      }
+             	   
+             	   if( document.getElementById("additional_seed1").value =="" || 
+             			   document.getElementById("additional_seed1").value ==null) {
+                   	 document.getElementById("additional_seed1_error").innerHTML="Please enter additional seed";
+                   	 document.getElementById("additional_seed1").focus() ;
+                       return false;
+                    }
+                    else{
+                 	   document.getElementById("additional_seed1_error").innerHTML="";
+                    } 
+             	   
+             	   if( document.getElementById("dateof_additional_seadsent").value =="" ||
+             			   document.getElementById("dateof_additional_seadsent").value ==null) {
+                     	 document.getElementById("dateof_additional_seadsent_error").innerHTML="Please enter date of additional seed sent";
+                     	 document.getElementById("dateof_additional_seadsent").focus() ;
+                         return false;
+                      }
+                      else{
+                   	   document.getElementById("dateof_additional_seadsent_error").innerHTML="";
+                      } 
+             	  
+             	   if( document.getElementById("seed_discarded1").value =="" || 
+             			   document.getElementById("seed_discarded1").value ==null) {
+                   	 document.getElementById("seed_discarded1_error").innerHTML="Please enter seeds discarded";
+                   	 document.getElementById("seed_discarded1").focus() ;
+                       return false;
+                    }
+                    else{
+                 	   document.getElementById("seed_discarded1_error").innerHTML="";
+                    } 
+             	   
+             	   if( document.getElementById("date_of_discard1").value =="" || 
+             			   document.getElementById("date_of_discard1").value ==null) {
+                   	 document.getElementById("date_of_discard1_error").innerHTML="Please enter date of discard";
+                   	 document.getElementById("date_of_discard1").focus() ;
+                       return false;
+                    }
+                    else{
+                 	   document.getElementById("date_of_discard1_error").innerHTML="";
+                    } 
+             	   
+             	   if( document.getElementById("reason_of_discard1").value =="" || 
+             			   document.getElementById("reason_of_discard1").value ==null) 
+             	   {
+                     	 document.getElementById("reason_of_discard1_error").innerHTML="Please enter region of discard";
+                     	 document.getElementById("reason_of_discard1").focus() ;
+                         return false;
+                      }
+                      else{
+                   	   document.getElementById("reason_of_discard1_error").innerHTML="";
+                      }
+             	   
+                  }
+             	
+             	 //mode of delevery manual
+                    
+                    //start mode of delevery speed post
+                     if(document.getElementById("mode_of_delivery2").checked == true) 
+                     {
+                  	   if( document.getElementById("speedpost_no").value =="" || document.getElementById("speedpost_no").value ==null) {
+                          	 document.getElementById("speedpost_no_error").innerHTML="Please enter speed post no";
+                          	 document.getElementById("speedpost_no").focus() ;
+                              return false;
+                           }
+                           else{
+                        	   document.getElementById("speedpost_no_error").innerHTML="";
+                           }
+                  	   if( document.getElementById("tracking").value =="" || document.getElementById("tracking").value ==null) {
+                        	 document.getElementById("tracking_error").innerHTML="Please enter tracking";
+                        	 document.getElementById("tracking").focus() ;
+                            return false;
+                         }
+                         else{
+                      	   document.getElementById("tracking_error").innerHTML="";
+                         } 
+                  	   if( document.getElementById("dateof_seadsent").value =="" || document.getElementById("dateof_seadsent").value ==null) {
+                          	 document.getElementById("dateof_seadsent_error").innerHTML="Please enter date seed sent";
+                          	 document.getElementById("dateof_seadsent").focus() ;
+                              return false;
+                           }
+                           else{
+                        	   document.getElementById("dateof_seadsent_error").innerHTML="";
+                           } 
+                  	   if( document.getElementById("additional_seed1").value =="" || 
+                  			   document.getElementById("additional_seed1").value ==null) {
+                        	 document.getElementById("additional_seed1_error").innerHTML="Please enter additional seed";
+                        	 document.getElementById("additional_seed1").focus() ;
+                            return false;
+                         }
+                         else{
+                      	   document.getElementById("additional_seed1_error").innerHTML="";
+                         } 
+                  	   if( document.getElementById("dateof_additional_seadsent").value =="" || document.getElementById("dateof_additional_seadsent").value ==null) {
+                        	 document.getElementById("dateof_additional_seadsent_error").innerHTML="Please enter additional seed sent date";
+                        	 document.getElementById("dateof_additional_seadsent").focus() ;
+                            return false;
+                         }
+                         else{
+                      	   document.getElementById("dateof_additional_seadsent_error").innerHTML="";
+                         } 
+                  	   
+                  	   if( document.getElementById("seed_discarded1").value =="" || 
+                  			   document.getElementById("seed_discarded1").value ==null) {
+                          	 document.getElementById("seed_discarded1_error").innerHTML="Please enter seed discarded";
+                          	 document.getElementById("seed_discarded1").focus() ;
+                              return false;
+                           }
+                           else{
+                        	   document.getElementById("seed_discarded1_error").innerHTML="";
+                           }
+                  	   if( document.getElementById("date_of_discard1").value =="" || 
+                  			   document.getElementById("date_of_discard1").value ==null) {
+                        	 document.getElementById("date_of_discard1_error").innerHTML="Please enter date of discard";
+                        	 document.getElementById("date_of_discard1").focus() ;
+                            return false;
+                         }
+                         else{
+                      	   document.getElementById("date_of_discard1_error").innerHTML="";
+                         }
+                  	   if( document.getElementById("reason_of_discard1").value =="" || 
+                  			   document.getElementById("reason_of_discard1").value ==null) {
+                          	 document.getElementById("reason_of_discard1_error").innerHTML="Please enter resion of discard";
+                          	 document.getElementById("reason_of_discard1").focus() ;
+                              return false;
+                           }
+                           else{
+                        	   document.getElementById("reason_of_discard1_error").innerHTML="";
+                           }
+                       }
+                     }
+                     else{
+                  	   document.getElementById("mode_of_delivery_error").innerHTML="Please select mode of delivery";
+                  	   return false;
+                     }
+        	    
+        	   }
+           
+           
+          
+           //  else{
+          	 //  document.getElementById("mode_of_delivery1_error").innerHTML="";
+             //}
+         
+         
+         
+         
+         return( true );
+      }
+</script>
+	
+	<script>
+      function validate_short_term_packet() {
+    	 // alert('test');
+    	  if(document.getElementById("no_of_final_packets").value == "" || document.getElementById("no_of_final_packets").value == null){
+    	//	 alert('test');
+    		  document.getElementById("no_of_final_packets_error").innerHTML="Please enter no of packet";
+         	 document.getElementById("no_of_final_packets").focus() ;
+             return false;
+    	  }
+    	  else{
+    		  document.getElementById("no_of_final_packets_error").innerHTML="";
+    	  }
+         return( true );
+      }
+</script>		
+
+		
+	</form>
+</span>
+<span th:unless="${ShortTermStorage != null && ShortTermStorage == 'ShortTermStorage' }">
+ <label>YOU ARE NOT AUTHORISED TO VIEW THIS PAGE.PLEASE CONTACT ADMINISTRATOR</label>
+ </span>
+
+</div>
+</html>

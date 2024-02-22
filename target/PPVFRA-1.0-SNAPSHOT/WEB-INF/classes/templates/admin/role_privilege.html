@@ -1,0 +1,449 @@
+  
+  <!DOCTYPE html>
+  
+<html xmlns:th="http://www.thymeleaf.org">
+
+	<head>
+	  <th:block th:include="adminfragment/headerlibs.html :: headerlibs"></th:block>
+<style>
+#mask{position:fixed;width:100%;height:100%;
+background:rgba(0,0,0,.5);top:0;left:0;color:#fff;
+display:none;z-index:999;text-align:center}
+select[disabled="disabled"]{background-color:#eee}
+</style>
+<div id="mask">
+<p style="margin-top: 20%;font-weight:bold">Loading...</p>
+</div>  
+	</head>
+
+  
+    <body class="fixed-left">
+        <!-- Begin page -->
+        <div id="wrapper">
+        
+            <!-- Top Bar Start -->
+           <header th:insert="adminfragment/header.html :: header"> </header>
+            <!-- Top Bar End -->
+
+
+            <!-- ========== Left Sidebar Start ========== -->
+			<header th:insert="adminfragment/sidenav.html :: sidevav"> </header>
+            <!-- Left Sidebar End --> 
+
+   			 <!-- Start right Content here -->
+            <!-- ============================================================== -->                      
+            <div class="content-page">
+                <!-- Start content -->
+                <div class="content">
+                    <div class="container">
+
+                        <!-- Page-Title -->
+                        <div class="row">
+                            <div class="col-sm-12">
+                                <h4 class="pull-left page-title">Role Management</h4>
+                                <ol class="breadcrumb pull-right">
+                                    <li><a href="/admin">Home</a></li>
+                                    <li class="active">Role Privilege</li>
+                                    <li>
+                                            <button type="button" onclick="history.go(-1);" class="btn btn-purple waves-effect waves-light btn-xs m-b-5">Back</button>
+                                    </li>
+                                </ol>
+                            </div>
+                        </div>
+					
+                        <div class="row">
+                            <div class="col-sm-12">
+                                <div class="panel panel-default">
+                                    <div class="panel-heading"><h3 class="panel-title">Role Privilege</h3></div>
+                                     <span th:if="${actd_viewtrue != null && actd_viewtrue == 'valpresent' }">
+											
+									<!--- content start (body of the form)-->
+                                    <div class="panel-body">
+                                    <form class="form-horizontal" role="form" th:action="@{/saveprevligescheked}" th:object="${addprevliges}" method="post">
+										<div class="form-horizontal" role="form">     
+											<div class="form-group">
+                                                <label class="col-md-3 control-label">Role</label>
+                                                <div class="col-md-6">
+                                                  
+                                                     
+                                              <div th:if="${rolefinding != null}">
+										         <select  class="form-control" id="roleid" th:name="rolename" required>
+										         <option th:value="-1" >---Select Role---</option>
+										         <option th:each="dropDownItem : ${rolefinding}" 
+										          th:value="${dropDownItem.id}" th:text="${dropDownItem.description}" />
+										          </select>
+                                              </div>
+                                                
+                                                </div>
+                                                  </div>
+											<div class="form-group">
+                                                <label class="col-sm-3 control-label">Modules</label>
+                                                <div class="col-sm-6">
+				                             <select id="moduledata" th:name="modulename" onchange="change_tbl1();" class="form-control" required>
+				                                 <option value="">--Select Modules --</option>
+				                                 <!-- <option th:value="1111">----All----</option> -->
+				                                 <option th:each="module : ${modulecontrol}" th:value="${module.id}" th:text="${module.modulename}" />
+				                             </select>
+                                                </div>
+                                            </div>
+                                  		 </div>
+									 <div id="hidden_div"> 
+											<div class="form-group m-b-0">
+                                                <div class="col-sm-12">
+												<button style="font-size:15px"><i class="fa fa-minus-circle"></i></button>
+												<label>Module Name</label>
+												</div>
+												
+                                              <table class="table table-bordered" id="tabledata">
+													<thead>
+														<tr>
+															<th>Module</th>
+															<th><INPUT type="checkbox" onchange="checkAll(this)" name="chk[]" class ="viewchkclass"/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;View</th>
+															<th><INPUT type="checkbox" onchange="checkAll(this)" name="chk1[]" class ="addchkclass">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Add</th>
+															<th><INPUT type="checkbox" onchange="checkAll(this)" name="chk2[]" class ="editchkclass">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Edit</th>
+															<th><INPUT type="checkbox" onchange="checkAll(this)" name="chk3[]" class ="deletechkclass">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Delete</th>
+															
+															
+															</tr>
+															
+															</thead>
+															<tbody>
+															<tr>
+															<td/>
+															<td><input type="checkbox" th:name="view" value=""></td>
+															<td><input type="checkbox" th:name="add" value=""></td>
+															<td><input type="checkbox" th:name="edit" value=""></td>
+															<td><input type="checkbox" th:name="delete" value=""></td>
+															
+															</tr>
+														</tbody>
+												</table>
+												
+											</div>
+											<div class="col-sm-offset-2 col-sm-9">
+                                                  <span th:each="sec_chk : ${actd}">
+													<span th:if="${sec_chk == 'Add'}">
+													  <!--  <button type="submit" onclick="halt();" class="btn btn-info waves-effect waves-light">Submit</button> -->
+													<button type="submit" onclick="halt()" class="btn btn-info waves-effect waves-light">Submit</button>
+											  
+													 </span>
+													 </span>  
+                                            </div>
+                                            </div>
+										</form>
+									  </div>
+									  </span>
+									  <span th:unless="${actd_viewtrue != null && actd_viewtrue == 'valpresent' }">
+							<label>YOU ARE NOT AUTHORISED TO VIEW THIS PAGE.PLEASE CONTACT ADMINISTRATOR</label>
+							</span>
+									
+									
+                                   </div> <!-- panel-body -->
+                                </div> <!-- panel -->
+                            </div> <!-- col -->
+                        </div> <!-- End row -->
+
+                    </div> <!-- container -->
+                               
+                </div> <!-- content -->
+
+               <!--  <footer class="footer text-right">
+                    2019 © PPVFRA.
+                </footer> 
+
+            </div>
+             -->
+            <!-- ============================================================== -->
+            <!-- End Right content here -->
+   			
+   			
+          <div th:replace="adminfragment/footer.html :: footer"></div>
+           </div> <!-- container -->
+                               
+                <!-- content -->
+
+			<!-- start footer content here -->
+			
+			<!-- end footer content here -->
+
+      
+        <!-- END wrapper -->
+
+<!-- footer lib start here-->
+
+<div th:replace="adminfragment/footerlibs.html :: footerlibs"></div>
+<!-- end footer lib -->
+
+
+<script>
+function checkAll(ele) {
+	 var chkElements = document.getElementsByClassName(ele.className);
+	 for (var i = 0; i < chkElements.length; i++) {
+	        if (chkElements[i] !== ele) {             // Not strictly necessary I guess, but...
+	            chkElements[i].checked = ele.checked;
+	        }
+	    }
+ }
+</script>
+
+
+
+
+<script>
+$(function($)
+{$.ajaxSetup({beforeSend:function()
+{$('#mask').show();},complete:function()
+{$('#mask').hide();}});});
+</script>
+
+<script type="text/javascript"  th:inline="javascript">
+  
+  function getValue(text,accessTypes){
+ 	  for(a in accesstypes){
+ 		if(accesstypes[a][1] === text.trim()){
+ 	          return accesstypes[a][0];
+ 	    }
+ 	  }
+ 	}
+  
+  function getdatabefore(moduledata,roleid)
+  {
+  	$.ajax({
+          type: "POST",
+          url: "/ppvfra/databefore",
+          data: 'moduledata='+moduledata+'&roleid='+roleid,
+          success: function (response1) 
+          {
+          	roleprev= response1;	
+          },                
+          failure: function (response1) {
+                  alert(response1.responseText);
+              },
+              error: function (response1) {
+                  alert(response1.responseText);
+              }
+});
+  }
+ 
+    var accesstypes = [[${accesstypes}]]; 
+    var roleprev= [[${moduledatalist}]];
+    function change_tbl1() {
+    	  
+    	        var moduledata= document.getElementById("moduledata");
+    	        if(moduledata.value <= 0 )
+    	        {
+    	        alert("Please Select Module First");
+    	        return false;
+    	        }
+    	        
+    	        var roleid= document.getElementById("roleid");
+    	        if(roleid.value <= 0)
+    	        {
+    	        	alert("Please Refresh And Select Role First");
+    	        	return false;
+    	        }
+    	        
+    	        //Umesh Commenting...on 28-12-2019... this as the ajax was running 
+    	        //asynchroniously and results were disrupted...
+    	        //getdatabefore(moduledata.value, roleid.value);
+    	        
+    	        Promise.all([getdatabefore(moduledata.value, roleid.value)]).then(() => {
+    	        	 // all requests finished successfully
+    	        	
+    	        
+	        //var accesstypes = [[${accesstypes}]]; /* 'default' */
+	        var tabledata=$("#tabledata");
+	        if(moduledata.value != null)		 
+	        	$.ajax({
+	                type: "POST",
+	                url: "/ppvfra/getmenulist",
+	                data: 'moduledata='+moduledata.value,
+	                //contentType: "application/json charset=utf-8",
+	                //dataType: "json",
+	                success: function (response) {
+	                	
+	                	var view = getValue("View",accesstypes);
+	                	
+	                	$("#tabledata tbody").html(''); 
+	                	//for (var chkcon=0;chkcon<roleprev.length;chkcon++)
+                			{
+	                		
+        	for (var i=0;i<response.length;i++)
+           	{
+               	var str = response[i][1].toString();
+               	var moduleid = response[i][0].toString();
+               	
+               	/* var html_data = '<tr><td>'+str+'</td><td><input type="checkbox" name="viewchkb" value="'+getValue("View",accesstypes)+'"></td><td><input type="checkbox" name="viewchkb" value="'+getValue("Add",accesstypes)+'"></td><td><input type="checkbox" name="viewchkb" value="'+getValue("Edit",accesstypes)+'"></td><td><input type="checkbox" name="viewchkb" value="'+getValue("Delete",accesstypes)+'"></td></tr>'; */
+               	//var html_data = '<tr><td><input name="modulename" type="hidden" value='+moduleid+' text="'+str+'" >'+str+'</td><td><input type="checkbox" name="viewchkb" th:field="*{accessid}" value="'+moduleid+'-'+getValue("View",accesstypes)+'"></td><td><input type="checkbox" name="addchkb" th:field="*{accessid}" value="'+moduleid+'-'+getValue("Add",accesstypes)+'"></td><td><input type="checkbox" name="editchkb" th:field="*{accessid}" value="'+moduleid+'-'+getValue("Edit",accesstypes)+'"></td><td><input type="checkbox" name="deletechkb" th:field="*{accessid}" value="'+moduleid+'-'+getValue("Delete",accesstypes)+'"></td></tr>';
+             
+               	//$("#tabledata tbody").html(''); 
+               
+               	var html_data = '<tr><td><input name="modulename" type="hidden" value='+moduleid+' text="'+str+'" >'+str+'</td><td><input type="checkbox" name="viewchkb" class="viewchkclass" th:field="*{accessid}" value="'+moduleid+'-'+getValue("View",accesstypes)+'"></td><td><input type="checkbox" name="addchkb" class="addchkclass" th:field="*{accessid}" value="'+moduleid+'-'+getValue("Add",accesstypes)+'"></td><td><input type="checkbox" name="editchkb"  class= "editchkclass" th:field="*{accessid}" value="'+moduleid+'-'+getValue("Edit",accesstypes)+'"></td><td><input type="checkbox"  class = "deletechkclass" name="deletechkb" th:field="*{accessid}" value="'+moduleid+'-'+getValue("Delete",accesstypes)+'"></td></tr>';
+               			
+               	
+               	$("#tabledata tbody").append(html_data);
+               	
+           	
+        	 var newcase = document.getElementsByName("viewchkb");
+        	 var newcase1 = document.getElementsByName("addchkb");
+        	 var newcase2 = document.getElementsByName("editchkb");
+        	 var newcase3 = document.getElementsByName("deletechkb");
+        	 
+        	for (var k=0;k<roleprev.length;k++)
+     		{
+         	var newgotvar = roleprev[k].toString();
+         	
+        	
+        	 	for(var t=0;t< newcase.length;t++)
+        	 		{
+        	 		var mk = newcase[t].value;
+        	 		if(mk == newgotvar)
+        	 			{
+        	 			newcase[t].checked=true;
+        	 			}
+        	 		}
+     		}
+        	
+        	 	
+        	 	for (var k=0;k<roleprev.length;k++)
+         		{
+             	var newgotvar = roleprev[k].toString();
+        	 	
+        	 	for(var t1=0;t1< newcase1.length;t1++)
+    	 		{
+    	 		var mk1 = newcase1[t1].value;
+    	 		if(mk1 == newgotvar)
+    	 			{
+    	 			newcase1[t1].checked=true;
+    	 			}
+    	 		}
+     		}
+        	 	
+        	 	for (var k=0;k<roleprev.length;k++)
+         		{
+             	var newgotvar = roleprev[k].toString();
+        	 	for(var t2=0;t2< newcase2.length;t2++)
+    	 		{
+    	 		var mk2 = newcase2[t2].value;
+    	 		if(mk2 == newgotvar)
+    	 			{
+    	 			newcase2[t2].checked=true;
+    	 			}
+    	 		}
+         		}
+        	 	
+        	 	
+        	 	for (var k=0;k<roleprev.length;k++)
+         		{
+             	var newgotvar = roleprev[k].toString();
+        	 	for(var t3=0;t3< newcase3.length;t3++)
+    	 		{
+    	 		var mk3 = newcase3[t3].value;
+    	 		if(mk3 == newgotvar)
+    	 			{
+    	 			newcase3[t3].checked=true;
+    	 			}
+    	 		}
+        	 		
+     		}
+           	
+           	}
+     		
+     		
+     		
+     		}
+	                    
+	                },
+	                    failure: function (response) {
+	                    alert(response.responseText);
+	                },
+	                error: function (response) {
+	                    alert(response.responseText);
+	                }
+			});
+	        
+  	        }).catch(() => {
+ 	        	 // all requests finished but one or more failed
+ 	        })
+}
+   </script>  
+    
+  
+<!-- <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script> -->
+
+
+  <div th:if="${message != null}">
+ <div id="myModal1" class="modal fade">
+   <div class="modal-dialog">
+    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+        <div class="modal-content">
+         <div class="modal-body">
+				<p align="center" th:text="${message}" />
+            </div>
+        </div>
+    </div>
+</div>
+</div>
+
+    <script type="text/javascript">
+	      $(document).ready(function(){
+		  $("#myModal1").modal('show');
+	     });
+        </script>
+        
+  
+    <script type="text/javascript">
+   function halt()
+   { 
+	var v=0,a=0,e=0,d=0;
+    var vv= document.getElementsByName("viewchkb");
+    var aa= document.getElementsByName("addchkb");
+    var ee= document.getElementsByName("editchkb");
+    var dd= document.getElementsByName("deletechkb");
+    	for(var i = 0; i<vv.length; i++)
+    	{ if(vv[i].checked == false) {v+=1;}}
+    	for(var j = 0; j<aa.length; j++)
+    	{ if(aa[j].checked == false) {a+=1;}}
+    	for(var k = 0; k<ee.length; k++)
+    	{ if(ee[k].checked == false) {e+=1;}}
+    	for(var l = 0; l<dd.length; l++)
+    	{ if(dd[l].checked == false) {d+=1;}}
+    	if(v==vv.length && a==aa.length  && d==dd.length && e==ee.length)
+		{
+    		event.preventDefault();
+    		var result = confirm("Are You Sure You Wish To Proceed Further...??");
+    		if(result)
+    			{
+    			var rr =$('#roleid').val();
+    			var mm =$('#moduledata').val();
+    			$.ajax({
+    		          type: "POST",
+    		          url: "/ppvfra/removing_allprevileges",
+    		          data: 'roleid='+rr+'&moduleid='+mm,
+    		          success: function (response1) 
+    		          {
+    		        	 // alert(response1);
+    		          	if(response1=="success" || response1=="false")
+    		          		{
+    		          		 alert("Data saved successfully");
+    		          		$('#roleid').val('-1');
+    		          		$('#moduledata').val('');
+    		          		}
+    		          },                
+    		          failure: function (response1) {
+    		                  alert(response1.responseText);
+    		              },
+    		              error: function (response1) {
+    		                  alert(response1.responseText);
+    		              }
+    		});
+    			}
+		}
+    	
+   	}
+    </script> 
+   
+
+     
+    </body>
+</html>

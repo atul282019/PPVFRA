@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<div th:fragment="fsubmit_f1">
+<form class="form-horizontal" name="finalform" action="/finalsubmit" method="post"> 
+
+
+ <table class="table table-bordered">
+               <thead>
+                   <tr>
+                   		<th>Serial</th>
+                   	    <th>Screen Section</th>
+                   	    <th>Is Processed</th>
+                   </tr>
+                   </thead>
+<tbody>
+<tr th:each="data,sno :${getMFormSectiondata}">
+<td th:text="${sno.count}"></td>
+<td th:text="${data.section_name}"></td>
+<td>
+<input type="checkbox" th:id="'chkbx_id/'+${data.id}" th:name="'chkbx_id/'+${data.id}" disabled>
+</td>
+
+</tbody>
+
+</table>
+<input type="hidden" id="finalapplicationid" name="finalapplicationid" th:value="*{id}">
+<div th:if="${appstatus ==1}">
+<button type="submit" id="f_submit_1" disabled class="btn btn-info waves-effect waves-light">Final Submit</button>
+</div>
+
+ 
+<script type="text/javascript" th:inline="javascript">
+function sectiondataval() 
+  { 
+	//alert("inside screen check");
+ var totalscreens = [[${getMFormSectiondata}]];
+//alert("Printing Total Screens = "+totalscreens);
+
+var appid = [[${id_fs1}]];
+//alert("Printing appid= "+appid); 
+var moduledata2 = document.getElementsByName("'chkbx_id/'+");
+
+//alert("Moduledata2= "+moduledata2.length);
+      
+    for (var unchk=0; unchk< moduledata2.length; unchk++)
+   	 {
+   	 moduledata2[unchk].checked=false;
+   	 }
+      
+      if(totalscreens != null)		 
+       	$.ajax(
+       			{
+               type: "POST",
+               url: "/ppvfra/getscreenvalue",
+               data: 'application_id='+appid,
+               //contentType: "application/json charset=utf-8",
+               //dataType: "json",
+               success: function (response) {
+               	
+               	 if(response.length != null)
+               	{  
+               		 var  c=0;
+               		 for (var i=0;i<response.length;i++)
+               		{
+                   	var str = response[i].toString();
+                   	 //for (var k=0; k<totalrolesfromcontroller.length; k++)
+                   	for (var k=0; k<totalscreens.length; k++)	 
+            			{
+                   		//var roleval = totalrolesfromcontroller[k][0].toString();
+                   		var roleval = totalscreens[k].id;
+                   		
+                   		 if (str == roleval)
+                   	{
+           document.getElementById("chkbx_id/"+str).checked = true;
+              
+           //moduledata2[k].checked = true;
+           c=c+1;
+         //  alert("c="+c);
+              }
+             else{$("#f_submit_1").attr("disabled", true);}
+               		}
+               			}
+               		 
+           if(c== totalscreens.length)
+        	   {
+        	   $("#f_submit_1").attr("disabled", false);
+        	   }
+           else{
+        	   alert("Please submit all the forms before final submit")
+        	   $("#f_submit_1").attr("disabled", true);
+           	   }
+               	} 
+               	
+										}
+				});
+  }
+//window.onload=sectiondataval;
+       </script> 
+    	        
+    	        
+</form>    
+ </div>
+    
+</html>
+                                                

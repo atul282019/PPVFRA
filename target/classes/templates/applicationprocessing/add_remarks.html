@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<div th:fragment="add_remarks">
+<span th:if="${AddRemarks != null && AddRemarks == 'AddRemarks' }"> 
+ 
+<form class="form-horizontal" role="form" th:action="@{/remarks}" th:object="${addremarks}" method="post">
+													<div class="panel panel-success">
+														<div class="panel-heading">Add Remarks</div>
+														<div class="panel-body">
+															<div class="form-group">
+                                                <label class="col-md-2 control-label" > </label>
+                                                <div class="col-md-10">
+                                 				<input type="text" id="applicationid" th:name="applicationid"  th:value="${applicationid}" readonly="readonly" hidden="true" />
+                                                </div>
+                                                </div>
+															
+															
+															
+															<div class="form-group">
+																<label class="col-md-2 control-label">Status <span style="color:red">*</span></label>
+																<div class="col-md-6">
+																	<select id="remarkstatus" th:field="*{status}" class="form-control">
+																		<option th:value="-1">Select</option>
+																		<option th:text="Accepted" th:value="Accepted">Accepted</option>
+																		<option th:text="Rejected" th:value="Rejected">Rejected</option>
+																	</select>
+																	<span id="remarkstatuserror" style="color:red"></span>
+																</div>
+															</div>
+															<div class="form-group">
+																<label class="col-md-2 control-label">Remarks <span style="color:red">*</span></label>
+																<div class="col-md-6">
+																<span th:if="${add_remarks_value !=null}">
+																<textarea id="remarksvalue" th:field="*{remarks}"  class="form-control" rows="5"></textarea>
+																</span>
+																<span th:unless="${add_remarks_value !=null}">
+																	<textarea id="remarksvalue" th:field="*{remarks}" class="form-control" rows="5"></textarea>
+																</span>	
+																<span id="remarksvalueerror" style="color:red"></span>
+																</div>
+															</div>
+															<div class="form-group m-b-0">
+																<label class="col-md-2 control-label"></label>
+																<span th:if="${add_remarks_value !=null}">
+																	<input type="hidden" id="app_remarkid" name="app_remarkid" th:value="${add_remarks_value[0]}">
+																	</span>
+																	<span th:unless="${add_remarks_value !=null}">
+																	<input type="hidden" id="app_remarkid" value='0' name="app_remarkid">
+																	</span>
+																	
+																<div class="col-md-7">
+																
+																<!-- <span th:if="${role_granted != 'Super Administrator' && role_granted != 'PPVFRA Admin'}">
+																 -->	
+																 <span>
+																 <span th:if="${sub4 == 'addpresent'}">
+																<span><!--  th:if="${add_remarks_value ==null}"> -->
+																	 <button type="submit" class="btn btn-info waves-effect waves-light" onclick="return validateAddRemarkValue();">Save</button>
+																	 </span>
+																</span>
+																</span>
+																</div>
+																
+															</div>
+														</div>
+													</div>
+				<!-- <table class="table table-striped  table-bordered table-hover">
+				<thead>
+				<tr>
+			     	<th>S.No</th>
+			     	<th>ApplicationId</th>
+			     	<th>Remarks</th>
+			     	<th>CreatedBy</th>
+			     	<th>CreatedOn</th> 
+			     </tr>
+			     </thead>
+			     
+			     <tbody>
+			      <tr class="table-info table-bordered" th:each="remarkdata,serial :${getremarks_datafortable}">
+			     <td th:text="${serial.count}"></td>
+			      <td th:text="${remarkdata[1]}"></td>
+			      <td th:text="${remarkdata[2]}"></td>
+			      <td th:text="${remarkdata[4]}+'('+${remarkdata[5]}+')'"></td>
+			      <td th:text="${remarkdata[4]}"></td>
+			      <td th:text="${remarkdata[6]}"></td>
+			     </tr>
+			     </tbody>
+				</table> -->
+				<script>
+      function validateAddRemarkValue() {
+           if( document.getElementById("remarkstatus").value =="-1") {
+          	 document.getElementById("remarkstatuserror").innerHTML="Please select status";
+          	 document.getElementById("remarkstatus").focus() ;
+              return false;
+           }
+           else{
+        	   document.getElementById("remarkstatuserror").innerHTML="";
+           }
+           if( document.getElementById("remarksvalue").value =="" || document.getElementById("remarksvalue").value ==null) {
+            	 document.getElementById("remarksvalueerror").innerHTML="Please enter remarks";
+            	 document.getElementById("remarksvalue").focus() ;
+                return false;
+             }
+             else{
+          	   document.getElementById("remarksvalueerror").innerHTML="";
+             }
+         return( true );
+      }
+</script>
+	    
+			 </form>
+ </span>
+<span th:unless="${AddRemarks != null && AddRemarks == 'AddRemarks' }">
+ <label>YOU ARE NOT AUTHORISED TO VIEW THIS PAGE.PLEASE CONTACT ADMINISTRATOR</label>
+ </span>					
+</div>
+</html>

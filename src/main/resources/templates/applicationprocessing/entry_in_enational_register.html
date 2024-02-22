@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<div th:fragment="enter_in_enational_register">
+<span th:if="${ENationalEntry != null && ENationalEntry == 'ENationalEntry' }"> 
+ 
+<form class="form-horizontal" role="form" th:action="@{/nationalregister}" th:object="${nationalregister}" method="post">  
+												<span th:if="${nationalreg_edit == 0}">
+												<div class="panel panel-success">
+													<div class="panel-heading">Entry in e-National Register</div>
+													<div class="panel-body">
+															
+															 
+				                                           
+				                                                <div class="col-md-10">
+				                                 				<input type="text" id="applicationid" th:name="applicationid"  th:value="${applicationid}" readonly="readonly" hidden="true" />
+				                                                </div>
+				                                             
+															
+															<div class="form-group col-md-12">
+																<label class="col-md-3 ">Entered in National Register <span style="color:red">*</span> </label>
+																<div class="col-md-6">
+																	<input th:field="*{entered_in_national_register}" class="received" type="radio" name="radio" value="Y">Yes &nbsp;
+																	<input th:field="*{entered_in_national_register}" class="oppositionn-1" type="radio" name="radio" value="N">No
+																<span id="entered_in_national_register_error" style="color:red"></span>
+																</div>
+																
+															</div>
+															
+															<div class="form-group col-md-12">
+																<label class="col-md-3 control-label">Date <span style="color:red">*</span> </label>
+																<div class="col-md-6">
+																	<input type="date" id="date_of_entry" th:field="*{date_of_entry}" class="form-control" >
+																	<span id="date_of_entry_error" style="color:red"></span>
+																</div>
+															</div>
+														
+															
+															<div class="form-group col-md-12">
+																<label class="col-md-3 control-label">Register Number <span style="color:red">*</span> </label>
+																<div class="col-md-6">
+																	<input type="text" id="register_number" th:field="*{register_number}" class="form-control" >
+																	<span id="register_number_error" style="color:red"></span>
+																</div>
+															</div>
+															
+															<div class="form-group col-md-12">
+																<label class="col-md-3 control-label">Page Number <span style="color:red">*</span> </label>
+																<div class="col-md-6">
+																	<input type="text" id="page_number" th:field="*{page_number}" class="form-control" >
+																	<span id="page_number_error" style="color:red"></span>
+																</div>
+															</div>
+														<br> 
+														<input type="hidden" name="id" id="id" th:value="0">
+														
+														<div class="form-group m-b-0">
+															<label class="col-md-3 control-label">&nbsp;</label>
+															<div class="col-sm-7">
+															<!-- <span th:if="${role_granted != 'Super Administrator' && role_granted != 'PPVFRA Admin'}">
+															 -->
+															 <span>
+															 <span th:if="${sub14 == 'addpresent'}">
+																<button type="submit" class="btn btn-info waves-effect waves-light" onclick="return validateENational_Register_Form();">Save</button>
+																</span>
+																</span>
+															</div>
+															
+														</div>
+													</div>
+												</div>
+												</span>
+												<span th:unless="${nationalreg_edit == 0}">
+												<div class="panel panel-success">
+													<div class="panel-heading">Entry in e-National Register</div>
+													<div class="panel-body">
+															
+															 
+				                                                <div class="col-md-10">
+				                                 				<input type="text" id="applicationid" th:name="applicationid"  th:value="${applicationid}" readonly="readonly" hidden="true" />
+				                                                </div>
+				                                            
+															
+															<div class="form-group col-md-12">
+																<label class="col-md-3 ">Entered in National Register <span style="color:red">*</span></label>
+																<div class="col-md-6">
+																	<input name="entered_in_national_register" id="edit_entered_in_national_register1" class="received" type="radio"    value="Y" th:checked="${national_rep[2] == 'Y'}">Yes &nbsp;
+																	<input name="entered_in_national_register" id="edit_entered_in_national_register2" class="oppositionn-1" type="radio"    value="N" th:checked="${national_rep[2] == 'N'}">No
+																	<span id="edit_entered_in_national_register_error" style="color:red"></span>
+																</div>
+															</div>
+															
+															<div class="form-group col-md-12">
+																<label class="col-md-3 control-label">Date <span style="color:red">*</span> </label>
+																<div class="col-md-6">
+																	<input type="date" name="date_of_entry" id="edit_date_of_entry" th:value="${national_rep[3]}" class="form-control" >
+																	<span id="edit_date_of_entry_error" style="color:red"></span>
+																</div>
+															</div>
+														
+															
+															<div class="form-group col-md-12">
+																<label class="col-md-3 control-label">Register Number <span style="color:red">*</span> </label>
+																<div class="col-md-6">
+																	<input type="text" name="register_number" id="edit_register_number" th:value="${national_rep[4]}" class="form-control" >
+																	<span id="edit_register_number_error" style="color:red"></span>
+																</div>
+															</div>
+															
+															<div class="form-group col-md-12">
+																<label class="col-md-3 control-label">Page Number <span style="color:red">*</span> </label>
+																<div class="col-md-6">
+																	<input type="text" name="page_number" id="edit_page_number" th:value="${national_rep[5]}" class="form-control" >
+																	<span id="edit_page_number_error" style="color:red"></span>
+																</div>
+															</div>
+														<br> 
+														
+														<input type="hidden" name="id" id="id" th:value="${national_rep[0]}">
+														<div class="form-group m-b-0">
+															<label class="col-md-3 control-label">&nbsp;</label>
+															<div class="col-sm-7">
+															<span th:if="${sub14 == 'addpresent'}">
+																<button type="submit" class="btn btn-info waves-effect waves-light" onclick="return validate_edit_ENational_Register_Form();">Save</button>
+																</span>
+															</div>
+															
+														</div>
+													</div>
+												</div>
+												</span>
+											</form>
+											
+	<script>
+      function validateENational_Register_Form() {
+    	  if(document.getElementById("entered_in_national_register1").checked == true || document.getElementById("entered_in_national_register2").checked == true){
+           if( document.getElementById("date_of_entry").value =="") {
+          	 document.getElementById("date_of_entry_error").innerHTML="Please select date";
+          	 document.getElementById("date_of_entry").focus() ;
+              return false;
+           }
+           else{
+        	   document.getElementById("date_of_entry_error").innerHTML="";
+           }
+           if( document.getElementById("register_number").value =="") {
+            	 document.getElementById("register_number_error").innerHTML="Please enter register number";
+            	 document.getElementById("register_number").focus() ;
+                return false;
+             }
+             else{
+          	   document.getElementById("register_number_error").innerHTML="";
+             }
+           if( document.getElementById("page_number").value =="" || document.getElementById("page_number").value ==null) {
+          	 document.getElementById("page_number_error").innerHTML="Please enter page number";
+          	 document.getElementById("page_number").focus() ;
+              return false;
+           }
+           else{
+        	   document.getElementById("page_number_error").innerHTML="";
+           }
+    	  }
+    	  else{
+    		  document.getElementById("entered_in_national_register_error").innerHTML="Please select yes or no";
+    		  return false;
+    	  }
+         return( true );
+      }
+</script>
+
+<script>
+      function validate_edit_ENational_Register_Form() {
+    	  if(document.getElementById("edit_entered_in_national_register1").checked == true || document.getElementById("edit_entered_in_national_register2").checked == true){
+           if( document.getElementById("edit_date_of_entry").value =="") {
+          	 document.getElementById("edit_date_of_entry_error").innerHTML="Please select date";
+          	 document.getElementById("edit_date_of_entry").focus() ;
+              return false;
+           }
+           else{
+        	   document.getElementById("edit_date_of_entry_error").innerHTML="";
+           }
+           if( document.getElementById("edit_register_number").value =="") {
+            	 document.getElementById("edit_register_number_error").innerHTML="Please enter register number";
+            	 document.getElementById("edit_register_number").focus() ;
+                return false;
+             }
+             else{
+          	   document.getElementById("edit_register_number_error").innerHTML="";
+             }
+           if( document.getElementById("edit_page_number").value =="" || document.getElementById("edit_page_number").value ==null) {
+          	 document.getElementById("edit_page_number_error").innerHTML="Please enter page number";
+          	 document.getElementById("edit_page_number").focus() ;
+              return false;
+           }
+           else{
+        	   document.getElementById("edit_page_number_error").innerHTML="";
+           }
+    	  }
+    	  else{
+    		  document.getElementById("edit_entered_in_national_register_error").innerHTML="Please select yes or no";
+    		  return false;
+    	  }
+         return( true );
+      }
+</script>						
+							
+</span>
+<span th:unless="${ENationalEntry != null && ENationalEntry == 'ENationalEntry' }">
+ <label>YOU ARE NOT AUTHORISED TO VIEW THIS PAGE.PLEASE CONTACT ADMINISTRATOR</label>
+ </span>
+
+</div>
+
+
+</html>

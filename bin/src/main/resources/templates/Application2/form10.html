@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<div th:fragment="formten">
+
+<form class="form-horizontal" role="form" id="" th:action="@{/saveapplicationformx}" th:object="${applications}" method="post">   <!--form_10 start -->                                       
+													<div class="form-group">
+                                                        <label class="col-md-12"><h4>10.(a.) If the candidate variety is a hybrid, state whether all the parental lines required for the repeated propagation of the hybrid are bred exclusively by the applicant(s)</h4></label>
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label class="col-md-3 control-label"></label>
+                                                        <div class="col-md-9">
+                                                            Yes <input type="radio" name="radio"  value="yes" class="radio-btn-position"> &nbsp; &nbsp; 
+                                                            No <input type="radio" name="radio"  value="no" class="radio-btn-position">
+															<a href="#" title="" data-toggle="popover" data-trigger="focus" data-content="If no, mention which of the parental line is outsourced, whether letter of agreement is obtained for each of the outsourced protected parental lines in compliance with Section 30 of the Protection of the Plant Varieties and Farmers' Rights Act and also provide following information on each of them"><span class="badge">i</span></a>
+                                                            <br>
+                                                            
+                                                       </div>
+													</div>
+														<div class="form-group">
+															<label class="col-md-3 control-label">Parental line(s)</label>
+															<div class="col-md-2 col-sm-4 col-xs-12">
+																<select class="form-control col-xs-12" name="parentline" id="">
+																<option value="">----Select----</option>
+																<option value="260">A Line</option>
+																<option value="253">B Line</option>
+																<option value="257">R Line</option>
+																</select>
+															</div>
+															
+															<div class="col-md-4">
+																<input type="text" class="form-control" name="line" value="">
+															</div>
+															
+														</div>
+														<div class="form-group">
+															<label class="col-md-3 control-label">Source</label>
+															<div class="col-md-6">
+																<input type="text" class="form-control" name="source" value="">
+															</div>
+														</div>
+														<div class="form-group">
+															<label class="col-md-3 control-label">
+																Denominations (In Block Letters) 
+															</label>
+															<div class="col-md-6">
+																<input type="combo-box" class="form-control" name="denominationx" value="">
+															</div>
+															<a href="#" title="" data-toggle="popover" data-trigger="focus" data-content="Denomination should not be altered from what was used at the source. Information on source may include name of breeder or institution or farmer or farming community who had bred and maintained the parental line. Repeat above information for additional applicable parental line."><span class="badge">i</span></a>
+															</div>
+														<div class="form-group">
+                                                        <label class="col-md-3 control-label">Authorized Letter Obtained</label>
+                                                        <div class="col-md-6">
+                                                           Attached <input type="radio" name="letter" value="Attached" class="radio-btn-position"> &nbsp; &nbsp; 
+                                                           Not Attached <input type="radio" name="letter"  value="Not Attached" class="radio-btn-position">
+                                                           <hr/>
+                                                        </div>
+														</div>
+														<div class="">
+														<table class="table table-striped  table-bordered w-auto table-hover">
+													<!--Table head-->
+													<thead>
+														<tr>
+															<th>S.No.</th>
+															<th>Parenal Line(s)</th>
+															<th>Source</th>
+															<th>Denominations</th>
+															<th>Authorized Letter Obtained</th>
+															<th>Action</th>
+														</tr>
+													</thead>
+													<!--Table head-->
+													<!--Table body-->
+													<tbody>
+													    <tr role="row" class="table-info" th:each="parentaline,serial : ${parentaline}">
+											            <td th:text="${serial.count}"></td> 
+											            <td th:text="${parentaline[2]}"></td>
+											            <td th:text="${parentaline[3]}"></td> 
+											            <td th:text="${parentaline[4]}"></td> 
+											            <td th:text="${parentaline[5]}"></td> 
+											            <td th:text="Edit"></td>
+											            
+											           </tr>
+											         </tbody>
+												<!--Table body-->
+												</table>
+														<div class="form-group">
+															<button type="submit" class="btn btn-danger pull-right" style="display: block;  border-radius:5px;height: 32px; padding: 5px; position:relative; right:25px; border-left: none;">Add</button>
+														</div>
+													</div>
+														<div class="form-group">
+                                                        <label class="col-md-12"><h4>(b.) State if any Farmers' Variety or Variety of Common Knowledge or variety in public domain is used as parental line for the repeated propagation of the hybrid.</h4></label>
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label class="col-md-3 control-label"></label>
+                                                        <div class="col-md-9">
+                                                           Yes <input type="radio" name="commonvariety"  value="yes" class="radio-btn-position"> &nbsp; &nbsp; 
+                                                           No <input type="radio" name="commonvariety" value="no" class="radio-btn-position">                                                        <br>
+                                                         </div>
+													</div>
+														<div class="form-group">
+															<label class="col-md-3 control-label">Denomination</label>
+															<div class="col-md-6">
+																<input type="combo-box" name="denomination" class="form-control" value="">
+															</div>
+														</div>
+														<div class="form-group">
+															<label class="col-md-3 control-label">Geographical Source</label>
+															<div class="col-md-6">
+																<input type="text" class="form-control" name="graphicalsource" value="">
+															</div>
+														</div>
+														<div class="form-group">
+															<label class="col-md-3 control-label">Detail of Attribution(origion)</label>
+															<div class="col-md-6">
+																<input type="combo-box" class="form-control" name="attribution" value="">
+															</div>
+														</div>
+														<div class="form-group">
+															<label class="col-md-3 control-label">Details of owner farmer/village community/Institution/Organisation</label>
+															<div class="col-md-6">
+																<input type="combo-box" class="form-control" name="farmercomunity" value="">
+															</div>
+														</div>
+														   <hr/> 
+																												
+														<div class="form-group">
+															<label class="col-md-12">
+															<h4>(c.) If the candidate is an Essentially Derived Variety, state whether a variety registered under the Protection of Plant Varieties and Farmers' Rights, Act 2001 and notified in the Plant Variety of Journal of India has been used as the initial variety:</h4>
+															</label>
+															</div>
+															<div class="form-group">
+															<label class="col-md-3 control-label"></label>
+															
+															<div class="col-md-9">
+															   Yes <input type="radio" name="radio" value="" class="radio-btn-position"> &nbsp; &nbsp; 
+															   No <input type="radio" name="radio" value="" class="radio-btn-position">                                                        <br>
+															  
+															</div>
+															
+															<div class="form-group">
+															<label class="col-md-3 control-label">Denomination</label>
+															<div class="col-md-6">
+																<input type="combo-box" class="form-control" value="">
+															</div>
+														</div>
+														
+														<div class="form-group">
+															<label class="col-md-3 control-label">Geographical Source</label>
+															<div class="col-md-6">
+																<input type="text" class="form-control" value="">
+															</div>
+														</div>
+														
+														<div class="form-group">
+															<label class="col-md-3 control-label">Details of owner farmer/village community/Institution/Organisation</label>
+															<div class="col-md-6">
+																<input type="text" class="form-control" value="">
+															</div>
+														</div>
+															
+														</div>
+													    <hr/> 
+                                                     	<div class="form-group ">
+															<div class="col-sm-offset-10 col-sm-12">
+															   <!--  <input type="hidden" id="applicationidfromx" name="applicationidfromx" th:value="*{id}">
+																<input type="hidden" id="applicantidformx" name="applicantidformx"  th:value="${userapplicant[0]}">
+																<input type="hidden" id="applicanttypeidformx" name="applicanttypeidformx" th:value="*{applicanttypeid}" />
+																 -->
+																<button type="submit" class="btn btn-info waves-effect waves-light">Save</button>
+																<button type="submit" class="btn btn-info waves-effect waves-light">Next</button>
+															</div>
+														</div>
+													</form>
+													</div>
+													</html>

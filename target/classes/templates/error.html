@@ -1,0 +1,57 @@
+<!DOCTYPE html> 
+<html lang="en"> 
+
+<head> 
+	<meta charset="UTF-8"> 
+	<meta name="viewport"
+		content="width=device-width, 
+				initial-scale=1.0"> 
+	<style> 
+		h1 { 
+			color: green; 
+		} 
+		.container { 
+			padding: 15px; 
+			width: 400px; 
+		} 
+		.button { 
+		background-color: #82b74b;
+  		border: 1px solid #3e7205;
+	  	width: 100px;
+		height: 50px;
+		text-transform: uppercase;
+		font-size: 15px;
+		font-family: 'Poppins', sans-serif;
+		font-color: white;
+		
+		border: none;
+		outline: none;
+		padding: 0;
+		line-height: 50px;
+		font-weight: bold;
+		transition: all .3s ease;
+		} 
+	</style> 
+</head> 
+
+<body> 
+	<center> 
+		<h1>Something went wrong!</h1> 
+		<b>We are looking into it!</b> 
+		<br><br> 
+		<div class="container"> 
+			<button type="submit"
+					onclick="goBack()"> 
+				    Go Back 
+			</button> 
+		</div> 
+	</center> 
+</body> 
+<script>
+	function goBack() {
+		window.history.back();
+	}
+</script>
+
+</html> 
+ 

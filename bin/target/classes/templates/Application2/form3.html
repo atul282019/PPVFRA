@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+	<div th:fragment="formthree">
+
+									<form class="form-horizontal" role="form" id="form3" th:action="@{/saveapplicationformiii}" th:object="${applications}" method="post">   <!--form_3 start --> 
+														<div class="form-group">
+															<label class="col-md-12 ">
+															<h4>3.Name and Address of the Person to whom Correspondence related to this application is to be sent:(Attach authorisation in Form-PV-1, if required)
+														</h4>
+														</label>
+														</div>
+													<div class="form-group">
+                                                        <label class="col-md-3 control-label">Name</label>
+                                                        <div class="col-md-6">
+                                                            <input type="text" class="form-control" name="agentname" value="">
+                                                        </div>
+                                                    </div>
+													<div class="form-group">
+														<label class="col-md-3 control-label">Address</label>
+														<div class="col-md-6">
+															<textarea class="form-control" name="agentaddress"></textarea>
+														</div>
+													</div>
+													<div class="form-group">
+														<label class="col-md-3 control-label">Country<span style="color:red">*</span></label>
+														   <div class="col-md-6 col-sm-6 col-xs-12">
+														    <div th:if="${Country != null}">
+														        <select id="ddlcountry" class="form-control col-md-7 col-xs-12" name="agentcountry">
+														        <option th:value="null" >---Select---</option>
+														            <option th:each="dropDownItem : ${Country}"
+														               th:value="${dropDownItem.id}"
+														               th:text="${dropDownItem.country}" />
+														        </select>
+														        <!-- <div class="alert alert-danger" th:if="${#fields.hasErrors('seat_Countryid')}" th:errors="*{seat_Countryid}"></div> -->
+												     	</div>
+													   	</div>
+														</div> 
+						
+												
+											     <div class="form-group">
+														<label class="col-md-3 control-label">State<span style="color:red">*</span></label>
+														   <div class="col-md-6 col-sm-6 col-xs-12">
+														    <div th:if="${State != null}">
+														        <select onchange="GetDistricts3();" id="statecode3" class="form-control col-md-7 col-xs-12" name="agentstate">
+														        <option th:value="null" >Select</option>
+														            <option th:each="dropDownItem : ${State}"
+														               th:value="${dropDownItem.statecode}"
+														               th:text="${dropDownItem.statename_inenglish}" />
+														        </select>
+														       <!--  <div class="alert alert-danger" th:if="${#fields.hasErrors('seat_state')}" th:errors="*{seat_state}"></div>
+														   --> 	</div>
+														   	
+														   	</div>
+														</div> 
+
+														 <div class="form-group">
+														<label class="col-md-3 control-label">District<span style="color:red">*</span></label>
+														   <div class="col-md-6 col-sm-6 col-xs-12">
+														    <div  th:if="${District != null}">
+														        <select id="districtcode3" class="form-control col-md-7 col-xs-12" name="agentdisdrict">
+														        <option th:value="null" >Select</option>
+														            <option th:each="dropDownItem : ${District}"
+														               th:value="${dropDownItem.districtcode}"
+														               th:text="${dropDownItem.districtname_inenglish}" />
+														        </select>
+														      <!--  <div class="alert alert-danger" th:if="${#fields.hasErrors('seat_districts')}" th:errors="*{seat_districts}"></div> -->
+														   	</div>
+														   	
+														   	</div>
+														</div> 													
+													
+														<div class="form-group">
+																<label class="control-label col-md-3 col-sm-3 col-xs-12">
+															Pincode/ZipCode<span style="color:red">*</span>
+															</label>
+																<div class="col-md-6">
+																	<input type="text" class="form-control" value="" name="agentpincode">
+																</div>
+															</div>
+														
+														<div class="form-group"> 
+															<label class="control-label col-md-3 col-sm-3 col-xs-12">
+															City<span style="color:red">*</span>
+															</label>
+															<div class="col-md-6">
+																	<input type="text" class="form-control" value="" name="agentcity">
+																</div>
+															</div>
+															
+													<div class="form-group">
+                                                        <label class="col-md-3 control-label">Telephone</label>
+                                                        <div class="col-md-6">
+                                                            <input type="text" class="form-control" value="" name="agenttelephone">
+                                                        </div>
+                                                    </div>
+													<div class="form-group">
+                                                        <label class="col-md-3 control-label">Fax</label>
+                                                        <div class="col-md-6">
+                                                            <input type="text" class="form-control" value="" name="agentfax">
+                                                        </div>
+                                                    </div>
+													<div class="form-group">
+                                                        <label class="col-md-3 control-label">Email</label>
+                                                        <div class="col-md-6">
+                                                            <input type="email" class="form-control" value="" name="agentemail">
+                                                        </div>
+														<!--<button type="submit" class="btn btn-danger"  style="display: block; margin-left:800px;  border-radius:5px;height: 32px; padding: 5px; float: left; border-left: none;">Add</button>-->
+														
+                                                    </div>
+					
+													<div class="form-group">
+                                                        <label class="col-md-3 control-label">3.(a)Principle place of business or domicile of applicant:</label>
+                                                        <div class="col-md-6">
+                                                            <textarea class="form-control" name="principaladdress"></textarea>
+                                                        </div>
+                                                    </div>
+												
+											     <div class="form-group">
+														<label class="col-md-3 control-label">State<span style="color:red">*</span></label>
+														   <div class="col-md-6 col-sm-6 col-xs-12">
+														    <div th:if="${State != null}">
+														        <select onchange="GetDistricts3();" id="statecode4" class="form-control col-md-7 col-xs-12" name="principalstate">
+														        <option th:value="null" >Select</option>
+														            <option th:each="dropDownItem : ${State}"
+														               th:value="${dropDownItem.statecode}"
+														               th:text="${dropDownItem.statename_inenglish}" />
+														        </select>
+														       <!--  <div class="alert alert-danger" th:if="${#fields.hasErrors('seat_state')}" th:errors="*{seat_state}"></div>
+														   --> 	</div>
+														   	
+														   	</div>
+														</div> 
+
+														 <div class="form-group">
+														<label class="col-md-3 control-label">District<span style="color:red">*</span></label>
+														   <div class="col-md-6 col-sm-6 col-xs-12">
+														    <div  th:if="${District != null}">
+														        <select id="districtcode3" class="form-control col-md-7 col-xs-12" name="principaldistrict">
+														        <option th:value="null" >Select</option>
+														            <option th:each="dropDownItem : ${District}"
+														               th:value="${dropDownItem.districtcode}"
+														               th:text="${dropDownItem.districtname_inenglish}" />
+														        </select>
+														      <!--  <div class="alert alert-danger" th:if="${#fields.hasErrors('seat_districts')}" th:errors="*{seat_districts}"></div> -->
+														   	</div>
+														   	
+														   	</div>
+														</div> 													
+													
+														
+													<hr/>
+												
+													<div class="form-group ">
+															<div class="col-sm-offset-10 col-sm-12">
+															
+															<!-- <input type="hidden" id="applicationidfromiii" name="applicationidfromiii" th:value="*{id}">
+															<input type="hidden" id="applicantidformiii" name="applicantidformiii"  th:value="${userapplicant[0]}">
+															<input type="hidden" id="applicanttypeidformiii" name="applicanttypeidformiii" th:value="*{applicanttypeid}" />
+															 -->
+															
+																<button type="submit" class="btn btn-info waves-effect waves-light">Save</button>
+																<button type="submit" class="btn btn-info waves-effect waves-light">Next</button>
+															</div>
+													</div>
+												</form>
+												
+												<script type="text/javascript">
+   function GetDistricts3()
+  {
+       var ddlState= document.getElementById("statecode3");
+       var district=document.getElementById("districtcode3");
+       var district1=$("#districtcode3");
+       if(ddlState.value != null)	
+       	$.ajax({
+               type: "POST",
+               url: "/ppvfra/getDistricts",
+               data: 'stateCode='+ddlState.value,
+               dataType:"json",
+               success: function (response) {
+               	
+              district1.empty().append('<option selected="selected" value="">Please select</option>');
+                for(var k=0;k<response.length;k++)
+     	  {
+     	  var opt = response[k];
+     	   var el = document.createElement("option");
+     	   el.textContent = opt[1];
+     	   el.value = opt[0];
+     	   district.appendChild(el);
+																	 
+     	}
+ 
+ 
+               },
+               failure: function (response) {
+                   alert(response.responseText);
+					  
+               },
+               error: function (response) {
+                   alert(response.responseText);
+					   
+										  
+														
+               }
+      });
+   	
+   }
+ </script>
+ 
+ <script type="text/javascript">
+   function GetDistricts4()
+  {
+       var ddlState= document.getElementById("statecode4");
+       var district=document.getElementById("districtcode4");
+       var district1=$("#districtcode4");
+       if(ddlState.value != null)	
+       	$.ajax({
+               type: "POST",
+               url: "/ppvfra/getDistricts",
+               data: 'stateCode='+ddlState.value,
+               dataType:"json",
+               success: function (response) {
+               	
+              district1.empty().append('<option selected="selected" value="">Please select</option>');
+                for(var k=0;k<response.length;k++)
+     	  {
+     	  var opt = response[k];
+     	   var el = document.createElement("option");
+     	   el.textContent = opt[1];
+     	   el.value = opt[0];
+     	   district.appendChild(el);
+																	 
+     	}
+ 
+ 
+               },
+               failure: function (response) {
+                   alert(response.responseText);
+					  
+               },
+               error: function (response) {
+                   alert(response.responseText);
+					   
+										  
+														
+               }
+      });
+   	
+   }
+ </script>
+</div>
+</html>

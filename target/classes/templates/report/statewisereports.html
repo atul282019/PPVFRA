@@ -1,0 +1,428 @@
+  
+  <!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+	<head>
+	  <th:block th:include="adminfragment/headerlibs.html :: headerlibs"></th:block> 
+	  
+	  <style>
+	  	.dataTables_wrapper>.dt-buttons {
+    width: 50%;
+    float: left;
+    position: relative;
+    margin-bottom: 5px;
+}
+
+.dataTables_filter>label {
+    float: right;
+    position: relative;
+    top: 4px;
+}
+
+
+.buttons-search {
+    padding: 2px 8px !important;
+    background: #2b94d2;
+	border: none;
+    border-radius: 2px;
+    font-size: 14px;
+    color: #fff;
+}
+
+.margin_top_25{
+	margin-top: 25px;
+}
+	  	
+	  </style>
+	  
+		<style>
+			#mask{position:fixed;width:100%;height:100%;
+			background:rgba(0,0,0,.5);top:0;left:0;color:#fff;
+			display:none;z-index:999;text-align:center}
+			select[disabled="disabled"]{background-color:#eee}
+		</style>
+		<div id="mask">
+			<p style="margin-top: 20%;font-weight:bold">Loading...</p>
+		</div>  
+	  
+	  
+	  
+	</head>
+
+    <body class="fixed-left">
+        <!-- Begin page -->
+        <div id="wrapper">
+        
+            <!-- Top Bar Start -->
+           <header th:insert="adminfragment/header.html :: header"> </header>
+            <!-- Top Bar End -->
+
+
+            <!-- ========== Left Sidebar Start ========== -->
+			<header th:insert="adminfragment/sidenav.html :: sidevav"> </header>
+            <!-- Left Sidebar End --> 
+
+  
+            <!-- Start right Content here -->  
+             
+        <!-- ============================================================== -->                      
+            <div class="content-page">
+                <!-- Start content -->
+               <div class="content">
+                    <div class="container">
+
+                        <!-- Page-Title -->
+                        <div class="row">
+                            <div class="col-sm-12">
+                                <h4 class="pull-left page-title">Reports</h4>
+                                <ol class="breadcrumb pull-right">
+                                    <li><a href="/admin">Home</a></li>
+                                    <li class="active">City/State wise Reports</li>
+                                </ol>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="panel panel-default">
+                                    <div class="panel-heading">
+                                        <h3 class="panel-title">City/State wise Reports</h3>
+                                    </div>
+                                    <div class="panel-body">
+                                        <div class="row">
+                                            <div class="col-md-12 col-sm-12 col-xs-12">
+                                            	<div class="col-lg-12">
+													<div class="panel panel-border panel-success">
+														<div class="panel-body" style="padding: 10px 0 0 0;">
+															<form action="" method="post" th:action="@{/getReportData4}" accept-charset="utf-8">
+																<div class="col-lg-3">
+																	<div class="form-group">
+																		<label>From Date:<span style="color:red">*</span></label>
+																		<input type="date" class="form-control" id="fromdate" name="fromdate" required>                                                     
+																	</div>
+																</div>
+																<div class="col-lg-3">
+																	<div class="form-group">
+																		<label>To Date: <span style="color:red">*</span> </label>
+																		<input type="date" class="form-control" name="todate" id="todate">                                                    
+																	</div>
+																</div>
+																<div class="col-lg-3">
+																	<div class="form-group">
+																		<label> Name of Applicant:</label>
+																		 <input type="text" class="form-control" name="applicantname" id="applicantname"> </label>
+																		                                            
+																	</div>
+																</div>
+																<div class="col-lg-3">
+																	
+																		<label>Crop Group:</label>
+																		<div th:if="${Crop_Group != null}" class="form-group">
+						                                                    <select name=cropgroup id="cropgroup" onchange="GetCropsByCropGroup();" class="form-control">
+						       														 <option th:value="-1">---Select---</option>
+						          													  <option th:each="dropDownItem : ${Crop_Group}"
+						              														  th:value="${dropDownItem.id}"
+						                  													  th:text="${dropDownItem.crop_group}" />
+						       										 		</select>                                             
+																	</div>
+																</div>
+																<div class="col-lg-3">
+																	<div class="form-group">
+																		<label>Crop:</label>
+																		 <div th:if="${addcroplist != null}" class="form-group">
+																        <select name="crop" id="crop" class="form-control col-md-7 col-xs-12">
+																        <option th:value="-1" >---Select---</option>
+																            <option th:each="cropsitem : ${addcroplist}"
+																               th:value="${cropsitem.id}"
+																               th:text="${cropsitem.crop_common_name}" />
+																        </select>
+																        </div>                                                      
+																	</div>
+																</div>
+																<div class="col-lg-3">
+																	<div class="form-group">
+																		<label>Denomination:</label>
+																		<input type="text" class="form-control" name="denomination" id="denomination">
+																	                                                
+																	</div>
+																</div>
+																		
+																<div class="col-lg-3">
+																	<div class="form-group">
+																		<label>Status: </label>
+																		<select name="stauts" id="status" class="form-control">
+																         <option th:value="-1" >---Select---</option>
+																            <option th:each="dropDownItem : ${Stages}"
+																               th:value="${dropDownItem[0]}"
+																               th:text="${dropDownItem[1]}" />
+																         </select>                                            
+																	</div>
+																</div>   
+																<div class="col-lg-3">
+																	<div class="form-group">
+																		<label>State:</label>
+																		<div th:if="${State != null}">
+																        <select onchange="GetDistricts();" id="statecode" class="form-control">
+																        <option th:value="-1" >Select</option>
+																            <option th:each="dropDownItem : ${State}"
+																               th:value="${dropDownItem.statecode}"
+																               th:text="${dropDownItem.statename_inenglish}" />
+																        </select>
+																      	</div>                                          
+																	</div>
+																</div>   
+																<div class="col-lg-3">
+																	<div class="form-group">
+																		<label>City:</label>
+																		<select id="districtcode" class="form-control">
+																        <option th:value="-1" >Select</option>
+																            <option th:each="dropDownItem : ${District}"
+																               th:value="${dropDownItem.districtcode}"
+																               th:text="${dropDownItem.districtname_inenglish}" />
+																        </select>                                         
+																	</div>
+																</div>  
+																<div class="col-lg-3">
+																	<div class="form-group" th:with="serialNumber=statewisereports.pdf">
+																		<button type="button" class="btn btn-success waves-effect waves-light margin_top_25" onclick='getfRepotfourData()' >Search</button>
+																		<button type="reset" value="Reset" class="btn btn-success waves-effect waves-light margin_top_25">Reset</button>
+																		<a th:href="@{'/ppvfra/download/japerreport/'+${serialNumber}}" class="btn btn-success waves-effect waves-light margin_top_25" target="_blank">View Pdf</a>
+				                                                    </div>
+																</div>
+															</form>
+														</div>
+													</div>
+												</div>	
+												
+                                              
+                                             		
+                                              <div class="col-md-12 col-sm-12 col-xs-12">
+                                              <div class="table-responsive">
+												 
+													<table id="statewisereport" class="table table-hover table-bordered">
+														<thead>
+															
+															<tr>
+																<!-- <th>S.No</th> -->
+																<th>Application ID</th>
+																<th>Name of Applicant</th>	
+																<th>State</th>
+																<th>City</th>
+																<th>Address</th>
+																<th>Application Date</th>
+																<th>Crop Group</th>
+																<th> Crop Name</th>
+																<th>Application Current Status</th>
+															    <th>Remarks</th>
+																<th>View</th>
+															</tr>
+														</thead>
+														<tbody id="tbodyid">
+													 
+														</tbody>
+													</table>
+												</div>
+												</div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div> <!-- End Row -->
+
+
+                    </div> <!-- container -->
+                               
+                </div> <!-- content -->
+
+            </div>
+            <!-- ============================================================== -->
+             
+            <!-- End Right content here -->
+          <div th:replace="adminfragment/footer.html :: footer"></div>
+           </div> <!-- container -->
+                               
+                <!-- content -->
+
+			<!-- start footer content here -->
+			
+			<!-- end footer content here -->
+
+      
+        <!-- END wrapper -->
+
+<!-- footer lib start here-->
+
+<div th:replace="adminfragment/footerlibs.html :: footerlibs"></div>
+<!-- end footer lib -->
+
+
+
+	<script>
+	$(function($)
+	{$.ajaxSetup({beforeSend:function()
+	{$('#mask').show();},complete:function()
+	{$('#mask').hide();}});});
+	</script>
+
+
+
+<script type="text/javascript">
+   function GetCropsByCropGroup()
+  {
+       var cropname= document.getElementById("cropgroup");
+       var botanicalname=document.getElementById("crop");
+       var botanicalname1=$("#crop");
+       if(cropname.value != null)	
+       	$.ajax({
+               type: "POST",
+               url: "/ppvfra/getCropsByCropGroup",
+               data: 'ddlcrops='+cropname.value,
+               dataType:"json",
+               success: function (response) {
+               	
+            	   botanicalname1.empty().append('<option selected="selected" value="-1">---Select---</option>');
+                for(var k=0;k<response.length;k++)
+     	  {
+     	  var opt = response[k];
+     	   var el = document.createElement("option");
+     	   el.textContent = opt[1];
+     	   el.value = opt[0];
+     	  botanicalname.appendChild(el);
+     	}
+               },
+               failure: function (response) {
+                   alert(response.responseText);
+               },
+               error: function (response) {
+                   alert(response.responseText);
+               }
+      });
+   	
+   }
+ </script>	
+
+ <script type="text/javascript">
+        function getfRepotfourData() {
+            var f_date =document.getElementById("fromdate").value;
+            var to_date =document.getElementById("todate").value;
+            var applicantname =document.getElementById("applicantname").value;
+            var cropgroup =document.getElementById("cropgroup").value;
+            var crop =document.getElementById("crop").value;
+            var denomination =document.getElementById("denomination").value;
+            var status =document.getElementById("status").value;
+            var statecode =document.getElementById("statecode").value;
+            var districtcode =document.getElementById("districtcode").value;
+            if( !(f_date ==null || f_date =="" || to_date ==null || to_date =="" ))
+        	{
+	        var chkdate2 =new Date(to_date);
+	     	var chkdate1 =new Date(f_date);
+	     	if(chkdate2<chkdate1)
+     		{alert("To Date Should be Greater From Date");
+     		return false;
+     		}
+        	}else
+        	{
+        		alert("Please Select Date First");
+        	return false;
+        	}
+            
+            if((f_date==null ||f_date=="") || (to_date==null || to_date=="") )
+            {
+                alert("Please Select Date Fields");
+                return false;
+            }
+            else{
+            	 //$("#shortstorage_wrapper").show();
+            	//$("#shortstorage").show();
+            	//$('#shortstorage').DataTable().clear().draw();
+            	
+            $.ajax({
+                type: "POST",
+                url: "/getReportData6",
+                 data: {
+                	f_date :f_date,
+                	to_date :to_date,
+                	applicantname :applicantname,
+                	cropgroup :cropgroup,
+                	crop :crop,
+                	denomination :denomination,
+                	status :status,
+                	statecode :statecode,
+                	districtcode :districtcode
+                	
+                	
+            	},
+            	dataType: 'json',
+                cache: false,
+                success: function(data) {
+                //	console.log(data);
+                	
+                	$('#statewisereport').DataTable().clear().draw();
+                    var table;
+                  table = $('#statewisereport').DataTable();
+                  if((data!='' || data!=null) && data.length !=0) 
+                  {               
+                   $.each(data, function(i, item) {
+                     //  alert(data[i]);
+                     if(data[i][10] =="NULL" || data[i][10]==null)
+                      data[i][10]="";
+                      table.row.add([data[i][0], data[i][1],  data[i][3], data[i][4], data[i][2], data[i][5], data[i][6], data[i][7],data[i][9],data[i][10],"<a href=/show_application_details/"+data[i][0]+" target='_blank'>view</a>"]);
+                  });
+                   table.draw();
+                  }
+                  else {
+                  
+                 $("#statewisereport").find("tbodyid tr:gt(0)").remove();
+                  $('#tbodyid').html('<tr><td colspan="11"><strong style="font-size: 20px;">No data available in search</strong></td></tr>');
+                  }
+                 // table.draw();
+                }
+            	
+            }); 
+            }
+  }
+    </script> 
+    
+     <script type="text/javascript">
+   function GetDistricts()
+  {
+       var ddlState= document.getElementById("statecode");
+       var district=document.getElementById("districtcode");
+       var district1=$("#districtcode");
+       if(ddlState.value != null)	
+       	$.ajax({
+               type: "POST",
+               url: "/ppvfra/getDistricts",
+               data: 'stateCode='+ddlState.value,
+               dataType:"json",
+               success: function (response) {
+               	
+              district1.empty().append('<option selected="selected" value="-1">Please select</option>');
+                for(var k=0;k<response.length;k++)
+     	  {
+     	  var opt = response[k];
+     	   var el = document.createElement("option");
+     	   el.textContent = opt[1];
+     	   el.value = opt[0];
+     	   district.appendChild(el);
+																	 
+     	}
+ 
+ 
+               },
+               failure: function (response) {
+                   alert(response.responseText);
+					  
+               },
+               error: function (response) {
+                   alert(response.responseText);
+					   
+										  
+														
+               }
+      });
+   	
+   }
+ </script>
+</body>
+</html>

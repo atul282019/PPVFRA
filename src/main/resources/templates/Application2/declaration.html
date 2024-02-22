@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+	<div th:fragment="declaration">
+												
+													
+                                                <p>I/We hereby apply for the grant of registration of the candidate variety with the above said denomination and I/we am are conversant with the Protection of Plant Varieties and Farmers' Rights Act, 2001 and Rules thereof related to this application.</p> 
+                                                <p>I/We hereby declare that no person other than the person or persons mentioned in this application has been involved in the breeding, or discovery or development of the candidate variety.</p> 
+                                                <p>I/We hereby declare that the candidate variety complies with the sub- section (3) of section 29 of Protection of Plant Varieties and Farmers Rights Act, 2001.</p> 
+                                                <p>I/We hereby declare that I/we have not applied for or received a trademark for the said denomination of the variety.</p> 
+                                                <p>I/We hereby attach an affidavit in compliance with clause (C) of sub- section (1) of section 18 of Protection of Plant Varieties and Farmers' Rights Act, 2001.</p> 
+                                                <p>I/We hereby declare that the information given in this application for the registration of t he above said candidate variety, including annexure and all supporting documents are complete, true and correct to the best of my/our knowledge, information and belief and no information has been wilfully concealed.</p> 
+                                                <p>I/We hereby declare that genetic material or parental material acquired for breeding, evolving or developing the variety has been lawfully acquired.</p> 
+                                                <p>I/We hereby declare that I/We shall abide by all the provisions and guidelines of Protection of Plant Varieties and Farmers' Rights Act, 2001</p> 
+                                                <form class="form-horizontal" role="form" id="" th:action="@{/savedeclaration_first_form2}" th:object="${applications}" method="post" onsubmit="return valuechk()">  
+												
+                                                <p><input type="checkbox" name="is_agreed_clause" id="is_agreed_clause" th:field="*{is_agreed_clause}" value="Y">I agree </p> 
+												
+													<div class="form-group">
+														<label class="col-md-3 control-label">Place</label>
+														<div class="col-md-6">
+															<input type="text"  id="application_declare_place" name="application_declare_place" th:field="*{application_declare_place}" class="form-control" value="">
+														  	<div style="color:red" id="application_declare_place_error"></div> 
+														  </div>
+														<label class="col-md-3 control-label"></label>
+													</div>
+													<div class="form-group">
+														<label class="col-md-3 control-label">Date</label>
+														<div class="col-md-6">
+														 <input type="date" id="application_signed_date" class="form-control" name="application_signed_date"  th:value="*{#dates.format(application_signed_date,'yyyy-MM-dd')}">
+														 <div style="color:red" id="application_signed_date_error"></div> 
+														 </div>
+														<label class="col-md-3 control-label"></label>
+													</div>
+													<div>
+													 <input type="hidden" id="applicationid"  name ="applicationid" th:value="*{id}">
+                                                     <input type="hidden" id="applicantid" name="applicantid"  th:value="${userapplicant[0]}">
+                                                     <input type="hidden" id="f13_id" name="f13_id" th:value="${f13_id}">
+                                                        
+													</div>
+													
+													<div class="form-group">
+														<label class="col-md-12 control-label">(Signature of Applicants).....</label>
+													</div>
+													<div class="form-group" th:if="${appstatus ==1}">
+														<div class="col-md-6">
+														    
+															<button id="submitbutton" value="Send" disabled="disabled"  type="submit" class="btn btn-info waves-effect waves-light">Submit</button>
+														</div>
+													</div>
+												</form>
+												
+												<script type="text/javascript">
+												var checker = document.getElementById('is_agreed_clause');
+												 var sendbtn = document.getElementById('submitbutton');
+												 
+												 checker.onchange = function(){
+													 
+														 
+												if(this.checked){
+												    sendbtn.disabled = false;
+												} else {
+												    sendbtn.disabled = true;
+												}
+
+												}
+												if(checker.value)
+												{
+												//alert("inside checked"+checker.value);
+												  sendbtn.disabled = false;
+												}else {
+												    sendbtn.disabled = true;
+												}
+												</script>
+												
+												<script type="text/javascript">
+												function valuechk()
+												{
+													 var el1 = document.getElementById("application_declare_place");
+													 var el = document.getElementById("application_signed_date");
+													 var sendbtn = document.getElementById('submitbutton');
+													 var checker1 = document.getElementById('is_agreed_clause');
+													 var chk = document.getElementById("is_agreed_clause");
+													 
+													 if(!(chk.checked))
+														 {
+														 sendbtn.disabled = true;
+														 alert("Please Check I Agree First");
+														 return false;
+														 }
+													 if (el1 == null || el1 == "" || el1.value === "" || el1.value =="")
+													 {
+													 //alert("Please Fill Place");
+													  document.getElementById("application_declare_place_error").innerHTML="Please enter place";
+													 
+													 //sendbtn.disabled = true;
+													 //checker1.checked=false;
+													 return false;
+													 }
+													 else{
+														 document.getElementById("application_declare_place_error").innerHTML="";
+													 }
+													 if (el == null || el.value === "")
+													 {
+													 //sendbtn.disabled = true;
+													 //checker1.checked=false;
+													 //alert("Please Select Date");
+													 document.getElementById("application_signed_date_error").innerHTML="Please select date";
+													 return false;
+													 }
+													 else{
+														 document.getElementById("application_signed_date_error").innerHTML="";
+													 } 
+														 sendbtn.disabled = false;
+														 return true;
+													  
+												}
+												</script>
+												
+                                          
+        </div>
+</html>
+           

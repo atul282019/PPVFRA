@@ -1,0 +1,220 @@
+  
+  <!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+	<head>
+	  <th:block th:include="adminfragment/headerlibs.html :: headerlibs"></th:block> 
+	</head>
+
+    <body class="fixed-left">
+        <!-- Begin page -->
+        <div id="wrapper">
+        
+            <!-- Top Bar Start -->
+           <header th:insert="adminfragment/header.html :: header"> </header>
+            <!-- Top Bar End -->
+
+
+            <!-- ========== Left Sidebar Start ========== -->
+			<header th:insert="adminfragment/sidenav.html :: sidevav"> </header>
+            <!-- Left Sidebar End --> 
+
+   			 <!-- Start right Content here -->
+            <!-- ============================================================== -->                      
+            <div class="content-page">
+                <!-- Start content -->
+                <div class="content">
+                    <div class="container">
+
+                        <!-- Page-Title -->
+                        <div class="row">
+                            <div class="col-sm-12">
+                                <h4 class="pull-left page-title">Role Management</h4>
+                                <ol class="breadcrumb pull-right">
+                                    <li><a href="/admin">Home</a></li>
+                                    <li class="active">Add Role</li>
+									<li><a href="role_privilege.html">Assign Roles</a></li>
+                                    <li>
+                                            <a href="role_managment.html" class="btn btn-purple waves-effect waves-light btn-xs m-b-5"><b>Back</b></a>
+                                    </li>
+                                </ol>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-sm-12">
+                                <div class="panel panel-default">
+                                    <div class="panel-heading"><h3 class="panel-title">Assign Role to User</h3></div>
+                                      <span th:if="${actd_viewtrue != null && actd_viewtrue == 'valpresent' }">
+									
+                                    <div class="panel-body">
+                             <form class="form-horizontal" role="form" action="#" th:action="@{/addrolefromadmin}" th:object="${saverole_para}" method="post" id="register-form" name="register-form"onsubmit = "return validateform()">
+                                             <div class="form-group">
+                                                <label class="col-sm-2 control-label">Select the User</label>
+                                                <div class="col-sm-6">
+                                                    <div th:if="${userbinding != null}">
+											         <select id="user_id"  name="user_id" th:field="*{user_id}"  class="form-control" onchange="fetchroleidval();">
+											         <option th:value="-1" >---Select User---</option>
+											         <option th:each="dropDownItem : ${userbinding}" 
+											          th:value="${dropDownItem.id}" th:text="${dropDownItem.username}" />
+											       </select>
+											     	<div class="error" th:if="${#fields.hasErrors('user_id')}" th:errors="*{user_id}">user_id Error</div>
+											     	<span id="user_iderror" style="color:red"></span>
+											     	</div>
+                                                </div>
+                                            </div>
+	 <div class="form-group">
+	<label class="col-md-3 control-label">Roles</label>
+	 
+		 
+		<div class="col-md-9">
+			<th:block th:each="certificate : ${certificates}">
+			<input id="role_id" name="role_id" th:field="*{role_id}" type="checkbox" th:text="${certificate.description}" th:value="${certificate.id}" /><br>
+            </th:block>
+              <div class="error" th:if="${#fields.hasErrors('role_id')}" th:errors="*{role_id}">role_id Error</div>
+		</div>   
+											    
+	</div>
+	                                 
+	                                
+
+                             <div class="form-group m-b-0">
+                                 <div class="col-sm-offset-2 col-sm-9">
+                                    <span th:each="sec_chk : ${actd}">
+									<span th:if="${sec_chk == 'Add'}">
+									<button type="submit" class="btn btn-info waves-effect waves-light">Submit</button>
+									</span>
+									</span>
+                                 </div>
+                             </div>
+            
+                         </form>
+                     </div> <!-- panel-body -->
+                     </span>
+                      <span th:unless="${actd_viewtrue != null && actd_viewtrue == 'valpresent' }">
+							<label>YOU ARE NOT AUTHORISED TO VIEW THIS PAGE.PLEASE CONTACT ADMINISTRATOR</label>
+							</span>
+                 </div> <!-- panel -->
+             </div> <!-- col -->
+         </div> <!-- End row -->
+
+     </div> <!-- container -->
+                
+ </div> <!-- content -->
+<!-- 
+                <footer class="footer text-right">
+                    2019 © PPVFRA.
+                </footer> -->
+
+            </div>
+            <!-- ============================================================== -->          
+            <!-- End Right content here -->
+          <div th:replace="adminfragment/footer.html :: footer"></div>
+           </div> <!-- container -->
+                               
+                <!-- content -->
+
+			<!-- start footer content here -->
+			
+			<!-- end footer content here -->
+
+      
+        <!-- END wrapper -->
+
+<!-- footer lib start here-->
+
+<div th:replace="adminfragment/footerlibs.html :: footerlibs"></div>
+<!-- end footer lib -->
+    
+     <script type="text/javascript" th:inline="javascript">
+      function fetchroleidval() 
+        {    	  
+    	 // var totalrolesfromcontroller = [[${rolesbindingval}]];
+    	
+    	  
+    	  var moduledata= document.getElementById("user_id");
+    	     //   var moduledata1 = document.getElementById("role_id");
+    	        var moduledata2 = document.getElementsByName("role_id");
+    	        
+    	     //  alert("Moduledata2="+moduledata2);
+    	       
+    	     for (var unchk=0; unchk< moduledata2.length; unchk++)
+    	    	 {
+    	    	 moduledata2[unchk].checked=false;
+    	    	 }
+    	       
+    	       if(moduledata.value != null)		 
+    	        	$.ajax(
+    	        			{
+    	                type: "POST",
+    	                url: "/ppvfra/getroleidvalue",
+    	                data: 'user_id='+moduledata.value,
+    	                //contentType: "application/json charset=utf-8",
+    	                //dataType: "json",
+    	                success: function (response) {
+    	                	
+    	                	 if(response.length != null)
+    	                	{  
+    	                		 for (var i=0;i<response.length;i++)
+    	                		{
+    	                    	var str = response[i].toString();
+    	                    	 //for (var k=0; k<totalrolesfromcontroller.length; k++)
+    	                    	for (var k=0; k<moduledata2.length; k++)	 
+ 	                			{
+    	                    		//var roleval = totalrolesfromcontroller[k][0].toString();
+    	                    		var roleval = moduledata2[k].value;
+    	                    		
+    	                    		 if (str == roleval)
+    	                    	{
+    	                    			// document.getElementById("role_id").checked = true;
+    	                    			 moduledata2[k].checked = true;
+    	                    	}
+    	                		}
+    	                			}
+    	                	} 
+    	                	
+    												}
+    						});
+        }
+    	        </script> 
+    	       
+<script type = "text/javascript">
+      function validateform() {
+    	
+      var a=document.getElementById("user_id").value;
+      if( a== "-1" ) {
+         	 document.getElementById("user_iderror").innerHTML="please select a user";
+         	 document.getElementById("user_id").focus() ;
+             return false;
+          }
+      else{
+    		return true ;
+    		}
+    	      }
+</script>
+
+
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
+
+  <div th:if="${message != null}">
+ <div id="myModal1" class="modal fade">
+   <div class="modal-dialog">
+    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+        <div class="modal-content">
+         <div class="modal-body">
+				<p align="center" th:text="${message}" />
+            </div>
+        </div>
+    </div>
+</div>
+</div>
+
+    <script type="text/javascript">
+	      $(document).ready(function(){
+		  $("#myModal1").modal('show');
+	     });
+        </script>
+ 
+    	        
+    </body>
+</html>

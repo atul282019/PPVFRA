@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+	<head>
+	  <th:block th:include="adminfragment/headerlibs.html :: headerlibs"></th:block> 
+	</head>
+
+    <body class="fixed-left">
+        <!-- Begin page -->
+        <div id="wrapper">
+        
+            <!-- Top Bar Start -->
+           <header th:insert="adminfragment/header.html :: header"> </header>
+            <!-- Top Bar End -->
+
+
+            <!-- ========== Left Sidebar Start ========== -->
+			<header th:insert="adminfragment/sidenav.html :: sidevav"> </header>
+            <!-- Left Sidebar End --> 
+            
+  
+             <!-- Start right Content here -->
+            <!-- ============================================================== -->                      
+            <div class="content-page">
+                <!-- Start content -->
+                <div class="content">
+                    <div class="container">
+
+                        <!-- Page-Title -->
+                        <div class="row">
+                            <div class="col-sm-12">
+                                <h4 class="pull-left page-title"></h4>
+                                <ol class="breadcrumb pull-right">
+                                    
+                                     <button action="action" type="button" onclick="history.go(-1);" class="btn btn-purple waves-effect waves-light btn-xs m-b-5">Back</button>
+                                    
+                                </ol>
+                            </div>
+                        </div>
+            
+            
+            
+            
+            <div class="row">
+                            <div class="col-sm-12">
+                                <div class="panel panel-default">
+                                    <div class="panel-heading"><h3 class="panel-title">Application Scrutiny Edit</h3></div>
+                                     <!-- <span th:if="${actd_viewtrue != null && actd_viewtrue == 'valpresent' }"> -->
+									
+                                    <div class="panel-body">
+                          <span th:if="${ApplicationScrutiny != null && ApplicationScrutiny == 'ApplicationScrutiny' }"> 
+                                    
+                                       <form class="form-horizontal" role="form" th:action="@{/applicationscrutiny}" th:object="${applicationscrutiny}" method="post" >   
+													<div class="panel panel-success">
+														<div class="panel-heading">Application Scrutiny</div>
+														<div class="panel-body">
+															
+												<div class="form-group">
+                                                <label class="col-md-2 control-label" > </label>
+                                                <div class="col-md-10">
+                                                    <input type="text" th:field="*{id}" readonly="readonly" hidden="true" />
+                                                    
+                                                </div>
+                                                </div>
+												
+												<div class="form-group">
+                                                <label class="col-md-2 control-label" > </label>
+                                                <div class="col-md-10">
+                                 				<input type="text" id="applicationid" th:field="*{applicationid}" th:name="applicationid"  th:value="${applicationid}" hidden="true"/>
+                                                </div>
+                                                </div>
+															
+															
+															<div class="form-group">
+																<label class="col-md-2 control-label">Category </label>
+																<div class="col-md-6">
+																<select  th:field="*{category}" class="form-control">
+																<option th:value="-1">Select</option>
+																<option th:text="Payment" th:value="Payment">Payment</option>
+																<option th:text="Attachments" th:value="Attachments">Attachments</option>
+																<option th:text="Submission" th:value="Submission">Seeds Submission</option>
+															</select>
+																</div>
+															</div>
+															<div class="form-group">
+																<label class="col-md-2 control-label">Observation</label>
+																<div class="col-md-6">
+																	<input type="text" th:field="*{observation}" class="form-control" >
+																</div>
+																<div class="col-md-2">
+																<span th:if="${sub2 == 'addpresent'}">
+																	<button type="submit" id="btnsubmit1" name="btnsubmit1" value="btnsubmit1"class="btn btn-danger pull-right" style="display: block;  border-radius:5px;height: 32px; padding: 5px; position:relative; right:14px; border-left: none;">Add</button>
+																</span>
+																</div>
+															</div>
+															
+															
+															
+															
+														
+															
+														</div>
+													 </div>
+													
+													<br>    
+												</form> 
+								</span>
+<span th:unless="${ApplicationScrutiny != null && ApplicationScrutiny == 'ApplicationScrutiny' }">
+ <label>YOU ARE NOT AUTHORISED TO VIEW THIS PAGE.PLEASE CONTACT ADMINISTRATOR</label>
+ </span>				
+                                    </div> <!-- panel-body -->
+                                    
+                                    <!-- </span>
+                                    <span th:unless="${actd_viewtrue != null && actd_viewtrue == 'valpresent' }">
+									 <label>YOU ARE NOT AUTHORISED TO VIEW THIS PAGE.PLEASE CONTACT ADMINISTRATOR</label>
+									 </span> -->
+                                </div> <!-- panel -->
+                            </div> <!-- col -->
+                        </div> <!-- End row -->
+
+                    </div> <!-- container -->
+                               
+                </div> <!-- content -->
+<!-- 
+                <footer class="footer text-right">
+                    2019 © PPVFRA.
+                </footer> -->
+
+            </div>
+            <!-- ============================================================== -->
+            <!-- End Right content here -->
+           
+           
+          <div th:replace="adminfragment/footer.html :: footer"></div>
+           </div> <!-- container -->
+                               
+                <!-- content -->
+
+			<!-- start footer content here -->
+			
+			<!-- end footer content here -->
+
+      
+        <!-- END wrapper -->
+
+<!-- footer lib start here-->
+
+<div th:replace="adminfragment/footerlibs.html :: footerlibs"></div>
+<!-- end footer lib -->
+    
+    </body>
+</html>

@@ -1,0 +1,394 @@
+  
+  <!DOCTYPE html>
+  
+<html xmlns:th="http://www.thymeleaf.org">
+
+	<head>
+	  <th:block th:include="adminfragment/headerlibs.html :: headerlibs"></th:block> 
+	</head>
+
+  
+    <body class="fixed-left">
+        <!-- Begin page -->
+        <div id="wrapper">
+        
+            <!-- Top Bar Start -->
+           <header th:insert="adminfragment/header.html :: header"> </header>
+            <!-- Top Bar End -->
+
+
+            <!-- ========== Left Sidebar Start ========== -->
+			<header th:insert="adminfragment/sidenav.html :: sidevav"> </header>
+            <!-- Left Sidebar End --> 
+
+   			 <!-- Start right Content here -->
+            <!-- ============================================================== -->                      
+            <div class="content-page">
+                <!-- Start content -->
+                <div class="content">
+                    <div class="container">
+
+                        <!-- Page-Title -->
+                       
+                        <!--  
+                        <span th:if="${actd_viewtrue != null && actd_viewtrue == 'valpresent' }"> 
+						 -->
+								 <div>
+                <!-- Start content -->
+                <div class="content">
+                    <div class="container">
+
+                        <!-- Page-Title -->
+                        <div class="row">
+                            <div class="col-sm-12">
+                                <h4 class="pull-left page-title">Application processing</h4>
+                                <ol class="breadcrumb pull-right">
+                                    <li><a href="/admin">Home</a></li>
+                                    <li class="active">Application Processing</li>
+                                </ol>
+                            </div>
+                        </div>
+
+                        <div class="row">
+							<div class="col-md-12"> 
+										<!-- Nav tabs -->
+										<div class="card">
+											<ul class="nav nav-tabs" role="tablist">
+									
+												
+															 
+												<li role="presentation" class="active">
+													<a href="#profile-management" aria-controls="home" role="tab" data-toggle="tab">
+														<i class="fa fa-id-card"></i>&nbsp; <span>Profile</span>
+													</a>
+												</li>
+												 
+												
+												
+												<li role="presentation">
+																						
+													<a href="#change-password" aria-controls="staff"  role="tab" data-toggle="tab">
+														<i class="fa fa-user"></i>&nbsp; <span>Change Passwod</span>
+													</a>
+												</li>
+												 
+													
+											</ul>
+											<!-- Tab panes -->
+											<div class="tab-content">
+											 
+												<div role="tabpanel" class="tab-pane active table-responsive" id="profile-management">		
+												<table class="table table-striped table-bordered table-hover table-checkable order-column dataTable no-footer display row-border hover compact" id="TABLE_1" role="grid">
+														 <tbody th:if="${userdata_profile != null}">
+														<tr>
+																  
+																  <td>User Name</td>
+																 <td th:text="${userdata_profile[1]}"></td>
+																</tr>
+																 
+																<tr>
+																	
+																	<td>Email-Id</td>
+																	<td th:text="${userdata_profile[2]}"></td>
+																</tr>
+																
+																<tr>
+																 
+																  <td>Mobile No</td>
+																 <td th:text="${userdata_profile[3]}"></td>
+																</tr>
+																
+																
+																
+																<tr>
+																
+																	<td>Designation</td>
+																	<td th:text="${userdata_profile[4]}"></td>
+																</tr>
+													     </tbody>
+													</table>
+													
+												 </div>
+																																																											 
+												 
+										
+												
+												
+												<div role="tabpanel" class="tab-pane table-responsive" id="change-password">
+												
+												 								<div class="col-sm-12 form-group">
+																				<label class="col-sm-5 font_weight_form">
+																					&nbsp;Old Password<span class="req">*</span>
+																				</label>
+																				<input name="oldpassword" type="password" class="form-control" placeholder="Old Password">
+																			</div>
+																			<div class="col-sm-12 form-group">
+																				<label class="col-sm-5 font_weight_form">
+																					&nbsp; New Password<span class="req"></span>
+																				</label>
+																				<input name="newpwd" type="password" class="form-control" placeholder="New Password">
+																			</div>
+																			<div class="col-sm-12 form-group">
+																				<label class="col-sm-5 font_weight_form">
+																					&nbsp; Confirm Password<span class="req"></span>
+																				</label>
+																				<input name="confpwd" type="password" class="form-control" placeholder="Confirm Password" value= "">
+																			</div>
+																			
+																			
+																			<div class="row">
+																			<div class="col-sm-12 col-xs-12 text-center">
+																			
+																			
+				                                            				 	<!-- <input type="submit" class="btn btn-lg btn-info"> -->
+														 					    <button type="submit" class="btn btn-lg btn-info">Change Password</button>
+														 					
+		 										
+												</div>
+											
+											 </div>
+											 
+																			</div>
+																			
+																		</div>
+																		<br>
+																		
+										</div>
+									</div>	  
+							
+							
+                     </div> <!-- End Row -->
+
+
+                    </div> <!-- container -->
+                               
+                </div> <!-- content -->
+                
+								 <!--  </span>
+									  <span th:unless="${actd_viewtrue != null && actd_viewtrue == 'valpresent' }">
+							<label>YOU ARE NOT AUTHORISED TO VIEW THIS PAGE.PLEASE CONTACT ADMINISTRATOR</label>
+							</span> -->
+									
+									
+                                
+                        </div> <!-- End row -->
+
+                    </div> <!-- container -->
+                               
+                </div> <!-- content -->
+
+               <!--  <footer class="footer text-right">
+                    2019 © PPVFRA.
+                </footer> -->
+
+            </div>
+            <!-- ============================================================== -->
+            <!-- End Right content here -->
+   			
+   			
+          <div th:replace="adminfragment/footer.html :: footer"></div>
+           </div> <!-- container -->
+                               
+                <!-- content -->
+
+			<!-- start footer content here -->
+			
+			<!-- end footer content here -->
+
+      
+        <!-- END wrapper -->
+
+<!-- footer lib start here-->
+
+<div th:replace="adminfragment/footerlibs.html :: footerlibs"></div>
+<!-- end footer lib -->
+
+<script type="text/javascript"  th:inline="javascript">
+  
+  function getValue(text,accessTypes){
+ 	  for(a in accesstypes){
+ 		if(accesstypes[a][1] === text.trim()){
+ 	          return accesstypes[a][0];
+ 	    }
+ 	  }
+ 	}
+  
+  function getdatabefore(moduledata,roleid)
+  {
+  	$.ajax({
+          type: "POST",
+          url: "/ppvfra/databefore",
+          data: 'moduledata='+moduledata+'&roleid='+roleid,
+          success: function (response1) 
+          {
+          	roleprev= response1;	
+          },                
+          failure: function (response1) {
+                  alert(response1.responseText);
+              },
+              error: function (response1) {
+                  alert(response1.responseText);
+              }
+});
+  }
+ 
+    var accesstypes = [[${accesstypes}]]; 
+    var roleprev= [[${moduledatalist}]];
+    function change_tbl1() {
+    	  
+    	        var moduledata= document.getElementById("moduledata");
+    	        if(moduledata.value <= 0 )
+    	        {
+    	        alert("Please Select Module First");
+    	        return false;
+    	        }
+    	        
+    	        var roleid= document.getElementById("roleid");
+    	        if(roleid.value <= 0)
+    	        {
+    	        	alert("Please Refresh And Select Role First");
+    	        	return false;
+    	        }else
+    	        	{
+    	        	getdatabefore(moduledata.value, roleid.value);
+    	        	}
+    	        
+    	        
+	        //var accesstypes = [[${accesstypes}]]; /* 'default' */
+	        var tabledata=$("#tabledata");
+	        if(moduledata.value != null)		 
+	        	$.ajax({
+	                type: "POST",
+	                url: "/ppvfra/getmenulist",
+	                data: 'moduledata='+moduledata.value,
+	                //contentType: "application/json charset=utf-8",
+	                //dataType: "json",
+	                success: function (response) {
+	                	
+	                	var view = getValue("View",accesstypes);
+	                	
+	                	$("#tabledata tbody").html(''); 
+	                	//for (var chkcon=0;chkcon<roleprev.length;chkcon++)
+                			{
+	                		
+        	for (var i=0;i<response.length;i++)
+           	{
+               	var str = response[i][1].toString();
+               	var moduleid = response[i][0].toString();
+               	
+               	/* var html_data = '<tr><td>'+str+'</td><td><input type="checkbox" name="viewchkb" value="'+getValue("View",accesstypes)+'"></td><td><input type="checkbox" name="viewchkb" value="'+getValue("Add",accesstypes)+'"></td><td><input type="checkbox" name="viewchkb" value="'+getValue("Edit",accesstypes)+'"></td><td><input type="checkbox" name="viewchkb" value="'+getValue("Delete",accesstypes)+'"></td></tr>'; */
+               	//var html_data = '<tr><td><input name="modulename" type="hidden" value='+moduleid+' text="'+str+'" >'+str+'</td><td><input type="checkbox" name="viewchkb" th:field="*{accessid}" value="'+moduleid+'-'+getValue("View",accesstypes)+'"></td><td><input type="checkbox" name="addchkb" th:field="*{accessid}" value="'+moduleid+'-'+getValue("Add",accesstypes)+'"></td><td><input type="checkbox" name="editchkb" th:field="*{accessid}" value="'+moduleid+'-'+getValue("Edit",accesstypes)+'"></td><td><input type="checkbox" name="deletechkb" th:field="*{accessid}" value="'+moduleid+'-'+getValue("Delete",accesstypes)+'"></td></tr>';
+             
+               	//$("#tabledata tbody").html(''); 
+               
+               	var html_data = '<tr><td><input name="modulename" type="hidden" value='+moduleid+' text="'+str+'" >'+str+'</td><td><input type="checkbox" name="viewchkb" th:field="*{accessid}" value="'+moduleid+'-'+getValue("View",accesstypes)+'"></td><td><input type="checkbox" name="addchkb" th:field="*{accessid}" value="'+moduleid+'-'+getValue("Add",accesstypes)+'"></td><td><input type="checkbox" name="editchkb" th:field="*{accessid}" value="'+moduleid+'-'+getValue("Edit",accesstypes)+'"></td><td><input type="checkbox" name="deletechkb" th:field="*{accessid}" value="'+moduleid+'-'+getValue("Delete",accesstypes)+'"></td></tr>';
+               			
+               	
+               	$("#tabledata tbody").append(html_data);
+               	
+           	
+        	 var newcase = document.getElementsByName("viewchkb");
+        	 var newcase1 = document.getElementsByName("addchkb");
+        	 var newcase2 = document.getElementsByName("editchkb");
+        	 var newcase3 = document.getElementsByName("deletechkb");
+        	 
+        	for (var k=0;k<roleprev.length;k++)
+     		{
+         	var newgotvar = roleprev[k].toString();
+         	
+        	
+        	 	for(var t=0;t< newcase.length;t++)
+        	 		{
+        	 		var mk = newcase[t].value;
+        	 		if(mk == newgotvar)
+        	 			{
+        	 			newcase[t].checked=true;
+        	 			}
+        	 		}
+     		}
+        	
+        	 	
+        	 	for (var k=0;k<roleprev.length;k++)
+         		{
+             	var newgotvar = roleprev[k].toString();
+        	 	
+        	 	for(var t1=0;t1< newcase1.length;t1++)
+    	 		{
+    	 		var mk1 = newcase1[t1].value;
+    	 		if(mk1 == newgotvar)
+    	 			{
+    	 			newcase1[t1].checked=true;
+    	 			}
+    	 		}
+     		}
+        	 	
+        	 	for (var k=0;k<roleprev.length;k++)
+         		{
+             	var newgotvar = roleprev[k].toString();
+        	 	for(var t2=0;t2< newcase2.length;t2++)
+    	 		{
+    	 		var mk2 = newcase2[t2].value;
+    	 		if(mk2 == newgotvar)
+    	 			{
+    	 			newcase2[t2].checked=true;
+    	 			}
+    	 		}
+         		}
+        	 	
+        	 	
+        	 	for (var k=0;k<roleprev.length;k++)
+         		{
+             	var newgotvar = roleprev[k].toString();
+        	 	for(var t3=0;t3< newcase3.length;t3++)
+    	 		{
+    	 		var mk3 = newcase3[t3].value;
+    	 		if(mk3 == newgotvar)
+    	 			{
+    	 			newcase3[t3].checked=true;
+    	 			}
+    	 		}
+        	 		
+     		}
+           	
+           	}
+     		
+     		
+     		
+     		}
+	                    
+	                },
+	                    failure: function (response) {
+	                    alert(response.responseText);
+	                },
+	                error: function (response) {
+	                    alert(response.responseText);
+	                }
+			});
+}
+   </script>  
+    
+  
+<!-- <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script> -->
+
+
+  <div th:if="${message != null}">
+ <div id="myModal1" class="modal fade">
+   <div class="modal-dialog">
+    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+        <div class="modal-content">
+         <div class="modal-body">
+				<p align="center" th:text="${message}" />
+            </div>
+        </div>
+    </div>
+</div>
+</div>
+
+    <script type="text/javascript">
+	      $(document).ready(function(){
+		  $("#myModal1").modal('show');
+	     });
+        </script>
+    
+    </body>
+</html>

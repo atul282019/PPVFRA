@@ -1,0 +1,192 @@
+  
+  <!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+	<head>
+	  <th:block th:include="adminfragment/headerlibs.html :: headerlibs"></th:block> 
+	</head>
+
+    <body class="fixed-left">
+        <!-- Begin page -->
+        <div id="wrapper">
+        
+            <!-- Top Bar Start -->
+           <header th:insert="adminfragment/header.html :: header"> </header>
+            <!-- Top Bar End -->
+
+
+            <!-- ========== Left Sidebar Start ========== -->
+			<header th:insert="adminfragment/sidenav.html :: sidevav"> </header>
+            <!-- Left Sidebar End --> 
+
+
+  			<!-- Start right Content here -->
+            <!-- ============================================================== -->                      
+            <div class="content-page">
+                <!-- Start content -->
+                <div class="content">
+                    <div class="container">
+
+                        <!-- Page-Title -->
+                        <div class="row">
+                            <div class="col-sm-12">
+                                <h4 class="pull-left page-title">User Management</h4>
+                                <ol class="breadcrumb pull-right">
+                                    <li><a href="/admin">Home</a></li>
+                                    <li class="active">Add User</li>
+                                </ol>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-sm-12">
+                                <div class="panel panel-default">
+                                    <div class="panel-heading"><h3 class="panel-title">Add User</h3></div>
+                                    <div class="panel-body">
+                                        <form class="form-horizontal" role="form"> 
+										<div class="form-group">
+											<div class="col-md-3">
+												<label for="Firstname">First name</label>
+												<input type="text" class="form-control" value="First name" >
+											</div>
+											<div class="col-md-3">
+												<label for="Firstname">Middle name </label>
+                                                <input type="text" class="form-control" value="Middle Name" >
+											</div>
+											<div class="col-md-3">
+												<label for="Firstname">Last  Name</label>
+                                                <input type="text" class="form-control" value="Last Name" >
+											</div>
+										</div>
+                                            <div class="form-group">
+                                                <label class="col-md-3 control-label" for="example-email">Designation</label>
+                                                <div class="col-md-6">
+                                                    <input type="email" id="example-email" name="example-email" class="form-control" placeholder="Designation">
+                                                </div>
+                                            </div>
+                                            <div class="form-group">
+                                                <label class="col-md-3 control-label" for="example-email">Email</label>
+                                                <div class="col-md-6">
+                                                    <input type="email" id="example-email" name="example-email" class="form-control" placeholder="Email">
+                                                </div>
+                                            </div>
+                                            <div class="form-group">
+                                                <label class="col-md-3 control-label" for="example-email">Mobile Number</label>
+                                                <div class="col-md-6">
+                                                    <input type="email" id="example-email" name="example-email" class="form-control" placeholder="Mobile  Number">
+                                                </div>
+                                            </div>
+											<div class="form-group">
+                                                <label class="col-md-3 control-label" for="example-email">Office</label>
+                                                <div class="col-md-6">
+                                                   <select class="form-control">
+                                                        <option>--Select--</option>
+                                                        <option>New Delhi</option>
+														<option>Ranchi</option>
+														<option>Guwahati</option>
+														<option>Pune	</option>
+														<option>Palampur</option>	
+														<option>Shivamogga</option>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                            <div class="form-group m-b-0">
+                                                <div class="col-sm-offset-2 col-sm-9">
+                                                    <button type="submit" class="btn btn-info waves-effect waves-light">Submit</button>
+                                                </div>
+                                            </div>
+                                                                       
+                                        </form>
+                                    </div> <!-- panel-body -->
+                                </div> <!-- panel -->
+								
+								
+								<div class="panel panel-default">
+                                    <div class="panel-heading"><h3 class="panel-title">User Login Account Details</h3></div>
+                                    <div class="panel-body">
+                                        <form class="form-horizontal" role="form">                                    
+                                         
+                                            <div class="form-group">
+                                                <label class="col-md-3 control-label" for="Username">Username</label>
+                                                <div class="col-md-6">
+                                                    <input type="email" id="example-email" name="example-email" class="form-control" placeholder="username">
+                                                </div>
+                                            </div>
+											 <div class="form-group">
+                                                <label class="col-md-3 control-label" for="password">Password</label>
+                                                <div class="col-md-6">
+                                                    <input type="text" id="example-email" name="example-email" class="form-control" placeholder="password">
+                                                </div>
+                                            </div>
+											<div class="form-group">
+												<label class="col-md-3 control-label">Roles</label>
+													<div class="col-md-9">
+														<input type="checkbox" name="radio" value=""> Super Admin<br>
+														<input type="checkbox" name="radio" value="">PPVFRA Admin<br>
+														<input type="checkbox" name="radio" value="">Verifying Authority<br>
+														<input type="checkbox" name="radio" value="">Approving Authority<br>
+														<input type="checkbox" name="radio" value="">DUS Testing Authority<br>
+														
+													</div>
+											</div>
+                                            <div class="form-group">
+                                                        <label class="col-md-3 control-label">Status</label>
+                                                        <div class="col-md-6">
+                                                            <select class="form-control">
+                                                                <option>Select</option>
+                                                                <option>Active</option>
+                                                                <option>Inactive</option>
+                                                               
+                                                            </select> 
+                                                            
+                                                        </div>
+                                                    </div>
+
+                                            <div class="form-group m-b-0">
+                                                <div class="col-sm-offset-2 col-sm-9">
+                                                    <button type="submit" class="btn btn-info waves-effect waves-light">Submit</button>
+                                                </div>
+                                            </div>
+                                                                       
+                                        </form>
+                                    </div> <!-- panel-body -->
+                                </div> <!-- panel -->
+								
+								
+								
+								
+								
+                            </div> <!-- col -->
+                        </div> <!-- End row -->
+
+                    </div> <!-- container -->
+                               
+                </div> <!-- content -->
+
+              <!--   <footer class="footer text-right">
+                    2019 © PPVFRA.
+                </footer> -->
+
+            </div>
+            <!-- ============================================================== -->
+            <!-- End Right content here -->
+
+   			
+          <div th:replace="adminfragment/footer.html :: footer"></div>
+           </div> <!-- container -->
+                               
+                <!-- content -->
+
+			<!-- start footer content here -->
+			
+			<!-- end footer content here -->
+
+      
+        <!-- END wrapper -->
+
+<!-- footer lib start here-->
+
+<div th:replace="adminfragment/footerlibs.html :: footerlibs"></div>
+<!-- end footer lib -->
+    
+    </body>
+</html>

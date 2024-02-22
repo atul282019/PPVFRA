@@ -1,0 +1,906 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<body>
+	<div th:fragment="footerlibs">
+	
+	
+    
+        <script>
+            var resizefunc = [];
+        </script>
+
+        <!-- jQuery  -->
+        <script src="/dashboard/js/jquery.min.js"></script>
+        <script src="/dashboard/js/bootstrap.min.js"></script>
+       
+        <script src="/dashboard/js/wow.min.js"></script>
+        <script src="/dashboard/js/jquery.nicescroll.js" type="text/javascript"></script>
+        <script src="/dashboard/js/jquery.scrollTo.min.js"></script>
+        <script src="/dashboard/assets/chat/moment-2.2.1.js"></script>
+        <script src="/dashboard/assets/jquery-sparkline/jquery.sparkline.min.js"></script>
+        <script src="/dashboard/assets/jquery-detectmobile/detect.js"></script>
+        <script src="/dashboard/assets/fastclick/fastclick.js"></script>
+        <script src="/dashboard/assets/jquery-slimscroll/jquery.slimscroll.js"></script>
+        <script src="/dashboard/assets/jquery-blockui/jquery.blockUI.js"></script>
+
+        <!-- sweet alerts -->
+        <script src="/dashboard/assets/sweet-alert/sweet-alert.min.js"></script>
+        <script src="/dashboard/assets/sweet-alert/sweet-alert.init.js"></script>
+
+        
+        <!-- Counter-up -->
+        <script src="/dashboard/assets/counterup/waypoints.min.js" type="text/javascript"></script>
+        <script src="/dashboard/assets/counterup/jquery.counterup.min.js" type="text/javascript"></script>
+        
+        <!-- CUSTOM JS -->
+        <script src="/dashboard/js/jquery.app.js"></script>
+
+      
+
+        <!-- Chat -->
+        <script src="/dashboard/js/jquery.chat.js"></script>
+
+        <!-- Todo -->
+        <script src="/dashboard/js/jquery.todo.js"></script>
+
+        
+
+        <script type="text/javascript">
+            /* ==============================================
+            Counter Up
+            =============================================== */
+            jQuery(document).ready(function($) {
+                $('.counter').counterUp({
+                    delay: 100,
+                    time: 1200
+                });
+            });
+        </script>
+        <script src="https://cdn.datatables.net/1.10.21/js/dataTables.bootstrap4.min.js"></script>
+	    <script src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
+		<script src="https://cdn.datatables.net/buttons/1.5.6/js/dataTables.buttons.min.js"></script>
+		<script src="https://cdn.datatables.net/buttons/1.5.6/js/buttons.flash.min.js"></script>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.1.3/jszip.min.js"></script>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/pdfmake.min.js"></script>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/vfs_fonts.js"></script>
+		<script src="https://cdn.datatables.net/buttons/1.5.6/js/buttons.html5.min.js"></script>
+		<script src="https://cdn.datatables.net/buttons/1.5.6/js/buttons.print.min.js"></script>
+		<!-- DataTable js -->
+
+        <!-- CUSTOM JS -->
+      
+		<script>
+			$(document).ready(function() {
+				$('#shortstorage').DataTable( {
+					dom: 'Bfrtip',
+					buttons: [
+						'csv', 'excel', 'pdf', 'print'
+					]
+				} );
+			} );
+		</script>
+		
+		<script>
+			$(document).ready(function() {
+				$('#TABLE_1').DataTable( {
+					dom: 'Bfrtip',
+					buttons: [
+						'csv', 'excel', 'pdf', 'print'
+					]
+				} );
+			} );
+		</script>
+		
+		<script>
+			$(document).ready(function() {
+				$('#TABLE_2').DataTable( {
+					dom: 'Bfrtip',
+					buttons: [
+						'csv', 'excel', 'pdf', 'print'
+					]
+				} );
+			} );
+		</script>
+		
+		<script>
+			$(document).ready(function() {
+				$('#TABLE_3').DataTable( {
+					dom: 'Bfrtip',
+					buttons: [
+						'csv', 'excel', 'pdf', 'print'
+					]
+				} );
+			} );
+		</script>
+		
+		
+		
+		<script type="text/javascript" th:inline="javascript">
+		var timeval = [[${time_obt}]];
+		$(document).ready(function() {
+				$('#role_manage_data').DataTable( {
+					 dom: 'Bfrtip',
+				        buttons: [
+				       {
+				            extend: 'pdf',
+				            title: 'role_management',
+				            // filename: 'role_management'+new Date().toLocaleString(),
+				            filename: 'role_management'+timeval,
+				            footer: true,
+				            exportOptions: {
+				                columns: [0,1,2,3]
+				            }
+				       },
+				       {
+				           extend: 'csv',
+				           footer: false,
+				           title: 'role_management',
+				           filename: 'role_management'+timeval,
+				           exportOptions: {
+				                columns: [0,1,2,3]
+				            }
+				          
+				       },
+				       {
+				           extend: 'excel',
+				           footer: false,
+				           title: 'role_management',
+				           filename: 'role_management'+timeval,
+				          exportOptions: {
+				                columns: [0,1,2,3]
+				            }
+				       },
+				       {
+				       extend: 'print',
+				       footer: false,
+			           title: 'role_management',
+			           filename: 'role_management'+timeval,
+			           exportOptions: {
+		                    columns: 'th:not(:last-child)'
+		                    	}
+				       
+				       } 
+				       ] 			
+				 });
+			});
+		</script>
+		
+		
+		
+		
+		
+		<script type="text/javascript" th:inline="javascript">
+		var timeval = [[${time_obt1}]];
+			$(document).ready(function() {
+				$('#internal_usr_mgmt').DataTable( {
+					 dom: 'Bfrtip',
+				        buttons: [
+				       {
+				            extend: 'pdfHtml5',
+				            title: 'internaluser_management',
+				            // filename: 'role_management'+new Date().toLocaleString(),
+				            filename: 'internal_user_mgmt'+timeval,
+				            footer: true,
+				            exportOptions: {
+				                columns: [0,1,2,3,4,5]
+				            }
+				       },
+				       {
+				           extend: 'csv',
+				           footer: false,
+				           title: 'internaluser_management',
+				           filename: 'internal_user_mgmt'+timeval,
+				           exportOptions: {
+				                columns: [0,1,2,3,4,5]
+				            }
+				          
+				       },
+				       {
+				           extend: 'excel',
+				           footer: false,
+				           title: 'internaluser_management',
+				           filename: 'internal_user_mgmt'+timeval,
+				          exportOptions: {
+				                columns: [0,1,2,3,4,5]
+				            }
+				       },
+				       {
+				       extend: 'print',
+				       footer: false,
+			           title: 'internaluser_management',
+			           filename: 'internal_user_mgmt'+timeval,
+			           exportOptions: {
+		                    columns: 'th:not(:last-child)'
+		                    	}
+				       
+				       } 
+				       ] 			
+				 });
+			});
+		</script>
+		
+		
+		
+		<script type="text/javascript" th:inline="javascript">
+		var timeval = [[${time_obt2}]];
+			$(document).ready(function() {
+				$('#company_mgmt_pg').DataTable( {
+					 dom: 'Bfrtip',
+				        buttons: [
+				       {
+				            extend: 'pdfHtml5',
+				            title: 'companyuser_mgmt',
+				            orientation: 'landscape',
+				            // filename: 'role_management'+new Date().toLocaleString(),
+				            filename: 'companyuser_mgmt'+timeval,
+				            footer: true,
+				            exportOptions: {
+				                columns: [0,1,2,3,4,5,6,7,8,9,10,11]
+				            }
+				       },
+				       {
+				           extend: 'csv',
+				           footer: false,
+				           title: 'companyuser_mgmt',
+				           filename: 'companyuser_mgmt'+timeval,
+				           exportOptions: {
+				                columns: [0,1,2,3,4,5,6,7,8,9,10,11]
+				            }
+				          
+				       },
+				       {
+				           extend: 'excel',
+				           footer: false,
+				           title: 'companyuser_mgmt',
+				           filename: 'companyuser_mgmt'+timeval,
+				          exportOptions: {
+				                columns: [0,1,2,3,4,5,6,7,8,9,10,11]
+				            }
+				       },
+				       {
+				       extend: 'print',
+				       footer: false,
+			           title: 'companyuser_mgmt',
+			           orientation: 'landscape',
+			           filename: 'companyuser_mgmt'+timeval,
+			           exportOptions: {
+		                    columns: 'th:not(:last-child)'
+		                    	}
+				       
+				       } 
+				       ] 			
+				 });
+			});
+		</script>
+		
+		<script type="text/javascript" th:inline="javascript">
+		//var timeval = [[${time_obt1}]];
+			$(document).ready(function() {
+				$('#cropwise').DataTable( {
+					 dom: 'Bfrtip',
+				        buttons: [
+				       {
+				           extend: 'csv',
+				           footer: false,
+				           title: 'STATUS OF THE TOTAL APPLICATIONS RECEIVED (CROP WISE)',
+				           filename: 'STATUS OF THE TOTAL APPLICATIONS RECEIVED (CROP WISE)',
+				           exportOptions: {
+				                columns: [0,1]
+				            }
+				          
+				       },
+				       {
+				           extend: 'excel',
+				           footer: false,
+				           title: 'STATUS OF THE TOTAL APPLICATIONS RECEIVED (CROP WISE)',
+				           filename: 'STATUS OF THE TOTAL APPLICATIONS RECEIVED (CROP WISE)',
+				          exportOptions: {
+				                columns: [0,1]
+				            }
+				       },
+				       {
+					       extend: 'print',
+					       footer: false,
+					       title: 'STATUS OF THE TOTAL APPLICATIONS RECEIVED (CROP WISE)',
+				           orientation: 'landscape',
+				           filename: 'STATUS OF THE TOTAL APPLICATIONS RECEIVED (CROP WISE)',
+				           exportOptions: {
+			                    columns: 'th:not(:last-child)'
+			                    	}
+					       
+					       } 
+				       ] 			
+				 });
+			});
+		</script>	
+		
+		<script type="text/javascript" th:inline="javascript">
+		var filename = [[${stat}]];
+			$(document).ready(function() {
+				$('#statuswise').DataTable( {
+					 dom: 'Bfrtip',
+				        buttons: [
+				       {
+				            extend: 'pdfHtml5',
+				            title: ''+filename,
+				            // filename: 'role_management'+new Date().toLocaleString(),
+				            filename: ''+filename,
+				            footer: true,
+				            exportOptions: {
+				                columns: [0,1,2,3,4,5,6,7,8]
+				            }
+				       },
+				       {
+				           extend: 'csv',
+				           footer: false,
+				           title: ''+filename,
+				           filename: ''+filename,
+				           exportOptions: {
+				        	   columns: [0,1,2,3,4,5,6,7,8]
+				            }
+				          
+				       },
+				       {
+				           extend: 'excel',
+				           footer: false,
+				           title: ''+filename,
+				           filename: ''+filename,
+				          exportOptions: {
+				        	  columns: [0,1,2,3,4,5,6,7,8]
+				            }
+				       },
+				       {
+					       extend: 'print',
+					       footer: false,
+					       title: ''+filename,
+				           orientation: 'landscape',
+				           filename: ''+filename,
+				           exportOptions: {
+			                    columns: 'th:not(:last-child)'
+			                    	}
+					       
+					       } 
+				       ] 			
+				 });
+			});
+		</script>	
+		
+		<script type="text/javascript" th:inline="javascript">
+		//var filename = [[${stat}]];
+			$(document).ready(function() {
+				$('#testresultreport').DataTable( {
+					 dom: 'Bfrtip',
+				        buttons: [
+				       {
+				           extend: 'csv',
+				           footer: false,
+				           title: 'DUS TEST RESULT REPORTS',
+				           filename: 'DUS TEST RESULT REPORTS',
+				           exportOptions: {
+				        	   columns: [0,1,2,3,4,5,6,7,8,9]
+				            }
+				          
+				       },
+				       {
+				           extend: 'excel',
+				           footer: false,
+				           title: 'DUS TEST RESULT REPORTS',
+				           filename: 'DUS TEST RESULT REPORTS',
+				          exportOptions: {
+				        	  columns: [0,1,2,3,4,5,6,7,8,9]
+				            }
+				       },
+				       {
+					       extend: 'print',
+					       footer: false,
+					       title: 'DUS TEST RESULT REPORTS',
+				           orientation: 'landscape',
+				           filename: 'DUS TEST RESULT REPORTS',
+				           exportOptions: {
+			                    columns: 'th:not(:last-child)'
+			                    	}
+					       
+					       } 
+				       ] 			
+				 });
+			});
+		</script>	
+		
+		<script type="text/javascript" th:inline="javascript">
+		//var filename = [[${stat}]];
+			$(document).ready(function() {
+				$('#yearonyear').DataTable( {
+					 dom: 'Bfrtip',
+				        buttons: [
+				       {
+				           extend: 'csv',
+				           footer: false,
+				           title: 'YEAR-ON YEAR REVIEW',
+				           filename: 'YEAR-ON YEAR REVIEW',
+				           exportOptions: {
+				        	   columns: [0,1]
+				            }
+				          
+				       },
+				       {
+				           extend: 'excel',
+				           footer: false,
+				           title: 'YEAR-ON YEAR REVIEW',
+				           filename: 'YEAR-ON YEAR REVIEW',
+				          exportOptions: {
+				        	  columns: [0,1]
+				            }
+				       },
+				       {
+					       extend: 'print',
+					       footer: false,
+					       title: 'YEAR-ON YEAR REVIEW',
+				           orientation: 'landscape',
+				           filename: 'YEAR-ON YEAR REVIEW',
+				           exportOptions: {
+			                    columns: 'th:not(:last-child)'
+			                    	}
+					       
+					       } 
+				       ] 			
+				 });
+			});
+		</script>	
+		
+				<script type="text/javascript" th:inline="javascript">
+		//var filename = [[${stat}]];
+			$(document).ready(function() {
+				$('#statuswiseyear').DataTable( {
+					 dom: 'Bfrtip',
+				        buttons: [
+				       {
+				           extend: 'csv',
+				           footer: false,
+				           title: 'APPLICATION DETAILS',
+				           filename: 'APPLICATION DETAILS',
+				           exportOptions: {
+				        	   columns: [0,1,2,3,4,5,6,7]
+				            }
+				          
+				       },
+				       {
+				           extend: 'excel',
+				           footer: false,
+				           title: 'APPLICATION DETAILS',
+				           filename: 'APPLICATION DETAILS',
+				          exportOptions: {
+				        	  columns: [0,1,2,3,4,5,6,7]
+				            }
+				       },
+				       {
+					       extend: 'print',
+					       footer: false,
+					       title: 'APPLICATION DETAILS',
+				           orientation: 'landscape',
+				           filename: 'APPLICATION DETAILS',
+				           exportOptions: {
+			                    columns: 'th:not(:last-child)'
+			                    	}
+					       
+					       } 
+				       ] 			
+				 });
+			});
+		</script>	
+		
+			<script type="text/javascript" th:inline="javascript">
+		//var filename = [[${stat}]];
+			$(document).ready(function() {
+				$('#cropwisereport').DataTable( {
+					 dom: 'Bfrtip',
+				        buttons: [
+				       {
+				           extend: 'csv',
+				           footer: false,
+				           title: 'CROP WISE',
+				           filename: 'CROP WISE',
+				           exportOptions: {
+				        	   columns: [0,1,2,3,4,5,6,7]
+				            }
+				          
+				       },
+				       {
+				           extend: 'excel',
+				           footer: false,
+				           title: 'CROP WISE',
+				           filename: 'CROP WISE',
+				          exportOptions: {
+				        	  columns: [0,1,2,3,4,5,6,7]
+				            }
+				       },
+				       {
+					       extend: 'print',
+					       footer: false,
+					       title: 'CROP WISE',
+				           orientation: 'landscape',
+				           filename: 'CROP WISE',
+				           exportOptions: {
+			                    columns: 'th:not(:last-child)'
+			                    	}
+					       
+					       } 
+				       ] 			
+				 });
+			});
+		</script>	
+		
+		
+			<script type="text/javascript" th:inline="javascript">
+		//var filename = [[${stat}]];
+			$(document).ready(function() {
+				$('#applicationreceiveddetail').DataTable( {
+					 dom: 'Bfrtip',
+				        buttons: [
+				       {
+				           extend: 'csv',
+				           footer: false,
+				           title: 'DETAILED LIST OF THE ALL APPLICATIONS RECEIVED',
+				           filename: 'DETAILED LIST OF THE ALL APPLICATIONS RECEIVED',
+				           exportOptions: {
+				        	   columns: [0,1,2,3,4,5,6,7]
+				            }
+				          
+				       },
+				       {
+				           extend: 'excel',
+				           footer: false,
+				           title: 'DETAILED LIST OF THE ALL APPLICATIONS RECEIVED',
+				           filename: 'DETAILED LIST OF THE ALL APPLICATIONS RECEIVED',
+				          exportOptions: {
+				        	  columns: [0,1,2,3,4,5,6,7]
+				            }
+				       },
+				       {
+					       extend: 'print',
+					       footer: false,
+					       title: 'DETAILED LIST OF THE ALL APPLICATIONS RECEIVED',
+				           orientation: 'landscape',
+				           filename: 'DETAILED LIST OF THE ALL APPLICATIONS RECEIVED',
+				           exportOptions: {
+			                    columns: 'th:not(:last-child)'
+			                    	}
+					       
+					       } 
+				       ] 			
+				 });
+			});
+		</script>	
+		
+		<script type="text/javascript" th:inline="javascript">
+		//var filename = [[${stat}]];
+			$(document).ready(function() {
+				$('#listofapplicationclose').DataTable( {
+					 dom: 'Bfrtip',
+				        buttons: [
+				       {
+				           extend: 'csv',
+				           footer: false,
+				           title: 'LIST OF APPLICATION CLOSED/WITHDRAWN/REJECTED',
+				           filename: 'LIST OF APPLICATION CLOSED/WITHDRAWN/REJECTED',
+				           exportOptions: {
+				        	   columns: [0,1,2,3,4,5,6,7]
+				            }
+				          
+				       },
+				       {
+				           extend: 'excel',
+				           footer: false,
+				           title: 'LIST OF APPLICATION CLOSED/WITHDRAWN/REJECTED',
+				           filename: 'LIST OF APPLICATION CLOSED/WITHDRAWN/REJECTED',
+				          exportOptions: {
+				        	  columns: [0,1,2,3,4,5,6,7]
+				            }
+				       },
+				       {
+					       extend: 'print',
+					       footer: false,
+					       title: 'LIST OF APPLICATION CLOSED/WITHDRAWN/REJECTED',
+				           orientation: 'landscape',
+				           filename: 'LIST OF APPLICATION CLOSED/WITHDRAWN/REJECTED',
+				           exportOptions: {
+			                    columns: 'th:not(:last-child)'
+			                    	}
+					       
+					       } 
+				       ] 			
+				 });
+			});
+		</script>
+		
+		<script type="text/javascript" th:inline="javascript">
+		//var filename = [[${stat}]];
+			$(document).ready(function() {
+				$('#listofapplicationpending').DataTable( {
+					 dom: 'Bfrtip',
+				        buttons: [
+				       {
+				           extend: 'csv',
+				           footer: false,
+				           title: 'LIST OF APPLICATIONS PENDING DUE TO LEGAL ISSUES',
+				           filename: 'LIST OF APPLICATIONS PENDING DUE TO LEGAL ISSUES',
+				           exportOptions: {
+				        	   columns: [0,1,2,3,4,5,6,7]
+				            }
+				          
+				       },
+				       {
+				           extend: 'excel',
+				           footer: false,
+				           title: 'LIST OF APPLICATIONS PENDING DUE TO LEGAL ISSUES',
+				           filename: 'LIST OF APPLICATIONS PENDING DUE TO LEGAL ISSUES',
+				          exportOptions: {
+				        	  columns: [0,1,2,3,4,5,6,7]
+				            }
+				       },
+				       {
+					       extend: 'print',
+					       footer: false,
+					       title: 'LIST OF APPLICATIONS PENDING DUE TO LEGAL ISSUES',
+				           orientation: 'landscape',
+				           filename: 'LIST OF APPLICATIONS PENDING DUE TO LEGAL ISSUES',
+				           exportOptions: {
+			                    columns: 'th:not(:last-child)'
+			                    	}
+					       
+					       } 
+				       ] 			
+				 });
+			});
+		</script>
+		
+		<script type="text/javascript" th:inline="javascript">
+		//var filename = [[${stat}]];
+			$(document).ready(function() {
+				$('#certificateissued').DataTable( {
+					 dom: 'Bfrtip',
+				        buttons: [
+				       {
+				           extend: 'csv',
+				           footer: false,
+				           title: 'LIST OF REGISTERED VARIETIES CERTIFICATE ISSUED',
+				           filename: 'LIST OF REGISTERED VARIETIES CERTIFICATE ISSUED',
+				           exportOptions: {
+				        	   columns: [0,1,2,3,4,5,6,7,8]
+				            }
+				          
+				       },
+				       {
+				           extend: 'excel',
+				           footer: false,
+				           title: 'LIST OF REGISTERED VARIETIES CERTIFICATE ISSUED',
+				           filename: 'LIST OF REGISTERED VARIETIES CERTIFICATE ISSUED.',
+				          exportOptions: {
+				        	  columns: [0,1,2,3,4,5,6,7,8]
+				            }
+				       },
+				       {
+					       extend: 'print',
+					       footer: false,
+					       title: 'LIST OF REGISTERED VARIETIES CERTIFICATE ISSUED',
+				           orientation: 'landscape',
+				           filename: 'LIST OF REGISTERED VARIETIES CERTIFICATE ISSUED',
+				           exportOptions: {
+			                    columns: 'th:not(:last-child)'
+			                    	}
+					       
+					       } 
+				       ] 			
+				 });
+			});
+		</script>
+		
+		
+		
+		<script type="text/javascript" th:inline="javascript">
+		//var filename = [[${stat}]];
+			$(document).ready(function() {
+				$('#statewisereport').DataTable( {
+					 dom: 'Bfrtip',
+				        buttons: [
+				       {
+				           extend: 'csv',
+				           footer: false,
+				           title: 'CITY_STATE WISE REPORTS',
+				           filename: 'CITY_STATE WISE REPORTS',
+				           exportOptions: {
+				        	   columns: [0,1,2,3,4,5,6,7,8]
+				            }
+				          
+				       },
+				       {
+				           extend: 'excel',
+				           footer: false,
+				           title: 'CITY_STATE WISE REPORTS',
+				           filename: 'CITY_STATE WISE REPORTS',
+				          exportOptions: {
+				        	  columns: [0,1,2,3,4,5,6,7,8]
+				            }
+				       },
+				       {
+					       extend: 'print',
+					       footer: false,
+					       title: 'CITY_STATE WISE REPORTS',
+				           orientation: 'landscape',
+				           filename: 'CITY_STATE WISE REPORTS',
+				           exportOptions: {
+			                    columns: 'th:not(:last-child)'
+			                    	}
+					       
+					       } 
+				       ] 			
+				 });
+			});
+		</script>
+		
+			<script type="text/javascript" th:inline="javascript">
+		//var filename = [[${stat}]];
+			$(document).ready(function() {
+				$('#yearwisereport').DataTable( {
+					 dom: 'Bfrtip',
+				        buttons: [
+				       {
+				           extend: 'csv',
+				           footer: false,
+				           title: 'YEAR-WISE REPORTS',
+				           filename: 'YEAR-WISE REPORTS',
+				           exportOptions: {
+				        	   columns: [0,1]
+				            }
+				          
+				       },
+				       {
+				           extend: 'excel',
+				           footer: false,
+				           title: 'YEAR-WISE REPORTS',
+				           filename: 'YEAR-WISE REPORTS',
+				          exportOptions: {
+				        	  columns: [0,1]
+				            }
+				       },
+				       {
+					       extend: 'print',
+					       footer: false,
+					       title: 'YEAR-WISE REPORTS',
+				           orientation: 'landscape',
+				           filename: 'YEAR-WISE REPORTS',
+				           exportOptions: {
+			                    columns: 'th:not(:last-child)'
+			                    	}
+					       
+					       } 
+				       ] 			
+				 });
+			});
+		</script>	
+		
+			<script type="text/javascript" th:inline="javascript">
+		var filename = [[${stat}]];
+			$(document).ready(function() {
+				$('#yearwisechiledreport').DataTable( {
+					 dom: 'Bfrtip',
+				        buttons: [
+				       {
+				           extend: 'csv',
+				           footer: false,
+				           title: 'Application List',
+				           filename: ''+filename,
+				           exportOptions: {
+				        	   columns: [0,1,2,3,4,5,6,7,8,9,10,11,12]
+				            }
+				          
+				       },
+				       {
+				           extend: 'excel',
+				           footer: false,
+				           title: 'Application List',
+				           filename: ''+filename,
+				          exportOptions: {
+				        	  columns: [0,1,2,3,4,5,6,7,8,9,10,11,12]
+				            }
+				       },
+				       {
+					       extend: 'print',
+					       footer: false,
+					       title: 'Application List',
+				           orientation: 'landscape',
+				           filename: ''+filename,
+				           exportOptions: {
+			                    columns: 'th:not(:last-child)'
+			                    	}
+					       
+					       } 
+				       ] 			
+				 });
+			});
+		</script>
+		
+		
+		<script type="text/javascript" th:inline="javascript">
+		//var filename = [[${stat}]];
+			$(document).ready(function() {
+				$('#registrar').DataTable( {
+					 dom: 'Bfrtip',
+				        buttons: [
+				       {
+				           extend: 'csv',
+				           footer: false,
+				           title: 'REGISTRAR WISE',
+				           filename: 'REGISTRAR WISE',
+				           exportOptions: {
+				        	   columns: [0,1,2,3,4,5,6,7,8]
+				            }
+				          
+				       },
+				       {
+				           extend: 'excel',
+				           footer: false,
+				           title: 'REGISTRAR WISE',
+				           filename: 'REGISTRAR WISE',
+				          exportOptions: {
+				        	  columns: [0,1,2,3,4,5,6,7,8]
+				            }
+				       },
+				       {
+					       extend: 'print',
+					       footer: false,
+					       title: 'REGISTRAR WISE',
+				           orientation: 'landscape',
+				           filename: 'REGISTRAR WISE',
+				           exportOptions: {
+			                    columns: 'th:not(:last-child)'
+			                    	}
+					       
+					       } 
+				       ] 			
+				 });
+			});
+		</script>
+		
+		<script type="text/javascript" th:inline="javascript">
+			$(document).ready(function() {
+				$('#savedapp').DataTable( {
+					 dom: 'Bfrtip',
+				        buttons: [
+				       {
+				           extend: 'csv',
+				           footer: false,
+				           title: 'SAVED APPLICATIONS',
+				           filename: 'SAVED APPLICATIONS',
+				           exportOptions: {
+				        	   columns: [0,1,2,3,4,5,6,7]
+				            }
+				          
+				       },
+				       {
+				           extend: 'excel',
+				           footer: false,
+				           title: 'SAVED APPLICATIONS',
+				           filename: 'SAVED APPLICATIONS',
+				          exportOptions: {
+				        	  columns: [0,1,2,3,4,5,6,7]
+				            }
+				       },
+				       {
+					       extend: 'print',
+					       footer: false,
+					       title: 'SAVED APPLICATIONS',
+				           orientation: 'landscape',
+				           filename: 'SAVED APPLICATIONS',
+				           exportOptions: {
+			                    columns: 'th:not(:last-child)'
+			                    	}
+					       
+					       } 
+				       ] 			
+				 });
+			});
+		</script>
+		
+</div>	
+</body>
+</html>

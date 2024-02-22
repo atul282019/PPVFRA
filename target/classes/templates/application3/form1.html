@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+	<div th:fragment="formone">
+ 		
+ 		<form class="form-horizontal" role="form" name="myForm_3" th:action="@{/saveform3}" th:object="${applications}" onsubmit = "return f3_validateformi()" method="post">  
+            	 <!--form3 start -->                                       
+                 <div class="form-group">
+                    <label class="col-md-3 control-label">1. Identity of the Applicant(s)<span style="color:red">*</span></label>
+					<div class="col-md-6">
+					<div th:each="applicanttypelist : ${applicanttypelist3}">
+					<input type="radio" th:field="*{applicanttypeid}"   id="radionid" th:text="${applicanttypelist[1]}" th:value="${applicanttypelist[0]}" />
+					
+		           
+		            </div>
+		            <p>Note: Application for farmers' variety by farmers or community of farmers or group of farmers as contained in the Protection of Plant Varieties and Farmers' Rights Act, 2001 shall be submitted only with an endorsement in Annexure 1 either by the concerned Panchayat Biodiversity Management Committee, or District Agricultural Officer, or Director of Research of concerned State Agricultural University or District Tribal Development Officer. </p>
+		            <span id="typeeerror" style="color:red"></span>
+					</div>
+							
+                    </div>
+					<hr/>
+						<div class="form-group ">
+                          <div class="col-sm-12">
+                              <input type="hidden" id="applicationid" th:field="*{id}" th:value="*{id}">
+                              <input type="hidden" id="applicantid" name="applicantid"  th:value="${userapplicant[0]}">
+                              <input type="hidden" id="editmode" name="editmode" th:value="${editmode}" />
+                              <input type="hidden" id="f1_id" name="f1_id" th:value="${f1_id}">
+                              
+                              <div th:if="${editmode == 0}"> 
+                            
+                              <button type="submit" id="btnsavenew" class="btn btn-info waves-effect waves-light pull-right">Save</button>
+                              </div> 
+                              <div th:if="${appstatus ==1}"> 
+                              <button type="submit" id="btnsavestatus" class="btn btn-info waves-effect waves-light pull-right">Save</button>
+                              </div>
+                               
+                          </div>
+                      </div>
+                                                    
+ <script type = "text/javascript">
+      function f3_validateformi() {
+         if (document.myForm_3.applicanttypeid[0].checked == true) {
+        	    return true;
+        	  }
+         else if (document.myForm_3.applicanttypeid[1].checked == true) {
+        	    return true;
+        	  }
+         else if (document.myForm_3.applicanttypeid[2].checked == true) {
+        	    return true;
+        	  }
+          else {
+        		  document.getElementById("typeeerror").innerHTML="Please select applicant type";
+                  document.myForm_3.applicanttypeid[0].focus() ;
+        	    return false;
+        	  }
+      }
+</script>
+
+</form>										
+</div>
+</html>

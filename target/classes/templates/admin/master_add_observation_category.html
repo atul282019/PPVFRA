@@ -1,0 +1,160 @@
+             
+  <!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+	<head>
+	  <th:block th:include="adminfragment/headerlibs.html :: headerlibs"></th:block> 
+	</head>
+
+    <body class="fixed-left">
+        <!-- Begin page -->
+        <div id="wrapper">
+        
+            <!-- Top Bar Start -->
+           <header th:insert="adminfragment/header.html :: header"> </header>
+            <!-- Top Bar End -->
+
+
+            <!-- ========== Left Sidebar Start ========== -->
+			<header th:insert="adminfragment/sidenav.html :: sidevav"> </header>
+            <!-- Left Sidebar End --> 
+
+  
+           
+            <!-- Start right Content here -->                    
+                 <div class="content-page">
+                <!-- Start content -->
+                <div class="content">
+                    <div class="container">
+
+                        <!-- Page-Title -->
+                        <div class="row">
+                            <div class="col-sm-12">
+                                <h4 class="pull-left page-title">Master</h4>
+                                <ol class="breadcrumb pull-right">
+                                    <li><a href="/admin">Home</a></li>
+                                    <li class="active">Add Observation</li>
+                                    <li>
+                                            <button type="button" onclick="history.go(-1);" class="btn btn-purple waves-effect waves-light btn-xs m-b-5">Back</button>
+                                    </li>
+                                </ol>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-sm-12">
+                                <div class="panel panel-default">
+                                    <div class="panel-heading"><h3 class="panel-title">Observation Category</h3></div>
+                                    <div class="panel-body">
+                                        <form class="form-horizontal" th:action="@{/addobservationcategory}" th:object="${observationcategory}" method="post" role="form" id="register-form1">                                    
+                                           
+                                           
+										    <div class="form-group">
+											<label class="col-sm-2 control-label">Form Type <span style="color:red">*</span></label>
+											<div class="col-md-6">
+											<select id="form_addcategory"  name="form_addcategory"   class="form-control">
+											 <option th:value="-1">Select Form Type</option>
+											 <option th:each="dropDownItem : ${formwise_data}"
+											 th:value="${dropDownItem.id}"
+											 th:text="${dropDownItem.section_name}" /> 
+											 </select>
+											<span id="form_addcategoryerror" style="color:red"></span>
+											</div>
+											
+											
+													
+											</div>
+                                           
+                                           
+                                           
+                                           
+                                           
+                                            <div class="form-group">
+                                                <label class="col-sm-2 control-label">Observation</label>
+                                                <div class="col-sm-6">
+<!--                                                     <input type="text" class="form-control" placeholder="Enter the observation"> -->
+                                                    <textarea  th:field="*{category}" class="form-control" rows="5"></textarea>
+                                                    <div class="error" th:if="${#fields.hasErrors('category')}" th:errors="*{category}">category Error</div>
+                                                	<span id="observationerror" style="color:red"></span>
+                                                </div>
+                                            </div>
+					                                           
+					             <div class="form-group">
+					                <label class="col-sm-2 control-label">Status</label>
+					                <div class="col-sm-6">
+					              <!--     <select class="form-control" >
+					                 <option th:value="active" th:text = "Active"></option>
+					                 <option th:value="inactive" th:text="Inactive"></option> -->
+					                 <select class="form-control" th:field="*{active}">
+					                 <option th:value="true" th:text = "Active"></option>
+					                 <option th:value="false" th:text="Inactive"></option>
+					             </select>
+					                </div>
+					            </div>
+                                           
+                                          
+                                            <div class="form-group m-b-0">
+                                                <div class="col-sm-offset-2 col-sm-9">
+                                                    <button type="submit" class="btn btn-info waves-effect waves-light" onclick="return addobservation_check();">Submit</button>
+                                                </div>
+                                            </div>
+                                                                       
+                                        </form>
+                                    </div> <!-- panel-body -->
+                                </div> <!-- panel -->
+                            </div> <!-- col -->
+                        </div> <!-- End row -->
+
+                    </div> <!-- container -->
+                               
+                </div> <!-- content -->
+
+               
+
+            </div>
+            <!-- End Right content here -->
+ <div th:replace="adminfragment/footer.html :: footer"></div>
+           </div> <!-- container -->
+                               
+                <!-- content -->
+
+			<!-- start footer content here -->
+			
+			<!-- end footer content here -->
+
+      
+        <!-- END wrapper -->
+
+<!-- footer lib start here-->
+
+<div th:replace="adminfragment/footerlibs.html :: footerlibs"></div>
+<!-- end footer lib -->
+
+ <script type="text/javascript">
+      function addobservation_check() {
+           if( document.getElementById("form_addcategory").value =="-1" || 
+        	   document.getElementById("form_addcategory").value =="") 
+    		  {
+          	 document.getElementById("form_addcategoryerror").innerHTML="Please select category";
+          	 document.getElementById("form_addcategory").focus() ;
+              return false;
+           }
+           else{
+        	   document.getElementById("form_addcategoryerror").innerHTML="";
+           }
+
+           if( document.getElementById("category").value =="" || 
+               document.getElementById("category").value ==null)
+               {
+            	 document.getElementById("observationerror").innerHTML="Please enter observation";
+            	 document.getElementById("category").focus() ;
+                return false;
+             }
+             else{
+          	   document.getElementById("observationerror").innerHTML="";
+             }
+         return( true );
+      }
+</script>
+
+</body>
+</html>

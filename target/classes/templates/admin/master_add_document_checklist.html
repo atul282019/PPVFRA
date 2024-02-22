@@ -1,0 +1,164 @@
+             
+  <!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+	<head>
+	  <th:block th:include="adminfragment/headerlibs.html :: headerlibs"></th:block> 
+	</head>
+
+    <body class="fixed-left">
+        <!-- Begin page -->
+        <div id="wrapper">
+        
+            <!-- Top Bar Start -->
+           <header th:insert="adminfragment/header.html :: header"> </header>
+            <!-- Top Bar End -->
+
+
+            <!-- ========== Left Sidebar Start ========== -->
+			<header th:insert="adminfragment/sidenav.html :: sidevav"> </header>
+            <!-- Left Sidebar End --> 
+
+  
+           
+            <!-- Start right Content here -->                    
+                 <div class="content-page">
+                <!-- Start content -->
+                <div class="content">
+                    <div class="container">
+
+                        <!-- Page-Title -->
+                        <div class="row">
+                            <div class="col-sm-12">
+                                <h4 class="pull-left page-title">Master</h4>
+                                <ol class="breadcrumb pull-right">
+                                   <li><a href="/admin">Home</a></li>
+                                    <li class="active">Add Documents</li>
+                                    <li>
+                                            <button type="button" onclick="history.go(-1);" class="btn btn-purple waves-effect waves-light btn-xs m-b-5">Back</button>
+                                    </li>
+                                </ol>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-sm-12">
+                                <div class="panel panel-default">
+                                    <div class="panel-heading"><h3 class="panel-title">Add Documents</h3></div>
+                                    <div class="panel-body">
+                                        <form class="form-horizontal" th:action="@{/adddocumentchecklist}" th:object="${documentchecklist}"  method="post" role="form" id="register-form1">                                    
+                                         
+                                            
+                                            <div class="form-group">
+                                                <label class="col-sm-2 control-label">Type of Form</label>
+                                                <div class="col-sm-6">
+                                                <div th:if="${formtypes!= null}">
+                                                    <select  th:field="*{formtypeid}" class="form-control">
+       														 <option th:value="-1">Select</option>
+          													  <option th:each="dropDownItem : ${formtypes}"
+              														  th:value="${dropDownItem.id}"
+                  													  th:text="${dropDownItem.formtypename}" />
+       										 			</select>
+       										 		 <div class="error" th:if="${#fields.hasErrors('formtypeid')}" th:errors="*{formtypeid}">formtypeid Error</div>
+       										 			
+                                                </div>
+                                            </div>
+                                            </div>
+                                            
+                                            <div class="form-group">
+                                              <label class="col-sm-2 control-label">Document Name</label>
+                                                <div class="col-sm-6">
+                                                    <textarea  th:field="*{document_desc}" class="form-control" placeholder="Enter the name of document" rows="5"></textarea>
+                                                   <div class="error" th:if="${#fields.hasErrors('document_desc')}" th:errors="*{document_desc}">document_desc Error</div>
+                                                    
+                                                </div>
+                                            </div>
+                                            
+					                        <div class="form-group">
+                                              <label class="col-md-2 control-label">Is Mandatory</label>
+                                               <div class="col-md-6">
+												<div class="form-check-inline">
+														<label class="form-check-label" for="radio1">
+															<input th:field="*{is_mandatory}" type="radio" class="form-check-input" id="radio1" name="optradio" value="Y">Yes
+														</label>
+											    </div>
+													<div class="form-check-inline">
+														<label class="form-check-label" for="radio1">
+															<input th:field="*{is_mandatory}" type="radio" class="form-check-input" id="radio1" name="optradio" value="N">No
+														</label>
+												   </div>
+												 <div class="error" th:if="${#fields.hasErrors('is_mandatory')}" th:errors="*{is_mandatory}">is_mandatory Error</div>
+												   
+                                               </div>
+                                            </div>     
+					                        
+					                        <div class="form-group">
+                                              <label class="col-sm-2 control-label">Attachment Size</label>
+                                                <div class="col-sm-6">
+                                                    <input type="text" th:field="*{attachment_maximum_size_in_kb}" class="form-control" placeholder="Enter the size of attachment">
+                                                   
+                                                    
+                                                </div>
+                                            </div>
+					                        
+					                        
+					                        <div class="form-group">
+												<label class="col-sm-2 control-label">Document Type</label>
+													<div class="col-sm-6">
+													<input th:field="*{attachment_allow_extension}" type="checkbox" th:name=".pdf" th:value=".pdf">.pdf <br>
+													<input th:field="*{attachment_allow_extension}" type="checkbox" th:name="png" th:value=".png">.png <br>
+													<input th:field="*{attachment_allow_extension}" type="checkbox" th:name="gif" th:value=".gif">.gif <br>
+													<input th:field="*{attachment_allow_extension}" type="checkbox" th:name="jpg" th:value=".jpg">.jpg<br>
+													  <div class="error" th:if="${#fields.hasErrors('attachment_allow_extension')}" th:errors="*{attachment_allow_extension}">attachment_allow_extension Error</div>
+													
+													</div>		
+											</div>
+											                   
+								            <div class="form-group">
+								                <label class="col-sm-2 control-label">Status</label>
+								                <div class="col-sm-6">
+								                  <select th:field="*{active}" class="form-control" >
+								                 <option th:value="1" th:text = "Active"></option>
+								                 <option th:value="0" th:text="Inactive"></option>
+								             </select>
+								                </div>
+								           </div>
+                                           
+                                          
+                                            <div class="form-group m-b-0">
+                                                <div class="col-sm-offset-2 col-sm-9">
+                                                    <button id="btnsubmitcgp" type="submit" class="btn btn-info waves-effect waves-light">Submit</button>
+                                                </div>
+                                            </div>
+                                                                       
+                                        </form>
+                                    </div> <!-- panel-body -->
+                                </div> <!-- panel -->
+                            </div> <!-- col -->
+                        </div> <!-- End row -->
+
+                    </div> <!-- container -->
+                               
+                </div> <!-- content -->
+
+               
+
+            </div>
+            <!-- End Right content here -->
+ <div th:replace="adminfragment/footer.html :: footer"></div>
+           </div> <!-- container -->
+                               
+                <!-- content -->
+
+			<!-- start footer content here -->
+			
+			<!-- end footer content here -->
+
+      
+        <!-- END wrapper -->
+
+<!-- footer lib start here-->
+
+<div th:replace="adminfragment/footerlibs.html :: footerlibs"></div>
+<!-- end footer lib -->
+</body>
+</html>

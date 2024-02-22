@@ -1,0 +1,212 @@
+  
+  <!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+	<head>
+	  <th:block th:include="adminfragment/headerlibs.html :: headerlibs"></th:block> 
+	</head>
+
+    <body class="fixed-left">
+        <!-- Begin page -->
+        <div id="wrapper">
+        
+            <!-- Top Bar Start -->
+           <header th:insert="adminfragment/header.html :: header"> </header>
+            <!-- Top Bar End -->
+
+
+            <!-- ========== Left Sidebar Start ========== -->
+			<header th:insert="adminfragment/sidenav.html :: sidevav"> </header>
+            <!-- Left Sidebar End --> 
+
+  
+            <!-- Start right Content here -->  
+             
+         <!-- ============================================================== -->                      
+            <div class="content-page">
+                <!-- Start content -->
+                <div class="content">
+                    <div class="container">
+
+                        <!-- Page-Title -->
+                        <div class="row">
+                            <div class="col-sm-12">
+                                <h4 class="pull-left page-title">Reports</h4>
+                                <ol class="breadcrumb pull-right">
+                                    <li><a href="#">Home</a></li>
+                                    <li class="active">Applicant List</li>
+                                </ol>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="panel panel-default">
+                                    <div class="panel-heading">
+                                        <h3 class="panel-title">Applicant List</h3>
+                                    </div>
+                                    <div class="panel-body">
+                                        <div class="row">
+                                            <div class="col-md-12 col-sm-12 col-xs-12">
+												<div class="table-responsive">
+											  <table id="mtsdetails" class="table table-hover table-bordered dataTable no-footer" role="grid" aria-describedby="mtsdetails_info">
+                                                    <thead>
+															<tr role="row">
+															<th class="sorting_desc" tabindex="0" aria-controls="mtsdetails" rowspan="1" colspan="1" aria-label="Sr.No.: activate to sort column ascending" style="width: 43px;" aria-sort="descending">Sr.No.</th>
+															<th class="sorting" tabindex="0" aria-controls="mtsdetails" rowspan="1" colspan="1" aria-label="Name: activate to sort column ascending" style="width: 66px;">Name</th>
+															<th class="sorting" tabindex="0" aria-controls="mtsdetails" rowspan="1" colspan="1" aria-label="Address: activate to sort column ascending" style="width: 37px;">Address</th>
+															<th class="sorting" tabindex="0" aria-controls="mtsdetails" rowspan="1" colspan="1" aria-label="State: activate to sort column ascending" style="width: 37px;">State</th>
+															<th class="sorting" tabindex="0" aria-controls="mtsdetails" rowspan="1" colspan="1" aria-label="District: activate to sort column ascending" style="width: 51px;">District</th>
+															<th class="sorting" tabindex="0" aria-controls="mtsdetails" rowspan="1" colspan="1" aria-label="Mobile: activate to sort column ascending" style="width: 46px;">Mobile</th>
+															<th class="sorting" tabindex="0" aria-controls="mtsdetails" rowspan="1" colspan="1" aria-label="Email: activate to sort column ascending" style="width: 38px;">Email</th>
+															<th class="sorting" tabindex="0" aria-controls="mtsdetails" rowspan="1" colspan="1" aria-label="Status:activate to sort column ascending" style="width:45px;">Status</th>
+															<th class="sorting" tabindex="0" aria-controls="mtsdetails" rowspan="1" colspan="1" aria-label="Remarks:activate to sort column ascending" style="width:45px;">Remarks</th> 
+															<th class="sorting" tabindex="0" aria-controls="mtsdetails" rowspan="1" colspan="1" aria-label="Action:activate to sort column ascending" style="width:45px;">Action</th>
+															<th class="sorting" tabindex="0" aria-controls="mtsdetails" rowspan="1" colspan="1" aria-label="View: activate to sort column ascending" style="width: 36px;">View</th>
+															</tr>
+														</thead>
+                                                    <tbody>
+															
+														 <tr  role="row" class="odd" th:each="applicantregloop,incr : ${data_viewing}">
+																<td th:text="${incr.count}" class="sorting_1"></td>
+																<td th:text="${applicantregloop[1]}"></td>
+																<td th:text="${applicantregloop[5]}"></td>
+																<td th:text="${applicantregloop[7]}"></td>
+																<td th:text="${applicantregloop[8]}"></td>
+																<td th:text="${applicantregloop[3]}"></td>
+																<td th:text="${applicantregloop[2]}"></td>
+																<td th:text="${applicantregloop[11]}"></td>
+																<td th:text="${applicantregloop[12]}"></td>
+																	<td>
+																<a class="btn btn-success btn-xs" data-toggle="modal" th:data-target="'#myModal' + ${applicantregloop[0]}"  href="#"> Accept / Reject</a>
+																	<div class="modal" th:id="'myModal'+ ${applicantregloop[0]}" style="display: none;">
+							<div class="modal-dialog">
+								<div class="modal-content">
+								  <div class="modal-header">
+									<h4 class="modal-title">Approval</h4>
+								  </div>
+								  <div class="modal-body">
+									<form class="form-horizontal active" th:action="@{'/acceptrejectapplicant/'+${applicantregloop[0]}}" th:object="${acceptrejectapplicant}" role="form" id="form_4"  method="post">   <!--form_4 start -->                                       
+											<input type="hidden" name="applicant_view" value="applicant_view"/> 
+                                              
+										<div class="form-group">
+											<label class="col-md-3 control-label"></label>
+											<div class="col-md-7">
+												<input id="companystatus" type="radio" name="applicantstatus" class="" value="Accepted"> Accept
+												<input id="companystatus" type="radio" name="applicantstatus" class="" value="Rejected"> Reject
+											</div>
+										</div>
+										<div class="form-group">
+											<label class="col-md-3 control-label">Remarks</label>
+											<div class="col-md-7 col-sm-7 col-xs-12">
+												<textarea name="remarks" class="form-control"></textarea>
+											</div>
+										</div>
+										
+										
+										
+										<div class="form-group ">
+											<label class="col-md-3 control-label">&nbsp;</label>
+											<div class="col-sm-7">
+												<button type="submit" onclick="return radiocheck()" class="btn btn-info waves-effect waves-light">Submit</button>
+											</div>
+										</div>
+										
+										
+									</form>
+								  </div>
+								  <div class="modal-footer">
+									<button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+								  </div>
+
+								</div>
+							</div>
+						</div>
+						</td>
+																<td> <a th:href="@{'/view_applicantdetails/'+${applicantregloop[0]}}"> View</a></td>
+																
+															 </tr>                                                        
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div> <!-- End Row -->
+
+
+                    </div> <!-- container -->
+                               
+                </div> <!-- content -->
+<!-- 
+                <footer class="footer text-right">
+                    2019 © PPVFRA.
+                </footer> -->
+
+            </div>
+            <!-- ============================================================== -->
+             
+            <!-- End Right content here -->
+          <div th:replace="adminfragment/footer.html :: footer"></div>
+           </div> <!-- container -->
+                               
+                <!-- content -->
+
+			<!-- start footer content here -->
+			
+			<!-- end footer content here -->
+
+      
+        <!-- END wrapper -->
+
+<!-- footer lib start here-->
+
+<div th:replace="adminfragment/footerlibs.html :: footerlibs"></div>
+<!-- end footer lib -->
+
+<script src="https://code.jquery.com/jquery-3.3.1.js"></script>
+<script src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
+<script src="https://cdn.datatables.net/buttons/1.5.6/js/dataTables.buttons.min.js"></script>
+<script src="https://cdn.datatables.net/buttons/1.5.6/js/buttons.flash.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.1.3/jszip.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/pdfmake.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/vfs_fonts.js"></script>
+<script src="https://cdn.datatables.net/buttons/1.5.6/js/buttons.html5.min.js"></script>
+<script src="https://cdn.datatables.net/buttons/1.5.6/js/buttons.print.min.js"></script>
+
+
+
+<script>
+			$(document).ready(function() {
+				$('#mtsdetails').DataTable( {
+					dom: 'Bfrtip',
+					buttons: [
+						'csv', 'excel', 'pdf', 'print'
+					]
+				} );
+			} );
+		</script>
+    <script type="text/javascript">
+   function radiocheck()
+    {
+	   var k = document.getElementsByName("applicantstatus");
+	   var ischecked_method = false;
+	   for ( var i = 0; i < k.length; i++) {
+	       if(k[i].checked) 
+	       {
+	           ischecked_method = true;
+	           break;
+	       }
+	   }
+	   if(!ischecked_method)   
+	   { //payment method button is not checked
+	       alert("Please select atleast one radio button");
+	   return false;
+	   }
+	 }
+    </script>
+    
+    
+    
+</body>
+</html>

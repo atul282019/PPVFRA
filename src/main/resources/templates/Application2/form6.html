@@ -1,0 +1,293 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+	<div th:fragment="formsix">
+
+<form class="form-horizontal" role="form" id="form_6" name="form_6" th:action="@{/saveapplication2form6}" th:object="${applications}" method="post" enctype="multipart/form-data">   <!--form_6 start -->                                       
+				  <div class="col-md-10">
+                      <input type="hidden" id="applicationidhidden" th:value="${applications.id}" th:name="applicationidhidden" readonly="readonly"  />
+                  </div>
+					
+					<div class="form-group">
+						<label class="col-md-6 "><h4>6.(a)Classification of the Candidate Variety:<span style="color:red">*</span><h4></label>
+					</div>
+					<div class="form-group">
+						<label class="col-md-3 control-label"></label>
+						<div class="col-md-9">
+							<input class="other-1" type="checkbox" id="checkbox1" name="checkbox" value="1" onchange="Hidetextboxapplicationform6()" >TYPICAL VARIETY <a href="#" title="" data-toggle="popover" data-trigger="focus" data-content=" Typical variety means a variety, which is not a hybrid or an essentially derived variety and normally propagated by using propagules saved from previous crop production cycles (Example: pure lines including parental lines/composite varieties or vegetative propagated varieties)."><span class="badge">i</span></a><br>
+							
+							<input class="other-1" type="checkbox" id="checkbox2" name="checkbox" value="2" onchange="Hidetextboxapplicationform6()" >HYBRID VARIETY <a href="#" title="" data-toggle="popover" data-trigger="focus" data-content="The hybrid and not a transgenic hybrid. In case of transgenic attach copy of the Genetic Engineering Approval Committee clearances for cultivation and seed productions."><span class="badge">i</span></a><br>
+							<!-- <input class="other-1" type="checkbox" id="checkbox3" name="checkbox" value="3">TRANSGENIC<br> -->
+							<input class="other" type="checkbox"   id="checkbox4"   name="checkbox" value="4" onchange="Hidetextbox()">OTHER (SPECIFY)<br>
+						 <div class="help-block with-errors" id="docuploaderror2"></div> 
+	                                             	
+						</div>
+					</div>
+					<div id="other_text_div" class="form-group other-textbox">
+						<label class="col-md-3 control-label"></label>
+						<div class="col-md-6">
+							<input type="text" class="form-control" id ="othervalue" name="othervalue" value="">
+							 <div class="help-block with-errors" id="docuploaderror3"></div> 
+	                                             	
+						</div>
+					</div>
+					<div class="form-group">
+						<label class="col-md-6 control-label">(b.) What is (are) the Distinctiveness Uniformity Stability feature on the basis of which registration is sought. Explain in detail the group characters (see specific guidelines for details). Attach 'Technical Questionnaire' sheet with all needed details duly signed with seal.<span style="color:red">*</span></label>
+					</div>
+					<div class="form-group">
+						<label class="col-md-3 control-label"></label>
+						<div class="col-md-9">
+							<textarea class="form-control" id="distinctuniform" th:field="*{dus_features}" onchange="uniform_f6()"></textarea>
+						</div>
+						<div class="help-block with-errors" th:id="distinctuniformerror"></div> 
+					</div>
+					<div class="form-group">
+						<label class="col-md-6 control-label">(c.) Whether the authorization of the breeder of initial variety has been taken<span style="color:red">*</span></label>
+					    <div class="col-md-6">
+                        Yes <input type="radio" th:field="*{initialvariety}"  value="1" class="radio-btn-position"> &nbsp; &nbsp; 
+                        No <input type="radio" th:field="*{initialvariety}" value="2" class="radio-btn-position"> 
+                     </div>
+					</div>
+					 
+					<div class="form-group">
+					<label class="col-md-6 control-label">(d.) If yes please attach copy of Authorization.<span style="color:red">*</span></label>
+					<div class="col-md-6">
+					<input type="file" id="fname_6thform" name="transgenicfile" th:onchange="'javascript:uploadfile_6(),validatePDF(this)'">
+	    			<a th:href="'/ppvfra/download/formvnotification/'+*{transgenic_bioname}" target="_blank">
+	    				<span id="file_f6"   th:value="*{transgenic_bioname}" th:text="*{transgenic_bioname}">
+	    				</span>
+	    			</a>
+	    			 <p><span>File type allowed: PDF/PNG/JPG/GIF, Max file size: 500KB.</span></p>
+					 <div class="help-block with-errors" th:id="docuploaderror4"></div> 
+					 </div>
+	 				</div>
+					<hr/>
+					<div class="form-group" th:if="${appstatus ==1}">
+						<div class="col-sm-offset-10 col-sm-12">
+						    <input type="hidden" id="applicationidfromvi" name="applicationidfromvi" th:value="*{id}">
+							<input type="hidden" id="applicantidformvi" name="applicantidformvi"  th:value="${userapplicant[0]}">
+							<input type="hidden" id="applicanttypeidformvi" name="applicanttypeidformvi" th:value="*{applicanttypeid}" />
+							<input type="hidden" id="f6_id" name="f6_id" th:value="${f6_id}">
+							<input type="hidden" id="file_f1f6"  name="file_f1f6" th:value="*{transgenic_bioname}">
+							
+							<button type="submit" id="subform6" class="btn btn-info waves-effect waves-light" onclick ="return checkvaluesform6()" >Save</button>
+						</div>
+					</div>
+				
+<script>
+    function Hidetextbox(){
+   	        if(document.getElementById("checkbox4").checked){
+           	$(".other-textbox").css("display", "block");
+            }
+   	        else{
+   	        	$(".other-textbox").css("display", "none");
+   	        	}
+   	        }
+</script>
+<script>
+    function Hidetextboxapplicationform6(){
+			if(document.getElementById("checkbox1").checked || document.getElementById("checkbox2").checked){
+           	
+           	$(".other-textbox").css("display", "block");
+            }
+   	        else if(document.getElementById("checkbox1").unchecked || document.getElementById("checkbox2").unchecked){
+   	        	$(".other-textbox").css("display", "block");
+   	        	}
+   	           	else{
+   	           	$(".other-textbox").css("display", "block");
+   	           	}
+   	           	
+   	        }
+</script>
+		<script type="text/javascript">
+				function checkvaluesform6()
+				{
+				var c1= document.getElementById("checkbox1").checked;
+				var c2= document.getElementById("checkbox2").checked;
+				//var c3= document.getElementById("checkbox3").checked;
+				var c4= document.getElementById("checkbox4").checked;
+				var otherval = document.getElementById("othervalue").value;
+				var file_id = document.getElementById("fname_6thform").value;
+				
+				
+				if((c1 == false || c1 == "") && (c2 == false || c2 == "")  && (c4 == false || c4 == ""))
+					{
+					document.getElementById("docuploaderror2").innerHTML = " <font color='red'>Please select candidate variety</font>";
+					  $("#subform6").attr("disabled", true);
+					return false;
+					}else if(c4 !=false)
+					{
+					if(otherval == null || otherval=="")
+						{
+						document.getElementById("docuploaderror3").innerHTML = " <font color='red'>Please specify others</font>";
+						 $("#subform6").attr("disabled", true);
+						return false;
+						}
+					}
+					else if(document.getElementById("initialvariety1").checked == true)
+					{
+						//alert('test');
+						 if(file_id =="" || file_id == null)
+						{
+						var pf_6=$('#file_f6').text();
+						if(pf_6.length>0 && !(pf_6 =="" || pf_6 ==null) )
+							{
+							$("#subform6").attr("disabled", false);
+							return true;
+							}else{
+						document.getElementById("docuploaderror4").innerHTML = " <font color='red'>Please upload file</font>";
+						 $("#subform6").attr("disabled", true);
+						return false;
+							}
+						}
+					}
+				
+				if(document.getElementById("distinctuniform").value=="" || document.getElementById("distinctuniform").value==null)
+						{
+						 document.getElementById("distinctuniformerror").innerHTML = " <font color='red'>Please fill Distinctiveness Uniformity feature.</font>";
+						// document.getElemmentById("distinctuniformerror").focus();
+						 $("#subform6").attr("disabled", true);
+						 return false;
+						}
+						
+				
+				return true;
+				
+				}
+				</script>
+					
+<script type="text/javaScript">
+var formOK = false;
+
+function validatePDF(objFileControl){
+ var file = objFileControl.value;
+ var len = file.length;
+ var ext = file.slice(len - 4, len);
+ if(ext.toUpperCase() == ".PDF" || ext.toUpperCase() == ".PNG" || ext.toUpperCase() == ".JPG" || ext.toUpperCase() == ".GIF"){
+   formOK = true;
+ }
+ else{
+	 $("#gotosubattach").attr("disabled", true);
+	 formOK = false;
+   objFileControl.value =null;
+   alert("Only PDF/PNG/JPG/GIF files allowed.");
+ }
+}
+</script>	
+
+
+
+<script type="text/javascript">
+        function uploadfile_6()  {
+        	var file_id = document.getElementById("fname_6thform").value;
+        	 {
+            var	filename = file_id;    
+            //alert(filename);
+			
+			var iFileSize = document.getElementById("fname_6thform").files[0].size;
+           // alert(iFileSize);
+            
+            $.ajax({
+                type: "POST",
+                url: "/ppfvra/api/filesizecheck",
+                data:'filename='+filename+'&filesize='+iFileSize,
+               
+                success: function (data) {
+
+               if(data == false)
+				{ 
+        document.getElementById("docuploaderror4").innerHTML = " <font color='red'>Allowed File size is 500 KB.</font>";
+        var tst=document.getElementById("fname_6thform");
+        $("#subform6").attr("disabled", true);
+
+        		tst.value='';
+         return false;
+                }
+			else if (data == true) {
+		        $("#subform6").attr("disabled", false);
+ 				document.getElementById("docuploaderror4").innerHTML = " ";
+			     return true;
+                    }
+                   
+                }
+            }); 
+            }
+  }
+</script>
+	
+	
+<script type="text/javascript" th:inline="javascript">
+document.onload=fetchvarietyval();    
+function fetchvarietyval() 
+        {  
+    	  var moduledata= document.getElementById("applicationidhidden");
+    	  var moduledata2 = document.getElementsByName("checkbox");
+    	
+    	  for (var unchk=0; unchk< moduledata2.length; unchk++)
+   	    	 {
+   	    	 moduledata2[unchk].checked=false;
+   	    	 }
+   	       
+   	       if(moduledata.value != null)		 
+   	        	$.ajax(
+   	        			{
+   	                type: "POST",
+   	                url: "/ppvfra/getvarietyvalue",
+   	                data: 'applicationidhidden='+moduledata.value,
+   	                success: function (response) {
+   	                if(response.length != null)
+   	                {  
+                	  for (var i=0;i<response.length;i++)
+                	  {
+                		 
+                    	var str = response[i].toString();
+                    	for (var k=0; k<moduledata2.length; k++)	 
+             			 {
+                    		
+                    		var roleval = moduledata2[k].value;
+                    		var text=document.getElementById("othervalue");
+                    	   var a=str.split(",");
+                    	   if(a[0]=="4")
+                    		{
+                    		   
+                        	   if (a[0] == roleval)
+                        	    {
+                        			moduledata2[k].checked = true;
+                        			document.getElementById("othervalue").value=a[1];
+                        			//$("#other_text_div").attr('disabled','false');
+                        			document.getElementById("other_text_div").disabled=false;
+                        	    }
+                    		}else if (a[0] == roleval)
+                    	    {
+                    			moduledata2[k].checked = true;
+                    			
+                    	    }
+                		}
+                	  }
+                	} 
+                	
+											}
+					});
+        }
+</script> 
+
+<script type="text/javascript">
+function uniform_f6()
+{
+	 $("#subform6").attr("disabled", false);
+	 
+	if(document.getElementById("distinctuniform").value=="" || document.getElementById("distinctuniform").value==null)
+	{
+	 document.getElementById("distinctuniformerror").innerHTML = " <font color='red'>Please fill Distinctiveness Uniformity feature.</font>";
+	 $("#subform6").attr("disabled", true);
+	 return false;
+	}
+	else{document.getElementById("distinctuniformerror").innerHTML = "";
+	 }
+}
+</script>	
+	
+</form>
+</div>
+
+</html>

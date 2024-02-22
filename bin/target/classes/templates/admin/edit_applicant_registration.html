@@ -1,0 +1,692 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+	<head>
+	  <th:block th:include="adminfragment/headerlibs.html :: headerlibs"></th:block> 
+	</head>
+
+    <body class="fixed-left">
+        <!-- Begin page -->
+        <div id="wrapper">
+        
+            <!-- Top Bar Start -->
+           <header th:insert="adminfragment/header.html :: header"> </header>
+            <!-- Top Bar End -->
+
+
+            <!-- ========== Left Sidebar Start ========== -->
+			<header th:insert="adminfragment/sidenav.html :: sidevav"> </header>
+            <!-- Left Sidebar End --> 
+
+  
+             <!-- Start right Content here -->
+            <!-- ============================================================== -->                      
+            <div class="content-page">
+                <!-- Start content -->
+                <div class="content">
+                    <div class="container">
+
+                        <!-- Page-Title -->
+                        <div class="row">
+                            <div class="col-sm-12">
+                                <h4 class="pull-left page-title">User Management</h4>
+                                <ol class="breadcrumb pull-right">
+                                    <li><a href="/admin">Home</a></li>
+		                            <li>
+		                              <button action="action" type="button" onclick="history.go(-1);" class="btn btn-purple waves-effect waves-light btn-xs m-b-5">Back</button>
+		                            </li>
+                                </ol>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-sm-12">
+                                <div class="panel panel-default">
+                                    <div class="panel-heading"><h3 class="panel-title">Applicant Registration View</h3></div>
+                                    <span th:if="${actd_viewtrue != null && actd_viewtrue == 'valpresent' }">
+						
+                                    <div class="panel-body">
+                                     
+											<form id="register-form16" class="form form-horizontal login-form-padding" th:action="@{/editapplicantregistration}" th:object="${edit_applicantregistration}" data-toggle="validator" enctype="multipart/form-data" method="post">
+													<h3 class="text-center"><b>Applicant Registration</b></h3><br>
+													<div th:each="data :${details}">
+													<div class="form-group">
+                                                <label class="col-md-2 control-label" > </label>
+                                                <div class="col-md-10">
+                                                    <input type="text" th:field="*{id}" readonly="readonly" hidden="true" />
+                                                    
+                                                </div>
+                                            </div>
+													
+													<div class="form-group">
+														<label class="col-md-3 control-label">Applicant Type<span style="color:red">*</span></label>
+														<div class="col-md-9">
+														<div  th:if="${applicantrolelist != null}">
+															<select  th:field="*{applicanttype}" id="ddlapplicant"  class="form-control">
+																<option  th:value="null">Select</option>
+																 <option  th:each="applicant : ${applicantrolelist}"
+														               th:value="${applicant[0]}"
+														               th:text="${applicant[1]}" />
+															</select>
+															 <div class="alert alert-danger" th:if="${#fields.hasErrors('applicanttype')}" th:errors="*{applicanttype}"></div> 
+														</div>
+														</div>
+														
+													</div>
+													
+													<div th:if="${data[1] == 'Company'}">
+													<div class="form-group">
+														<label class="col-md-3 control-label">Company Name<span style="color:red">*</span></label>
+														<div class="col-md-9">
+															<div  th:if="${companyregistration != null}">
+															<select th:field="*{companyid}"  class="form-control">
+																<option th:value="null" >Select</option>
+														            <option th:each="company : ${companyregistration}"
+														               th:value="${company[0]}"
+														               th:text="${company[1]}" />
+															</select>
+															</div>
+														</div>
+														</div>
+													</div>
+													
+													
+													
+													
+													<div  th:if="${data[1] == 'Institution'}">
+													<div class="form-group">
+														<label class="col-md-3 control-label">Institution Name<span style="color:red">*</span></label>
+														<div class="col-md-9">
+															<div  th:if="${institutionregistration != null}">
+															<select th:field="*{institutionid}"  class="form-control">
+																<option th:value="null" >Select</option>
+														            <option th:each="institution : ${institutionregistration}"
+														               th:value="${institution[0]}"
+														               th:text="${institution[1]}" />
+															</select>
+															</div>
+															</div>
+														</div>
+													</div>
+													
+													
+													 <div  th:if="${data[1] == 'other'}">
+													<div class="form-group">
+														<label class="col-md-3 control-label">Company/Institution Name (If Type is Other)<span style="color:red">*</span></label>
+														<div class="col-md-9">
+															<textarea th:text="${data[2]}" name="other" id="other" onblur='javascript:institutenamecheck(),companycheck()'class="form-control"></textarea>
+														  	<div class="help-block with-errors" id="othererror"></div>
+														</div>
+													</div>
+													</div>
+													
+													<div class="form-group">
+														<label class="col-md-3 control-label">Name<span style="color:red">*</span></label>
+														<div class="col-md-9"> 
+														<textarea th:field="*{firstname}" id="authorname" th:text="${data[16]}" rows="1" name="firstname" onblur='javascript:authornamecheck()' class="form-control"></textarea>
+														<div class="alert alert-danger" th:if="${#fields.hasErrors('firstname')}" th:errors="*{firstname}"></div>
+														<div class="help-block with-errors" id="authornameerror"></div>
+														</div>
+													</div>
+													<div class="form-group">
+														<label class="col-md-3 control-label">User Name<span style="color:red">*</span></label>
+														<div class="col-md-9">
+														<textarea  rows="1" th:field="*{username}" th:text="${data[3]}" id="username" name="username" onblur='javascript:usernamecheck()' class="form-control"></textarea>
+														<div class="alert alert-danger" th:if="${#fields.hasErrors('username')}" th:errors="*{username}"></div>
+														<div class="help-block with-errors" id="emailerror"></div>
+														</div>
+													</div>
+														<div class="form-group">
+														<label class="col-md-3 control-label">Email<span style="color:red">*</span></label>
+														<div class="col-md-9">
+														<textarea th:field="*{email}" th:text="${data[4]}" rows="1" id="emailidcheck" onblur='javascript:emailcheck()' name="email" class="form-control"></textarea>
+														<div class="alert alert-danger" th:if="${#fields.hasErrors('email')}" th:errors="*{email}"></div>
+														<div class="help-block with-errors" id="emailiderror"></div>
+														</div>
+													</div>
+													
+													<div class="form-group">
+														<label class="col-md-3 control-label">Mobile No<span style="color:red">*</span></label>
+														<div class="col-md-1">
+															<input type="text" placeholder="+91" class="form-control">
+														</div>
+														<div class="col-md-8">
+														<textarea th:field="*{mobile_number}" th:text="${data[5]}" rows="1" id="mobilenocheck" onblur='javascript:mobilecheck()' name="mobile_number" class="form-control"></textarea>
+														 <div class="alert alert-danger" th:if="${#fields.hasErrors('mobile_number')}" th:errors="*{mobile_number}"></div>
+														 <div class="help-block with-errors" id="mobilenoerror"></div>
+														</div>
+													</div>
+												
+													<div class="form-group">
+														<label class="col-md-3 control-label">Telephone No<span style="color:red">*</span></label>
+														<div class="col-md-1">
+															<input type="text" class="form-control">
+														</div>
+														<div class="col-md-8">
+														<textarea th:field="*{contactno}" th:text="${data[17]}" rows="1"  name="contactno" class="form-control"></textarea>
+														<div class="alert alert-danger" th:if="${#fields.hasErrors('contactno')}" th:errors="*{contactno}"></div>
+														</div>
+													</div>
+													
+													<div class="form-group">
+													<label class="col-md-3 control-label">Designation<span style="color:red">*</span></label>
+													<div class="col-md-9">
+													<textarea th:field="*{designation}" th:value="${designation}" th:text="${data[6]}" rows="1" id="designation" name="designation" onblur='javascript:designationcheck()' class="form-control" ></textarea>
+												      <div class="alert alert-danger" th:if="${#fields.hasErrors('designation') }" th:errors="*{designation}"></div>
+												     <div class="help-block with-errors" id="designationerror"></div>
+												     </div>
+													</div>
+													
+													
+													<div class="form-group">
+														<label class="col-md-3 control-label">Address<span style="color:red">*</span></label>
+														<div class="col-md-9">
+															<textarea  th:field="*{address}" name="address"  class="form-control"></textarea>
+															 <div class="alert alert-danger" th:if="${#fields.hasErrors('address')}" th:errors="*{address}"></div>
+														 </div>
+													</div> 
+												
+												
+												     <div class="form-group" th:if="${data[8] != 'India'}">
+														 <div id="dvState" style="display: none"> 
+														<div class="form-group">
+														<label class="col-md-3 control-label">Country<span style="color:red">*</span></label>
+														   <div class="col-md-9">
+														    <div th:if="${Country != null}">
+														        <select th:field="*{countryid}" id="ddlcountry" name="countrycode" class="form-control">
+														        <option th:value="null">Select</option>
+														            <option th:each="dropDownItem : ${Country}"
+														               th:value="${dropDownItem.id}"
+														               th:text="${dropDownItem.country}" />
+														        </select>
+														        <div class="alert alert-danger" th:if="${#fields.hasErrors('countryid')}" th:errors="*{countryid}"> </div>
+												     	</div>
+													   	</div>
+														</div> 
+														</div> </div>
+														
+														<div  th:if="${data[8] == 'India'}">
+														<div class="form-group">
+														<label class="col-md-3 control-label">Country<span style="color:red">*</span></label>
+														   <div class="col-md-9">
+														    <div th:if="${Country != null}">
+														        <select th:field="*{countryid}" id="ddlcountry" name="countrycode" class="form-control">
+														        <option th:value="null" >Select</option>
+														            <option th:each="dropDownItem : ${Country}"
+														               th:value="${dropDownItem.id}"
+														               th:text="${dropDownItem.country}" />
+														        </select>
+														        <div class="alert alert-danger" th:if="${#fields.hasErrors('countryid')}" th:errors="*{countryid}"> </div>
+												     	</div>
+													   	</div>
+														</div> 
+						
+												<div id="dvState"> 
+											     <div class="form-group">
+														<label class="col-md-3 control-label">State<span style="color:red">*</span></label>
+														   <div class="col-md-9">
+														    <div th:if="${State != null}">
+														        <select onchange="GetDistricts();" id="statecode"  th:field="*{stateid}" name="statecode" class="form-control">
+														        <option th:value="null" >Select</option>
+														            <option th:each="dropDownItem : ${State}"
+														               th:value="${dropDownItem.statecode}"
+														               th:text="${dropDownItem.statename_inenglish}" />
+														        </select>
+														       </div>
+														       	<div class="alert alert-danger" th:if="${#fields.hasErrors('stateid')}" th:errors="*{stateid}"></div>
+														</div> 
+														</div> 
+
+														<div class="form-group">
+														<label class="col-md-3 control-label">District<span style="color:red">*</span></label>
+														   <div class="col-md-9">
+														    <div  th:if="${District != null}">
+														        <select id="districtcode" name="districtcode" th:field="*{districtid}" class="form-control">
+														        <option th:value="null" >Select</option>
+														            <option th:each="dropDownItem : ${District}"
+														               th:value="${dropDownItem.districtcode}"
+														               th:text="${dropDownItem.districtname_inenglish}" />
+														        </select>
+														       <div class="alert alert-danger" th:if="${#fields.hasErrors('districtid')}" th:errors="*{districtid}">districtid Error</div>
+														   	</div>
+														   	</div>
+														</div> 													
+													 </div>											
+													</div>
+													
+													
+													
+													
+													
+													
+													
+													
+													
+													<div class="form-group">
+														<label class="col-md-3 control-label">City/Town/Village<span style="color:red">*</span></label>
+														<div class="col-md-9">
+															<input type="text" th:field="*{city}" name="city"  class="form-control">
+															 <div class="alert alert-danger" th:if="${#fields.hasErrors('city')}" th:errors="*{city}"></div>
+														</div>
+													</div>
+													
+													<div class="form-group">
+														<label class="col-md-3 control-label">Pincode/Zipcode<span style="color:red">*</span></label>
+														<div class="col-md-9">
+															<input type="text" th:field="*{pincode}" name="pincode"  class="form-control">
+															 <div class="alert alert-danger" th:if="${#fields.hasErrors('pincode')}" th:errors="*{pincode}"></div>
+														</div>
+													</div>
+													
+													<div class="form-group">
+														<label class="col-md-3 control-label"></label>
+														<div class="col-md-9">
+													   <span th:each="sec_chk : ${actd}">
+														  <span th:if="${sec_chk == 'Edit'}">
+														   <input type="submit" id="btnsubmitcgp" name="submit" class="btn btn-info btn-md" value="Submit" style="background-color:#3e7205;">
+														   </span>
+														</span>
+														</div>
+													</div>
+													
+													</div>
+												</form>
+											</div>
+											
+											</span>
+											<span th:unless="${actd_viewtrue != null && actd_viewtrue == 'valpresent' }">
+											 <label>YOU ARE NOT AUTHORISED TO VIEW THIS PAGE.PLEASE CONTACT ADMINISTRATOR</label>
+											 </span>
+										</div>
+									</div>
+								</div>
+							</div>
+				</div>
+			</div>
+	
+<div th:replace="adminfragment/footer.html :: footer"></div>
+           </div> <!-- container -->
+                               
+                <!-- content -->
+
+			<!-- start footer content here -->
+			
+			<!-- end footer content here -->
+
+      
+        <!-- END wrapper -->
+
+<!-- footer lib start here-->
+
+<div th:replace="adminfragment/footerlibs.html :: footerlibs"></div>
+<!-- end footer lib -->
+	
+
+<script type="text/javascript">
+   function GetDistricts()
+  {
+       var ddlState= document.getElementById("statecode");
+       var district=document.getElementById("districtcode");
+       var district1=$("#districtcode");
+       if(ddlState.value != null)	
+       	$.ajax({
+               type: "POST",
+               url: "/ppvfra/getDistricts",
+               data: 'stateCode='+ddlState.value,
+               dataType:"json",
+               success: function (response) {
+               	
+              district1.empty().append('<option selected="selected" value="">Please select</option>');
+                for(var k=0;k<response.length;k++)
+     	  {
+     	  var opt = response[k];
+     	   var el = document.createElement("option");
+     	   el.textContent = opt[1];
+     	   el.value = opt[0];
+     	   district.appendChild(el);
+		}
+ 
+ },
+        failure: function (response) {
+        alert(response.responseText);
+		},
+          error: function (response) {
+           alert(response.responseText);
+			}
+      });
+   	
+   }
+ </script>		
+ 
+<!-- <script type="text/javascript">
+    $(function () {
+        $("#ddlapplicant").change(function () {
+            if ($(this).val() == "2") {
+                $("#dvCompany").show();
+            } else {
+                $("#dvCompany").hide();
+            }
+            if ($(this).val() == "3") {
+                $("#dvInstitution").show();
+            } else {
+                $("#dvInstitution").hide();
+            }
+            if ($(this).val() == "5") {
+                $("#dvOther").show();
+            } else {
+                $("#dvOther").hide();
+            }
+        });
+        
+    });
+</script> -->	
+
+<script type="text/javascript">
+    $(function () {
+        $("#ddlcountry").change(function () {
+            if ($(this).val() == "1") {
+                $("#dvState").show();
+            } else {
+                $("#dvState").hide();
+            }
+           
+        });
+        
+    });
+</script>	
+<script type="text/javascript" th:inline="javascript">
+        function emailcheck() {
+        	var chk =  [[${details}]];
+            var emailid =document.getElementById("emailidcheck").value;
+            
+          // alert(emailid);
+            $.ajax({
+                type: "POST",
+                url: "/ppvfra/checkmail",
+                data:emailid,
+                contentType:'application/json',
+                success: function (data) {
+                 
+                if((data == 'taken')&& (chk[0][4].toString()== emailid))
+                	{
+                	document.getElementById("emailiderror").innerHTML = " ";
+   			     return true;
+                	}else if((data == 'taken')&& (chk != emailid))
+                	{
+                	
+                //Email not available.
+        		document.getElementById("emailiderror").innerHTML = " <font color='red'>Email is already present.</font>";
+        		document.forms["register-form16"]["emailidcheck"].focus();
+        		return false;
+                }
+				else (data == 'not taken') 
+				{
+				document.getElementById("emailiderror").innerHTML = " ";
+			     return true;
+                    }
+                   
+                }
+            }); 
+  }
+        </script>
+        <script type="text/javascript" th:inline="javascript">
+        function mobilecheck() {
+        	var chk =  [[${edit_applicantregistration}]];
+        	var emailid =document.getElementById("mobilenocheck").value;
+            //alert(emailid);
+            $.ajax({
+                type: "POST",
+                url: "/ppvfra/checkmobile",
+                data:emailid,
+                contentType:'application/json',
+                success: function (data) {
+                 
+                if((data == 'taken')&& (chk.mobile_number == emailid))
+                	{
+                		document.getElementById("mobilenoerror").innerHTML = " ";
+       			        return true;
+                	}
+                else if((data == 'taken')&& (chk != emailid))
+				{
+                //Email not available.
+        		document.getElementById("mobilenoerror").innerHTML = " <font color='red'>Mobile Number is already present.</font>";
+        		document.forms["register-form16"]["mobilenocheck"].focus();
+        		return false;
+                }
+				else if (data == 'not taken') 
+				{
+				document.getElementById("mobilenoerror").innerHTML = " ";
+			     return true;
+                    }
+                   
+                }
+            }); 
+  }
+    </script>
+       
+<script type="text/javascript" th:inline="javascript">
+        function usernamecheck() {
+        	var chk =  [[${details}]];
+        	var letter = /^[a-zA-Z0-9]+$/;
+            var emailid =document.getElementById("username").value;
+            var bt=document.getElementById("btnsubmitcgp").value;
+           //alert(emailid);
+           if(emailid == null || emailid == "" )
+        	   {
+        	   alert("Please Enter UserName.");
+        	   document.getElementById("btnsubmitcgp").disabled = true; 
+        	   return false;
+        	   }
+            $.ajax({
+                type: "POST",
+                url: "/ppvfra/checkusername",
+                data:emailid,
+                contentType:'application/json',
+                success: function (data) {
+                 
+                	if((data == 'taken')&& (chk[0][3].toString() == emailid))
+                		{
+                		document.getElementById("emailerror").innerHTML = " ";
+        				return true;
+                		}
+                	else if((data == 'taken')&& (chk != emailid))
+				{
+                //Email not available.
+        		document.getElementById("emailerror").innerHTML = " <font color='red'>Username is already present.</font>";
+        		document.forms["register-form16"]["username"].focus();
+        		return false;
+                }
+				else if (data == 'not taken') 
+				{
+					if(isNaN(emailid))
+	    			{
+						if(letter.test(emailid))
+						{
+							document.getElementById("emailerror").innerHTML = " ";
+							return true;  
+						} 
+						else
+						{
+							document.getElementById("emailerror").innerHTML = " <font color='red'>Special characters are not allowed.</font>";
+							document.forms["register-form16"]["username"].focus();
+			        		return false;  
+						}
+	    			}
+					else
+					{
+						document.getElementById("emailerror").innerHTML = " <font color='red'>Username cannot be fully numeric.</font>";
+						document.forms["register-form16"]["username"].focus();
+		        		return false;  
+					}
+                    }
+                   
+                }
+            }); 
+  }
+    </script>    
+  			
+<script>
+function myFunction() {
+  var inpObj = document.getElementById("designation");
+  if (!inpObj.checkValidity()) {
+    document.getElementById("designationerror").innerHTML = inpObj.validationMessage;
+  } else {
+    document.getElementById("designationerror").innerHTML = "Fill designation";
+  } 
+} 
+</script>
+
+<script type="text/javascript">
+        function designationcheck() {
+            var emailid =document.getElementById("designation").value;
+            var letters = /^[ A-Za-z_@./#&+-]*$/;
+				 var format = /^[!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?]*$/;
+				 if(format.test(emailid)){
+					 document.getElementById("designationerror").innerHTML = " <font color='red'>Designation in special characters and in numbers not accepted.</font>";
+					 document.forms["register-form16"]["designation"].focus();
+		        		return false;  
+					 
+				 }else if(letters.test(emailid))
+            	     {
+            		   document.getElementById("designationerror").innerHTML = " ";
+					   ; 
+						return true;
+            	     }
+            	   else
+            	     {
+            		   document.getElementById("designationerror").innerHTML = " <font color='red'>Designation in special characters and in numbers not accepted.</font>";
+            		   document.forms["register-form16"]["designation"].focus();
+		        		return false;  
+            	     }
+            	}
+</script>
+<script type="text/javascript">
+        function authornamecheck() {
+            var emailid =document.getElementById("authorname").value;
+            var letters = /^[a-zA-Z ]*$/;
+				
+				  if(letters.test(emailid))
+            	     {
+            		   document.getElementById("authornameerror").innerHTML = " ";
+            		   
+					   document.getElementById("btnsubmitcgp").disabled = false; 
+						return true;
+            	     }
+            	   else
+            	     {
+            		   document.getElementById("authornameerror").innerHTML = " <font color='red'>Applicant name in special characters or in numeric format is not accepted.</font>";
+            		   document.forms["register-form16"]["authorname"].focus();
+            		   
+		        		return false;  
+            	     }
+            	}
+</script>
+<script type="text/javascript" th:inline="javascript">
+        function institutenamecheck() {
+        	var chk =  [[${edit_applicantregistration}]];
+        	var letter = /^[a-zA-Z ]*$/;
+            var name =document.getElementById("other").value;
+            $.ajax({
+                type: "POST",
+                url: "/ppvfra/checkinstitute",
+                data:name,
+                contentType:'application/json',
+                success: function (data) {
+                if((data == 'taken')&& (chk.other == name))
+                {
+                	document.getElementById("othererror").innerHTML = " ";
+					return true;
+                }
+                else if((data == 'taken')&& (chk != name))
+				{
+	                document.getElementById("othererror").innerHTML = " <font color='red'>Institute Name already present.</font>";
+	        		document.forms["register-form16"]["other"].focus();
+	        		return false;
+                }
+				else if (data == 'not taken') 
+				{
+					if(isNaN(name))
+	    			{
+						if(letter.test(name))
+						{
+							document.getElementById("othererror").innerHTML = " ";
+							return true;  
+						}
+					else
+            	     {
+						document.getElementById("othererror").innerHTML = " <font color='red'>Special characters are not allowed.</font>";
+		        		document.forms["register-form16"]["other"].focus();
+		        		return false;  
+            	     } 
+	    			}
+					else
+					{
+						document.getElementById("othererror").innerHTML = " <font color='red'>Institute Name cannot be fully numeric.</font>";
+						document.forms["register-form16"]["other"].focus();
+		        		return false;  
+					}
+			     	
+			     	
+                }
+                   
+                }
+            }); 
+  }
+    </script>
+  <script type="text/javascript" th:inline="javascript">
+        function companycheck() {
+        	var chk =  [[${edit_applicantregistration}]];
+        	var letter = /^[a-zA-Z ]*$/;
+            var emailid =document.getElementById("other").value;
+            //alert(emailid);
+            $.ajax({
+                type: "POST",
+                url: "/ppvfra/company",
+                data:emailid,
+                contentType:'application/json',
+                success: function (data) {
+                 
+                if((data == 'taken')&& (chk.other == emailid))
+				{
+                	document.getElementById("othererror").innerHTML = " ";
+					return true;  
+				}
+                else if((data == 'taken')&& (chk != emailid))
+                {
+                //Email not available.
+        		document.getElementById("othererror").innerHTML = " <font color='red'>Company Name is already present.</font>";
+        		document.forms["register-form16"]["other"].focus();
+        		return false;
+                }
+				else if (data == 'not taken') 
+				{
+					if(isNaN(emailid))
+	    			{
+						if(letter.test(emailid))
+						{
+							document.getElementById("othererror").innerHTML = " ";
+							return true;  
+						}
+					else
+            	     {
+						document.getElementById("othererror").innerHTML = " <font color='red'>Company Name in special characters is not accepted.</font>";
+						document.forms["register-form16"]["other"].focus();
+		        		return false;  
+            	     } 
+	    			}
+					else
+					{
+						document.getElementById("othererror").innerHTML = " <font color='red'>Company Name cannot be fully numeric.</font>";
+						document.forms["register-form16"]["other"].focus();
+		        		return false;  
+					}
+			    
+                    }
+                   
+                }
+            }); 
+  }
+    </script>
+   
+			  
+</body>
+</html>

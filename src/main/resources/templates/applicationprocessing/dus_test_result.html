@@ -1,0 +1,326 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<div th:fragment="dus_test_results">
+
+<div th:if="${DusTestResults != null && DusTestResults == 'DusTestResults' }"> 
+
+<form class="form-horizontal" role="form" th:action="@{/dustestresults}" th:object="${dustestresults}" method="post" enctype="multipart/form-data">  
+												<div class="panel panel-success">
+													<div class="panel-heading">DUS TEST Results</div>
+														<div class="panel-body">
+														<div th:if= "${editmode ==0}">	
+															<div class="form-group">
+			                                                	<label class="col-md-2 control-label" > </label>
+			                                                		<div class="col-md-10">
+			                                 							<input type="text" id="applicationid" th:name="applicationid"  th:value="${applicationid}" readonly="readonly" hidden="true" />
+			                                                		</div>
+			                                                </div>
+															
+															<div class="form-group">
+																<label class="col-md-3 ">DUS Test Completed <span style="color:red">*</span></label>
+																<div class="col-md-6">
+																	<input th:field="*{dus_test_completed}" class="received" type="radio" name="radio" value="Y">Yes &nbsp;
+																	<input th:field="*{dus_test_completed}" class="oppositionn-1" type="radio" name="radio" value="N">No
+																	<span id="dus_test_completed_error" style="color:red"></span>
+																</div>
+															</div>
+															
+															<div class="form-group">
+																<label class="col-md-3 control-label">Date of Completion <span style="color:red">* </span></label>
+																<div class="col-md-6">
+																	<input type="date" id="date_of_completion" th:field="*{date_of_completion}" class="form-control" value="">
+																	<span id="date_of_completion_error" style="color:red"></span>
+																</div>
+															</div>
+														
+															<div class="form-group">
+																<label class="col-md-3 control-label">DUS Test Report <span style="color:red">*</span> </label>
+																<div class="col-md-6">
+																<div th:if="${reportstatus != null}">
+																	<select th:field="*{dus_test_report_status}" id="dus_test_report_status" class="form-control">
+																		<option th:value="-1">Select</option>
+																		<option th:each="dropDownItem : ${reportstatus}"
+														               th:value="${dropDownItem[0]}"
+														               th:text="${dropDownItem[1]}" />
+																	</select>
+																	<span id="dus_test_report_status_error" style="color:red"></span>
+																	</div>
+																</div>
+															</div>
+															
+															<div class="form-group">
+																<label class="col-md-3 control-label">Remarks <span style="color:red">*</span> </label>
+																<div class="col-md-6">
+																	<textarea id="dus_test_remark" th:field="*{remarks}" cols="62" rows="4" >
+																	</textarea>
+																	<span id="dus_test_remark_error" style="color:red"></span>
+																</div>
+															</div>
+															
+															<div class="form-group">
+																<label class="col-md-3 control-label">Upload DUS Test Report <span style="color:red">*</span> </label>
+																<div class="col-md-6">
+																	<input type="file" class="form-control" id="fname" name="fileUpload" >
+																	 
+																<span id="file_upl_error" style="color:red"></span>
+																</div>
+															</div>
+														
+														<br> 
+														<input type="hidden" name="editmode" id="editmode" th:value="${editmode}">
+														<input type="hidden" name="id" id="id" th:value="0">
+														<input type="hidden" name="file_dustest" id="file_dustest">
+														
+														</div>
+														
+														
+														<div th:if= "${editmode ==1}">
+														
+														<div class="form-group">
+			                                                	<label class="col-md-2 control-label" > </label>
+			                                                		<div class="col-md-10">
+			                                 							<input type="text" id="applicationid" th:name="applicationid"  th:value="${applicationid}" readonly="readonly" hidden="true" />
+			                                                		</div>
+			                                                </div>
+															
+															<div class="form-group">
+																<label class="col-md-3 ">DUS Test Completed <span style="color:red">*</span></label>
+																<div class="col-md-6">
+																	<input   class="received" type="radio" id="radio" name="radio" value="Y" th:checked="${dustestdata[2] =='Y'}">Yes &nbsp;
+																	<input   class="oppositionn-1" type="radio" id="radio" name="radio" value="N" th:checked="${dustestdata[2] =='N'}">No
+																<span id="dus_test_completed_error" style="color:red"></span>
+																</div>
+															</div>
+															
+															<div class="form-group">
+																<label class="col-md-3 control-label">Date of Completion <span style="color:red">*</span></label>
+																<div class="col-md-6">
+																	<input type="date"  id="date_of_completion" name="date_of_completion"  class="form-control" th:value="${dustestdata[3]}">
+																<span id="date_of_completion_error" style="color:red"></span>
+																</div>
+															</div>
+														
+															<div class="form-group">
+																<label class="col-md-3 control-label">DUS Test Report <span style="color:red">*</span></label>
+																<div class="col-md-6">
+																<div th:if="${reportstatus != null}">
+																	<select  name="dus_test_report_status" id="dus_test_report_status" class="form-control">
+																		<option th:value="-1">Select</option>
+																		<option th:each="dropDownItem : ${reportstatus}"
+														                th:text="${dropDownItem[1]}"   th:value="${dropDownItem[0]}"
+														                th:selected="${dropDownItem[0] == dustestdata[4]}"  />
+																	</select>
+																 <span id="dus_test_report_status_error" style="color:red"></span>
+																	</div>
+																</div>
+															</div>
+															
+															<div class="form-group">
+																<label class="col-md-3 control-label">Remarks <span style="color:red">*</span> </label>
+																<div class="col-md-6">
+																	<textarea id="dus_test_remark" th:field="*{remarks}" th:text="${dustestdata[5]}" cols="62" rows="4" >
+																	</textarea>
+																		<span id="dus_test_remark_error" style="color:red"></span>
+																
+																</div>
+															</div>
+															
+															<div class="form-group">
+																<label class="col-md-3 control-label">Upload DUS Test Report <span style="color:red">*</span></label>
+																<div class="col-md-6">
+																<a th:href="'/ppvfra/download/dustestresult/'+${dustestdata[1]}+'/'+${dustestdata[6]}" target="_blank">
+																<input type="file" class="form-control" id="fname" name="fileUpload" th:text="${dustestdata[6]}">
+																</a>
+																<span id="file_upl_error" style="color:red"></span>	
+																</div>
+															</div>
+														
+														<br> 
+														
+														<input type="hidden" name="editmode" id="editmode" th:value="${editmode}">
+														<input type="hidden" name="id" id="id" th:value="${dustestdata[0]}">
+														<input type="hidden" name="file_dustest" id="file_dustest" th:value="${dustestdata[6]}">
+															
+														</div>
+														
+														<div class="form-group m-b-0">
+															<label class="col-md-3 control-label">&nbsp;</label>
+															<div class="col-sm-7">
+															<!-- <span th:if="${role_granted != 'Super Administrator' && role_granted != 'PPVFRA Admin'}">
+															 -->
+															 <span>
+															 <span th:if="${sub8 == 'addpresent'}">
+																<button type="submit" class="btn btn-info waves-effect waves-light" onclick="return validate_dust_test_result_Form();">Save</button>
+															</span>
+															</span>
+															</div>
+															
+														</div>
+														
+													</div>
+												</div>
+											</form>
+		
+		<script type="text/javascript" th:inline="javascript">
+		var mode = [[${editmode}]];
+	//	alert(editmode)
+	    function validate_dust_test_result_Form() 
+	    {
+	    	var attachsheet = document.getElementById("fname").value;
+	    	
+	   	if(mode ==0)
+	   		{
+    	  if(document.getElementById("dus_test_completed1").checked == true || document.getElementById("dus_test_completed2").checked == true)
+    	  {
+    		  
+           if( document.getElementById("date_of_completion").value =="") {
+          	 document.getElementById("date_of_completion_error").innerHTML="Please select date of completion";
+          	 document.getElementById("date_of_completion").focus() ;
+              return false;
+           }
+           else{
+        	   document.getElementById("date_of_completion_error").innerHTML="";
+           }
+           
+           if( document.getElementById("dus_test_report_status").value =="-1") {
+            	 document.getElementById("dus_test_report_status_error").innerHTML="Please select dus test report";
+            	 document.getElementById("dus_test_report_status").focus() ;
+                return false;
+             }
+             else{
+          	   document.getElementById("dus_test_report_status_error").innerHTML="";
+             }
+           
+           if( document.getElementById("dus_test_remark").value =="" || document.getElementById("dus_test_remark").value ==null) {
+          	 document.getElementById("dus_test_remark_error").innerHTML="Please enter remark";
+          	 document.getElementById("dus_test_remark").focus() ;
+              return false;
+           }
+           else{
+        	   document.getElementById("dus_test_remark_error").innerHTML="";
+           }
+           
+           /*
+           if(attachsheet =="" || attachsheet == null)
+			{
+			document.getElementById("file_upl_error").innerHTML="Please upload file";
+			 document.getElementById("fname").focus();
+			 //sub.disabled=true;
+      		return false;
+			}
+			else{
+				 document.getElementById("file_upl_error").innerHTML="";
+			}
+           */
+        
+        if(attachsheet =="" || attachsheet == null)
+			{
+				var vartrait=$('#file_dustest').val();
+				if(vartrait.length>0 && !(vartrait ==null || vartrait==""))
+					{
+				document.getElementById("file_upl_error").innerHTML="";
+					}else{
+			 document.getElementById("file_upl_error").innerHTML="Please upload file";
+			 document.getElementById("fname").focus();
+			 //sub.disabled=true;
+     		return false;
+					}
+			}
+			else{
+				 document.getElementById("file_upl_error").innerHTML="";
+			}
+         
+   	  
+          
+	}else{
+    		  document.getElementById("dus_test_completed_error").innerHTML="Please select yes or no";
+    		  return false;
+    	  }
+   
+  
+	    }else{
+	  	 
+	    	if($('input[name="radio"]:checked').val() == "Y" || $('input[name="radio"]:checked').val() == "N")
+    	  {
+    		  
+           if( document.getElementById("date_of_completion").value =="") {
+          	 document.getElementById("date_of_completion_error").innerHTML="Please select date of completion";
+          	 document.getElementById("date_of_completion").focus() ;
+              return false;
+           }
+           else{
+        	   document.getElementById("date_of_completion_error").innerHTML="";
+           }
+           
+           if( document.getElementById("dus_test_report_status").value =="-1") {
+            	 document.getElementById("dus_test_report_status_error").innerHTML="Please select dus test report";
+            	 document.getElementById("dus_test_report_status").focus() ;
+                return false;
+             }
+             else{
+          	   document.getElementById("dus_test_report_status_error").innerHTML="";
+             }
+           
+           if( document.getElementById("dus_test_remark").value =="" || document.getElementById("dus_test_remark").value ==null) {
+          	 document.getElementById("dus_test_remark_error").innerHTML="Please enter remark";
+          	 document.getElementById("dus_test_remark").focus() ;
+              return false;
+           }
+           else{
+        	   document.getElementById("dus_test_remark_error").innerHTML="";
+           }
+           
+           /*
+           if(attachsheet =="" || attachsheet == null)
+			{
+			document.getElementById("file_upl_error").innerHTML="Please upload file";
+			 document.getElementById("fname").focus();
+			 //sub.disabled=true;
+      		return false;
+			}
+			else{
+				 document.getElementById("file_upl_error").innerHTML="";
+			}
+           */
+        
+        if(attachsheet =="" || attachsheet == null)
+			{
+				var vartrait=$('#file_dustest').val();
+				if(vartrait.length>0 && !(vartrait ==null || vartrait==""))
+					{
+				document.getElementById("file_upl_error").innerHTML="";
+					}else{
+			 document.getElementById("file_upl_error").innerHTML="Please upload file";
+			 document.getElementById("fname").focus();
+			 //sub.disabled=true;
+     		return false;
+					}
+			}
+			else{
+				 document.getElementById("file_upl_error").innerHTML="";
+			}
+         
+   	  
+          
+	}else{
+    		  document.getElementById("dus_test_completed_error").innerHTML="Please select yes or no";
+    		  return false;
+    	  }
+   }
+	    
+	   	
+	   	return( true );
+	      }
+</script>
+			
+           </div>
+<span th:unless="${DusTestResults != null && DusTestResults == 'DusTestResults' }">
+ <label>YOU ARE NOT AUTHORISED TO VIEW THIS PAGE.PLEASE CONTACT ADMINISTRATOR</label>
+ </span>
+ 										
+
+
+</div>
+
+
+</html>

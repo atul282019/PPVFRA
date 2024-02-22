@@ -1,0 +1,1040 @@
+  
+  <!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+	<head>
+	  <th:block th:include="adminfragment/headerlibs.html :: headerlibs"></th:block> 
+	</head>
+
+    <body class="fixed-left">
+        <!-- Begin page -->
+        <div id="wrapper">
+        
+            <!-- Top Bar Start -->
+           <header th:insert="adminfragment/header.html :: header"> </header>
+            <!-- Top Bar End -->
+
+
+            <!-- ========== Left Sidebar Start ========== -->
+			<header th:insert="adminfragment/sidenav.html :: sidevav"> </header>
+            <!-- Left Sidebar End --> 
+
+  
+            <!-- Start right Content here -->  
+             
+        <!-- ============================================================== -->                      
+            <div class="content-page">
+                <!-- Start content -->
+                <div class="content">
+               
+               <span th:if="${actd_viewtrue != null && actd_viewtrue == 'valpresent' }">
+				  <div class="container">
+
+                        <!-- Page-Title -->
+                        <div class="row">
+                            <div class="col-sm-12">
+                                <h4 class="pull-left page-title">View Application Details</h4>
+                                <ol class="breadcrumb pull-right">
+                                    <li><a href="#">Home</a></li>
+                                    <li class="active">View Application</li>
+                                    <li>
+                                        <a href="applicationprocessing.html" class="btn btn-purple waves-effect waves-light btn-xs m-b-5"><b>Back</b></a>
+                                    </li>
+                                </ol>
+                            </div>
+                        </div>
+						
+						    <div class="row">
+                           
+                               <div class="col-md-12">
+                             				
+							<input type="button" class="btn btn-danger" onclick="printDiv('printableArea1')" value="Print" />
+							<input type="button" class="btn btn-purple" onclick="" value="PDF" />
+							<div id="printableArea1"> <!-- id="printJS-form"> -->
+								<div class="panel-group" id="accordion">
+									
+									<div class="panel panel-default">
+										<div class="panel-heading">
+											<h4 class="panel-title">
+												<a data-toggle="collapse" data-parent="#accordion" href="#collapse1">Form I</a>
+											</h4>
+										</div>
+										<div id="collapse1" class="panel-collapse collapse in">
+											<div class="panel-body">
+												<div class="final-preview">
+											
+														<div class="application-margin" style="margin-top:30px;">
+															<h4>1. Identity of the Applicant(s):</h4>
+															<table class="table table-bordered table-striped">
+																<tr>
+																	<th>Identity of the Applicant(s)</th>
+																 </tr>
+																 <tr>
+																 <td th:text="${firstsetbind[16]}"></td>
+																 </tr>
+																
+															</table>
+														</div>
+														
+														<div class="application-margin table-responsive" style="margin-top:30px;">
+															<h4>2.Name(s) and Nationality of Applicant(s)</h4>
+															<h5 style="margin-top:20px;">(a.) (If natural person):</h5>   
+														
+															<table class="table table-bordered table-striped">
+																<tr>
+																	<th>Serial Number</th>
+																	<th>Name</th>
+																	<th>Address</th>
+																	<th>Country</th>
+																	<th>State</th>
+																	
+																</tr>
+																 
+																<tr th:each="data : ${firstsetbind1}">
+																<span th:if="${data[8] == 'Natural Person'}">
+																	<td th:text="${data[3]}"></td>
+																	<td th:text="${data[4]}"></td>
+																	<td th:text="${data[5]}"></td>
+																	<td th:text="${data[6]}"></td>
+																	<td th:text="${data[7]}"></td>
+																	</span>
+																 </tr>
+																 
+															 </table>
+															 
+															<h5 style="margin-top:20px;">(b.) (If a legal person; for example a firm or company or institution):</h5>
+															<table class="table table-bordered table-striped">
+																<tr>
+																	<th>Name</th>
+																	<th>Address of eshtablishment(Registered office)</th>
+																	<th>Year of Incorporation</th>
+																	<th>State whether the applicant legal person has non-Indian participation in capital or management</th>
+																	<th>Identify the Nationality</th>
+																	
+																</tr>
+																<tr th:each="data : ${firstsetbind1}"> 
+																<span th:if="${data[14] == 'Company'||firstsetbind[14] == 'Institution' }">
+																	<td th:text="${data[4]}"></td>
+																	<td th:text="${data[9]}"></td>
+																	<td th:text="${data[10]}"></td>
+																	<td></td>
+																	<td>
+																	<span th:if="${data[15] ==1}"><span th:text="Indian"></span></span>
+																	<span th:unless="${data[15] ==1}"><span th:text="Non-Indian"></span></span>
+																	</td>
+																	</span>
+																</tr>
+																
+															</table>
+															
+															<h5 style="margin-top:20px;">(c.) Indicate the name and address of the natural person, being an employee of the legal person, who is duly authorized to represent the legal person (example a director of a company or a partner of a firm):</h5>
+															<table class="table table-bordered table-striped">
+																<tr>
+																	<th>Name</th>
+																	<th>Address</th>
+																	<th>Country</th>
+																	<th>State</th>
+																	<th>District</th>
+																	<th>Pincode/ZipCode</th>
+																	<th>City</th>
+																	
+																</tr>
+																<tr th:each="data : ${firstsetbind1}">
+																<span th:if="${data[8] == 'Natural Person'}">
+																	<td th:text="${data[4]}"></td>
+																	<td th:text="${data[5]}"></td>
+																	<td th:text="${data[6]}"></td>
+																	<td th:text="${data[7]}"></td>
+																	<td th:text="${data[11]}"></td>
+																	<td th:text="${data[12]}"></td>
+																	<td th:text="${data[13]}"></td>
+																	</span>
+																</tr>
+																
+															</table>
+														</div>
+														<div class="application-margin table-responsive" style="margin-top:30px;">
+															<h4>3.Name and Address of the Person to whom Correspondence related to this application is to be sent:</h4>
+															<table class="table table-bordered table-striped">
+																<tr>
+																	<th>Name</th>
+																	<th>Address</th>
+																	<th>Country</th>
+																	<th>State</th>
+																	<th>District</th>
+																	<th>Pincode/ZipCode</th>
+																	<th>City</th>
+																	<th>Telephone</th>
+																	<th>Fax</th>
+																	<th>Email</th>
+																</tr>
+																<tr th:each="data : ${firstsetbind1}">
+																<span th:if="${data[8] == 'Agent'}">
+																	<td th:text="${data[4]}"></td>
+																	<td th:text="${data[5]}"></td>
+																	<td th:text="${data[6]}"></td>
+																	<td th:text="${data[7]}"></td>
+																	<td th:text="${data[11]}"></td>
+																	<td th:text="${data[12]}"></td>
+																	<td th:text="${data[13]}"></td>
+																	<td th:text="${data[17]}"></td>
+																	<td th:text="${data[18]}"></td>
+																	<td th:text="${data[19]}"></td>
+																</tr>
+																</span>
+																
+															</table>
+															
+															<h5 style="margin-top:20px;">3.(a)</h5>
+															<table class="table table-bordered table-striped">
+																<tr>
+																	<th>Principle place of business or domicile of applicant</th>
+																	<th>State</th>
+																	<th>District</th>
+																</tr>
+																<tr>
+																	 <td th:text="${firstsetbind[21]}"></td>
+																	 <td th:text="${firstsetbind[22]}"></td>
+																	 <td th:text="${firstsetbind[23]}"></td>
+																</tr>
+																
+															</table>
+														</div>
+														
+														
+														
+														<div class="application-margin table-responsive" style="margin-top:30px;">
+															<h4>4.General Information of Candidate variety:</h4>
+															<table class="table table-bordered table-striped">
+																<tr>
+																	<th>Select</th>
+																	<th>Common name of crop</th>
+																	<th>Botanical name</th>
+																	<th>Family</th>
+																	<th>Denomination(in Block letters)</th>
+																</tr>
+																<tr>
+																	 <td th:text="${firstsetbind[25]}"></td>
+																	 <td th:text="${firstsetbind[26]}"></td>
+																	 <td th:text="${firstsetbind[27]}"></td>
+																	<td th:text="${firstsetbind[28]}"></td>
+																	<td th:text="${firstsetbind[29]}"></td>
+																</tr>
+																
+															</table>
+														</div>
+														
+														<div class="application-margin table-responsive" style="margin-top:30px;">
+															<h4>5.Type of variety(see in chapter III of the protection of plant varieties and farmers' Right Authority,2003):</h4>
+															<table class="table table-bordered table-striped">
+																<tr>
+																	<span th:if="${firstsetbind[30] == 'New Variety'}">
+																	<th th:text="${firstsetbind[30]}"></th>
+																	</span>
+																	<span th:unless="${firstsetbind[30] == 'New Variety'}">
+																	<th th:text="${firstsetbind[30]}"></th>
+																	<th></th><th></th><th></th><th></th><th></th>
+																	</span>
+																</tr>
+																<tr>
+																	<span th:if="${firstsetbind[30] == 'New Variety'}">
+																	<td th:text="${firstsetbind[30]}"></td>
+																	</span>
+																	<span th:unless="${firstsetbind[30] == 'New Variety'}">
+																	<td th:text="${firstsetbind[30]}"></td>
+																	<td th:text="${firstsetbind[31]}"></td>
+																	<td th:text="${firstsetbind[32]}"></td>
+																	<td th:text="${firstsetbind[33]}"></td>
+																	<td th:text="${firstsetbind[34]}"></td>
+																	<td th:text="${firstsetbind[35]}"></td>
+																	</span>
+																</tr>
+																
+															</table>
+														</div>
+														
+														<div class="application-margin table-responsive" style="margin-top:30px;">
+															<h4>6(a)Classification of the Candidate Variety:</h4>
+															<table class="table table-bordered table-striped">
+																<tr th:each="listval :${intArray}">
+														  <!-- <p th:text="${listval[0]}"/>  -->
+														  <td>
+																	<div th:each="cval :${candidatevar}">
+																	<span th:if="${listval == cval.id}" th:text="${cval.candidate_variety}">
+																	  </span>
+																	</div>
+														   </td>
+																</tr>
+																
+															</table>
+															
+															<h5 style="margin-top:20px;">(b.) What is (are) the Distinctiveness Uniformity Stability feature on the basis of which registration is sought. Explain in detail the group characters (see specific guidelines for details). Attach 'Technical Questionnaire' sheet with all needed details duly signed with seal.</h5>
+															<table class="table table-bordered table-striped">
+																<tr>
+																	<th th:text="${firstsetbind[37]}"></th>
+																</tr>
+																
+															</table>
+															
+															<h5 style="margin-top:20px;">(c.) If new variety is a transgenic attach clearance on Bio-safety from Ministry of Environment and Forests.</h5>
+															<table class="table table-bordered table-striped">
+																<tr>
+																	<td></td>
+																</tr>
+																
+															</table>
+														</div>
+														
+														
+														<div class="application-margin table-responsive" style="margin-top:30px;">
+															<h4>7.Names and Addresses of Breeder(s) who had/have bred the candidate Variety:</h4>
+															
+
+															<table class="table table-bordered table-striped">
+																<tr>
+																	<th>S.No.</th>
+																	<th>Name</th>
+																	<th>Address</th>
+																	<th>Telephone</th>
+																	<th>Fax</th>
+																	<th>Email</th>
+																	<th>Nationality</th>
+																	<th>Action</th>
+																</tr>
+																<span th:each="data,counter : ${firstsetbind1}">
+																<span th:if="${data[8] == 'Breeder'}">
+																<tr>
+																	<td th:text="${counter.count}"></td>
+																	<td th:text="${data[4]}"></td>
+																	<td th:text="${data[5]}"></td>
+																	<td th:text="${data[17]}"></td>
+																	<td th:text="${data[18]}"></td>
+																	<td th:text="${data[19]}"></td>
+																	<td>
+																	<span th:if="${data[15] ==1}"><span th:text="Indian"></span></span>
+																	<span th:unless="${data[15] ==1}"><span th:text="Non-Indian"></span></span>
+																	</td>
+																	<td></td></tr>
+																	</span>
+																	 
+															</table>
+														</div>
+														
+														<div class="application-margin table-responsive" style="margin-top:30px;">
+															<h4>8.(a)Details of all other earlier applications made on the candidate variety in convention countries or other countries (if applicable):</h4>
+															<table class="table table-bordered table-striped">
+																<tr>
+																	<th>Select</th>
+																	<th>Variety Denomination</th>
+																	<th>Nature of right applied for</th>
+																	<th>Filing Date</th>
+																	<th>Name of Country</th>
+																	<th>Name of Authority</th>
+																	<th>Application Number</th>
+																	<th>Status of Application</th>
+																</tr>
+																<tr th:each="secondset : ${secondsetbind2}">
+																	<td>
+																
+																	 </td>
+																	<td>
+																	<span th:if="${secondset[2] !=null}" th:text="${secondset[2]}"></span>
+																	</td>
+																	<td>
+																	<span th:if="${secondset[3] !=null}" th:text="${secondset[3]}"></span>
+																	</td>
+																	<td>
+																	<span th:if="${secondset[4] !=null}" th:text="${secondset[4]}"></span>
+																	</td>
+																	<td>
+																	<span th:if="${secondset[5] !=null}" th:text="${secondset[5]}"></span>
+																	</td>
+																	<td>
+																	<span th:if="${secondset[6] !=null}" th:text="${secondset[6]}"></span>
+																	</td>
+																	<td>
+																	<span th:if="${secondset[7] !=null}" th:text="${secondset[7]}"></span>
+																	</td>
+																	<td>
+																	<span th:if="${secondset[8] !=null}" th:text="${secondset[8]}"></span>
+																	</td>
+																</tr>
+																
+															</table>
+															
+															
+															<h5 style="margin-top:20px;">(b.) Priority is now claimed in respect of the earliest application for a candidate variety of said denomination (if applicable)</h5>
+														
+															<table class="table table-bordered table-striped">
+																<tr>
+																	<th>S.No.</th>
+																	<th>Variety Denomination</th>
+																	<th>Nature of right applied for</th>
+																	<th>Filing Date</th>
+																	<th>Name of Country</th>
+																	<th>Name of Authority</th>
+																	<th>Application Number</th>
+																	<th>Status of Application</th>
+																	<th>In(Country)</th>
+																	<th>On (Date of Application)</th>
+																</tr>
+																<tr th:each="secondset : ${secondsetbind2}">
+																	<td>
+																	
+																	 </td>
+																	<td>
+																	<span th:if="${secondset[2] !=null}" th:text="${secondset[2]}"></span>
+																	</td>
+																	<td>
+																	<span th:if="${secondset[3] !=null}" th:text="${secondset[3]}"></span>
+																	</td>
+																	<td>
+																	<span th:if="${secondset[4] !=null}" th:text="${secondset[4]}"></span>
+																	</td>
+																	<td>
+																	<span th:if="${secondset[5] !=null}" th:text="${secondset[5]}"></span>
+																	</td>
+																	<td>
+																	<span th:if="${secondset[6] !=null}" th:text="${secondset[6]}"></span>
+																	</td>
+																	<td>
+																	<span th:if="${secondset[7] !=null}" th:text="${secondset[7]}"></span>
+																	</td>
+																	<td>
+																	<span th:if="${secondset[8] !=null}" th:text="${secondset[8]}"></span>
+																	</td>
+																	<td>
+																	<span th:if="${secondset[9] !=null}" th:text="${secondset[9]}"></span>
+																	</td>
+																	<td>
+																	<span th:if="${secondset[10] !=null}" th:text="${secondset[10]}"></span>
+																	</td>
+																</tr>
+																
+															</table>
+														</div>
+														
+														<div class="application-margin table-responsive" style="margin-top:30px;">
+															<h4>9. Has the candidate variety been commercialised or otherwise exploited:</h4>
+															<table class="table table-bordered table-striped">
+																<tr>
+																	<th>Select</th>
+																	<th>Data of the first sale of the variety</th>
+																	<th>Country (ies) where Protection is made</th>
+																	<th>Denomiantion Used</th>
+																	<th>Trademark used, if any</th>
+																	<th>Variation is important trait with respect to first filling(Attach sheet)</th>
+																</tr>
+																<tr>
+																	<td>
+																	<span th:if="${firstsetbind[38] !=null}">
+																	<span th:if="${firstsetbind[38] =='true'}"><span th:text="Yes"></span></span>
+																	<span th:unless="${firstsetbind[38] =='true'}"><span th:text="No"></span></span>
+																	</span>
+																	</td>
+																	<td>
+																	<span th:if="${firstsetbind[39] !=null}">
+																	Date:
+																	<span th:text="${firstsetbind[39]}"></span></span>
+																	<br>
+																	<span th:if="${firstsetbind[40] !=null}">
+																	First Sale Name:
+																	<span th:text="${firstsetbind[40]}"></span></span>
+																	<br>
+																	<span th:if="${firstsetbind[41] !=null}">
+																	First Sale Path:
+																	<span th:text="${firstsetbind[41]}"></span></span>
+																	</td>
+																	
+																	<td>
+																	<span th:if="${firstsetbind[42] !=null}">
+																	 <span th:text="${firstsetbind[42]}"></span></span>
+																	</td>
+																	<td>
+																	<span th:if="${firstsetbind[43] !=null}">
+																	 <span th:text="${firstsetbind[43]}"></span></span>
+																	</td>
+																	<td>
+																	<span th:if="${firstsetbind[44] !=null}">
+																	 <span th:text="${firstsetbind[44]}"></span></span>
+																	</td>
+																	<td>
+																	<span th:if="${firstsetbind[45] !=null}">
+																	 <span th:text="${firstsetbind[45]}"></span></span>
+																	</td>
+																</tr>
+																
+															</table>
+														</div>
+														
+														<div class="application-margin table-responsive" style="margin-top:30px;">
+															<h4>10.(a.) If the candidate variety is a hybrid, state whether all the parental lines required for the repeated propagation of the hybrid are bred exclusively by the applicant(s):</h4>
+														
+															<table class="table table-bordered table-striped">
+																<tr>
+																	<th>Select</th>
+																	<th>Parenal Line(s)</th>
+																	<th>Source</th>
+																	<th>Denominations</th>
+																	<th>Authorized Letter Obtained</th>
+																	<th>Action</th>
+																</tr>
+																<tr th:each="thhirdvar : ${thirdsetbind3}">
+																	<td></td>
+																	<td>
+																	<span th:if="${thhirdvar[2] !=null}">
+																	 <span th:text="${thhirdvar[2]}"></span></span>
+																	</td>
+																	<td>
+																	<span th:if="${thhirdvar[4] !=null}">
+																	 <span th:text="${thhirdvar[4]}"></span></span>
+																	</td>
+																	<td>
+																	<span th:if="${thhirdvar[3] !=null}">
+																	 <span th:text="${thhirdvar[3]}"></span></span>
+																	</td>
+																	<td>
+																	<span th:if="${thhirdvar[5] !=null}">
+																	 <span th:text="${thhirdvar[5]}"></span></span>
+																	</td>
+																	<td></td>
+																	
+																</tr>
+																
+															</table>
+															
+															
+															<h5 style="margin-top:20px;">(b.) State if any Farmers' Variety or Variety of Common Knowledge or variety in public domain is used as parental line for the repeated propagation of the hybrid.</h5>
+															<table class="table table-bordered table-striped">
+																<tr>
+																	<th>Select</th>
+																	<th>Denomination</th>
+																	<th>Geographical Source</th>
+																	<th>Detail of Attribution(origion)</th>
+																	<th>Details of owner farmer/village community/Institution/Organisation</th>
+																</tr>
+																<tr th:each="forthvar : ${fourthsetbind4}">
+																	<td></td>
+																	<td>
+																	<span th:if="${forthvar[2] !=null}">
+																	 <span th:text="${forthvar[2]}"></span></span>
+																	</td>
+																	
+																	<td>
+																	<span th:if="${forthvar[3] !=null}">
+																	 <span th:text="${forthvar[3]}"></span></span>
+																	</td>
+																	
+																	<td>
+																	<span th:if="${forthvar[4] !=null}">
+																	 <span th:text="${forthvar[4]}"></span></span>
+																	</td>
+																	
+																	<td>
+																	<span th:if="${forthvar[5] !=null}">
+																	 <span th:text="${forthvar[5]}"></span></span>
+																	</td>
+																</tr>
+																
+															</table>
+															
+															<h5 style="margin-top:20px;">(c.) The Protection of Plant Varieties and Farmers' Rights Act, 2001 provides access to benefit sharing to farmers who have conserved the genetic resource that has contributed towards variety development. In this particular case what sort of farmer/community recognition the Applicant has planned:</h5>
+															<table class="table table-bordered table-striped">
+																<tr>
+																	<td></td>
+																</tr>
+																
+															</table>
+														</div>
+														
+														<div class="application-margin table-responsive" style="margin-top:30px;">
+															<h4 style="margin-top:20px;">11. In case exotic germplasm was used in the derivation of the variety or hybrid, give details:</h4>
+															<table class="table table-bordered table-striped">
+																<tr>
+																	 <td th:text="${firstsetbind[20]}"></td>
+																
+															</table>
+														</div>
+														
+														
+											
+										</div>
+											</div>
+										</div>
+									</div>
+									<div class="panel panel-default">
+										<div class="panel-heading">
+											<h4 class="panel-title">
+											  <a data-toggle="collapse" data-target="#multiCollapseExample3" aria-expanded="false" aria-controls="multiCollapseExample3">Declaration</a>
+											</h4>
+										</div>
+										<div id="multiCollapseExample3" class="collapse multi-collapse">
+											<div class="panel-body">
+												<div class="tab-pane" id="profile-21" style="display: block;">
+                                                <p>I/We hereby apply for the grant of registration of the candidate variety with the above said denomination and I/we am are conversant with the Protection of Plant Varieties and Farmers' Rights Act, 2001 and Rules thereof related to this application.</p> 
+                                                <p>I/We hereby declare that no person other than the person or persons mentioned in this application has been involved in the breeding, or discovery or development of the candidate variety.</p> 
+                                                <p>I/We hereby declare that the candidate variety complies with the sub- section (3) of section 29 of Protection of Plant Varieties and Farmers Rights Act, 2001.</p> 
+                                                <p>I/We hereby declare that I/we have not applied for or received a trademark for the said denomination of the variety.</p> 
+                                                <p>I/We hereby attach an affidavit in compliance with clause (C) of sub- section (1) of section 18 of Protection of Plant Varieties and Farmers' Rights Act, 2001.</p> 
+                                                <p>I/We hereby declare that the information given in this application for the registration of t he above said candidate variety, including annexure and all supporting documents are complete, true and correct to the best of my/our knowledge, information and belief and no information has been wilfully concealed.</p> 
+                                                <p>I/We hereby declare that genetic material or parental material acquired for breeding, evolving or developing the variety has been lawfully acquired.</p> 
+                                                <p>I/We hereby declare that I/We shall abide by all the provisions and guidelines of Protection of Plant Varieties and Farmers' Rights Act, 2001</p> 
+                                                <p>I agree </p> 
+												<form class="form-horizontal" role="form">
+													<div class="form-group col-md-12">
+														<label>Place</label>
+														&nbsp; &nbsp;
+														<span th:if="${firstsetbind[47] !=null}">
+																	 <span th:text="${firstsetbind[47]}"></span></span>
+														
+													</div>
+													<div class="form-group col-md-12">
+														<label >Date</label>
+														&nbsp; &nbsp;
+														<span th:if="${firstsetbind[46] !=null}">
+																	 <span th:text="${firstsetbind[46]}"></span></span>
+													</div>
+													
+													<div class="form-group">
+														<label class="col-md-12 control-label">(Signature of Applicants)</label>
+													</div>
+												</form>
+                                            </div>
+											</div>
+										</div>
+									</div>
+									<div class="panel panel-default">
+										<div class="panel-heading">
+											<h4 class="panel-title">
+											  <a data-toggle="collapse" data-target="#multiCollapseExample2" aria-expanded="false" aria-controls="multiCollapseExample2">Attachments</a>
+											</h4>
+										</div>
+										<div id="multiCollapseExample2" class="collapse multi-collapse">
+											<div class="panel-body">
+												<div class="tab-pane" id="messages-21" style="display: block;">
+                                                <label>
+                                                        Following are the attachments (duly signed/seal) submitted along  with of the application (note that wherever signature is affixed in the application or attachments, all such signatures shall be in the original)
+                                                </label>
+                                                <table class="table table-bordered">
+                                                    <thead>
+                                                        <tr>
+                                                            <th>Sr. No.</th>
+                                                            <th>Title</th>
+                                                            <th>Attachment</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody> 
+                                                        <tr th:each="attachments,serial : ${attachmentlist}">
+                                                        <td th:text="${serial.count}"></td>
+                                                        <td th:text="${attachments[5]}"></td>
+                                                        <td>
+                                                        <div>
+														<a th:href="@{'/ppvfra/download/attachment/'+${attachments[2]}}" target="_blank"><span th:text="${attachments[2]}"></span></a>
+														</div>
+                                                        </td>
+                                                        </tr>
+                                                    </tbody>
+                                                </table>
+                                                <label>
+                                                        If felt necessary attach colour pictures of specific  characteristics used for establishing distinctiveness. Please sign each page of the application and other document on the left
+                                                        margin
+                                                </label>
+                                            </div>
+											</div>
+										</div>
+									</div>
+									
+									<div class="panel panel-default">
+										<div class="panel-heading">
+											<h4 class="panel-title">
+											  <a data-toggle="collapse" href="#multiCollapseExample1"aria-expanded="false" aria-controls="multiCollapseExample1">Technical Questionnaire</a>
+											</h4>
+										</div>
+										<div id="multiCollapseExample1" class="collapse multi-collapse">
+											<div class="panel-body">
+											
+												<table class="table table-bordered">
+													<tr>
+														<td>1</td>
+														<td>Name of the Applicant/breeder/company</td>
+														<td></td>
+													</tr>
+													<tr>
+														<td>2</td>
+														<td>Year of Establishment</td>
+														<td></td>
+													</tr>
+													<tr>
+														<td>3</td>
+														<td>If registered company under Company’s Act 1956 (Give details)</td>
+														<td></td>
+													</tr>
+													<tr>
+														<td>4</td>
+														<td>Location of corporate office and address</td>
+														<td></td>
+													</tr>
+													<tr>
+														<td>5.1</td>
+														<td>Telephone</td>
+														<td></td>
+													</tr>
+													<tr>
+														<td>5.2</td>
+														<td>Fax</td>
+														<td></td>
+													</tr>
+													<tr>
+														<td>5.3</td>
+														<td>Email</td>
+														<td></td>
+													</tr>
+													<tr>
+														<td>6</td>
+														<td>Name of candidate variety</td>
+														<td></td>
+													</tr>
+													<tr>
+														<td>a</td>
+														<td>Has it been released in any Convention Country earlier</td>
+														<td></td>
+													</tr>
+													<tr>
+														<td>b</td>
+														<td>Pedigree/genealogy</td>
+														<td></td>
+													</tr>
+												
+													<tr>
+														<td>c</td>
+														<th colspan="2">Breeding of Candidate Variety</th>
+													</tr>
+													<tr>
+														<td>(i)</td>
+														<td>Origination</td>
+														<td></td>
+													</tr>
+													<tr>
+														<td>(ii)</td>
+														<td>Parental material (name of the parental material, characteristics of the parental material,distinguishable from the candidate variety). If the variety was developed by selection, then the number of selection cycles completed before fixing it.</td>
+														<td></td>
+													</tr>
+													<tr>
+														<td>iii</td>
+														<td colspan="2">Breeding technique/procedure used</td>
+													</tr>
+													<tr>
+														<td>iv</td>
+														<td>Selection criteria used</td>
+														<td></td>
+													</tr>
+													<tr>
+														<td>v</td>
+														<td>Stage of selection and multiplication</td>
+														<td></td>
+													</tr>
+													<tr>
+														<td>vi</td>
+														<td>Location where breeding was conducted</td>
+														<td></td>
+													</tr>
+												
+													<tr>
+														<td>7</td>
+														<td><strong>Particulars of comparative trial conducted by the applicant, if any.</strong><br><br>
+														
+														Information on the location, place, period and year/month of comparative trial conducted method of cultivation such as open field, facilities, planting, potting etc., scale of cultivation, reference varieties used, criteria for choice of the reference varieties, design of experiment, method of analysis of variance experimental error where applicable, and other details.<br><br>
+														NOTE: Applicant may, furnish data, tables, copy (ies) of publication(s) related to the details of breeding, comparative trial and comparative data in addition to table of characteristics of candidate and reference varieties. This information provided under this item will not be published by the Authority but will be used to facilitate examination of candidate variety.
+														
+														</td>
+														<td></td>
+													</tr>
+													
+													<tr>
+														<td>i</td>
+														<td>Location</td>
+														<td></td>
+													</tr><tr>
+														<td>ii</td>
+														<td>Place</td>
+														<td></td>
+													</tr>
+													<tr>
+														<td>iii</td>
+														<td>Period</td>
+														<td></td>
+													</tr><tr>
+														<td>iv</td>
+														<td>Year and month of comparative trial</td>
+														<td></td>
+													</tr>
+													<tr>
+														<td>v</td>
+														<td>Conducted method of cultivation</td>
+														<td></td>
+													</tr>
+													<tr>
+														<td>vi</td>
+														<td>Scale of Cultivation</td>
+														<td></td>
+													</tr>
+													<tr>
+														<td>vii</td>
+														<td>Reference Varieties Used</td>
+														<td></td>
+													</tr>
+													<tr>
+														<td>viii</td>
+														<td>Criteria for Choice of the reference varieties</td>
+														<td></td>
+													</tr>
+													<tr>
+														<td>ix</td>
+														<td>Design of experiment</td>
+														<td></td>
+													</tr>
+													<tr>
+														<td>x</td>
+														<td>Method of Analysis of variance experimental error</td>
+														<td></td>
+													</tr>
+													<tr>
+														<td>xi</td>
+														<td>Other Details</td>
+														<td></td>
+													</tr>
+													<tr>
+														<td>8</td>
+														<td><strong>Characteristics of the candidate variety</strong>
+															<br><br>
+															Please describe characteristics of the variety in the subheadings: Plant, Stem, Leaf, Inflorescence, Flower and flower parts, Fruit and fruit parts, Seed etc. Describe characters within subheadings generally in the following order: habit, height, length, width, size, shape, colour (RHS colour chart reference with edition). Refer the specific guideline wherever necessary for clarity of description.
+														</td>
+														<td></td>
+													</tr>
+													
+													<tr>
+														<td>a (i)</td>
+														<td>Give group characters.</td>
+														<td></td>
+													</tr>
+													<tr>
+														<td>(ii)</td>
+														<td>Distinguishing characteristics (descriptive or elaborate)</td>
+														<td></td>
+													</tr>
+													<tr>
+														<td>b</td>
+														<td><strong>Table of characteristics between candidate denomination and reference variety</strong>
+														<br><br>
+														Please give replicated values for all of its distinguishing and other description for important characteristics along with the corresponding average values of the references varieties.
+														<br><br>
+														NOTE: Two or more reference varieties should be compared with the candidate variety in the characteristics table, including one deemed to be the most similar variety and other(s) as obvious/similar as possible. If you provide this information it will facilitate the Authority in their DUS test further in examination of the candidate variety.
+														</td>
+														<td></td>
+													</tr>
+													
+													
+													<tr>
+														<td>9 </td>
+														<th colspan="2">Characteristics of the reference varieties</th>
+													</tr>
+													<tr>
+														<td>a</td>
+														<th colspan="2">Most similar variety</th>
+													</tr>
+													<tr>
+														<td>(i)</td>
+														<td>Denomination</td>
+														<td></td>
+													</tr>
+													<tr>
+														<td>(ii)</td>
+														<td>Basis of choice of this variety for comparison</td>
+														<td></td>
+													</tr>
+													<tr>
+														<td>(iii)</td>
+														<td>Distinguishable Characteristics</td>
+														<td></td>
+													</tr>
+													<tr>
+														<td>b</td>
+														<th colspan="2">Other reference variety</th>
+													</tr>
+													<tr>
+														<td>(i)</td>
+														<td>Denomination</td>
+														<td></td>
+													</tr>
+													<tr>
+														<td>(ii)</td>
+														<td>Basis of choice of this variety for comparison</td>
+														<td></td>
+													</tr>
+													<tr>
+														<td>(iii)</td>
+														<td>Distinguishable Characteristics</td>
+														<td></td>
+													</tr>
+													<tr>
+														<td>10</td>
+														<td><strong>Statement of distinctiveness of candidate variety</strong>
+														<br><br>
+														Please give a distinctiveness statement covering a brief summary of the characteristics that distinguish the candidate variety from all varieties of common knowledge. The Distinctiveness statement should include, (i) names of reference variety (ies) that have been observed most similar to the candidate variety, and (ii) salient comparison for major distinguishing characteristics between the candidate variety and the similar/reference variety (ies).</td>
+														<td></td>
+													</tr>
+													<tr>
+														<td>11</td>
+														<td colspan="2"><strong>Statement on uniformity and stability of candidate variety</strong>
+															<br><br>
+															Please give a brief statement describing any variation in the variety that may be regarded as part of its normal uniform or stable expression, which is predictable, capable of being described in clear terms and commercially acceptable. This should include description and frequency of any off-types, variants or mutations. In your opinion what should be the frequency of off types or any other describable variation beyond which the candidate variety shall be deem to be non-uniform. Also please point out which are the traits that may be particularly referred to as indicators to determine an unstable expression of the phenotype of candidate variety.
+														</td>
+													</tr>
+													<tr>
+														<td>(i)</td>
+														<td>Uniformity</td>
+														<td></td>
+													</tr>
+													<tr>
+														<td>(ii)</td>
+														<td>Stability</td>
+														<td></td>
+													</tr>
+													<tr>
+														<td>12</td>
+														<td><strong>SMethods for maintaining the candidate variety</strong>
+														<br><br>
+														Please provide in a brief statement as to how the propagating material will be maintained throughout the duration of the plant breeder’s right, and complete address where the variety will be maintained. This should include status of varieties that are not propagated by seeds including place and method of maintenance and storage of their vegetative material.
+														<br><br>
+														NOTE: The holder of a plant breeder’s right is responsible for ensuring that propagating material representative of the variety is maintained for the duration of the right.
+														</td>
+														<td></td>
+													</tr>
+													<tr>
+														<td>13</td>
+														<td colspan="2"><strong>Information on variety registered in Convention Countries.</strong></td>
+													</tr>
+													<tr>
+														<td>a</td>
+														<td>What were the grouping characters in that application for this candidate variety?</td>
+														<td></td>
+													</tr>
+													<tr>
+														<td>b</td>
+														<td>What was the Distinctiveness Uniformity and Stability parameter on which it was registered?</td>
+														<td></td>
+													</tr>
+													<tr>
+														<td>c</td>
+														<td>What is the variation in important trait with respect to first filing and the present one (Attach photograph)?</td>
+														<td></td>
+													</tr>
+													<tr>
+														<td colspan="2">Has the Variety been withdrawn in the first filed country from cultivation or banned or from any of the subsequently released country?</td>
+														<td></td>
+													</tr>
+													<tr>
+														<td></td>
+														<td>If so, the reasons (supplement with information)?</td>
+														<td></td>
+													</tr>
+												</table>
+											
+											
+											
+											
+											</div>
+										</div>
+									</div>
+									
+									
+									<div class="panel panel-default">
+										<div class="panel-heading">
+											<h4 class="panel-title">
+											  <a data-toggle="collapse" href="#multiCollapseExample4" aria-expanded="false" aria-controls="multiCollapseExample4">Payment</a>
+											</h4>
+										</div>
+										<div id="multiCollapseExample4" class="collapse multi-collapse">
+											<div class="panel-body">
+												<table class="table table-bordered table-striped">
+													<tr class="text-center">
+														<th>Amount</th> 
+														<th>Pay</th> 
+													</tr>
+													<tr class="text-center">
+														<td></td> 
+														<td></td> 
+													</tr> 
+												</table>
+											</div>
+										</div>
+									</div>
+
+								</div>
+								</div>
+								
+                            </div>
+                            
+                        </div> <!-- End Row -->
+                        
+                        
+
+
+                    </div> <!-- container -->
+                    
+                    			
+                          </span>
+						 <span th:unless="${actd_viewtrue != null && actd_viewtrue == 'valpresent' }">
+						 <label>YOU ARE NOT AUTHORISED TO VIEW THIS PAGE.PLEASE CONTACT ADMINISTRATOR</label>
+						 </span>
+                               
+                </div> <!-- content -->
+
+                <footer class="footer text-right">
+                    2019 © PPVFRA.
+                </footer>
+
+            </div>
+            
+             <!-- container -->
+                               
+                <!-- content -->
+
+			<!-- start footer content here -->
+			
+			<!-- end footer content here -->
+
+      
+        <!-- END wrapper -->
+
+<!-- footer lib start here-->
+
+<div th:replace="adminfragment/footerlibs.html :: footerlibs"></div>
+<!-- end footer lib -->
+
+<script src="https://code.jquery.com/jquery-3.3.1.js"></script>
+<script src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
+<script src="https://cdn.datatables.net/buttons/1.5.6/js/dataTables.buttons.min.js"></script>
+<script src="https://cdn.datatables.net/buttons/1.5.6/js/buttons.flash.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.1.3/jszip.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/pdfmake.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/vfs_fonts.js"></script>
+<script src="https://cdn.datatables.net/buttons/1.5.6/js/buttons.html5.min.js"></script>
+<script src="https://cdn.datatables.net/buttons/1.5.6/js/buttons.print.min.js"></script>
+
+
+
+
+<!-- <script src="static/dashboard/js/jquery.app.js"></script> -->
+<script>
+			$(document).ready(function() {
+				$('#mtsdetails').DataTable( {
+					dom: 'Bfrtip',
+					buttons: [
+						'csv', 'excel', 'pdf', 'print'
+					]
+				} );
+			} );
+		</script>
+    
+    </body>
+</html>

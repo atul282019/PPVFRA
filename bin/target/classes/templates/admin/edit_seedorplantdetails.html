@@ -1,0 +1,209 @@
+             
+  <!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+	<head>
+	  <th:block th:include="adminfragment/headerlibs.html :: headerlibs"></th:block> 
+	</head>
+
+    <body class="fixed-left">
+        <!-- Begin page -->
+        <div id="wrapper">
+        
+            <!-- Top Bar Start -->
+           <header th:insert="adminfragment/header.html :: header"> </header>
+            <!-- Top Bar End -->
+
+
+            <!-- ========== Left Sidebar Start ========== -->
+			<header th:insert="adminfragment/sidenav.html :: sidevav"> </header>
+            <!-- Left Sidebar End --> 
+
+  
+           
+            <!-- Start right Content here -->                    
+                 <div class="content-page">
+                <!-- Start content -->
+                <div class="content">
+                    <div class="container">
+
+                        <!-- Page-Title -->
+                        <div class="row">
+                            <div class="col-sm-12">
+                                <ol class="breadcrumb pull-right">
+                                    <li><a href="/admin">Home</a></li>
+                                    <li class="active">Seed/Plant Details</li>
+                                    <button action="action" type="button" onclick="history.go(-1);" class="btn btn-purple waves-effect waves-light btn-xs m-b-5">Back</button>
+                                </ol>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-sm-12">
+                                <div class="panel panel-default">
+                                    <div class="panel-heading"><h3 class="panel-title">Seed/Plant Details</h3></div>
+                                    <div class="panel-body">
+                                        <form class="form-horizontal active" th:action="@{/editform_openingseed_details}" th:object="${applicationstsseedreceived}" role="form" id="form_seed_details"  method="post" enctype="multipart/form-data">   <!--form_4 start -->                                       
+									 
+												<div class="panel panel-success">
+													<div class="panel-heading">Seeds/ Planting Material Submission</div>
+													<div class="panel-body">
+														
+														<div class="form-group">
+			                                            <label class="col-md-2 control-label" ></label>
+			                                              <div class="col-md-10">
+			                                                <input id="id" name="id" type="text" th:field="*{id}" readonly="readonly" hidden="true"/>
+			                                                </div>
+			                                           </div>
+			                                          
+														<div class="form-group">
+														<div class="table-responsive col-sm-12">
+														<table class="table table-striped  table-bordered table-hover">
+																<!--Table head-->
+															<tbody th:each="data :${typelinedetails}">
+															
+																<tr>
+																	<td>Seed Or Plant</td>
+																	<td>
+																		<input type="radio" name="radio" th:field="*{seedorplant}"  value="Seeds">Seeds
+																		<input type="radio" name="radio" th:field="*{seedorplant}" value="Planting Material">Planting Material
+																	</td>
+																	
+																</tr>
+																<tr>
+																	<td>Date of Submission</td>
+																	<td>
+																	<input type="date" id="receiptdate" name="receiptdate" th:field="*{receiptdate}"  class="form-control" />
+																	 </td>
+																	
+																</tr>
+																
+																<!-- <tr >
+																<td>Line Type</td>
+																<td>
+																<p th:text="${data[1]}"></p>
+																<span  th:if="${data[1] == 'C'}">
+																<input type="text" value="" th:name="typeline" id="typeline" class="form-control">
+																</span>
+																</td>
+																
+																</tr> -->
+																<tr class="table-info">
+																		<td>Line Type </td>
+																		<span th:if="${data[1] == 'C'}">
+																		<td><input type="text" id="typeline" name="typeline" value="Candidate Variety" class="form-control" readonly></td>
+																		</span>
+																		<span th:if="${data[1] == 'A'}">
+																		<td><input type="text" id="typeline" name="typeline" value="A Line (female)" class="form-control" readonly></td>
+																		</span>
+																		<span th:if="${data[1] == 'R'}">
+																		<td><input type="text" id="typeline" name="typeline" value="R Line (Male)" class="form-control" readonly></td>
+																		</span>
+																		<span th:if="${data[1] == 'B'}">
+																		<td><input type="text" id="typeline" name="typeline" value="B Line (Maintainer)" class="form-control" readonly></td>
+																		</span>
+																	</tr>	
+																	<tr class="table-info">
+																		<td>Seeds Requirement as per guidelines </td>
+																		<td><input type="text" id="seed_req_asper_guideline" name="seed_req_asper_guideline" th:field="*{seed_req_asper_guideline}" class="form-control" value=""></td>
+																	</tr>
+																	
+																	<tr class="table-info">
+																		<td>Approx weight of packet</td>
+																		<td><input type="text" name="approx_weight" id="approx_weight" th:field="*{approx_weight}" class="form-control" value=""></td>
+																	</tr>
+																	
+																	<tr class="table-info">
+																		<td>Quantity of seeds(g)</td>
+																		<td><input type="text" name="quantityofseed_recd" id="quantityofseed_recd" th:field="*{quantityofseed_recd}" class="form-control" value=""></td>
+																	</tr>
+																	
+																	<tr class="table-info">
+																		<td>Number of packets</td>
+																		<td><input type="text" name="no_of_packets" id="no_of_packets" th:field="*{no_of_packets}" class="form-control" value=""></td>
+																	</tr>
+																	
+																	<tr class="table-info">
+																		<td>Moisture %</td>
+																		<td><input type="text" name="moisture_ptg" id="moisture_ptg" th:field="*{moisture_ptg}" class="form-control" value=""></td>
+																	</tr>
+																	
+																	<tr class="table-info">
+																		<td>Germination %</td>
+																		<td>
+																			<input type="text" name="germination_ptg" id="germination_ptg" th:field="*{germination_ptg}"class="form-control" value="">
+																		</td>
+																	</tr>
+																	
+																	<tr class="table-info">
+																		<td>Purity %</td>
+																		<td>
+																			<input type="text" name="purity_ptg" id="purity_ptg" th:field="*{purity_ptg}" class="form-control" value="">
+																		</td>
+																	</tr>
+																	
+																	<tr class="table-info">
+																		<td>Upload Seed Testing Report</td>
+																		<td>
+																			<input type="file" name="fileUpload" class="form-control">
+																			<div>
+																			<a th:href="@{'/ppvfra/download/'+${data[3]}}" target="_blank"><span th:text="${data[3]}"></span></a>
+																			</div>
+																		</td>
+																	 </tr>
+																	
+                                            
+                                                 <div class="col-md-10">
+                                                <!--  <input id="id" name="id" type="text" th:field="*{id}" readonly="readonly" hidden="true"/> -->
+                                                 <input id="applicationidhidden" th:name="applicationidhidden" type="text"  th:value="${data[2]}" readonly="readonly" hidden="true"/>
+                                                 </div>
+                                          
+                                          
+																	<tr class="table-info">
+																		<td></td>
+																		<td colspan="4">
+																			<button type="submit" class="btn btn-info waves-effect waves-light">Save</button>
+																		</td>
+																	</tr>
+																	
+																</tbody>
+															<!--Table body-->
+															</table>
+															<!--Table-->
+														
+														
+														</div>
+														</div>
+													</div>
+ 												</div>
+ 											</form>
+                                    </div> <!-- panel-body -->
+                                </div> <!-- panel -->
+                            </div> <!-- col -->
+                        </div> <!-- End row -->
+
+                    </div> <!-- container -->
+                               
+                </div> <!-- content -->
+
+               
+
+            </div>
+            <!-- End Right content here -->
+ <div th:replace="adminfragment/footer.html :: footer"></div>
+           </div> <!-- container -->
+                               
+                <!-- content -->
+
+			<!-- start footer content here -->
+			
+			<!-- end footer content here -->
+
+      
+        <!-- END wrapper -->
+
+<!-- footer lib start here-->
+
+<div th:replace="adminfragment/footerlibs.html :: footerlibs"></div>
+<!-- end footer lib -->
+</body>
+</html>

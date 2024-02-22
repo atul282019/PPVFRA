@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+	<head>
+	  <th:block th:include="adminfragment/headerlibs.html :: headerlibs"></th:block> 
+	</head>
+
+    <body onload="fetchstateidval();" class="fixed-left">
+        <!-- Begin page -->
+        <div id="wrapper">
+        
+            <!-- Top Bar Start -->
+           <header th:insert="adminfragment/header.html :: header"> </header>
+            <!-- Top Bar End -->
+
+
+            <!-- ========== Left Sidebar Start ========== -->
+			<header th:insert="adminfragment/sidenav.html :: sidevav"> </header>
+            <!-- Left Sidebar End --> 
+
+  
+            <!-- Start right Content here -->  
+                         
+            <!-- ============================================================== -->                      
+            <div class="content-page">
+                <!-- Start content -->
+                <div class="content">
+                    <div class="container">
+
+                        <!-- Page-Title -->
+                        <div class="row">
+                            <div class="col-sm-12">
+                                <h4 class="pull-left page-title">Master</h4>
+                                <ol class="breadcrumb pull-right">
+                                    <li><a href="/admin">Home</a></li>
+                                    <li class="active">Office States</li>
+                                </ol>
+                            </div>
+                        </div>
+                    
+                        <div class="row">
+                            <div class="col-sm-12">
+                                <div class="panel panel-default">
+                                    <div class="panel-heading"><h3 class="panel-title">Assign Office States</h3></div>
+                                   <span th:if="${actd_viewtrue != null && actd_viewtrue == 'valpresent' }">
+									   <div class="panel-body">
+                                    
+                                       
+                     <form class="form-horizontal" th:action="@{/assignofficestates}" th:object="${officestates}" role="form"  method="post">                                    
+                                    
+                                       
+                                            <div class="col-md-12 col-sm-12 col-xs-12">
+                                                <table class="table table-hover table-bordered"> 
+                                                    <thead>
+                                                        <tr>
+                                                          <th>id</th> 
+                                                            <th>Office Type</th>
+															<th>Location</th>
+															<th>Address</th>
+															<th>Office Code</th>
+															<th>State</th>
+                                                         
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+            
+										            <tr th:each="officelist,serial : ${officedetailslist}">
+										     <td>  <input  type="hidden" id="officeidhidden" th:text="${officelist.id}"  th:value="${officelist.id}"  th:name="officeidhidden" /></td> 
+										         <!-- <td th:text="${officelist.id}" id="officeidhidden" th:name="officeidhidden">id</td> -->
+										            <td th:text="${officelist.office_type}"> Office Type </td> 
+										            <td th:text="${officelist.location}"> Location </td> 
+										            <td th:text="${officelist.address}"> Address</td> 
+										            <td th:text="${officelist.office_code}">Office Code</td>
+										            <!-- <td th:text="${officelist.State}">State</td>  -->
+											        <td>
+											        <div th:each="bindstate : ${bindstates}">
+												    <span th:if="${officelist.state == bindstate.statecode}" th:text="${bindstate.statename_inenglish}"></span>
+													</div>
+									   			    </td>  
+										            </tr>
+          
+                                                    </tbody>  
+                                                    
+                                                    
+                                                    
+                                                    
+                                                </table>
+                                            </div>
+                     
+						                    <div class="form-group">
+													<label class="col-md-3 control-label">States</label>
+														<div class="col-md-9">
+															<th:block th:each="bindstate : ${bindstates}">
+																<input th:name="stateid" id="stateid" th:field="*{stateid}" type="checkbox" th:text="${bindstate.statename_inenglish}" th:value="${bindstate.statecode}" /><br>
+															
+															</th:block>		
+														</div>
+												</div> 
+ 
+												 <div class="form-group m-b-0">
+						                                <div class="col-sm-offset-2 col-sm-9">
+						                                    <span th:each="sec_chk : ${actd}">
+													  <span th:if="${sec_chk == 'Edit'}">
+													    <button type="submit" class="btn btn-info waves-effect waves-light">Submit</button>
+													    </span>
+													    </span>
+						                                 </div>
+						                        </div>
+												
+						                 </form> 
+						                 
+						                 
+						                 
+						                   
+						                   
+                               </div>
+                               </span>
+                               <span th:unless="${actd_viewtrue != null && actd_viewtrue == 'valpresent' }">
+									 <label>YOU ARE NOT AUTHORISED TO VIEW THIS PAGE.PLEASE CONTACT ADMINISTRATOR</label>
+									 </span>
+                             </div>
+                           </div>
+                          
+                     </div> <!-- End Row -->     
+                   </div> <!-- container -->
+                               
+                </div> <!-- content -->
+
+               <!--  <footer class="footer text-right">
+                    2019 © PPVFRA.
+                </footer> -->
+
+            </div>
+            <!-- ============================================================== -->
+            <!-- End Right content here -->
+          <div th:replace="adminfragment/footer.html :: footer"></div>
+           </div> <!-- container -->
+                               
+                <!-- content -->
+
+			<!-- start footer content here -->
+			
+			<!-- end footer content here -->
+
+      
+        <!-- END wrapper -->
+
+<!-- footer lib start here-->
+
+<div th:replace="adminfragment/footerlibs.html :: footerlibs"></div>
+<!-- end footer lib -->
+
+
+<script type="text/javascript">
+   function fetchstateidval() 
+   {    	  
+     var data= document.getElementById("officeidhidden");
+     var data2 = document.getElementsByName("stateid");
+     for (var unchk=0; unchk< data2.length; unchk++)
+    {
+    	 data2[unchk].checked=false;
+    }
+       if(data.value != null)		 
+       $.ajax(
+    {
+    	 type: "POST",
+    	 url: "/ppvfra/fetchstateidval",
+    	 data: 'officeidhidden='+data.value,
+    	 success: function (response){
+    	   if(response.length != null)
+    	     {  
+    	        for (var i=0;i<response.length;i++)
+    	          {
+    	             var str = response[i].toString();
+    	               for (var k=0; k<data2.length; k++)	 
+ 	                	   {
+    	                       var val = data2[k].value;
+    	                       if (str == val)
+    	                    	{
+    	                    	   data2[k].checked = true;
+    	                    	}
+    	                   }
+    	           }
+    	      } 
+    	                	
+    	}
+    });
+    }
+</script> 
+ 
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script> 
+  <div th:if="${message != null}">
+ <div id="myModal1" class="modal fade">
+   <div class="modal-dialog">
+    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+        <div class="modal-content">
+         <div class="modal-body">
+				<p align="center" th:text="${message}" />
+            </div>
+        </div>
+    </div>
+</div>
+</div>
+
+    <script type="text/javascript">
+	      $(document).ready(function(){
+		  $("#myModal1").modal('show');
+	     });
+        </script>
+   
+</body>
+</html>

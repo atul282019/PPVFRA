@@ -1,0 +1,386 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<div th:fragment="finalpreview_f3">
+<form class="form-horizontal" name="finalform"  th:object="${applications}" > 
+ 									
+<div class="panel-group" id="accordion" th:if="${editmode == 1}">
+												
+	<div class="panel panel-default">
+		<div class="panel-heading">
+			<h4 class="panel-title">
+				<a data-toggle="collapse" data-parent="#accordion" href="#collapse1">Form III</a>
+			</h4>
+		</div>
+		<div id="collapse1" class="panel-collapse collapse in">
+			<div class="panel-body">
+				<div class="final-preview">
+					<div class="application-margin" style="margin-top:30px;">
+							<h4>1. Identity of the Applicant(s):</h4>
+							
+							<table class="table table-bordered table-striped">
+								<tr>
+									<th>Identity of the Applicant(s)</th>
+								 </tr>
+								 <tr th:if="${firstsetbind != null}">
+								 <td th:text="${firstsetbind[16]}"></td> 
+								 
+								 
+								 </tr>
+								
+							</table>
+						</div>
+						
+						<div class="application-margin" style="margin-top:30px;">
+							<h4>2.Name(s) and Nationality of Applicant(s)</h4>
+					 <div class="table-responsive" th:if="${applicationcontact !=1}"> 
+					
+					<table class="table table-striped  table-bordered w-auto table-hover">
+	
+					<thead>
+						<tr>
+							<th>S.No.</th>
+							<th>Name</th>
+							<th>Address </th>
+							<th>State </th>
+							<th>District </th>
+							<th>Pincode </th>
+							<th>City </th>
+							<th>Country</th>
+							<th>Nationality</th>
+						</tr>
+					</thead>
+					<tbody>
+					
+					  <tr role="row" class="table-info" th:each="contactlist,serial : ${applicationcontact}">
+			     <td th:if="${contactlist !=null}" th:text="${serial.count}"></td>
+			     <td th:text="${contactlist[2]}"></td>   
+	            <td th:text="${contactlist[5]}"></td> 
+	            <td th:if="${contactlist[10] !=null}" th:text="${contactlist[10]}"></td>
+		             <td th:unless="${contactlist[10] !=null}"></td>   		
+		             <td th:if="${contactlist[11] !=null}" th:text="${contactlist[11]}"></td>
+		             <td th:unless="${contactlist[11] !=null}"></td>   		
+		           <td th:text="${contactlist[8]}"></td>
+		           <td th:if="${contactlist[9] !=null}" th:text="${contactlist[9]}"></td>
+		             <td th:unless="${contactlist[9] !=null}"></td>  
+		             <td th:text="${contactlist[7]}"></td>		
+	            <td th:text="${contactlist[6]}"></td>
+	             		
+		        </tr>
+					</tbody>
+					</table>
+						</div>
+						
+								<h5 style="margin-top:20px;">2.(b) Principle place of business or domicile of applicant</h5>
+							<table class="table table-bordered table-striped">
+								<tr>
+									<th>State</th>
+									<th>District</th>
+								</tr>
+								<tr>
+									 <td th:if="${firstsetbind != null}"><span th:text="${firstsetbind[22]}"></span></td>
+									 <td th:if="${firstsetbind != null}"><span th:text="${firstsetbind[23]}"></span></td>
+								</tr>
+								
+							</table>
+								 
+							
+		
+						<div class="application-margin" style="margin-top:30px;">
+							<h4>3.Name and Address of the Person to whom Correspondence related to this application is to be sent:</h4>
+							<!--Table-->
+								<div class="table-responsive" th:if="${agentcontact !=1}">
+									<table class="table table-striped  table-bordered w-auto table-hover" >
+								<!--Table head-->
+								<thead>
+									<tr>
+										<th>S.No.</th>
+										<th>Name</th>
+										<th>Country</th>
+										<th>State</th>
+										<th>District</th>
+										<th>Address</th>
+										<th>Telephone</th>
+										<th>Fax</th>
+									
+									</tr>
+								</thead>
+								<!--Table head-->
+								<!--Table body-->
+								<tbody>
+									<tr role="row" class="table-info" th:each="contactlist,serial : ${agentcontact}">
+						            <td th:text="${serial.count}"></td> 
+						            <td th:text="${contactlist[2]}"></td>
+						            <td th:text="${contactlist[9]}"></td>
+						            <td th:if="${contactlist[10] !=null}" th:text="${contactlist[10]}"></td>
+								    <td th:unless="${contactlist[10] !=null}"></td>
+						            <td th:if="${contactlist[11] !=null}" th:text="${contactlist[11]}"></td>
+								    <td th:unless="${contactlist[11] !=null}"></td>
+						            <td th:text="${contactlist[5]}"></td>
+						            <td th:text="${contactlist[6]}"></td> 
+						            <td th:text="${contactlist[7]}"></td> 
+						            	
+								</tr>
+							</tbody>
+							<!--Table body-->
+							</table>
+							</div>
+								
+							<!--Table-->
+													
+					
+						</div>
+						
+						
+						
+			<div class="application-margin" style="margin-top:30px;">
+				<h4>4.General Information of Candidate variety:</h4>
+				<table class="table table-bordered table-striped">
+					<tr>
+						<th>Crop Details</th>
+						<th>Common name of crop</th>
+						<th>Botanical name</th>
+						<th>Family</th>
+						<th>Denomination(in Block letters)</th>
+					</tr>
+					<tr th:if="${firstsetbind != null}">
+						 <td th:text="${firstsetbind[25]}"></td>
+						 <td th:text="${firstsetbind[26]}"></td>
+						 <td th:text="${firstsetbind[27]}"></td>
+						<td th:text="${firstsetbind[28]}"></td>
+						<td th:text="${firstsetbind[29]}"></td>
+					</tr>
+					
+				</table>
+			</div>
+			
+			<div class="application-margin table-responsive" style="margin-top:30px;">
+			<h4>5(a). Classification of the Candidate Variety:</h4>
+			<table class="table table-bordered table-striped">
+				<tr th:each="listval :${intArray}"> 
+				<td>
+					<div th:each="cval :${candidatevar}">
+					<span th:if="${listval == cval.id}" th:text="${cval.candidate_variety}">
+					  </span>
+					  
+					</div>
+		  		 </td>
+				</tr>
+				
+			</table>
+			
+			<div th:if="${fifthsetbind !=null}">
+				<h4>5(a.i). FOR Others:</h4>
+				<table class="table table-bordered table-striped">
+				<tr >
+				<td>
+				<div>
+				 <span th:if="${fifthsetbind !=null}" th:text="${fifthsetbind}"></span>  
+				</div>
+				</td>
+				</tr>
+				</table>
+				</div>
+				
+			</div>
+			
+			
+			
+		
+				<div class="table-responsive">
+				<h4>6.Names and Addresses of farmer(s) who has/have bred the candidate Variety:</h4>
+																	
+					<table class="table table-striped  table-bordered w-auto table-hover" >
+				<!--Table head-->
+				<thead>
+					<tr>
+						<th>S.No.</th>
+						<th>Name</th>
+						<th>Address</th>
+						<th>Country</th>
+						<th>State</th>
+						<th>District</th>
+						<th>Telephone</th>
+						<th>Fax</th>
+						<th>Email</th>
+						<th>Nationality</th>
+						
+					</tr>
+				</thead>
+				<!--Table head-->
+				<!--Table body-->
+				<tbody th:if="${breadercontact !=1}">
+					<tr role="row" class="table-info" th:each="contactlist,serial : ${breadercontact}">
+					<td th:text="${serial.count}"></td> 
+					<td th:text="${contactlist[2]}"></td>   
+					<td th:text="${contactlist[5]}"></td>
+					<td th:text="${contactlist[10]}"></td>
+					<td th:if="${contactlist[11] != null}" th:text="${contactlist[11]}"></td>
+					<td th:unless="${contactlist[11] != null}"></td>
+					<td th:if="${contactlist[12] != null}" th:text="${contactlist[12]}"></td>
+					<td th:unless="${contactlist[12] != null}"></td>
+					<td th:text="${contactlist[6]}"></td> 
+					<td th:text="${contactlist[7]}"></td> 
+					<td th:text="${contactlist[8]}"></td> 
+					<td th:text="${contactlist[9]}"></td>
+						
+				</tr>
+			</tbody>
+			<!--Table body-->
+			</table>
+				</div>
+				
+			<!--Table-->
+			
+			
+			
+			<div class="application-margin table-responsive" style="margin-top:30px;">
+				<h4>7. Has the candidate variety been commercialised or otherwise exploited:</h4>
+				<table class="table table-bordered table-striped">
+					<tr>
+						<th>Selected Yes/No</th>
+						<th>Data of the first sale of the variety</th>
+						<th>Country (ies) where Protection is made</th>
+						<th>Denomiantion Used</th>
+						<th>Trademark used, if any</th>
+						<th>Variation is important trait with respect to first filling(Attach sheet)</th>
+					</tr>
+					<tr th:if="${firstsetbind != null}">
+						<td>
+						<span th:if="${firstsetbind[38] !=null}">
+						<span th:if="${firstsetbind[38] ==true}"><span th:text="Yes"></span></span>
+						<span th:unless="${firstsetbind[38] ==true}"><span th:text="No"></span></span>
+						</span>
+						</td>
+						<td>
+						<span th:if="${firstsetbind[39] !=null}">
+						Date:
+						<span th:text="${#dates.format(firstsetbind[39],'dd-MM-yyyy')}"></span>
+						<br>
+						<span th:if="${firstsetbind[40] !=null}">
+						First Sale Name:
+						<a th:href="'/ppvfra/download/f3formvnotification/'+${firstsetbind[40]}" target="_blank">
+						<span id="file" th:text="${firstsetbind[40]}">
+						</span>
+						</a>
+					 
+						</span>
+						</span>
+						</span>
+						</td>
+						
+						<td>
+						<span th:if="${firstsetbind[42] !=null}">
+						 <span th:text="${firstsetbind[42]}"></span></span>
+						</td>
+						<td>
+						<span th:if="${firstsetbind[43] !=null}">
+						 <span th:text="${firstsetbind[43]}"></span></span>
+						</td>
+						<td>
+						<span th:if="${firstsetbind[44] !=null}">
+						 <span th:text="${firstsetbind[44]}"></span></span>
+						</td>
+						<td>
+						<span th:if="${firstsetbind[39] !=null}">
+							<span th:if="${firstsetbind[50] !=null}">
+							 <a th:href="'/ppvfra/download/f3formvnotification/'+${firstsetbind[50]}" target="_blank"><span id="file" th:text="${firstsetbind[50]}"></span></a>
+							 </span>
+					 	</span>
+					 	
+						</td>
+					</tr>
+					
+				</table>
+			</div>
+														
+														
+				</div>
+			</div>
+		</div>
+	</div>
+<div class="panel panel-default">
+	<div class="panel-heading">
+		<h4 class="panel-title">
+		  <a data-toggle="collapse" data-target="#multiCollapseExample3" aria-expanded="false" aria-controls="multiCollapseExample3" class="collapsed">Declaration</a>
+		</h4>
+	</div>
+	<div id="multiCollapseExample3" class="collapse multi-collapse">
+		<div class="panel-body">
+			<div id="profile-21" style="display: block;">
+         <p>I/We hereby declare that genetic material or parental material acquired for breeding, evolving or developing the variety has been lawfully acquired.</p> 
+         <p>I agree </p> 
+<div class="form-horizontal">
+	<div class="form-group col-md-12">
+		<label>Place</label>
+		&nbsp; &nbsp;
+	<span th:if="${firstsetbind != null}">
+		<span th:if="${firstsetbind[47] !=null}">
+					 <span th:text="${firstsetbind[47]}"></span></span>
+		
+	</span>
+	</div>
+	<div class="form-group col-md-12">
+		<label >Date</label>
+		&nbsp; &nbsp;
+		<span th:if="${firstsetbind != null}">
+		<span th:if="${firstsetbind[46] !=null}">
+		<span th:text="${#dates.format(firstsetbind[46],'dd-MM-yyyy')}"></span></span>
+	</span>
+	</div>
+													
+				<div class="form-group">
+					<label class="col-md-12 control-label">(Signature of Applicants)</label>
+				</div>
+			</div>
+                                   </div>
+		</div>
+	</div>
+</div>
+<div class="panel panel-default">
+										<div class="panel-heading">
+											<h4 class="panel-title">
+											  <a data-toggle="collapse" data-target="#multiCollapseExample2" aria-expanded="false" aria-controls="multiCollapseExample2" class="collapsed">Attachments</a>
+											</h4>
+										</div>
+										<div id="multiCollapseExample2" class="collapse multi-collapse">
+											<div class="panel-body">
+												<div id="messages-21final" style="display: block;">
+                                                <label>
+                                                        Following are the attachments (duly signed/seal) submitted along  with of the application (note that wherever signature is affixed in the application or attachments, all such signatures shall be in the original)
+                                                </label>
+                                                <table class="table table-bordered">
+                                                    <thead>
+                                                        <tr>
+                                                            <th>Sr. No.</th>
+                                                            <th>Title</th>
+                                                            <th>Attachment</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody> 
+                                                        <tr th:each="attachments,serial : ${document_checklistdataf3}">
+                                                        <td th:text="${serial.count}"></td>
+                                                        <td th:text="${attachments[2]}"></td>
+                                                        <td>
+                                                        <div>
+														<a th:href="@{'/ppvfra/download/f3_app_attach/'+${attachments[7]}}" target="_blank"><span th:text="${attachments[7]}"></span></a>
+														</div>
+                                                        </td>
+                                                        </tr>
+                                                    </tbody>
+                                                </table>
+                                                <label>
+                                                        If felt necessary attach colour pictures of specific  characteristics used for establishing distinctiveness. Please sign each page of the application and other document on the left
+                                                        margin
+                                                </label>
+                                            </div>
+											</div>
+										</div>
+									</div>
+									
+	</div>
+	</div>						
+ </form>       
+ </div>
+</html>
+          				

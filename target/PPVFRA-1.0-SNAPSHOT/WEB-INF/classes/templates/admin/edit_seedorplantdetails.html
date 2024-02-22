@@ -1,0 +1,343 @@
+             
+  <!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+	<head>
+	  <th:block th:include="adminfragment/headerlibs.html :: headerlibs"></th:block> 
+	</head>
+
+    <body class="fixed-left">
+        <!-- Begin page -->
+        <div id="wrapper">
+        
+            <!-- Top Bar Start -->
+           <header th:insert="adminfragment/header.html :: header"> </header>
+            <!-- Top Bar End -->
+
+
+            <!-- ========== Left Sidebar Start ========== -->
+			<header th:insert="adminfragment/sidenav.html :: sidevav"> </header>
+            <!-- Left Sidebar End --> 
+
+  
+           
+            <!-- Start right Content here -->                    
+                 <div class="content-page">
+                <!-- Start content -->
+                <div class="content">
+                    <div class="container">
+
+                        <!-- Page-Title -->
+                        <div class="row">
+                            <div class="col-sm-12">
+                                <ol class="breadcrumb pull-right">
+                                    <li><a href="/admin">Home</a></li>
+                                    <li class="active">Seed/Plant Details</li>
+                                    <button action="action" type="button" onclick="history.go(-1);" class="btn btn-purple waves-effect waves-light btn-xs m-b-5">Back</button>
+                                </ol>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-sm-12">
+                                <div class="panel panel-default">
+                                    <div class="panel-heading"><h3 class="panel-title">Seed/Plant Details</h3></div>
+                                    <div class="panel-body">
+                                        <form class="form-horizontal active" th:action="@{/editform_openingseed_details}" th:object="${applicationstsseedreceived}" role="form" id="form_seed_details"  method="post" enctype="multipart/form-data">   <!--form_4 start -->                                       
+									 
+												<div class="panel panel-success">
+													<div class="panel-heading">Seeds/ Planting Material Submission</div>
+													<div class="panel-body">
+														
+														<div class="form-group">
+			                                            <label class="col-md-2 control-label" ></label>
+			                                              <div class="col-md-10">
+			                                                <input id="id" name="id" type="text" th:field="*{id}" readonly="readonly" hidden="true"/>
+			                                                </div>
+			                                           </div>
+			                                          
+														<div class="form-group">
+														<div class="table-responsive col-sm-12">
+														<table class="table table-striped  table-bordered table-hover">
+																<!--Table head-->
+															<tbody th:each="data :${typelinedetails}">
+															
+																<tr>
+																	<td>Seed Or Plant</td>
+																	<td>
+																		<input type="radio" name="radio" th:field="*{seedorplant}"  value="Seeds">Seeds
+																		<input type="radio" name="radio" th:field="*{seedorplant}" value="Planting Material">Planting Material
+																	</td>
+																	
+																</tr>
+																<tr>
+																	<td>Date of Submission</td>
+																	<td>
+																	<input type="date" id="receiptdate" name="receiptdate" th:field="*{receiptdate}"  class="form-control" />
+																	 </td>
+																	
+																</tr>
+																
+																<!-- <tr >
+																<td>Line Type</td>
+																<td>
+																<p th:text="${data[1]}"></p>
+																<span  th:if="${data[1] == 'C'}">
+																<input type="text" value="" th:name="typeline" id="typeline" class="form-control">
+																</span>
+																</td>
+																
+																</tr> -->
+																<tr class="table-info">
+																		<td>Line Type
+																		 </td>
+																	 <span th:if="${data[1] == 'Candidate Variety'}">
+																		<td><input type="text" id="typeline" name="typeline"  value="Candidate"  class="form-control" readonly></td>
+																		</span>
+																		<span th:if="${data[1] == 'A Line'}">
+																		<td><input type="text" id="typeline" name="typeline" value="A Line"   class="form-control" readonly></td>
+																		</span>
+																		<span th:if="${data[1] == 'R Line'}">
+																		<td><input type="text" id="typeline" name="typeline" value="R Line"   class="form-control" readonly></td>
+																		</span>
+																		<span th:if="${data[1] == 'B Line'}">
+																		<td><input type="text" id="typeline" name="typeline" value="B Line"   class="form-control" readonly></td>
+																		</span>  
+																		<!-- <td><select class="form-control" name="type_line" id="type_line">
+																	    <option th:value="-1" >Select</option>
+																	    <option th:each="dropDownItem : ${TypeLine}"
+															               th:value="${dropDownItem[0]}"
+															               th:text="${dropDownItem[1]}" th:selected= "${dropDownItem[1] == data[1]}" />
+															        	</select>
+															        	</td> -->
+																	</tr>	
+																	<tr class="table-info">
+																		<td>Seeds Requirement as per guidelines </td>
+																		<td><input type="text" id="seed_req_asper_guideline" name="seed_req_asper_guideline" th:field="*{seed_req_asper_guideline}" class="form-control" value="">
+																		<span id="seed_req_asper_guideline_error" style="color:red"></span>
+																		</td>
+																	</tr>
+																	
+																	<tr class="table-info">
+																		<td>Approx weight of packet <span style="color:red">*</span>
+																		</td>
+																		<td><input type="text" name="approx_weight" id="approx_weight" th:field="*{approx_weight}" class="form-control" value="" onkeyup="NumAndTwoDecimals(event , this);" pattern="\d*" maxlength="5">
+																		<span id="approx_weight_error" style="color:red"></span>
+																		</td>
+																	</tr>
+																	
+																	<tr class="table-info">
+																		<td>Quantity of seeds(g)<span style="color:red">*</span></td>
+																		<td><input type="text" name="quantityofseed_recd" id="quantityofseed_recd" th:field="*{quantityofseed_recd}" class="form-control" value="" onkeyup="NumAndTwoDecimals(event , this);" pattern="\d*" maxlength="5">
+																		<span id="quantityofseed_recd_error" style="color:red"></span>
+																		</td>
+																	</tr>
+																	
+																	<tr class="table-info">
+																		<td>Number of packets<span style="color:red">*</span></td>
+																		<td><input type="text"  name="no_of_packets" id="no_of_packets" th:field="*{no_of_packets}" class="form-control" value="" onkeyup="NumAndTwoDecimals(event , this);" pattern="\d*" maxlength="5">
+																		<span id="no_of_packets_error" style="color:red"></span>
+																		</td>
+																	</tr>
+																	
+																	<tr class="table-info">
+																		<td>Moisture %<span style="color:red">*</span></td>
+																		<td><input type="text"  name="moisture_ptg" id="moisture_ptg" th:field="*{moisture_ptg}" class="form-control" value="" onkeyup="NumAndTwoDecimals(event , this);" pattern="\d*" maxlength="5">
+																		<span id="moisture_ptg_error" style="color:red"></span></td>
+																	</tr>
+																	
+																	<tr class="table-info">
+																		<td>Germination %<span style="color:red">*</span></td>
+																		<td>
+																			<input type="text" name="germination_ptg" id="germination_ptg" th:field="*{germination_ptg}"class="form-control" value="" onkeyup="NumAndTwoDecimals(event , this);" pattern="\d*" maxlength="5">
+																			<span id="germination_ptg_error" style="color:red"></span></td>
+																		</td>
+																	</tr>
+																	
+																	<tr class="table-info">
+																		<td>Purity %<span style="color:red">*</span></td>
+																		<td>
+																			<input type="text"  name="purity_ptg" id="purity_ptg" th:field="*{purity_ptg}" class="form-control" value="" onkeyup="NumAndTwoDecimals(event , this);" pattern="\d*" maxlength="5">
+																		<span id="purity_ptg_error" style="color:red"></span></td>
+																		</td>
+																	</tr>
+																	
+																	<tr class="table-info">
+																		<td>Upload Seed Testing Report<span style="color:red">*</span></td>
+																		<td>
+																			<input type="file"  id="fupld_editseed" name="fileUpload" class="form-control">
+																			<div>
+																			<a th:href="@{'/ppvfra/download/'+${data[3]}}" target="_blank">
+																			<span th:text="${data[3]}"></span>
+																			<input type="hidden" id="editseed_plant_pdf" name="editseed_plant_pdf"  th:value="${data[3]}">
+																			</a>
+																			</div>
+																			<span id="fupld_editseed_error" style="color:red"></span>
+																		</td>
+																	 </tr>
+																	
+                                            
+                                                 <div class="col-md-10">
+                                                <!--  <input id="id" name="id" type="text" th:field="*{id}" readonly="readonly" hidden="true"/> -->
+                                                 <input id="applicationidhidden" th:name="applicationidhidden" type="text"  th:value="${data[2]}" readonly="readonly" hidden="true"/>
+                                                 </div>
+                                          
+                                          
+																	<tr class="table-info">
+																		<td></td>
+																		<td colspan="4">
+																			<button type="submit" class="btn btn-info waves-effect waves-light" onclick="return validate_seeddata();">Save</button>
+																		</td>
+																	</tr>
+																	
+																</tbody>
+															<!--Table body-->
+															</table>
+															<!--Table-->
+														
+														
+														</div>
+														</div>
+													</div>
+ 												</div>
+ 												
+ 											</form>
+                                    </div> <!-- panel-body -->
+                                </div> <!-- panel -->
+                            </div> <!-- col -->
+                        </div> <!-- End row -->
+
+                    </div> <!-- container -->
+                               
+                </div> <!-- content -->
+
+               
+
+            </div>
+            <!-- End Right content here -->
+ <div th:replace="adminfragment/footer.html :: footer"></div>
+           </div> <!-- container -->
+                               
+                <!-- content -->
+
+			<!-- start footer content here -->
+			
+			<!-- end footer content here -->
+
+      
+        <!-- END wrapper -->
+
+<!-- footer lib start here-->
+
+<div th:replace="adminfragment/footerlibs.html :: footerlibs"></div>
+<!-- end footer lib -->
+<script>
+function validate_seeddata()
+{
+
+
+if( (document.getElementById("seed_req_asper_guideline").value==null ) || document.getElementById("seed_req_asper_guideline").value=="")
+{document.getElementById("seed_req_asper_guideline_error").innerHTML=" Please fill guidlines";
+document.getElementById("seed_req_asper_guideline").focus() ;
+return false;}else{
+	document.getElementById("seed_req_asper_guideline_error").innerHTML="";
+}
+
+if((document.getElementById("approx_weight").value==null ) || document.getElementById("approx_weight").value=="")
+{
+	document.getElementById("approx_weight_error").innerHTML=" Please fill approx weight";
+	document.getElementById("approx_weight").focus() ;
+	return false;
+}else{
+	document.getElementById("approx_weight_error").innerHTML="";
+}
+
+
+if((document.getElementById("quantityofseed_recd").value==null ) || document.getElementById("quantityofseed_recd").value=="")
+{
+	document.getElementById("quantityofseed_recd_error").innerHTML=" Please fill Quantity Of Seed Received";
+	document.getElementById("quantityofseed_recd").focus() ;
+	return false;
+}else{
+	document.getElementById("quantityofseed_recd_error").innerHTML="";
+}
+
+
+if((document.getElementById("no_of_packets").value==null ) || document.getElementById("no_of_packets").value=="")
+{
+	document.getElementById("no_of_packets_error").innerHTML=" Please fill No Of Packets";
+	document.getElementById("no_of_packets").focus() ;
+	return false;
+}else{
+	document.getElementById("no_of_packets_error").innerHTML="";
+}
+
+
+if((document.getElementById("moisture_ptg").value==null ) || document.getElementById("moisture_ptg").value=="")
+{
+	document.getElementById("moisture_ptg_error").innerHTML=" Please fill Moisture";
+	document.getElementById("moisture_ptg").focus() ;
+	return false;
+}else{
+	document.getElementById("moisture_ptg_error").innerHTML="";
+}
+
+if((document.getElementById("germination_ptg").value==null ) || document.getElementById("germination_ptg").value=="")
+{
+	document.getElementById("germination_ptg_error").innerHTML=" Please fill Germination";
+	document.getElementById("germination_ptg").focus() ;
+	return false;
+}else{
+	document.getElementById("germination_ptg_error").innerHTML="";
+}
+
+
+if((document.getElementById("purity_ptg").value==null ) || document.getElementById("purity_ptg").value=="")
+{
+	document.getElementById("purity_ptg_error").innerHTML=" Please fill Purity";
+	document.getElementById("purity_ptg").focus() ;
+	return false;
+}else{
+	document.getElementById("purity_ptg_error").innerHTML="";
+}
+
+
+if((document.getElementById("fupld_editseed").value==null ) || document.getElementById("fupld_editseed").value=="")
+{
+	var edit_seed_plant_case=$('#editseed_plant_pdf').val();
+	
+	if(edit_seed_plant_case.length>0 && !(edit_seed_plant_case =="" || edit_seed_plant_case == null))
+	{
+	document.getElementById("fupld_editseed_error").innerHTML="";
+	}
+	else{
+		document.getElementById("fupld_editseed_error").innerHTML=" Please Attach file as it is mandatory file.";
+		document.getElementById("fupld_editseed").focus() ;
+		return false;
+		}
+
+}
+
+return true;
+}
+</script>
+<script>
+function NumAndTwoDecimals(e , field) {
+    var val = field.value;
+    var re = /^([0-9]+[\.]?[0-9]?[0-9]?|[0-9]+)$/g;
+    var re1 = /^([0-9]+[\.]?[0-9]?[0-9]?|[0-9]+)/g;
+    if (re.test(val)) {
+        //do something here
+
+    } else {
+        val = re1.exec(val);
+        if (val) {
+            field.value = val[0];
+        } else {
+            field.value = "";
+        }
+    }
+}
+</script>
+
+</body>
+</html>

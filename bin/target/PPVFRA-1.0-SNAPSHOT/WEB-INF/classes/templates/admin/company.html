@@ -1,0 +1,286 @@
+  
+  <!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+	<head>
+	  <th:block th:include="adminfragment/headerlibs.html :: headerlibs"></th:block> 
+	</head>
+
+    <body class="fixed-left">
+        <!-- Begin page -->
+        <div id="wrapper">
+        
+            <!-- Top Bar Start -->
+           <header th:insert="adminfragment/header.html :: header"> </header>
+            <!-- Top Bar End -->
+
+
+            <!-- ========== Left Sidebar Start ========== -->
+			<header th:insert="adminfragment/sidenav.html :: sidevav"> </header>
+            <!-- Left Sidebar End --> 
+
+  
+            <!-- Start right Content here -->  
+             
+        <!-- ============================================================== -->                      
+            <div class="content-page">
+                <!-- Start content -->
+                <div class="content">
+                    <div class="container">
+			<div class="row">
+                            <div class="col-sm-12">
+                                <h4 class="pull-left page-title">Reports</h4>
+                                <ol class="breadcrumb pull-right">
+                                    <li><a href="/admin">Home</a></li>
+                                    <li class="active">Company Details</li>
+                                </ol>
+                            </div>
+                        </div>
+                        
+                        <!-- Page-Title -->
+             <div class="row">
+                            <div class="col-md-12">
+                                <div class="panel panel-default">
+                                    <div class="panel-heading">
+                                        <h3 class="panel-title">Company Details</h3>
+                                    </div>
+                                    <div class="panel-body">
+                                        <div class="row">
+                                            <div class="col-md-12 col-sm-12 col-xs-12">
+												<div class="table-responsive">
+										<!-- <div id="mtsdetails_wrapper" class="dataTables_wrapper no-footer"><div class="dt-buttons">      <button class="dt-button buttons-csv buttons-html5" tabindex="0" aria-controls="mtsdetails" type="button"><span>CSV</span></button> <button class="dt-button buttons-excel buttons-html5" tabindex="0" aria-controls="mtsdetails" type="button"><span>Excel</span></button> <button class="dt-button buttons-pdf buttons-html5" tabindex="0" aria-controls="mtsdetails" type="button"><span>PDF</span></button> <button class="dt-button buttons-print" tabindex="0" aria-controls="mtsdetails" type="button"><span>Print</span></button> </div> -->
+													<span th:if="${actd_viewtrue != null && actd_viewtrue == 'valpresent' }">
+													 
+																
+													<table id="mtsdetails" class="table table-hover table-bordered dataTable no-footer" role="grid" aria-describedby="mtsdetails_info">
+														<thead>
+															<tr role="row">
+															<th class="sorting_desc" tabindex="0" aria-controls="mtsdetails" rowspan="1" colspan="1" aria-label="Sr.No.: activate to sort column ascending" style="width: 43px;" aria-sort="descending">Sr.No.</th>
+															<th class="sorting" tabindex="0" aria-controls="mtsdetails" rowspan="1" colspan="1" aria-label="Name: activate to sort column ascending" style="width: 41px;">Name</th>
+															<th class="sorting" tabindex="0" aria-controls="mtsdetails" rowspan="1" colspan="1" aria-label="CIN Number: activate to sort column ascending" style="width: 66px;">CIN Number</th>
+															<th class="sorting" tabindex="0" aria-controls="mtsdetails" rowspan="1" colspan="1" aria-label="Address: activate to sort column ascending" style="width: 58px;">Address</th>
+															<th class="sorting" tabindex="0" aria-controls="mtsdetails" rowspan="1" colspan="1" aria-label="State: activate to sort column ascending" style="width: 37px;">State</th>
+															<th class="sorting" tabindex="0" aria-controls="mtsdetails" rowspan="1" colspan="1" aria-label="District: activate to sort column ascending" style="width: 51px;">District</th>
+															<th class="sorting" tabindex="0" aria-controls="mtsdetails" rowspan="1" colspan="1" aria-label="Contact Details: activate to sort column ascending" style="width: 72px;">Name&Designation</th>
+															<th class="sorting" tabindex="0" aria-controls="mtsdetails" rowspan="1" colspan="1" aria-label="Mobile: activate to sort column ascending" style="width: 46px;">Mobile</th>
+															<th class="sorting" tabindex="0" aria-controls="mtsdetails" rowspan="1" colspan="1" aria-label="Fax: activate to sort column ascending" style="width: 25px;">Fax</th>
+															<th class="sorting" tabindex="0" aria-controls="mtsdetails" rowspan="1" colspan="1" aria-label="Email: activate to sort column ascending" style="width: 38px;">Email</th>
+															<th class="sorting" tabindex="0" aria-controls="mtsdetails" rowspan="1" colspan="1" aria-label="Status:activate to sort column ascending" style="width:45px;">Status</th>
+															<th class="sorting" tabindex="0" aria-controls="mtsdetails" rowspan="1" colspan="1" aria-label="Remarks:activate to sort column ascending" style="width:45px;">Remarks</th>
+															
+															<span th:if="${actd_addtrue == 'addpresent'}">
+															<th class="sorting" tabindex="0" aria-controls="mtsdetails" rowspan="1" colspan="1" aria-label="Action:activate to sort column ascending" style="width:45px;">Action</th>
+															</span>
+															
+															<span th:each="sec_chk : ${actd}">
+															<span th:if="${sec_chk == 'View'}">
+															<th class="sorting" tabindex="0" aria-controls="mtsdetails" rowspan="1" colspan="1" aria-label="View: activate to sort column ascending" style="width: 36px;">View</th>
+															</span>
+															</span>
+																
+															<span th:each="sec_chk : ${actd}">
+															<span th:if="${sec_chk == 'Edit'}">
+															<th class="sorting" tabindex="0" aria-controls="mtsdetails" rowspan="1" colspan="1" aria-label="View: activate to sort column ascending" style="width: 36px;">Edit</th>
+															</span>
+															</span>
+															</tr>
+														</thead>
+														<tbody>
+															
+														 <tr  role="row" class="odd" th:each="compregloop,incr : ${compreg}">
+																<td th:text="${incr.count}" class="sorting_1"></td>
+																<td th:text="${compregloop.companyname}"></td>
+																<td th:text="${compregloop.cin_number}"></td>
+																<td th:text="${compregloop.Author_Address}"></td>
+																<td>
+																<div th:each="statedrop : ${stateselections}">
+																<span th:if="${compregloop.registeredoffice_state == statedrop.statecode}" th:text="${statedrop.statename_inenglish}"></span>
+																<!-- <span th:unless="${compregloop.Registeredoffice_Statecode == statedrop.statecode}" th:text="${compregloop.Registeredoffice_Statecode}"></span>
+																 -->
+																 </div>
+																 </td>
+																<td>
+																<div th:each="districtselection: ${distsel}">
+																<span th:if="${compregloop.registeredoffice_districts == districtselection.districtcode}" th:text="${districtselection.districtname_inenglish}"></span> 
+																</div>
+																</td>
+																<td th:text="${compregloop.Author_Name+' '+'('+compregloop.Author_Designation+')'}"></td>
+																<td th:text="${compregloop.Author_Mobile}"></td>
+																<td th:text="${compregloop.Author_Fax}"></td>
+																<td th:text="${compregloop.Author_Email}"></td>
+																<td th:text="${compregloop.verificationstatus}"></td>
+																<td th:text="${compregloop.verificationremarks}"></td>
+																<span th:if="${actd_addtrue == 'addpresent'}">
+																<td>									
+																 <a class="btn btn-success btn-xs" data-toggle="modal" th:data-target="'#myModal' + ${compregloop.id}"  href="#"> Accept / Reject</a>
+															  <div class="modal" th:id="'myModal'+ ${compregloop.id}" style="display: none;">
+																<div class="modal-dialog">
+																	<div class="modal-content">
+																	  <div class="modal-header">
+																		<h4 class="modal-title">Approval</h4>
+																	  </div>
+																	  <div class="modal-body">
+																		<form class="form-horizontal active" th:action="@{'/acceptrejectcompany/'+${compregloop.id}}" th:object="${cmpreg}" role="form" id="form_4"  method="post">   <!--form_4 start -->                                       
+																			
+																			<div class="form-group">
+																				<label class="col-md-3 control-label"></label>
+																				<div class="col-md-7">
+																					<input id="companystatus" type="radio" name="companystatus" class="" value="Accepted"> Accept
+																					<input id="companystatus" type="radio" name="companystatus" class="" value="Rejected"> Reject
+																				</div>
+																			</div>
+																			<div class="form-group">
+																				<label class="col-md-3 control-label">Remarks</label>
+																				<div class="col-md-7 col-sm-7 col-xs-12">
+																					<textarea name="remarks" class="form-control"></textarea>
+																				</div>
+																			</div>
+																			
+																			
+																			
+																			<div class="form-group ">
+																				<label class="col-md-3 control-label">&nbsp;</label>
+																				<div class="col-sm-7">
+																					<button type="submit" onclick="return radiocheck()" class="btn btn-info waves-effect waves-light">Submit</button>
+																				</div>
+																			</div>
+																			
+																			
+																		</form>
+																	  </div>
+																	  <div class="modal-footer">
+																		<button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+																	  </div>
+											
+																	</div>
+																</div>
+															</div>
+															
+															</td>
+															</span>
+																
+																<span th:each="sec_chk : ${actd}">
+																<span th:if="${sec_chk == 'View'}">
+																<td><a th:href="@{'/view_applicationdetails/'+${compregloop.id}}">View</a></td>
+																</span>
+																</span>
+																
+																 
+																
+																<span th:each="sec_chk : ${actd}">
+																<span th:if="${sec_chk == 'Edit'}">
+																 <td> <a th:href="@{'/editcompany/'+${compregloop.id}}">Edit</a> </td>
+																 </span>
+																 </span>
+																
+																 
+																 </tr>
+															</tbody>
+													</table>
+							
+												</span>
+							<span th:unless="${actd_viewtrue != null && actd_viewtrue == 'valpresent' }">
+							<label>YOU ARE NOT AUTHORISED TO VIEW THIS PAGE.PLEASE CONTACT ADMINISTRATOR</label>
+							</span>
+						 
+						
+													<!-- <div class="dataTables_info" id="mtsdetails_info" role="status" aria-live="polite">Showing 1 to 1 of 1 entries</div> -->
+													<!-- <div class="dataTables_paginate paging_simple_numbers" id="mtsdetails_paginate"><a class="paginate_button previous disabled" aria-controls="mtsdetails" data-dt-idx="0" tabindex="0" id="mtsdetails_previous">Previous</a><span><a class="paginate_button current" aria-controls="mtsdetails" data-dt-idx="1" tabindex="0">1</a></span><a class="paginate_button next disabled" aria-controls="mtsdetails" data-dt-idx="2" tabindex="0" id="mtsdetails_next">Next</a></div> -->
+												<!-- </div> -->
+											 	</div> 
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div> <!-- container -->
+                               
+                </div> <!-- content -->
+<!-- 
+                <footer class="footer text-right">
+                    2019 © PPVFRA.
+                </footer> -->
+
+            </div>
+            <!-- ============================================================== -->
+             
+            <!-- End Right content here -->
+          <div th:replace="adminfragment/footer.html :: footer"></div>
+           </div> <!-- container -->
+                               
+                <!-- content -->
+
+			<!-- start footer content here -->
+			
+			<!-- end footer content here -->
+
+      
+        <!-- END wrapper -->
+
+<!-- footer lib start here-->
+
+<div th:replace="adminfragment/footerlibs.html :: footerlibs"></div>
+<!-- end footer lib -->
+
+<script src="https://code.jquery.com/jquery-3.3.1.js"></script>
+<script src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
+<script src="https://cdn.datatables.net/buttons/1.5.6/js/dataTables.buttons.min.js"></script>
+<script src="https://cdn.datatables.net/buttons/1.5.6/js/buttons.flash.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.1.3/jszip.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/pdfmake.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/vfs_fonts.js"></script>
+<script src="https://cdn.datatables.net/buttons/1.5.6/js/buttons.html5.min.js"></script>
+<script src="https://cdn.datatables.net/buttons/1.5.6/js/buttons.print.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+<script>
+			$(document).ready(function() {
+				$('#mtsdetails').DataTable( {
+					dom: 'Bfrtip',
+					buttons: [
+						'csv', 'excel', 'pdf', 'print'
+					]
+				} );
+			} );
+		</script>
+    <script type="text/javascript">
+   function radiocheck()
+    {
+	   var k = document.getElementsByName("companystatus");
+	   var ischecked_method = false;
+	   for ( var i = 0; i < k.length; i++) {
+	       if(k[i].checked) 
+	       {
+	           ischecked_method = true;
+	           break;
+	       }
+	   }
+	   if(!ischecked_method)   
+	   { //payment method button is not checked
+	       alert("Please select atleast one radio button");
+	   return false;
+	   }
+	 }
+    </script>
+ 
+<div th:if="${message != null}">
+ <div id="myModal1" class="modal fade">
+   <div class="modal-dialog">
+    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+        <div class="modal-content">
+         <div class="modal-body">
+				<p align="center" th:text="${message}" />
+            </div>
+        </div>
+    </div>
+</div>
+</div>
+
+    <script type="text/javascript">
+	      $(document).ready(function(){
+		  $("#myModal1").modal('show');
+	     });
+        </script>
+    
+    
+     
+</body>
+</html>

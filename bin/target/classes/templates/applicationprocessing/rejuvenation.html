@@ -1,0 +1,279 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<div th:fragment="rejuvenation">
+
+<span th:if="${Rejuvination != null && Rejuvination == 'Rejuvination' }"> 
+ 
+<style>
+.text_box_disp{
+	display:none;
+}
+</style>
+
+
+
+<form class="form-horizontal active" role="form" id="form_rej" name="form_rej" th:action="@{/rejuvenation}" th:object="${rejuvenation}" method="post" onsubmit = "return validaterejuv();">                                      
+									 
+		<div class="panel panel-success">
+		<div class="panel-heading">Rejuvenation</div>
+		<div class="panel-body">
+														
+		<div class="form-group">
+		<div class="form-group">
+     	<label class="col-md-2 control-label" > </label>
+     		<div class="col-md-10">
+	<input type="text" id="applicationid" th:name="applicationid"  th:value="${applicationid}" readonly="readonly" hidden="true" />
+     		</div>
+        </div>
+		<div class="table-responsive col-sm-12">
+		<table class="table table-striped  table-bordered table-hover">
+		<!--Table head-->
+		<tbody>
+			<tr>
+				<td>Type of Variety</td>
+				<td>
+					 
+					<div class="col-md-9" th:each="list : ${CandidateVariety}">
+					 <input class="otherEvent" type="checkbox"   id="checkbox" name="checkbox" th:text="${list.candidate_variety}" th:value="${list.id}" /><br>
+				</div>
+				<div class="text_box_disp" id="other_text_div" style="display:none">
+						<div class="col-md-6">
+							<input type="text" class="form-control" id ="othervalue" name="othervalue" >
+						</div>
+					</div>
+				 </td>
+				
+			</tr>
+			<tr>
+				<td>Date</td>
+				<td>
+				<input type="date" name="date_rejuvenation" id="date_rejuvenation" th:field="*{date_rejuvenation}" class="form-control" />
+				<span id="date_error" style="color:red"></span>
+				</td>
+			</tr>
+			
+		</tbody>
+	    </table>
+	    </div>
+			<div class="table-responsive col-sm-12">
+				<table class="table table-striped  table-bordered table-hover">
+					<!--Table head-->
+				<thead>
+					<tr></tr>
+				</thead>
+				<!--Table head-->
+			
+				<!--Table body-->
+				<tbody>
+					
+					<tr class="table-info">
+					<td>Line Type</td>
+					<td> 
+					<select class="form-control" th:field ="*{type_line}" name="type_line" id="type_line" th:onchange="'typelinevalue(\''+${applicationid}+'\',this)'">
+				    <option th:value="-1" >Select</option>
+		            <option th:each="dropDownItem : ${TypeLine}"
+		               th:value="${dropDownItem.id}"
+		               th:text="${dropDownItem.code}" />
+		        	</select>
+		        	<span id="type_lineerror" style="color:red"></span>
+				  	</td>
+					</tr>
+					
+					<tr class="table-info">
+						<td>Denomination </td>
+						<td><input type="text" class="form-control" name="denomination" id="denomination"></td>
+					</tr>
+					
+					<tr class="table-info">
+						<td>Quantity</td>
+						<td><input type="text" class="form-control"  name="quantity" id="quantity"></td>
+					</tr>
+					
+					<tr class="table-info">
+						<td>Place</td>
+						<td><input type="text" class="form-control"  name="place" id="place"></td>
+					</tr>
+					
+					<tr class="table-info">
+						<td>Findings</td>
+						<td><input type="text" class="form-control"  name="findings" id="findings"></td>
+					</tr>
+					
+					<tr class="table-info">
+						<td>No. of packets added to MTS</td>
+						<td><input type="text" class="form-control"  name="no_of_packets_added_mts" id="no_of_packets_added_mts"></td>
+					</tr>
+					
+					<tr class="table-info">
+						<td>Total packets in MTS</td>
+						<td>
+							<input type="text" class="form-control"  name="total_packets_mts" id="total_packets_mts">
+						</td>
+					</tr>
+					
+					
+				</tbody>
+			</table>
+			<div class="form-group m-b-0">
+			<label class="col-md-3 control-label">&nbsp;</label>
+			<div class="col-sm-7">
+			<span th:if="${sub15 == 'addpresent'}">
+			<input type="hidden" name="id" id="id" value="0"/>
+				<input type="submit" class="btn btn-info waves-light">
+			</span>
+			</div>
+				
+			</div>
+			<div class="table-responsive col-sm-12">
+			<div class="panel-heading">SAVED DETAILS</div>
+			
+				<table  class="table table-striped  table-bordered table-hover">
+			
+			<thead>
+				<tr>
+			     	<th>S.No</th>
+			     	<th>Type of Variety</th>
+			     	<th>Date</th>
+			     	<th>Line Type</th>
+			     	<th>Denomination</th>
+					<th>Quantity</th>
+				    <th>Place</th>
+				    <th>Findings</th>
+				    <th>No. of packets added to MTS</th>
+					<th>Total packets in MTS</th>
+					<th>Action</th>
+				</tr>
+			</thead>
+									
+			<tbody>
+				<tr class="table-info" th:each="data,serial : ${rejuvenationdetails}">
+				<td th:text="${serial.count}"></td>
+				<td th:text="${data[2]}"></td>
+				<td th:text="${#dates.format(data[3],'yyyy-MM-dd')}"></td>
+				<td th:text="${data[4]}"></td>
+				<td th:text="${data[5]}"></td>
+				<td th:text="${data[6]}"></td>
+				<td th:text="${data[7]}"></td>
+				<td th:text="${data[8]}"></td>
+				<td th:text="${data[9]}"></td>
+				<td th:text="${data[10]}"></td>
+				<td><a th:href="@{'/editrejuvenation/'+${data[0]}}">Edit</a></td>
+				</tr> 
+			</tbody>
+			</table> 
+			</div>
+																	
+			</div>
+			</div>
+			</div>
+			</div>
+			</form>
+			
+			
+<script type="text/javascript">
+$(document).on('click','.otherEvent',function(){
+	var value = $(this).val();
+	
+	$(".text_box_disp").hide();
+	var checkval  = $(this).is(":checked");
+	if(value ==4 && checkval )   
+        $(".text_box_disp").show();
+    else
+        $(".text_box_disp").hide();
+});
+ </script>
+ 
+ 
+ <script type="text/javascript"  th:inline="javascript">
+   var dataval = [[${dataintab_rejuv}]];
+	function typelinevalue(Obj,that){
+ $(that).closest('form').find('input[type=submit]').attr("disabled", false);
+		
+    var typelinedata= document.getElementById("type_line");
+    var response1 =null;
+  	//DOES NOT WORK
+  	//var text= typelinedata.options[typelinedata.selectedIndex].text;
+    //ENDS
+  	//var selected = $(that).val();
+  
+    var selected = $(that).closest('form').find("#type_line").val();
+
+    //	var selected = $(that).closest('form').find("#type_line  option:selected").text();
+	var text=selected;
+  
+	// alert("vvv"+text+""+selected);
+  /*
+   if(text !=null || text!= "")
+	   {
+   if(text=="Candidate"){text="C"}
+   else if(text=="A Line"){text="A"}
+   else if(text=="B Line"){text="B"}
+   else if(text=="R Line"){text="R"}
+	   }
+   */
+   
+    if(Obj != null)		 
+      	$.ajax({
+              type: "POST",
+              url: "/ppvfra/getdatasaved_forrejuvination",
+              data:Obj,
+              success: function (response) {
+
+            	for(var k=0; k< response.length ; k++)
+            		{
+            	//alert(""+k);
+            		var a = response[k][11];
+            		if(text == a)
+            			{
+            			alert("Value Already Exists.Please Select another Field Or Edit The Value Present in Table.");
+            			/*  $("#submitseedmodal").attr("disabled", true); */
+            			$(that).closest('form').find('input[type=submit]').attr("disabled", true);
+            			return false;
+            			}
+            		 
+            			
+            		}
+          	},
+            failure: function (response) {
+            alert(response.responseText);
+        },
+        error: function (response) {
+            alert(response.responseText);
+        }
+      	});           
+         
+    
+                  
+    
+}
+</script>
+
+<script type = "text/javascript">
+      function validaterejuv() {
+    	//  alert(document.getElementById("type_line").value);
+    	  if( document.form_rej.type_line.value == "-1") 
+    	  {
+    		 document.getElementById("type_lineerror").innerHTML="please select typeline";
+               document.getElementById("type_line").focus() ;
+               return false;
+            } 
+    	  if(document.form_rej.date_rejuvenation.value == "")
+    			  {
+    		  document.getElementById("date_error").innerHTML="please select date";
+              document.getElementById("date_rejuvenation").focus() ;
+              return false;
+    			  }
+    	  
+    	     return true;
+    	}
+      </script>
+ 
+ </span>
+<span th:unless="${Rejuvination != null && Rejuvination == 'Rejuvination' }">
+ <label>YOU ARE NOT AUTHORISED TO VIEW THIS PAGE.PLEASE CONTACT ADMINISTRATOR</label>
+ </span>
+
+</div>
+
+
+</html>

@@ -1,0 +1,84 @@
+	<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<body>
+	<div th:fragment="footerlibs">
+	
+	<!-- main jQuery -->
+	<script th:src="@{/assets/js/jquery-1.11.1.min.js}"></script>
+	<!-- bootstrap -->
+	<script th:src="@{/assets/js/bootstrap.min.js}"></script>
+	<!-- bx slider -->
+	<script th:src="@{/assets/js/jquery.bxslider.min.js}"></script>
+	<!-- owl carousel -->
+	<script th:src="@{/assets/js/owl.carousel.min.js}"></script>
+	<!-- validate -->
+	<script th:src="@{/assets/js/jquery-parallax.js}"></script>
+	<!-- validate -->
+	<script th:src="@{/assets/js/validate.js}"></script>
+	<!-- mixit up -->
+	<script th:src="@{/assets/js/jquery.mixitup.min.js}"></script>
+	<!-- fancybox -->
+	<script th:src="@{/assets/js/jquery.fancybox.pack.js}"></script>
+	<!-- easing -->
+	<script th:src="@{/assets/js/jquery.easing.min.js}"></script>
+	<!-- circle progress -->
+	<script th:src="@{/assets/js/circle-progress.js}"></script>
+	<!-- appear js -->
+	<script th:src="@{/assets/js/jquery.appear.js}"></script>
+	<!-- count to -->
+	<script th:src="@{/assets/js/jquery.countTo.js}"></script>
+	<!-- gmap helper -->
+	<script th:src="@{/assets/http://maps.google.com/maps/api/js?sensor=true}"></script>
+	<!-- gmap main script -->
+	<script th:src="@{/assets/js/gmap.js}"></script>
+
+	<!-- isotope script -->
+	<script th:src="@{/assets/js/isotope.pkgd.min.js}"></script>
+	<!-- jQuery ui js -->
+	<script th:src="@{/assets/js/jquery-ui-1.11.4/jquery-ui.js}"></script>
+	
+	<!-- revolution scripts -->
+
+	<script th:src="@{/assets/revolution/js/jquery.themepunch.tools.min.js}"></script>
+	<script th:src="@{/assets/js/jquery.jConveyorTicker.min.js}"></script>
+	<script th:src="@{/assets/revolution/js/jquery.themepunch.revolution.min.js}"></script>
+	<script type="text/javascript" th:src="@{/assets/revolution/js/extensions/revolution.extension.actions.min.js}"></script>
+	<script type="text/javascript" th:src="@{/assets/revolution/js/extensions/revolution.extension.carousel.min.js}"></script>
+	<script type="text/javascript" th:src="@{/assets/revolution/js/extensions/revolution.extension.kenburn.min.js}"></script>
+	<script type="text/javascript" th:src="@{/assets/revolution/js/extensions/revolution.extension.layeranimation.min.js}"></script>
+	<script type="text/javascript" th:src="@{/assets/revolution/js/extensions/revolution.extension.migration.min.js}"></script>
+	<script type="text/javascript" th:src="@{/assets/revolution/js/extensions/revolution.extension.navigation.min.js}"></script>
+	<script type="text/javascript" th:src="@{/assets/revolution/js/extensions/revolution.extension.parallax.min.js}"></script>
+	<script type="text/javascript" th:src="@{/assets/revolution/js/extensions/revolution.extension.slideanims.min.js}"></script>
+	<script type="text/javascript" th:src="@{/assets/revolution/js/extensions/revolution.extension.video.min.js}"></script>
+
+
+	<!-- thm custom script -->
+	<script th:src="@{/assets/js/custom.js}"></script>
+	
+	
+	
+
+		<script>
+			$(document).ready(function() {
+	$(".dropdown").hover(
+		function() {
+			$('.dropdown-menu', this).stop(true, true).slideDown("fast");
+			$(this).toggleClass('open');
+		},
+		function() {
+			$('.dropdown-menu', this).stop(true, true).slideUp("fast");
+			$(this).toggleClass('open');
+		}
+	);
+});
+
+
+		</script>
+		
+	
+		
+		
+	</div>	
+</body>
+</html>

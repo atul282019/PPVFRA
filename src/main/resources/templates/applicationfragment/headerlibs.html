@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" 
+   xmlns:th="http://www.thymeleaf.org"
+   xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+   xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3"
+      layout:decorator="layout">   
+		<head th:fragment="headerlibs">
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta name="description" content="A fully featured admin theme which can be used to build CRM, CMS, etc.">
+        <meta name="author" content="Coderthemes">
+        <link rel="shortcut icon" th:href="@{/dashboard/images/favicon_1.ico}">
+        <title>PPVFRA</title>
+        <!-- Base Css Files -->
+        <link th:href="@{/dashboard/css/bootstrap.min.css}" rel="stylesheet" />
+        <!-- Font Icons -->
+        <link th:href="@{/dashboard/assets/font-awesome/css/font-awesome.min.css}" rel="stylesheet" />
+        <link th:href="@{/dashboard/assets/ionicon/css/ionicons.min.css}" rel="stylesheet" />
+        <link th:href="@{/dashboard/css/material-design-iconic-font.min.css}" rel="stylesheet">
+        <!-- animate css -->
+        <link th:href="@{/dashboard/css/animate.css}" rel="stylesheet" />
+        <!-- Waves-effect -->
+        <link th:href="@{/dashboard/css/waves-effect.css}" rel="stylesheet">
+        <!-- sweet alerts -->
+        <link th:href="@{/dashboard/assets/sweet-alert/sweet-alert.min.css}" rel="stylesheet">
+        <!-- Custom Files -->
+        <link th:href="@{/dashboard/css/helper.css}" rel="stylesheet" type="text/css" />
+        <link th:href="@{/dashboard/css/style.css}" rel="stylesheet" type="text/css" />
+        <script th:src="@{/dashboard/js/modernizr.min.js}"></script>
+
+ <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+  			
+	<script type="text/javascript">
+	$(document).ready(function(){
+		$("#myModal").modal('show');
+	});
+</script>
+			
+    </head>
+	
+
+</html>

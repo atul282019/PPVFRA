@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+	<head>
+	  <th:block th:include="adminfragment/headerlibs.html :: headerlibs"></th:block> 
+	</head>
+
+    <body class="fixed-left">
+        <!-- Begin page -->
+        <div id="wrapper">
+        
+            <!-- Top Bar Start -->
+           <header th:insert="adminfragment/header.html :: header"> </header>
+            <!-- Top Bar End -->
+
+
+            <!-- ========== Left Sidebar Start ========== -->
+			<header th:insert="adminfragment/sidenav.html :: sidevav"> </header>
+            <!-- Left Sidebar End --> 
+
+  
+            <!-- Start right Content here -->  
+                         
+            <!-- ============================================================== -->                      
+            <div class="content-page">
+                <!-- Start content -->
+                <div class="content">
+                    <div class="container">
+
+                        <!-- Page-Title -->
+                        <div class="row">
+                            <div class="col-sm-12">
+                                <h4 class="pull-left page-title">Master</h4>
+                                <ol class="breadcrumb pull-right">
+                                    <li><a href="/admin">Home</a></li>
+                                    <li class="active">Office</li>
+                                    <li>
+                                        <a href="/addnewoffice" class="btn btn-purple waves-effect waves-light btn-xs m-b-5"><b>Add Office</b></a>
+                                    </li>
+                                </ol>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="panel panel-default">
+                                    <div class="panel-heading">
+                                        <h3 class="panel-title">Office List</h3>
+                                    </div>
+                                    <div class="panel-body">
+                                        <div class="row">
+                                            <div class="col-md-12 col-sm-12 col-xs-12">
+                                            <div class="table-responsive">
+                                             <span th:if="${actd_viewtrue != null && actd_viewtrue == 'valpresent' }">
+											
+                                                <table id="shortstorage" class="table table-hover table-bordered dataTable no-footer" role="grid" aria-describedby="mtsdetails_info"> 
+                                                    <thead>
+                                                        <tr role="row">
+                                                            <th class="sorting_desc" tabindex="0" aria-controls="mtsdetails" rowspan="1" colspan="1" aria-label="Sr.No.: activate to sort column ascending" style="width: 43px;" aria-sort="descending">S.No</th>
+                                                            <th class="sorting" tabindex="0" aria-controls="mtsdetails" rowspan="1" colspan="1" aria-label="Office Type: activate to sort column ascending" style="width: 41px;">Office Type</th>
+															<th class="sorting" tabindex="0" aria-controls="mtsdetails" rowspan="1" colspan="1" aria-label="Location: activate to sort column ascending" style="width: 41px;">Location</th>
+															<th class="sorting" tabindex="0" aria-controls="mtsdetails" rowspan="1" colspan="1" aria-label="Addresss: activate to sort column ascending" style="width: 41px;">Address</th>
+															<th class="sorting" tabindex="0" aria-controls="mtsdetails" rowspan="1" colspan="1" aria-label="Code: activate to sort column ascending" style="width: 41px;">Code</th>
+															<!-- <th>State</th> -->
+                                                             <span th:each="sec_chk : ${actd}">
+															<span th:if="${sec_chk == 'Edit'}"> 
+															<th class="sorting" tabindex="0" aria-controls="mtsdetails" rowspan="1" colspan="1" aria-label="Action: activate to sort column ascending" style="width: 41px;">Action</th>
+															</span>
+															</span>
+															
+															 <span th:each="sec_chk : ${actd}">
+															<span th:if="${sec_chk == 'Add'}"> 
+                                                            <th class="sorting" tabindex="0" aria-controls="mtsdetails" rowspan="1" colspan="1" aria-label="Assign States: activate to sort column ascending" style="width: 41px;">Assign States </th>
+                                                            </span>
+                                                            </span>
+                                                            
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+            
+										            <tr role="row" class="odd" th:each="officelist,serial : ${officedetailslist}">
+										            <td th:text="${serial.count}">S.No </td> 
+										            <td th:text="${officelist.office_type}"> Office Type </td> 
+										            <td th:text="${officelist.location}"> Location </td> 
+										            <td th:text="${officelist.address}"> Address</td> 
+										            <td th:text="${officelist.office_code}"> Code</td>
+										            <!-- <td th:text="${officelist.State}">State</td> --> 
+											           
+											            <span th:each="sec_chk : ${actd}">
+														<span th:if="${sec_chk == 'Edit'}"> 
+											           <td>
+											           
+									                    <a th:href="@{'/editoffice/'+${officelist.id}}">Edit</a>
+									                   <!--  &nbsp;&nbsp;&nbsp;
+									                    <a onclick="javascript:if (confirm('Are you sure, you want to remove this office?')) return true; else return false;" th:href="@{'/deleteoffice/'+${officelist.id}}">Delete</a>
+											            -->
+											           
+											            </td>
+											            </span>
+											            </span>
+											            
+											             <span th:each="sec_chk : ${actd}">
+													<span th:if="${sec_chk == 'Add'}"> 
+											            <td><a th:href="@{'/addassignofficestates/'+${officelist.id}}">Assign States</a>
+											            </td>
+											            </span>
+											            </span>
+											            
+										            </tr>
+          
+                                                    </tbody>
+                                                </table>
+                                                </span>
+                                                <span th:unless="${actd_viewtrue != null && actd_viewtrue == 'valpresent' }">
+												<label>YOU ARE NOT AUTHORISED TO VIEW THIS PAGE.PLEASE CONTACT ADMINISTRATOR</label>
+												</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div> <!-- End Row -->
+
+
+                    </div> <!-- container -->
+                               
+                </div> <!-- content -->
+
+               <!--  <footer class="footer text-right">
+                    2019 © PPVFRA.
+                </footer> -->
+
+            </div>
+            <!-- ============================================================== -->
+            <!-- End Right content here -->
+          <div th:replace="adminfragment/footer.html :: footer"></div>
+           </div> <!-- container -->
+                               
+                <!-- content -->
+
+			<!-- start footer content here -->
+			
+			<!-- end footer content here -->
+
+      
+        <!-- END wrapper -->
+
+<!-- footer lib start here-->
+
+<div th:replace="adminfragment/footerlibs.html :: footerlibs"></div>
+</div>
+<!-- end footer lib -->
+
+<script src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
+<script src="https://cdn.datatables.net/buttons/1.5.6/js/dataTables.buttons.min.js"></script>
+<script src="https://cdn.datatables.net/buttons/1.5.6/js/buttons.flash.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.1.3/jszip.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/pdfmake.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/vfs_fonts.js"></script>
+<script src="https://cdn.datatables.net/buttons/1.5.6/js/buttons.html5.min.js"></script>
+<script src="https://cdn.datatables.net/buttons/1.5.6/js/buttons.print.min.js"></script>
+     
+  <div th:if="${message != null}">
+ <div id="myModal1" class="modal fade">
+   <div class="modal-dialog">
+    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+        <div class="modal-content">
+         <div class="modal-body">
+				<p align="center" th:text="${message}" />
+            </div>
+        </div>
+    </div>
+</div>
+</div>
+
+    <script type="text/javascript">
+	      $(document).ready(function(){
+		  $("#myModal1").modal('show');
+	     });
+        </script>
+</body>
+</html>

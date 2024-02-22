@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<div th:fragment="pay">
+												 <form class="form-horizontal" name="formpay" id="formpay" method="post" th:action="@{/savepayment}" th:object="${applications}" onsubmit = "return validatepayment()" enctype="multipart/form-data" role="form"> 
+														
+													 <div th:if="${editmode == 1}">
+													<!--  <div th:if="${binded_values[2] ==1 or binded_values[2] ==2 or binded_values[2] ==4 or binded_values[2] ==5 or binded_values[2] ==6}">
+												      -->
+														<div th:if="${varietyandsubvariety != null}">
+														 <div class="form-group">
+															<label class="col-md-3 control-label">Varaity</label>
+															
+															<div class="col-md-9">
+															
+																<input class="other-12" type="hidden" id="varaity" name="varaity" th:value="${varietyandsubvariety[1]}"> <div th:text="${varietyandsubvariety[3]}"></div><br>
+															<span id="radio1error" style="color:red"></span>
+															</div>
+														</div>
+														 <div class="form-group">
+															<label class="col-md-3 control-label">Sub Varaity</label>
+															<div class="col-md-9">
+																<input type="hidden" class="extant" id="sub" name="sub" th:value="${varietyandsubvariety[2]}"><div th:text="${varietyandsubvariety[4]}"></div><br>
+															</div>
+														</div>
+														</div>
+														<div th:object="${payment}">
+														<div class="form-group">
+															<label class="col-md-3 control-label">Category<span style="color:red">*</span></label>
+															<div class="col-md-6 col-sm-6 col-xs-12">
+																
+														        <select  onchange="GetFees();"  id="category" th:field="*{payment_category}" class="form-control col-md-7 col-xs-12">
+														        <option th:value="-1" >---Select---</option>
+														        <option th:value="1"> Individual </option> 
+																<option th:value="3"> Educational </option>
+																<option th:value="5" >Commercial </option>
+														        </select>
+														  	</div>
+														  	<span id="categoryerror" style="color:red"></span>
+														</div>
+														
+														
+														<div class="form-group">
+															<label class="col-md-3 control-label">Amount: <span style="color:red">*</span> </label>
+															<div class="col-md-3">
+																 <!-- <label id="amount"></label> -->
+																 <input type="text" id="firstName" th:field="*{amount}" readonly>
+															</div>
+														</div>
+														<div class="form-group">
+															<label class="col-md-3 control-label">Payment Type: <span style="color:red">*</span> </label>
+															<div class="col-md-3">
+																<input type="radio" th:field="*{paymentmode}" value="offline" > Offline
+																<input type="radio" th:field="*{paymentmode}" value="online" disabled> Online
+															 	<span id="radioerror" style="color:red"></span>
+															</div>
+															  
+														</div>
+														<div class="form-group">
+                                                        <label class="col-md-3 control-label">DD Number: </label>
+                                                        <div class="col-md-6">
+                                                            <input type="text" th:field="*{ddnumber}" class="form-control" value="">
+                                                            <span id="dderror" style="color:red"></span>
+                                                        </div>
+                                                       </div>
+                                                       	<div class="form-group">
+                                                        <label class="col-md-3 control-label">DD Date: </label>
+                                                        <div class="col-md-6">
+                                                             <input type="date" th:field="*{dddate}" class="form-control" value="">
+                                                             <span id="dateerror" style="color:red"></span>
+                                                        </div>
+                                                       </div>
+	                                                  
+                                                     <div class="form-group">
+                                                        <label class="col-md-3 control-label"> Bank Name: </label>
+                                                        <div class="col-md-6">
+                                                             <input type="text" class="form-control" th:field="*{bankname}" value="">
+                                                               <span id="banknameerror" style="color:red"></span>
+                                                        </div>
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label class="col-md-3 control-label">Branch Name: </label>
+                                                        <div class="col-md-6">
+                                                            <input type="text" class="form-control" th:field="*{branchname}" value="">
+                                                            <span id="branchnameerror" style="color:red"></span>
+                                                        </div>
+                                                    </div>
+                                                    <div class="form-group">
+	                                                        <label class="col-md-3 control-label">Upload scanned document: </label>
+	                                                        <div class="col-md-6">
+	                                                            <input type="file" id="file2" name="paymentfile" class="form-control" th:onchange="'validatePDF(this)'">
+	                                                             <span id="file2error" style="color:red"></span>
+	                                                        </div>
+	                                                    </div>
+                                                   </div>
+                                                    <div class="form-group m-b-0" th:if="${appstatus ==1}">
+                                                        <div class="col-sm-offset-3 col-sm-9">
+                                                             <div th:object="${payment}">
+                                                         	 <input type="hidden" id="paymentid"  name ="paymentid" th:value="*{id}">
+                                                         	 </div>
+                                                        	 <input type="hidden" id="applicationid"  name ="applicationid" th:value="*{id}">
+                                                        	 <input type="hidden" id="applicantid" name="applicantid"  th:value="${userapplicant[0]}">
+                                                        	 <button type="submit" class="btn btn-info waves-effect waves-light">Submit</button>
+                                                        </div>
+                                                    </div>
+                                                    </div>
+<script type="text/javascript">
+  function GetFees()
+  {
+       var variety = document.getElementById("varaity");
+       var suv=document.getElementById("sub");
+       var category=document.getElementById("category");
+       if(variety.value != null)	
+       	$.ajax({
+               type: "POST",
+               url: "/ppvfra/getFees",
+               data: 'variety='+variety.value+'&suv='+suv.value+'&cat='+category.value,
+               //dataType:'application/json',
+               success: function (response) {
+                 $('#firstName').val(response);
+                 $('#amount').text(response);
+                 },
+               failure: function (response) {
+            	   
+                   alert(response.responseText);
+					  
+               },
+               error: function (response) {
+                   alert(response.responseText);
+					   
+															
+              }
+      });
+   	
+   }
+ </script>
+ 
+ 
+ <script type = "text/javascript">
+      function validatepayment() {
+    	  if( document.formpay.category.value == "-1" ) {
+         	 document.getElementById("categoryerror").innerHTML="please select Category";
+         	 document.formpay.category.focus() ;
+             return false;
+          }
+    	 else { 
+    		 document.getElementById("categoryerror").innerHTML="";
+    		 if (document.formpay.paymentmode[0].checked == true) {
+    		 document.getElementById("categoryerror").innerHTML="";
+			 if( document.formpay.ddnumber.value == "" ) {
+			
+               	 document.getElementById("dderror").innerHTML="name can't be blank";
+                   document.formpay.ddnumber.focus() ;
+                   return false;
+                }
+           	   
+                if( document.formpay.dddate.value == "" ) {
+                 document.getElementById("dderror").innerHTML="";
+               	 document.getElementById("dateerror").innerHTML="please select date";
+               	 document.formpay.dddate.focus() ;
+                   return false;
+                }
+               
+                 if( document.formpay.bankname.value == "" ) {
+                	 document.getElementById("dateerror").innerHTML="";
+                	 document.getElementById("banknameerror").innerHTML="bank name can't be null";
+                	 document.formpay.bankname.focus() ;
+                    return false;
+                 }
+                 if( document.formpay.branchname.value == "" ) {
+                	 document.getElementById("banknameerror").innerHTML="";
+                 	 document.getElementById("branchnameerror").innerHTML="branch name can't be null";
+                 	 document.formpay.branchname.focus() ;
+                     return false;
+                  }
+                 if( document.formpay.paymentfile.value == "" ) 
+          	    {
+                	 document.getElementById("branchnameerror").innerHTML="";
+              	    if(document.formpay.paymentfile.files.length === 0){
+              	        document.formpay.paymentfile.focus();
+              	        document.getElementById("file2error").innerHTML="field can't be blank";
+              	        return false;
+              	    }
+                  
+                   return false;
+                }
+	      	    return true;
+	      	  }
+		 else{
+		  document.getElementById("radioerror").innerHTML="please select payment type";
+          document.formpay.paymentmode[0].focus();
+          return false;
+		 }
+		 
+    	    return true;
+    	  }
+     	 return( true );
+      }
+	</script>
+	
+	
+<script type="text/javaScript">
+
+var formOK = false;
+function validatePDF(objFileControl){
+ var file = objFileControl.value;
+ var len = file.length;
+ var ext = file.slice(len - 4, len);
+ if(ext.toUpperCase() == ".PDF" || ext.toUpperCase() == ".PNG" || ext.toUpperCase() == ".JPG" || ext.toUpperCase() == ".GIF"){
+   formOK = true;
+ }
+ else{
+	 $("#gotosubattach").attr("disabled", true);
+	 formOK = false;
+   objFileControl.value =null;
+   alert("Only PDF/PNG/JPG/GIF files allowed.");
+ }
+}
+</script>
+
+
+	
+	
+  </form>    
+ </div>
+    
+</html>
+                                                

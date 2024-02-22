@@ -1,0 +1,117 @@
+  
+  <!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+	<head>
+	  <th:block th:include="adminfragment/headerlibs.html :: headerlibs"></th:block> 
+	</head>
+
+    <body class="fixed-left">
+        <!-- Begin page -->
+        <div id="wrapper">
+        
+            <!-- Top Bar Start -->
+           <header th:insert="adminfragment/header.html :: header"> </header>
+            <!-- Top Bar End -->
+
+
+            <!-- ========== Left Sidebar Start ========== -->
+			<header th:insert="adminfragment/sidenav.html :: sidevav"> </header>
+            <!-- Left Sidebar End --> 
+
+  
+            <!-- Start right Content here -->  
+         <!-- ============================================================== -->                      
+            <div class="content-page">
+                <!-- Start content -->
+                <div class="content">
+                    <div class="container">
+
+                        <!-- Page-Title -->
+                        <div class="row">
+                            <div class="col-sm-12">
+                                <h4 class="pull-left page-title">Role Management</h4>
+                                <ol class="breadcrumb pull-right">
+                                    <li><a href="/admin">Home</a></li>
+                                    <li class="active">Add Role</li>
+                                    <li>
+                                            <button type="button" onclick="history.go(-1);" class="btn btn-purple waves-effect waves-light btn-xs m-b-5">Back</button>
+                                    </li>
+                                </ol>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-sm-12">
+                                <div class="panel panel-default">
+                                    <div class="panel-heading"><h3 class="panel-title">Add Role</h3></div>
+                                    <div class="panel-body">
+                                      
+                                        <form action="#" th:action="@{/saverolemethod}" th:object="${urserole}" method="post" class="form-horizontal" role="form">                                   
+                                            <div class="form-group">
+                                                <label class="col-md-2 control-label">Role</label>
+                                                <div class="col-md-10">
+                                                 <!--    <input type="text" class="form-control" value="Some text value..."> -->
+                                                 <input class="form-control" type="text" th:field="*{role}">
+ 												<div class="error" th:if="${#fields.hasErrors('role')}" th:errors="*{role}">Role Error</div>
+                                         		</div>
+                                                
+                                            </div>
+                                                                                                                  
+                                            <div class="form-group">
+                                                <label class="col-md-2 control-label">Description</label>
+                                                <div class="col-md-10">
+                                                    <textarea class="form-control" th:field="*{description}" rows="5"></textarea>
+                                                	<!-- <span th:if="${#fields.hasErrors('description')}" th:errors="*{description}" class="text-danger"></span> -->
+                                               <div class="error" th:if="${#fields.hasErrors('description')}" th:errors="*{description}">Description Error</div> 
+                                                </div>
+                                            </div>
+                                            
+                                            <div class="form-group">
+                                                <label class="col-sm-2 control-label">Status</label>
+                                                <div class="col-sm-10">
+                                                      <select class="form-control" th:field="*{active}">
+                                                        <option th:value="0" th:text = "Active"></option>
+                                                        <option th:value="1" th:text="Inactive"></option>
+                                                    </select>
+                                                </div>
+                                            </div>
+
+                                            <div class="form-group m-b-0">
+                                                <div class="col-sm-offset-2 col-sm-9">
+                                                    <button type="submit" class="btn btn-info waves-effect waves-light">Submit</button>
+                                                </div>
+                                            </div>
+                           
+                                        </form>
+                                    </div> <!-- panel-body -->
+                                </div> <!-- panel -->
+                            </div> <!-- col -->
+                        </div> <!-- End row -->
+
+                    </div> <!-- container -->
+                               
+                </div> <!-- content -->
+
+             
+            </div>
+            <!-- ============================================================== -->           
+            <!-- End Right content here -->
+          <div th:replace="adminfragment/footer.html :: footer"></div>
+           </div> <!-- container -->
+                               
+                <!-- content -->
+
+			<!-- start footer content here -->
+			
+			<!-- end footer content here -->
+
+      
+        <!-- END wrapper -->
+
+<!-- footer lib start here-->
+
+<div th:replace="adminfragment/footerlibs.html :: footerlibs"></div>
+<!-- end footer lib -->
+    
+    </body>
+</html>

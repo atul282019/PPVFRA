@@ -1,0 +1,256 @@
+  
+  <!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+	<head>
+	  <th:block th:include="adminfragment/headerlibs.html :: headerlibs"></th:block> 
+	</head>
+
+    <body class="fixed-left">
+        <!-- Begin page -->
+        <div id="wrapper">
+        
+            <!-- Top Bar Start -->
+           <header th:insert="adminfragment/header.html :: header"> </header>
+            <!-- Top Bar End -->
+
+
+            <!-- ========== Left Sidebar Start ========== -->
+			<header th:insert="adminfragment/sidenav.html :: sidevav"> </header>
+            <!-- Left Sidebar End --> 
+
+  
+             <!-- Start right Content here -->
+            <!-- ============================================================== -->                      
+            <div class="content-page">
+                <!-- Start content -->
+                <div class="content">
+                    <div class="container">
+
+                        <!-- Page-Title -->
+                        <div class="row">
+                            <div class="col-sm-12">
+                                <h4 class="pull-left page-title">Master</h4>
+                                <ol class="breadcrumb pull-right">
+                                <li><a href="/admin">Home</a></li>
+                                 <li class="active">Add Dust Test Centers</li>
+                                 <li>
+                                            <a href="getdustestcenter" class="btn btn-purple waves-effect waves-light btn-xs m-b-5"><b>Back</b></a>
+                                 </li>
+                                </ol>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-sm-12">
+                                <div class="panel panel-default">
+                                    <div class="panel-heading"><h3 class="panel-title">Add Dust Test Center </h3></div>
+                                    <div class="panel-body">
+                                        <form class="form-horizontal" th:action="@{/adddustestcentermethod}" th:object="${adddustestcenter}" role="form" method="post">                                    
+                                           
+											
+											<div class="form-group">
+                                                <label class="col-sm-2 control-label">Crop group</label>
+                                                <div class="col-sm-6">
+                                                <div th:if="${Crop_Group != null}">
+                                                    <select onchange="GetCropName();" id="cropgroupname" th:field="*{cropgroup_id}" class="form-control">
+       														 <option th:value="-1">Select</option>
+          													  <option th:each="dropDownItem : ${Crop_Group}"
+              														  th:value="${dropDownItem.id}"
+                  													  th:text="${dropDownItem.crop_group}" />
+       										 			</select>
+       										 			<div class="error" th:if="${#fields.hasErrors('cropgroup_id')}" th:errors="*{cropgroup_id}">cropgroup_id Error</div>
+                                                </div>
+                                            </div>
+                                            </div>
+                                              <div class="form-group">
+                                                <label class="col-sm-2 control-label">Crop Name</label>
+                                                <div class="col-sm-6">
+                                                <div th:if="${Crop != null}">
+                                                     <select id="cname" th:field="*{crop_id}" class="form-control">
+       														 <option th:value="-1">Select</option>
+          													  <option th:each="dropDownItem : ${Crop}"
+              														  th:value="${dropDownItem.id}"
+                  													  th:text="${dropDownItem.crop_common_name}" />
+       										 			</select>
+       										 			<div class="error" th:if="${#fields.hasErrors('crop_id')}" th:errors="*{crop_id}">crop_id Error</div>
+                                                </div>
+                                            </div>	
+                                            </div>		
+                                            							
+											 <div class="form-group">
+														<label class="col-sm-2 control-label">State</label>
+														   <div class="col-sm-6">
+														    <div th:if="${State != null}">
+														        <select onchange="GetDistricts();" id="statecode"  th:field="*{state_id}" class="form-control">
+														        <option th:value="-1" >Select</option>
+														            <option th:each="dropDownItem : ${State}"
+														               th:value="${dropDownItem.statecode}"
+														               th:text="${dropDownItem.statename_inenglish}" />
+														        </select>
+														        <div class="error" th:if="${#fields.hasErrors('state_id')}" th:errors="*{state_id}">state_id Error</div>
+														   	</div>
+														   	
+														   	</div>
+														</div> 
+														
+														
+														
+														
+														 <div class="form-group">
+														<label class="col-sm-2 control-label">District</label>
+														   <div class="col-sm-6">
+														    <div  th:if="${District != null}">
+														        <select id="districtcode" th:name="districtcode" th:field="*{district_id}" class="form-control">
+														        <option th:value="-1" >Select</option>
+														            <option th:each="dropDownItem : ${District}"
+														               th:value="${dropDownItem.districtcode}"
+														               th:text="${dropDownItem.districtname_inenglish}" />
+														        </select>
+														       <div class="error" th:if="${#fields.hasErrors('district_id')}" th:errors="*{district_id}">district_id Error</div>
+														   	</div>
+														   	
+														   	</div>
+														</div> 
+																								
+											<div class="form-group">
+                                                <label class="col-md-2 control-label">DUS Test Center</label>
+                                                <div class="col-md-6">
+                                                    <input type="text" th:field="*{dus_test_center}" class="form-control"  placeholder="Enter the Dus Test Center">
+                                                    <div class="error" th:if="${#fields.hasErrors('dus_test_center')}" th:errors="*{dus_test_center}">dus_test_center Error</div>
+                                                </div>
+                                            </div>
+                                           
+                                           <div class="form-group">
+					                <label class="col-sm-2 control-label">Status</label>
+					                <div class="col-sm-6">
+					                  <select class="form-control" th:field="*{isactive}">
+					                 <option th:value="1" th:text = "Active"></option>
+					                 <option th:value="0" th:text="Inactive"></option>
+					             </select>
+					                </div>
+					            </div> 
+					            
+					            
+					                <div class="form-group">
+					                <label class="col-sm-2 control-label">Center Type</label>
+					                <div class="col-sm-6">
+					                  <select class="form-control" th:field="*{centertype}">
+					                 <option th:value="LC" th:text = "Lead_Centre"></option>
+					                 <option th:value="CNC" th:text="Co_Nodal_Centre"></option>
+					             </select>
+					                </div>
+					            </div> 
+                                          
+                                            <div class="form-group m-b-0">
+                                                <div class="col-sm-offset-2 col-sm-9">
+                                                    <button type="submit" class="btn btn-info waves-effect waves-light">Submit</button>
+                                                </div>
+                                            </div>
+                                                                       
+                                        </form>
+                                    </div> <!-- panel-body -->
+                                </div> <!-- panel -->
+                            </div> <!-- col -->
+                        </div> <!-- End row -->
+
+                    </div> <!-- container -->
+                               
+                </div> <!-- content -->
+<!-- 
+                <footer class="footer text-right">
+                    2019 © PPVFRA.
+                </footer> -->
+
+            </div>
+            <!-- ============================================================== -->
+            <!-- End Right content here -->
+           
+           
+          <div th:replace="adminfragment/footer.html :: footer"></div>
+           </div> <!-- container -->
+                               
+                <!-- content -->
+
+			<!-- start footer content here -->
+			
+			<!-- end footer content here -->
+
+      
+        <!-- END wrapper -->
+
+<!-- footer lib start here-->
+
+<div th:replace="adminfragment/footerlibs.html :: footerlibs"></div>
+<!-- end footer lib -->
+
+<script type="text/javascript">
+   function GetDistricts()
+  {
+       var ddlState= document.getElementById("statecode");
+       var district=document.getElementById("districtcode");
+       var district1=$("#districtcode");
+       if(ddlState.value != null)	
+       	$.ajax({
+               type: "POST",
+               url: "/ppvfra/getDistricts",
+               data: 'stateCode='+ddlState.value,
+               dataType:"json",
+               success: function (response) {
+               	
+              district1.empty().append('<option selected="selected" value="">Please select</option>');
+                for(var k=0;k<response.length;k++)
+     	  {
+     	  var opt = response[k];
+     	   var el = document.createElement("option");
+     	   el.textContent = opt[1];
+     	   el.value = opt[0];
+     	   district.appendChild(el);
+     	}
+               },
+               failure: function (response) {
+                   alert(response.responseText);
+               },
+               error: function (response) {
+                   alert(response.responseText);
+               }
+      });
+   	
+   }
+ </script>
+
+   <script type="text/javascript">
+   function GetCropName()
+  {
+       var cropgroup= document.getElementById("cropgroupname");
+       var cropname=document.getElementById("cname");
+       var cropname1=$("#cname");
+       if(cropgroup.value != null)	
+       	$.ajax({
+               type: "POST",
+               url: "/ppvfra/getCropName",
+               data: 'cropgroupname='+cropgroup.value,
+               dataType:"json",
+               success: function (response) {
+               	
+              cropname1.empty().append('<option selected="selected" value="">Please select</option>');
+                for(var k=0;k<response.length;k++)
+     	  {
+     	  var opt = response[k];
+     	   var el = document.createElement("option");
+     	   el.textContent = opt[1];
+     	   el.value = opt[0];
+     	   cropname.appendChild(el);
+     	}
+               },
+               failure: function (response) {
+                   alert(response.responseText);
+               },
+               error: function (response) {
+                   alert(response.responseText);
+               }
+      });
+   	
+   }
+ </script>
+</body>
+</html>

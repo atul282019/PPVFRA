@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+	<div th:fragment="tabmenu">
+
+            <!-- ========== Left Sidebar Start ========== -->
+  										  <ul class="nav nav-tabs tabs tabs-top">
+                                            <li class="active tab dashboard-bg-color">
+                                                <a href="#home-21" data-toggle="tab" aria-expanded="false"> 
+                                                    <span class="visible-xs"><i class="fa fa-home"></i></span> 
+                                                    <span class="hidden-xs">Form I</span> 
+                                                </a> 
+                                            </li> 
+                                             
+                                            <li class="tab payment dashboard-bg-color"> 
+                                                <a href="#profile-21" aria-expanded="false"> 
+                                                    <span class="visible-xs"><i class="fa fa-user"></i></span> 
+                                                    <span class="hidden-xs">Declaration</span> 
+                                                </a> 
+                                            </li> 
+                                            <li class="tab dashboard-bg-color"> 
+                                                <a href="#messages-21" data-toggle="tab" aria-expanded="true"> 
+                                                    <span class="visible-xs"><i class="fa fa-envelope-o"></i></span> 
+                                                    <span class="hidden-xs">Attachments</span> 
+                                                </a> 
+                                            </li>
+                                            <li class="tab dashboard-bg-color"> 
+                                                <a href="#technical" data-toggle="tab" aria-expanded="true"> 
+                                                    <span class="visible-xs"><i class="fa fa-envelope-o"></i></span> 
+                                                    <span class="hidden-xs">Technical Questionnaire</span> 
+                                                </a> 
+                                            </li> 
+                                            <li class="tab dashboard-bg-color"> 
+                                                <a href="#messages-23" data-toggle="tab" aria-expanded="true"> 
+                                                    <span class="visible-xs"><i class="fa fa-envelope-o"></i></span> 
+                                                    <span class="hidden-xs">Final Preview</span> 
+                                                </a> 
+                                            </li> 
+											<li class="tab payment dashboard-bg-color"> 
+                                                <a href="#payment" aria-expanded="true"> 
+                                                    <span class="visible-xs"><i class="fa fa-envelope-o"></i></span> 
+                                                    <span class="hidden-xs">Payment</span> 
+                                                </a> 
+                                            </li>
+                                        </ul>
+                                        
+                                         <div class="tab-pane dashboard-bg-color" id="payment">
+                                                 <div th:insert="application/payment.html :: pay"> </div> 
+                                         </div> 
+                                         <div class="tab-pane dashboard-bg-color" id="profile-21">
+                                         		<div th:insert="application/declaration.html :: declaration"> </div> 
+                                          </div> 
+                                          <div class="tab-pane dashboard-bg-color" id="messages-21">
+                                          		<div th:insert="application/attachment.html :: attachement"> </div>
+                                          </div>
+                                          <div class="tab-pane dashboard-bg-color" id="technical">
+                                          		<div th:insert="application/questionnaier.html :: question"> </div>
+                                          </div>
+                                          <div class="tab-pane dashboard-bg-color" id="messages-23">
+                                          		<div th:insert="application/finalpreview_form1.html :: finalpreview"> </div>
+                                          </div>
+            <!-- ========== Left Sidebar End ========== -->
+
+   </div>
+</html>

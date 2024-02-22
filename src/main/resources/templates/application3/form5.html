@@ -1,0 +1,582 @@
+<!-- 
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+	<div th:fragment="formfive">
+
+	
+<form class="form-horizontal" role="form" name="f3_formv" id="f3_formv" th:action="@{/saveapplication3form5}" th:object="${applications}" method="post" enctype="multipart/form-data" onsubmit = "return f3_validateformv()" >  
+				<div class="form-group">
+					<label><h4>5.Type of variety(see in chapter III of the protection of plant varieties and farmers' Right Authority,2003):<span style="color:red">*</span></h4></label>
+				</div>
+				<div class="form-group">
+					<label class="col-md-3 control-label"></label>
+					<div class="col-md-9">
+						<input class="other-12" type="radio" th:field="*{varirtytypeid}" value="1">NEW VARIETY<br>
+						<input type="radio" class="extant" th:field="*{varirtytypeid}" value="2">EXTANT VARIETY<br>
+					<span id="radio1error" style="color:red"></span>
+					</div>
+				</div>
+					
+				<div class="form-group variety-knowledge" style="margin-left:35px;">
+					<label class="col-md-3 control-label"></label>
+					<div class="col-md-9">
+						<input class="" type="radio"  th:field="*{subvarietytypeid}" value="1">Notified Under Section 5 of Seeds Act, 1966
+					</div>
+				</div>
+				<div class="form-group other-1 variety-knowledge" style="margin-left:35px;">
+					<label class="col-md-3 control-label"></label>
+					<div class="col-md-9">
+						<input type="radio" th:field="*{subvarietytypeid}" value="2">VCK (Variety of Common Knowledge)
+					<span id="notifiederror" style="color:red"></span>
+					</div>
+				</div>
+				
+				<hr/>
+				
+				<div class="variety-knowledge-1">
+				<div class="form-group">
+					<label class="col-md-3 control-label">Date of Notification<span style="color:red">*</span></label>
+					<div class="col-md-6">
+						<input type="date" class="form-control" id="date_notification" name="date_notification" th:value="*{#dates.format(date_notification,'yyyy-MM-dd')}" onchange="f3_TDate()">
+					     <span id="notificationdateerror" style="color:red"></span>
+					
+					</div>
+				</div>
+								
+		<div class="form-group">
+			<label class="col-md-3 control-label">Notification Number<span style="color:red">*</span> </label>
+			<div class="col-md-6">
+				<input type="text" class="form-control"  th:field="*{notification_number}" value="">
+				<span id="notificationnoerror" style="color:red"></span>
+			</div>
+		</div>
+		
+		<div class="form-group">
+			<label class="col-md-3 control-label">Upload Copy of Notification<span style="color:red">*</span> </label>
+			<div class="col-md-6">
+				<input type="file" id="file1" name="notificationfile" th:value="*{copy_notiifcation_path}" class="form-control" th:onchange="'javascript:f3_uploadfile_5(),f3_validatePDF(this)'">
+				<a th:href="'/ppvfra/download/f3formvnotification/'+*{copy_notiifcation_name}" target="_blank">
+				<span id="file_ucon" th:text="*{copy_notiifcation_name}"></span></a>
+				<p><span>File type allowed: PDF/PNG/JPG/GIF, Max file size: 500KB.</span></p>
+				<span id="file1error" style="color:red"></span>
+			</div>
+		</div>
+		
+		<div class="form-group">
+			<label class="col-md-3 control-label">Upload Release Proposal<span style="color:red">*</span></label>
+			<div class="col-md-6">
+				<input type="file" id="fileupload2" name="proposalfile" class="form-control" th:onchange="'javascript:f3_uploadfile_52(),f3_validatePDF(this)'">
+				<a th:href="'/ppvfra/download/f3formvnotification/'+*{release_proposal_name}" target="_blank">
+				<span id="file_urp" th:text="*{release_proposal_name}"></span></a>
+				 <p><span>File type allowed: PDF/PNG/JPG/GIF, Max file size: 500KB.</span></p>
+				 <span id="file2_uploaderror" style="color:red"></span>
+			</div>
+		</div>
+		</div>
+		
+		<div class="form-group" th:if="${appstatus ==1}">
+			<div class="col-sm-offset-10 col-sm-12">
+			
+			    <input type="hidden" id="applicationidfromv" name="applicationidfromv" th:value="*{id}">
+				<input type="hidden" id="applicantidformv" name="applicantidformv"  th:value="${userapplicant[0]}">
+				<input type="hidden" id="applicanttypeidformv" name="applicanttypeidformv" th:value="*{applicanttypeid}" />
+				<input type="hidden" id="f5_id" name="f5_id" th:value="${f5_id}">
+				<input type="hidden" id="file_ucon" name="file_ucon" th:value="*{copy_notiifcation_name}">
+				<input type="hidden" id="file_urp" name="file_urp" th:value="*{release_proposal_name}">
+				
+				
+				<button type="submit" id="btnsave" class="btn btn-info waves-effect waves-light">Save</button>
+			</div>
+		</div>
+														
+</form>
+<script type = "text/javascript">
+      function f3_validateformv() {  
+         if (document.getElementById("varirtytypeid1").checked == true) {
+        	 document.getElementById("radio1error").innerHTML="";
+             return true;
+        	  }
+         else if (document.getElementById("varirtytypeid2").checked == true) {
+        	     document.getElementById("radio1error").innerHTML="";
+        	     if (document.getElementById("subvarietytypeid1").checked == true) {
+        	    	 document.getElementById("notifiederror").innerHTML="";
+        	    	 if (document.f3_formv.date_notification.value == "")
+        	    		 {
+        	    		 document.getElementById("notificationdateerror").innerHTML="Please enter date";
+                         document.f3_formv.date_notification.focus() ;
+                         return false;
+        	    		 }
+	        	    	 else{
+	        	    		 document.getElementById("notificationdateerror").innerHTML="";
+	        	    	 }
+	        	    	 if(document.f3_formv.notification_number.value == ""){
+	        	    		 document.getElementById("notificationnoerror").innerHTML="Please enter your notification number";
+	                         document.f3_formv.notification_number.focus() ;
+	                         return false;
+	        	    	 }
+	        	    	 else{
+	        	    		 document.getElementById("notificationnoerror").innerHTML="";
+	        	    	 }
+	        	    	 
+	        	    	 
+	        	    	 if( document.getElementById("file1").value == "" || document.getElementById("file1").value ==null ) 
+		             	    {
+		                 	 var ucn= $('#file_ucon').text();
+		                 	 if(ucn.length>0 && !(ucn =="" || ucn==null))
+		                 		 {
+		                 		 document.getElementById("file1error").innerHTML="";
+		                 	     }else{
+		                 	        document.getElementById("file1").focus();
+		                 	        document.getElementById("file1error").innerHTML="Please upload file";
+		                 	        return false;
+		                 	    	}
+		                 	}
+	        	    	 else{
+	        	    		 document.getElementById("file1error").innerHTML="";
+	        	    	 }
+	        	    	 
+	        	    	 if( document.getElementById("fileupload2").value == "" || document.getElementById("fileupload2").value == null ) 
+		             	    {
+		                 	    var urp2=$('#file_urp').text();
+		                 	   if(urp2.length>0 && !(urp2 =="" || urp2==null))
+		                 		 {
+		                 		 document.getElementById("file2_uploaderror").innerHTML="";
+		                 	     }else{
+		                 	        document.getElementById("fileupload2").focus();
+		                 	        document.getElementById("file2_uploaderror").innerHTML="Please upload file";
+		                 	        return false;
+		                 	    }
+		                   }
+	        	    	 else{
+	        	    		 document.getElementById("file2_uploaderror").innerHTML="";
+		             	    } 
+                   
+	        	    	 
+	        	    	 return true;
+                    }
+        	    
+        	    else if(document.getElementById("subvarietytypeid2").checked == true){
+        	    	return true;
+        	    }
+        	    else{
+        	    	document.getElementById("notifiederror").innerHTML="Please select any one";
+                    document.getElementById("varirtytypeid1").focus() ;
+          	    return false;
+        	    }
+        	    return true;
+        	  }
+           else {
+        		  document.getElementById("radio1error").innerHTML="Please select any one variety";
+                  document.getElementById("subvarietytypeid1").focus() ;
+        	    return false;
+        	  }
+      }
+</script>
+
+<script type="text/javaScript">
+
+var formOK = false;
+function f3_validatePDF(objFileControl){
+ var file = objFileControl.value;
+ var len = file.length;
+ var ext = file.slice(len - 4, len);
+ if(ext.toUpperCase() == ".PDF" || ext.toUpperCase() == ".PNG" || ext.toUpperCase() == ".JPG" || ext.toUpperCase() == ".GIF"){
+   formOK = true;
+ }
+ else{
+	 $("#gotosubattach").attr("disabled", true);
+	 formOK = false;
+   objFileControl.value =null;
+   alert("Only PDF/PNG/JPG/GIF files are allowed.");
+ }
+}
+</script>
+
+
+<script type="text/javascript">
+        function f3_uploadfile_5()  {
+        	var file_id = document.getElementById("file1").value;
+        	 {
+            var	filename = file_id;    
+            //alert(filename);
+			
+			var iFileSize = document.getElementById("file1").files[0].size;
+           // alert(iFileSize);
+            
+            $.ajax({
+                type: "POST",
+                url: "/ppfvra/api/filesizecheck",
+                data:'filename='+filename+'&filesize='+iFileSize,
+               
+                success: function (data) {
+
+               if(data == false)
+				{ 
+            	  
+        document.getElementById("file1error").innerHTML = " <font color='red'>File size is greater than maximum allowed size of 500 KB.</font>";
+        var tst=document.getElementById("file1");
+        //$("#subform6").attr("disabled", true);
+
+        		tst.value='';
+         return false;
+                }
+			else if (data == true) {
+		       // $("#subform6").attr("disabled", false);
+ 				document.getElementById("file1error").innerHTML = " ";
+			     return true;
+                    }
+                   
+                }
+            }); 
+            }
+  }
+</script>
+	
+<script type="text/javascript">
+        function f3_uploadfile_52()  {
+        	var file_id = document.getElementById("fileupload2").value;
+        	 {
+            var	filename = file_id;    
+            //alert(filename);
+			
+			var iFileSize = document.getElementById("fileupload2").files[0].size;
+           // alert(iFileSize);
+            
+            $.ajax({
+                type: "POST",
+                url: "/ppfvra/api/filesizecheck",
+                data:'filename='+filename+'&filesize='+iFileSize,
+               
+                success: function (data) {
+
+               if(data == false)
+				{ 
+            	  
+        document.getElementById("file2_uploaderror").innerHTML = " <font color='red'>File size is greater than maximum allowed size of 500 KB.</font>";
+        var tst=document.getElementById("fileupload2");
+       // $("#subform6").attr("disabled", true);
+
+        		tst.value='';
+         return false;
+                }
+			else if (data == true) {
+		        //$("#subform6").attr("disabled", false);
+ 				document.getElementById("file2_uploaderror").innerHTML = " ";
+			     return true;
+                    }
+                   
+                }
+            }); 
+            }
+  }
+</script>
+
+<script type="text/javascript">
+function f3_TDate() {
+    var UserDate = document.getElementById("date_notification").value;
+    var ToDate = new Date();
+	
+    $("#btnsave").attr("disabled",false);
+    
+    if (new Date(UserDate).getTime() > ToDate.getTime()) {
+          //alert("Please Select Date Less Than Or Equal to Present Date.");
+          document.getElementById("notificationdateerror").innerHTML="Please Select Date Less Than Or Equal to Present Date";
+          document.f3_formv.date_notification.focus() ;
+           $("#btnsave").attr("disabled",true);
+          return false;
+     }else{
+    	 document.getElementById("notificationdateerror").innerHTML="";
+          }
+    
+    return true;
+}
+</script>	
+
+
+	</div>
+	</html>
+	
+-->
+
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+	<div th:fragment="formfive">
+
+<form class="form-horizontal" role="form" id="f3_formv" name="f3_formv" th:action="@{/saveapplication3form5}" th:object="${applications}" method="post"> <!-- enctype="multipart/form-data">  -->                                       
+				  <div class="col-md-10">
+                      <input type="hidden" id="applicationidhidden" th:value="${applications.id}" th:name="applicationidhidden" readonly="readonly"  />
+                  </div>
+					
+					<div class="form-group">
+						<label class="col-md-6 "><h4>5.(a)Classification of the Candidate Variety:<span style="color:red">*</span><h4></label>
+					</div>
+					<div class="form-group">
+						<label class="col-md-3 control-label"></label>
+						<div class="col-md-9">
+							<input class="other-1" type="checkbox" id="checkbox1" name="checkbox" value="1">TYPICAL VARIETY <a href="#" title="" data-toggle="popover" data-trigger="focus" data-content=" Typical variety means a variety, which is not a hybrid or an essentially derived variety and normally propagated by using propagules saved from previous crop production cycles (Example: pure lines including parental lines/composite varieties or vegetative propagated varieties)."><span class="badge">i</span></a><br>
+							
+							<!-- <input class="other-1" type="checkbox" id="checkbox2" name="checkbox" value="2">HYBRID VARIETY <a href="#" title="" data-toggle="popover" data-trigger="focus" data-content="The hybrid and not a transgenic hybrid. In case of transgenic attach copy of the Genetic Engineering Approval Committee clearances for cultivation and seed productions."><span class="badge">i</span></a><br>
+							<input class="other-1" type="checkbox" id="checkbox3" name="checkbox" value="3">TRANSGENIC<br>
+							 -->
+							 <input class="other" type="checkbox"   id="checkbox4_f3"   name="checkbox" value="4" onchange="Hidetextbox()">OTHER (SPECIFY)<br>
+						 <div class="help-block with-errors" id="docuploaderror2"></div> 
+	                                             	
+						</div>
+					</div>
+					<div id="other_text_div_f3" class="form-group other-textbox_f3">
+						<label class="col-md-3 control-label"></label>
+						<div class="col-md-6">
+							<input type="text" class="form-control" id ="othervalue" name="othervalue" value="">
+							 <div class="help-block with-errors" id="docuploaderror3"></div> 
+	                                             	
+						</div>
+					</div>
+					
+					<!-- 
+					<div class="form-group">
+						<label class="col-md-6 control-label">(b.) What is (are) the Distinctiveness Uniformity Stability feature on the basis of which registration is sought. Explain in detail the group characters (see specific guidelines for details). Attach 'Technical Questionnaire' sheet with all needed details duly signed with seal.<span style="color:red">*</span></label>
+					</div>
+					<div class="form-group">
+						<label class="col-md-3 control-label"></label>
+						<div class="col-md-9">
+							<textarea class="form-control" id="distinctuniform" th:field="*{dus_features}" onchange="uniform_f6()"></textarea>
+						</div>
+						<div class="help-block with-errors" th:id="distinctuniformerror"></div> 
+					</div>
+					
+					<div class="form-group">
+						<label class="col-md-6 control-label">(c.) If new variety is a transgenic attach clearance on Bio-safety from Ministry of Environment and Forests.<span style="color:red">*</span></label>
+					</div>
+					<input type="file" id="fname_6thform" name="transgenicfile" th:onchange="'javascript:uploadfile_6(),validatePDF(this)'">
+	    			<a th:href="'/ppvfra/download/formvnotification/'+*{transgenic_bioname}" target="_blank">
+	    				<span id="file_f6"   th:value="*{transgenic_bioname}" th:text="*{transgenic_bioname}">
+	    				</span>
+	    			</a>
+	    			
+	    				
+					 <p><span>File type allowed: PDF/PNG/JPG/GIF, Max file size: 500KB.</span></p>
+					 <div class="help-block with-errors" th:id="docuploaderror4"></div> 
+	 				-->
+	 				
+	 				
+					<hr/>
+					<div class="form-group" th:if="${appstatus ==1}">
+						<div class="col-sm-offset-10 col-sm-12">
+						    <input type="hidden" id="applicationidfromvi" name="applicationidfromvi" th:value="*{id}">
+							<input type="hidden" id="applicantidformvi" name="applicantidformvi"  th:value="${userapplicant[0]}">
+							<input type="hidden" id="applicanttypeidformvi" name="applicanttypeidformvi" th:value="*{applicanttypeid}" />
+							<input type="hidden" id="f5_id" name="f5_id" th:value="${f5_id}">
+							<!-- <input type="hidden" id="file_f1f6"  name="file_f1f6" th:value="*{transgenic_bioname}">
+							 -->
+							<button type="submit" id="subform6" class="btn btn-info waves-effect waves-light" onclick ="return checkvaluesform6()" >Save</button>
+						</div>
+					</div>
+				
+<script>
+    function Hidetextbox(){
+   	        if(document.getElementById("checkbox4_f3").checked){
+           	$(".other-textbox_f3").css("display", "block");
+            }
+   	        else{
+   	        	$(".other-textbox_f3").css("display", "none");
+   	        	}
+   	        }
+</script>
+				<script type="text/javascript">
+				function checkvaluesform6()
+				{
+				var c1= document.getElementById("checkbox1").checked;
+				/* var c2= document.getElementById("checkbox2").checked;
+				var c3= document.getElementById("checkbox3").checked; */
+				var c4= document.getElementById("checkbox4_f3").checked;
+				var otherval = document.getElementById("othervalue").value;
+				var file_id = document.getElementById("fname_6thform").value;
+				
+				
+			//	if((c1 == false || c1 == "") && (c2 == false || c2 == "") && (c3 == false || c3 == "") && (c4 == false || c4 == ""))
+				if((c1 == false || c1 == "")  && (c4 == false || c4 == ""))
+							{
+					document.getElementById("docuploaderror2").innerHTML = " <font color='red'>Please select candidate variety</font>";
+					  $("#subform6").attr("disabled", true);
+					return false;
+					}else if(c4 !=false)
+					{
+					if(otherval == null || otherval=="")
+						{
+						document.getElementById("docuploaderror3").innerHTML = " <font color='red'>Please specify others</font>";
+						 $("#subform6").attr("disabled", true);
+						return false;
+						}
+					}
+					
+					/*
+					else if(c3 !=false)
+					{
+						 if(file_id =="" || file_id == null)
+						{
+						var pf_6=$('#file_f6').text();
+						if(pf_6.length>0 && !(pf_6 =="" || pf_6 ==null) )
+							{
+							$("#subform6").attr("disabled", false);
+							return true;
+							}else{
+						document.getElementById("docuploaderror4").innerHTML = " <font color='red'>Please upload file</font>";
+						 $("#subform6").attr("disabled", true);
+						return false;
+							}
+						}
+					}
+			*/
+				
+			/*	if(document.getElementById("distinctuniform").value=="" || document.getElementById("distinctuniform").value==null)
+						{
+						 document.getElementById("distinctuniformerror").innerHTML = " <font color='red'>Please fill Distinctiveness Uniformity feature.</font>";
+						// document.getElemmentById("distinctuniformerror").focus();
+						 $("#subform6").attr("disabled", true);
+						 return false;
+						}
+				*/		
+				
+				return true;
+				
+				}
+				</script>
+					
+<!-- 					
+<script type="text/javaScript">
+var formOK = false;
+
+function validatePDF(objFileControl){
+ var file = objFileControl.value;
+ var len = file.length;
+ var ext = file.slice(len - 4, len);
+ if(ext.toUpperCase() == ".PDF" || ext.toUpperCase() == ".PNG" || ext.toUpperCase() == ".JPG" || ext.toUpperCase() == ".GIF"){
+   formOK = true;
+ }
+ else{
+	 $("#gotosubattach").attr("disabled", true);
+	 formOK = false;
+   objFileControl.value =null;
+   alert("Only PDF/PNG/JPG/GIF files allowed.");
+ }
+}
+</script>	
+
+
+
+<script type="text/javascript">
+        function uploadfile_6()  {
+        	var file_id = document.getElementById("fname_6thform").value;
+        	 {
+            var	filename = file_id;    
+         
+			var iFileSize = document.getElementById("fname_6thform").files[0].size;
+            
+            $.ajax({
+                type: "POST",
+                url: "/ppfvra/api/filesizecheck",
+                data:'filename='+filename+'&filesize='+iFileSize,
+               
+                success: function (data) {
+
+               if(data == false)
+				{ 
+        document.getElementById("docuploaderror4").innerHTML = " <font color='red'>Allowed File size is 500 KB.</font>";
+        var tst=document.getElementById("fname_6thform");
+        $("#subform6").attr("disabled", true);
+
+        		tst.value='';
+         return false;
+                }
+			else if (data == true) {
+		        $("#subform6").attr("disabled", false);
+ 				document.getElementById("docuploaderror4").innerHTML = " ";
+			     return true;
+                    }
+                   
+                }
+            }); 
+            }
+  }
+</script>
+-->
+	
+<script type="text/javascript" th:inline="javascript">
+document.onload=fetchvarietyval();    
+function fetchvarietyval() 
+        {  
+    	  var moduledata= document.getElementById("applicationidhidden");
+    	  var moduledata2 = document.getElementsByName("checkbox");
+    	
+    	  for (var unchk=0; unchk< moduledata2.length; unchk++)
+   	    	 {
+   	    	 moduledata2[unchk].checked=false;
+   	    	 }
+   	       
+   	       if(moduledata.value != null)		 
+   	        	$.ajax(
+   	        			{
+   	                type: "POST",
+   	                url: "/ppvfra/getvarietyvalue",
+   	                data: 'applicationidhidden='+moduledata.value,
+   	                success: function (response) {
+   	                if(response.length != null)
+   	                {  
+                	  for (var i=0;i<response.length;i++)
+                	  {
+                		 
+                    	var str = response[i].toString();
+                    	for (var k=0; k<moduledata2.length; k++)	 
+             			 {
+                    		
+                    		var roleval = moduledata2[k].value;
+                    		var text=document.getElementById("othervalue");
+                    	   var a=str.split(",");
+                    	   if(a[0]=="4")
+                    		{
+                    		   
+                        	   if (a[0] == roleval)
+                        	    {
+                        			moduledata2[k].checked = true;
+                        			document.getElementById("othervalue").value=a[1];
+                        			$("#other_text_div").attr('disabled','false');
+                        			//document.getElementById("other_text_div").disabled=false;
+                        	    }
+                    		}else if (a[0] == roleval)
+                    	    {
+                    			moduledata2[k].checked = true;
+                    			
+                    	    }
+                		}
+                	  }
+                	} 
+                	
+											}
+					});
+        }
+</script> 
+
+<!-- 
+
+<script type="text/javascript">
+function uniform_f6()
+{
+	 $("#subform6").attr("disabled", false);
+	 
+	if(document.getElementById("distinctuniform").value=="" || document.getElementById("distinctuniform").value==null)
+	{
+	 document.getElementById("distinctuniformerror").innerHTML = " <font color='red'>Please fill Distinctiveness Uniformity feature.</font>";
+	 $("#subform6").attr("disabled", true);
+	 return false;
+	}
+	else{document.getElementById("distinctuniformerror").innerHTML = "";
+	 }
+}
+</script>	
+	-->
+</form>
+</div>
+
+</html>	

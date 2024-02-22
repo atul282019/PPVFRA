@@ -1,0 +1,304 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<div th:fragment="issue_certificate">
+<span th:if="${IssueCertificate != null && IssueCertificate == 'IssueCertificate' }"> 
+ <form class="form-horizontal" th:action="@{/issue_certificate}" th:object="${issue_cert}" role="form" id="issue_certificate"  method="post" enctype="multipart/form-data"> 
+	<span th:if="${acs == 0 && datasaved_once ==0}">
+	
+	<div class="panel panel-success">
+		<div class="panel-heading">Issue Certificate</div>
+		<div class="panel-body">
+			<div class="form-group">
+				<label class="col-md-3 control-label">Pre grant opposition received </label>
+				<div class="col-md-6">
+					<input th:field="*{is_pre_grant_opposition_received}" class="received" type="radio" name="radio1"  value="Yes">Yes
+					<input th:field="*{is_pre_grant_opposition_received}" class="oppositionn-1" type="radio" name="radio1" value="No">No
+				</div>
+			</div>
+			
+			<div class="form-group opposition">
+				<label class="col-md-3 control-label">Opposition Filed By </label>
+				<div class="col-md-6">
+					<input th:field="*{opposition_filed_by}" type="text" class="form-control" value="">
+				</div>
+			</div>
+			
+			<div class="form-group opposition-1">
+				<label class="col-md-3 control-label">Status</label>
+				<div class="col-md-6" th:each="status : ${appprerepstatus}">
+				<span th:if="${status[0] == 35}">
+				<input th:field="*{opposition_status}" class="oppositionn" type="radio" name="radio" id="radio" th:text="${status[1]}" th:value="${status[0]}">
+				</span>
+				<span th:unless="${status[0] == 35}">
+				<input th:field="*{opposition_status}" class="oppositiony" type="radio" name="radio" id="radio" th:text="${status[1]}" th:value="${status[0]}">
+				</span>
+				</div>
+			</div>
+						<!--div Work Done-->			
+			
+			<div class="oppositionn" style="display: block;"> 
+			
+			<!-- <div class="certificate1" th:style="${status[0] == 35? 'display:block' : 'display:none'}"> -->
+				<!-- <div class="form-group opposition-1">
+					<label class="col-md-3 control-label">Certificate no</label>
+					<div class="col-md-6">
+						<input type="number" id="certificateno" name="certificateno" value="0" class="form-control" readonly="readonly">
+					</div>
+				</div>
+				
+				<div class="form-group opposition-1">
+					<label class="col-md-3 control-label">Date of  issue</label>
+					<div class="col-md-6">
+						<input type="date" id="date_of_issue" name="date_of_issue" class="form-control" value="">
+					</div>
+				</div>
+				
+				<div class="form-group opposition-1">
+					<label class="col-md-3 control-label">Start Date of Protection</label>
+					<div class="col-md-6">
+						<input type="date" id="startdate" name="startdate" class="form-control" value="">
+					</div>
+				</div>
+				
+				<div class="form-group opposition-1">
+					<label class="col-md-3 control-label">Expiry date of Protection</label>
+					<div class="col-md-6">
+						<input type="date" id="enddate" name="enddate" class="form-control" value="">
+					</div>
+				</div> -->
+			</div>
+			
+			
+						<!--div ends here  -->
+						
+						
+			<div class="opposition">
+			<div class="form-group opposition">
+				<label class="col-md-3 control-label">Date of Decision</label>
+				<div class="col-md-6">
+					<input id="date_of_deceision" name="date_of_deceision" type="date" class="form-control" value="">
+				</div>
+			</div>
+			
+			<br>
+			</div>
+			<div class="form-group m-b-0 save-1">
+				<label class="col-md-3 control-label">&nbsp;</label>
+				<div class="col-sm-7">
+				<span th:if="${sub11 == 'addpresent'}">
+					<button type="submit" class="btn btn-info waves-effect waves-light">Save</button>
+				</span>
+				</div>
+			</div>
+			<div class="certificate">
+				<div class="form-group">
+					<label class="col-md-3 control-label">Certificate no</label>
+					<div class="col-md-6">
+						<input type="number" id="certificateno" name="certificateno" th:value="0" class="form-control" readonly="readonly">
+					</div>
+				</div>
+				
+				<div class="form-group">
+					<label class="col-md-3 control-label">Date of  issue</label>
+					<div class="col-md-6">
+						<input type="date" id="date_of_issue" name="date_of_issue" class="form-control" value="">
+					</div>
+				</div>
+				
+				<div class="form-group">
+					<label class="col-md-3 control-label">Start Date of Protection</label>
+					<div class="col-md-6">
+						<input type="date" id="startdate" name="startdate" class="form-control" value="">
+					</div>
+				</div>
+				
+				<div class="form-group">
+					<label class="col-md-3 control-label">Expiry date of Protection</label>
+					<div class="col-md-6">
+						<input type="date" id="enddate" name="enddate" class="form-control" value="">
+					</div>
+				</div>
+			</div>
+			
+			<input type="hidden" id="editmode_issuecerty" name="editmode_issuecerty" th:value="${editmode_issuecerty}">
+			<input type="hidden" id="id" name="id" th:value="${datasaved_once}">
+			<input type="hidden" id="applicationid" name="applicationid" th:value="${applicationid}"/>
+			<span th:if="${acs == 0}">
+			<input type="hidden" id="acsid" name="acsid" th:value="${acs}">
+			</span>
+			<span th:unless="${acs == 0}">
+			<input type="hidden" id="acsid" name="acsid" th:value="${acs[0]}">
+			</span>
+				
+			<div class="form-group m-b-0 certificate">
+				<label class="col-md-3 control-label">&nbsp;</label>
+				<div class="col-sm-7">
+				<span th:if="${sub11 == 'addpresent'}">
+				 <button type="submit" class="btn btn-info waves-effect waves-light">Save</button>
+					 <a th:href="@{'/issue_certificate_number/'+${applicationid}}" type="submit" class="btn btn-purple waves-effect waves-light">Issue Certificate</a>
+				</span> 
+					 <button type="button" onclick="window.open('utilities/form-o-2.html')" class="btn btn-info waves-effect waves-light">View Certificate</button>
+				</div>
+			</div>
+			
+			  
+			<br>    
+		</div>
+	</div>
+	</span>
+
+
+
+<span th:unless="${acs == 0 && datasaved_once ==0}">
+
+
+ 	<div class="panel panel-success">
+		<div class="panel-heading">Issue Certificate</div>
+		<div class="panel-body">
+			<div class="form-group">
+				<label class="col-md-3 control-label">Pre grant opposition received </label>
+				<div class="col-md-6">
+					<input class="received" type="radio" th:name="radio2" th:id="radio2"  th:value="Y" th:checked="${datasaved_once[2] =='Y'}">Yes
+					<input class="oppositionn-1" type="radio" th:name="radio2" th:id="radio2"  th:value="N" th:checked="${datasaved_once[2] =='N'}">No
+				</div>
+			</div>
+			
+			<div class="form-group opposition">
+				<label class="col-md-3 control-label">Opposition Filed By </label>
+				<div class="col-md-6">
+					<input id="opposition_filed_by" name="opposition_filed_by"  class="form-control" th:value="${datasaved_once[4]}">
+				</div>
+			</div>
+			
+			<div class="form-group opposition-1">
+				<label class="col-md-3 control-label">Status</label>
+				<div class="col-md-6" th:each="status : ${appprerepstatus}">
+				
+				<span th:if="${status[0] == 35}">
+				<input th:field="*{opposition_status}" class="oppositionn" type="radio"  th:text="${status[1]}" th:value="${status[0]}">
+				</span>
+				<span th:unless="${status[0] == 35}">
+				<input th:field="*{opposition_status}" class="oppositiony" type="radio"  th:text="${status[1]}" th:value="${status[0]}">
+				</span>
+				</div>
+				
+			</div>
+			<div class="oppositionn" style="display: block;"> 
+			</div>
+			
+			
+			<div class="opposition">
+			<div class="form-group">
+				<label class="col-md-3 control-label">Date of Decision</label>
+				<div class="col-md-6">
+					<input id="date_of_deceision" name="date_of_deceision" type="date" class="form-control" th:value="${datasaved_once[5]}">
+				</div>
+			</div>
+			
+			<br>
+			</div>
+			<div class="form-group m-b-0 save-1">
+				<label class="col-md-3 control-label">&nbsp;</label>
+				<div class="col-sm-7">
+				<span th:if="${sub11 == 'addpresent'}">
+				<button type="submit" class="btn btn-info waves-effect waves-light">Save</button>
+				</span>
+				</div>
+			</div>
+			</div>
+			<div class="certificate panel-body">
+				<div class="form-group">
+					<label class="col-md-3 control-label">Certificate no</label>
+					<div class="col-md-6">
+					<span th:if="${acs_list == null}">
+					<input type="text" id="certificate_serial_no" name="certificate_serial_no" value="" class="form-control">
+					</span>
+					<span th:unless="${acs_list == null}">
+						<input type="text" id="certificate_serial_no" name="certificate_serial_no" th:value="${acs[5]}" class="form-control">
+					</span>
+					</div>
+				</div>
+				
+				<div class="form-group">
+					<label class="col-md-3 control-label">Date of  issue</label>
+					<div class="col-md-6">
+					<span th:if="${localdate == null}">
+						<input type="date" id="date_of_issue" name="date_of_issue" class="form-control" value="">
+					</span>
+					<span th:unless="${localdate == null}">
+						<input type="date" id="date_of_issue" name="date_of_issue" class="form-control" th:value="${localdate}" readonly>
+					</span>
+					</div>
+				</div>
+				
+				<div class="form-group">
+					<label class="col-md-3 control-label">Start Date of Protection</label>
+					<div class="col-md-6">
+						<span th:if="${acs_list == null}">
+							<input type="date" id="startdate" name="startdate" class="form-control" value="">
+							</span>
+							<span th:unless="${acs_list == null}">
+							<input type="date" id="startdate" name="startdate" class="form-control" th:value="${acs[7]}">
+							</span>
+					</div>
+				</div>
+				
+				<div class="form-group">
+					<label class="col-md-3 control-label">Expiry date of Protection</label>
+					<div class="col-md-6">
+						<span th:if="${acs_list == null}">
+						<input type="date" id="enddate" name="enddate" class="form-control" value="">
+						</span>
+						<span th:unless="${acs_list == null}">
+						<input type="date" id="enddate" name="enddate" class="form-control" th:value="${acs[11]}">
+						</span>
+					</div>
+				</div>
+			 
+			
+			<input type="hidden" id="editmode_issuecerty" name="editmode_issuecerty" th:value="${editmode_issuecerty}">
+			<input type="hidden" id="id" name="id" th:value="${datasaved_once[0]}">
+			<input type="hidden" id="applicationid" name="applicationid" th:value="${applicationid}">
+			
+			<span th:if="${acs == 0}">
+			<input type="hidden" id="acsid" name="acsid" th:value="${acs}">
+			</span>
+			<span th:unless="${acs == 0}">
+			<input type="hidden" id="acsid" name="acsid" th:value="${acs[0]}">
+			</span>
+				
+			<div class="form-group m-b-0 certificate">
+				<label class="col-md-3 control-label">&nbsp;</label>
+				
+				<div class="col-sm-7">
+				<span th:if="${sub11 == 'addpresent'}">
+				 <button type="submit" class="btn btn-info waves-effect waves-light">Save</button>
+					<a th:href="@{'/issue_certificate_number/'+${applicationid}}" type="submit" class="btn btn-purple waves-effect waves-light">Issue Certificate</a>
+				 </span>	
+					<a th:href="@{'/view_cert_issued/'+${applicationid}}" class="btn btn-info waves-effect waves-light" target="_blank">View Certificate</a>
+			
+					<!-- <button type="button" onclick="window.open('utilities/form-o-2.html')" class="btn btn-info waves-effect waves-light">View Certificate</button> -->
+				</div>
+			</div>
+			<br>    
+		</div>
+	</div>
+	
+	 </div>
+	
+	</span>
+	
+
+</form>
+</span>
+<span th:unless="${IssueCertificate != null && IssueCertificate == 'IssueCertificate' }">
+ <label>YOU ARE NOT AUTHORISED TO VIEW THIS PAGE.PLEASE CONTACT ADMINISTRATOR</label>
+ </span>
+
+
+
+
+</div>
+
+
+</html>

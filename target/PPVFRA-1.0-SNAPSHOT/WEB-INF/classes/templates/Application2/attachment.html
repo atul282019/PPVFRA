@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+			<div th:fragment="attachement">
+			<form class="form-horizontal" th:action="@{/form2_attachments}" th:object="${applicationdocuments}" role="form" method="post" enctype="multipart/form-data">
+                                             
+                <div class="col-md-10">
+                    <input type="hidden" id="applicationidhidden" th:value="${applications.id}" th:name="applicationidhidden" readonly="readonly"  />
+                </div>
+           <label>
+                   Following are the attachments (duly signed/seal) submitted along  with of the application (note that wherever signature is affixed in the application or attachments, all such signatures shall be in the original)
+           </label>
+           <label>
+                  <span style="color:red">Note: Only PDF/PNG/JPG/GIF files allowed.</span>
+           </label>
+           <table class="table table-bordered">
+               <thead>
+                   <tr>
+                   		<th>Serial</th>
+                   	    <th>Title</th>
+                       <th>Is Mandatory</th>
+                       <th> Max File Size(KB)</th>
+                      <!--  <th>Allowed File Extension</th>  -->
+           			   <th>Attachment</th>
+                   </tr>
+               </thead>
+               <tbody> 
+            <span th:if="${editmode ==0}">
+            <tr th:each="doclist,serial : ${document_checklistdata}">
+            	<td th:text="${serial.count}"></td>
+            	<input type="hidden" id="documenttypeid" name="documenttypeid"  th:value="${doclist[0]}" />
+            	
+                <!-- <td th:text="${serial.index}" ><span hidden="true" id="documenttypeid" th:name="documenttypeid" th:value="${doclist[0]}"></span></td>   -->
+                  
+                <td th:text="${doclist[2]}"></td>
+                <td th:text="${doclist[5]}"></td>
+                <td th:text="${doclist[3]}"></td>
+                <!-- <td th:text="${doclist[6]}"></td> -->
+                <td>
+                <input type="file"  th:id="'fname/'+${doclist[0]}" name="fileUploadf2" th:onchange="'javascript:uploadfilechkattachments(\''+${doclist[0]}+'\'),validatePDF(this)'">
+              <!-- <a th:href="'/ppvfra/download/app_attach/'+${doclist[7]}" target="_blank"><span id="file" th:text="${doclist[7]}"></span></a> -->
+              <input type="hidden" th:id="'file_f2_attach/'+${doclist[0]}" name="file_f2_attach" value="">
+			<div class="help-block with-errors" th:id="'docuploaderror2/'+${doclist[0]}"></div> 
+           		</td>
+                </tr>
+                </span>
+                
+                <span th:unless="${editmode ==0}"> 
+               <tr th:each="doclist,serial : ${document_checklistdata}">
+            	<td th:text="${serial.count}"></td>
+            	<input type="hidden" id="documenttypeid" name="documenttypeid"  th:value="${doclist[0]}" />
+            	
+                <!-- <td th:text="${serial.index}" ><span hidden="true" id="documenttypeid" th:name="documenttypeid" th:value="${doclist[0]}"></span></td>   -->
+                  
+                <td th:text="${doclist[2]}"></td>
+                <td th:text="${doclist[5]}"></td>
+                <td th:text="${doclist[3]}"></td>
+                <!-- <td th:text="${doclist[6]}"></td> -->
+                <td>
+                <input type="file"  th:id="'fname/'+${doclist[0]}" name="fileUploadf2" th:onchange="'javascript:uploadfilechkattachments(\''+${doclist[0]}+'\'),validatePDF(this)'">
+             <!-- //Commented On 25-02-2020 
+             <a th:href="'/ppvfra/download/app_attach/'+${doclist[7]}" target="_blank"><span id="file" th:text="${doclist[7]}"></span></a>
+             -->
+             <span th:if="${docattach == 0}">
+				 </span>
+			 <span th:unless="${docattach== 0}">
+				<a th:href="'/ppvfra/download/app_attach/'+${doclist[7]}" target="_blank"><span id="file" th:text="${doclist[7]}"></span></a>
+			  </span>
+			  	<input type="hidden" th:id="'file_f2_attach/'+${doclist[0]}" name="file_f2_attach" th:value="${doclist[7]}">
+			
+			<div class="help-block with-errors" th:id="'docuploaderror2/'+${doclist[0]}"></div> 
+           		</td>
+                </tr>
+                </span> 
+                </tbody>
+              </table>
+              <label>
+                      If felt necessary attach colour pictures of specific  characteristics used for establishing distinctiveness. Please sign each page of the application and other document on the left
+                      margin
+              </label>
+              <div th:object="${applications}" >
+              <input type="hidden" id="applicationid" th:field="*{id}" th:value="*{id}">
+              </div>
+              <input type="hidden" id="f14_id" name="f14_id" th:value="${f14_id}">
+              
+              <div th:if="${appstatus ==1}">
+              <button type="submit" id="gotosubattach" class="btn btn-info waves-effect waves-light" onclick="return checkattachedfiles()">Submit</button>
+             </div>
+         
+         
+         
+         
+         <script type="text/javascript">
+        function uploadfilechkattachments(Obj) {
+        	
+        	
+        	if (Obj == null) 
+            Obj = window.event.srcElement;
+            
+            if (Obj.value != "") 
+            {
+            var	filename = Obj;    
+            //alert(filename);
+			
+			var iFileSize = document.getElementById('fname/'+filename).files[0].size;
+           // alert(iFileSize);
+            
+            $.ajax({
+                type: "POST",
+                url: "/ppfvra/api/filesizecheck",
+                data:'filename='+filename+'&filesize='+iFileSize,
+               
+                success: function (data) {
+
+               if(data == false)
+				{ 
+        document.getElementById("docuploaderror2/"+filename).innerHTML = " <font color='red'>Try to upload file less than 500KB!</font>";
+        var tst=document.getElementById("fname/"+filename);
+        $("#gotosubattach").attr("disabled", true);
+
+        		tst.value='';
+         return false;
+                }
+			else if (data == true) {
+		        $("#gotosubattach").attr("disabled", false);
+
+				document.getElementById("docuploaderror2/"+filename).innerHTML = " ";
+			     return true;
+                    }
+                   
+                }
+            }); 
+            }
+  }
+    </script>
+    
+    <script type="text/javaScript">
+var formOK = false;
+
+function validatePDF(objFileControl){
+ var file = objFileControl.value;
+ var len = file.length;
+ var ext = file.slice(len - 4, len);
+ if(ext.toUpperCase() == ".PDF" || ext.toUpperCase() == ".PNG" || ext.toUpperCase() == ".JPG" || ext.toUpperCase() == ".GIF"){
+   formOK = true;
+ }
+ else{
+	 $("#gotosubattach").attr("disabled", true);
+	 formOK = false;
+   objFileControl.value =null;
+   alert("Only PDF/PNG/JPG/GIF files allowed.");
+ }
+}
+</script>
+
+<script type="text/javascript" th:inline="javascript">
+function checkattachedfiles()
+{
+  var requireddata = [[${document_checklistdata}]];
+  var fileupload = document.getElementsByName("fileUploadf2");
+  var file_all_attach2= document.getElementsByName("file_f2_attach");
+  
+  for(var i=0; i< requireddata.length; i++)
+	  {
+	  var a = fileupload[i].id;
+	  var b= a.split("/");
+	//  var c =parseInt(b[1]);
+	  
+	//  var att_file=$('#file_f1_attach/'+c).text();
+	//  alert("Printing att_file as = "+att_file);
+	  //alert("PRINTONG B1="+b[1].toString());
+	  if(b[1] == requireddata[i][0])
+		  {
+		  if(requireddata[i][5] =="Y" && (fileupload[i].value =="" || fileupload[i].value ==null) )
+			{  
+			 // if(file_all_attach[i].files.length>0 && !(file_all_attach[i].value==""|| file_all_attach[i].value==null))
+			 // if(att_file.length>0 && !(att_file==""|| att_file==null))
+				 if(!(file_all_attach2[i].value=="" || file_all_attach2[i].value==null))
+			  {document.getElementById("docuploaderror2/"+b[1]).innerHTML = "";
+		 	 	}else
+		 	 	{	
+				    document.getElementById("docuploaderror2/"+b[1]).innerHTML = " <font color='red'>Please Attach File As It Is Mandatory File.</font>";
+			 	 	$("#gotosubattach").attr("disabled", true);
+			  		return false;
+				  }
+			}
+		  }
+	  }
+  
+}
+</script>
+                                                
+   </form>
+</div>
+
+</html>

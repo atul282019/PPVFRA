@@ -1,0 +1,154 @@
+  
+  <!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+	<head>
+	  <th:block th:include="adminfragment/headerlibs.html :: headerlibs"></th:block> 
+	</head>
+
+    <body class="fixed-left">
+        <!-- Begin page -->
+        <div id="wrapper">
+        
+            <!-- Top Bar Start -->
+           <header th:insert="adminfragment/header.html :: header"> </header>
+            <!-- Top Bar End -->
+
+
+            <!-- ========== Left Sidebar Start ========== -->
+			<header th:insert="adminfragment/sidenav.html :: sidevav"> </header>
+            <!-- Left Sidebar End -->
+
+
+            <!-- ============================================================== -->
+            <!-- Start right Content here -->
+            <!-- ============================================================== -->                      
+            <div class="content-page">
+                <!-- Start content -->
+                <div class="content">
+                    <div class="container">
+
+                        <!-- Page-Title -->
+                        <div class="row">
+                            <div class="col-sm-12">
+                                <h4 class="pull-left page-title">Informative Dashboard</h4>
+                                <ol class="breadcrumb pull-right">
+                                    <li><a href="/admin">Home</a></li>
+                                    <li class="active">Informative Dashboard</li>
+                                </ol>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-lg-12">
+                                <div class="portlet"><!-- /portlet heading -->
+                                    <div class="portlet-heading">
+                                        <h3 class="portlet-title text-dark text-uppercase">
+                                            Applications received (2017-18) category-wise 
+                                        </h3>
+                                        <div class="clearfix"></div>
+                                    </div>
+                                    <div id="portlet1" class="panel-collapse collapse in">
+                                        <div class="portlet-body">
+                                            <div class="row">
+                                                <div class="col-md-12">
+                                                    <div id="chart-id1" style="position: relative;height: 320px;"></div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div> <!-- /Portlet -->
+                            </div> <!-- end col -->
+
+                            <div class="col-lg-12">
+                                <div class="portlet"><!-- /portlet heading -->
+                                    <div class="portlet-heading">
+                                        <h3 class="portlet-title text-dark text-uppercase">
+                                            Applications received year-wise (2007-08 to 2017-18)
+                                        </h3>
+                                        <div class="clearfix"></div>
+                                    </div>
+                                    <div id="portlet1" class="panel-collapse collapse in">
+                                        <div class="portlet-body">
+                                            <div class="row">
+                                                <div class="col-md-12">
+                                                    <div id="chart-id2" style="position: relative;height: 320px;"></div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div> <!-- /Portlet -->
+                            </div> <!-- end col -->
+
+                            <div class="col-lg-12">
+                                <div class="portlet"><!-- /portlet heading -->
+                                    <div class="portlet-heading">
+                                        <h3 class="portlet-title text-dark text-uppercase">
+                                            No. of registration certificates issued (2007 to 2017)
+                                        </h3>
+                                        <div class="clearfix"></div>
+                                    </div>
+                                    <div id="portlet1" class="panel-collapse collapse in">
+                                        <div class="portlet-body">
+                                            <div class="row">
+                                                <div class="col-md-12">
+                                                    <div id="chart-id3" style="position: relative;height: 320px;"></div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div> <!-- /Portlet -->
+                            </div> <!-- end col -->
+
+                            <div class="col-lg-12">
+                                <div class="portlet"><!-- /portlet heading -->
+                                    <div class="portlet-heading">
+                                        <h3 class="portlet-title text-dark text-uppercase">
+                                            No. of registration certificates issued Category wise(2017-18)
+                                        </h3>
+                                        <div class="clearfix"></div>
+                                    </div>
+                                    <div id="portlet1" class="panel-collapse collapse in">
+                                        <div class="portlet-body">
+                                            <div class="row">
+                                                <div class="col-md-12">
+                                                    <div id="chart-id4" style="position: relative;height: 320px;"></div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div> <!-- /Portlet -->
+                            </div> <!-- end col -->
+
+                        </div> <!-- End row -->
+
+                    </div> <!-- container -->
+                               
+                </div> <!-- content -->
+
+
+            </div>
+            <!-- ============================================================== -->
+            <!-- End Right content here -->
+            <!-- ============================================================== -->
+
+
+            
+             <div th:replace="adminfragment/footer.html :: footer"></div>
+           </div> <!-- container -->
+                               
+                <!-- content -->
+
+			<!-- start footer content here -->
+			
+			<!-- end footer content here -->
+
+      
+        <!-- END wrapper -->
+
+<!-- footer lib start here-->
+
+<div th:replace="adminfragment/footerlibs.html :: footerlibs"></div>
+<!-- end footer lib -->
+    
+    </body>
+</html>

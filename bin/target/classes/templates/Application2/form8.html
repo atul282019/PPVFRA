@@ -1,0 +1,187 @@
+
+
+
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+	<div th:fragment="formeight">
+
+<form class="form-horizontal" role="form" th:action="@{/saveapplicationformviii}" th:object="${applications}" method="post">   <!--form_8 start -->                                       
+														<div class="form-group">
+															<label class="col-md-12 "><h4>8.(a)Details of all other earlier applications made on the candidate variety in convention countries or other countries (if applicable)</h4></label>
+														</div>
+														
+														<div class="form-group">
+															<label class="col-md-3 control-label"></label>
+															<div class="col-md-9">
+															   Yes <input type="radio" name="radio" value="yes" class="radio-btn-position"> &nbsp; &nbsp; 
+															   No <input type="radio" name="radio" value="no" class="radio-btn-position">                                                        <br>
+															   
+														   </div>
+														</div>
+														
+														<div class="form-group">
+															<label class="col-md-3 control-label">Variety Denomination</label>
+															<div class="col-md-6">
+																<input type="text" class="form-control" name="varietydenomination" value="">
+															</div>
+														</div>
+														<div class="form-group">
+															<label class="col-md-3 control-label">Nature of right applied for</label>
+															<div class="col-md-9">
+																Plant Breeder's Rights <input type="radio" name="nature"  value="Plant Breeder's Rights" class="radio-btn-position"> &nbsp; &nbsp; 
+																 Patent  <input type="radio" name="nature"  value="Patent" class="radio-btn-position">
+                                                        </div>
+                                                    </div>
+														<div class="form-group">
+															<label class="col-md-3 control-label">Filing  Date</label>
+															<div class="col-md-6">
+																<input type="date" class="form-control" name="fillingdate" />
+															</div>
+														</div>
+														<div class="form-group"> 
+															<label class="control-label col-md-3 col-sm-3 col-xs-12">
+															Name of Country <span class="required"></span>
+															</label>
+															<div class="col-md-6 col-sm-6 col-xs-12">
+                 												<select class="form-control col-md-7 col-xs-12" name="country" id="city_id">
+                 												<option value="">----Select----</option>
+																<option value="260">Anjaw</option>
+																<option value="253">Changlang</option>
+																<option value="257">Dibang Valley</option>
+																<option value="247">East Kameng</option>
+																<option value="251">East Siang</option>
+																<option value="256">Kurung Kumey</option>
+																<option value="259">Lohit</option>
+																<option value="1014">Longding</option>
+																<option value="258">Lower Dibang Valley</option>
+																<option value="255">Lower Subansiri</option>
+																<option value="248">Papum Pare</option>
+																<option value="245">Tawang</option>
+																<option value="254">Tirap</option>
+																<option value="252">Upper Siang</option>
+																<option value="249">Upper Subansiri</option>
+																<option value="246">West Kameng</option>
+																<option value="250">West Siang</option>
+																</select>
+																<br><span class="error" id="err_city"></span>
+															</div>
+														</div>
+														<div class="form-group">
+															<label class="col-md-3 control-label">Name of Authority</label>
+															<div class="col-md-6">
+																<input type="text" class="form-control" name="authorityname" value="">
+															</div>
+														</div>
+														<div class="form-group">
+															<label class="col-md-3 control-label">Application Number</label>
+															<div class="col-md-6">
+																<input type="text" class="form-control" name="applicationumber" value="">
+															</div>
+														</div>
+														<div class="form-group">
+															<label class="col-md-3 control-label">Status of Application </label>
+															<div class="col-md-9">
+																Under process <input type="radio" name="applicationstatus"  value="Under process" class="radio-btn-position"> &nbsp; &nbsp; 
+																Approved <input type="radio" name="applicationstatus"  value="Approved" class="radio-btn-position"> &nbsp; &nbsp; 
+																Rejected <input type="radio" name="applicationstatus"  value="Rejected" class="radio-btn-position">
+																<br>
+																<sub>(If required, repeat the above for each applicable country and attach separate sheet)</sub>
+															</div>
+														</div>
+														
+														<div class="form-group">
+															<label class="col-md-12"><h4>(b.) Priority is now claimed in respect of the earliest application for a candidate variety of said denomination (if applicable)</h4></label>
+														</div>
+														<div class="form-group"> 
+															<label class="control-label col-md-3 col-sm-3 col-xs-12">
+															In(Country)<span class="required"></span>
+															</label>
+														<div class="col-md-6 col-sm-6 col-xs-12">
+                 												<select class="form-control col-md-7 col-xs-12" name="incountryname" id="city_id">
+                 												<option value="">----Select----</option>
+																<option value="260">Anjaw</option>
+																<option value="253">Changlang</option>
+																<option value="257">Dibang Valley</option>
+																<option value="247">East Kameng</option>
+																<option value="251">East Siang</option>
+																<option value="256">Kurung Kumey</option>
+																<option value="259">Lohit</option>
+																<option value="1014">Longding</option>
+																<option value="258">Lower Dibang Valley</option>
+																<option value="255">Lower Subansiri</option>
+																<option value="248">Papum Pare</option>
+																<option value="245">Tawang</option>
+																<option value="254">Tirap</option>
+																<option value="252">Upper Siang</option>
+																<option value="249">Upper Subansiri</option>
+																<option value="246">West Kameng</option>
+																<option value="250">West Siang</option>
+																</select>
+																<br><span class="error" id="err_city"></span>
+															</div>
+														</div>
+														<div class="form-group">
+															<label class="col-md-3 control-label">On (Date of Application)</label>
+															<div class="col-md-6">
+																<input type="date" class="form-control" name="ondate" />
+															</div>
+														</div>
+														<hr/>
+														<div class="form-group ">
+															<div class="col-sm-offset-10 col-sm-12">
+															
+															   <!--  <input type="hidden" id="applicationidfromviii" name="applicationidfromviii" th:value="*{id}">
+																<input type="hidden" id="applicantidformviii" name="applicantidformviii"  th:value="${userapplicant[0]}">
+																<input type="hidden" id="applicanttypeidformviii" name="applicanttypeidformviii" th:value="*{applicanttypeid}" />
+																 -->
+																<button type="submit" class="btn btn-info waves-effect waves-light">Save</button>
+																<button type="submit" class="btn btn-info waves-effect waves-light">Next</button>
+															</div>
+														</div>
+														
+														<div class="table-responsive">
+															<table class="table table-striped  table-bordered w-auto table-hover">
+																<!--Table head-->
+																<thead>
+																	<tr>
+																		<th>S.No.</th>
+																		<th>Variety Denomination</th>
+																		<th>Nature of right applied for</th>
+																		<th>Filing Date</th>
+																		<th>Name of Country</th>
+																		<th>Name of Authority</th>
+																		<th>Application Number</th>
+																		<th>Status of Application</th>
+																		<th>In(Country)</th>
+																		<th>On (Date of Application)</th>
+																	</tr>
+																</thead>
+																<!--Table head-->
+
+																<!--Table body-->
+																<tbody>		
+																	<tr role="row" class="table-info" th:each="convention,serial : ${conventioncontry}">
+														            <td th:text="${serial.count}"></td> 
+														           <!--  <td th:text="${convention[0]}"></td>  -->  
+														            <td th:text="${convention[2]}"></td>
+														            <td th:text="${convention[3]}"></td> 
+														            <td th:text="${convention[4]}"></td> 
+														            <td th:text="${convention[5]}"></td> 
+														            <td th:text="${convention[6]}"></td>
+														            <td th:text="${convention[6]}"></td>
+														            <td th:text="${convention[7]}"></td>
+														            <td th:text="${convention[9]}"></td>
+														            <td th:text="${convention[10]}"></td>
+														           	
+																</tr>
+																</tbody>
+															<!--Table body-->
+															</table>
+															<div class="form-group">
+																<button type="submit" class="btn btn-danger pull-right" style="display: block;  border-radius:5px;height: 32px; padding: 5px; position:relative; right:25px; border-left: none;">Add</button>
+															</div>
+														</div>
+													</form>
+													</div>
+													</html>

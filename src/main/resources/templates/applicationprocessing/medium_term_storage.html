@@ -1,0 +1,430 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<div th:fragment="medium_term_storage">
+ <span th:if="${MediumTermStorage != null && MediumTermStorage == 'MediumTermStorage' }"> 
+     
+<form class="form-horizontal" role="form" th:action="@{/mediumtermstorage}" th:object="${mediumtermstorage}" method="post" id="form_medium" name="form_medium">  
+												<div class="panel panel-success">
+												<div class="panel-heading"><!--Dispatch of Seeds to DUS TEST Centres-->Medium term storage</div>
+												<div class="panel-body">
+													<div class="form-group">
+	                                                <label class="col-md-2 control-label" > </label>
+	                                                <div class="col-md-10">
+	                                 				<input type="text" id="applicationid" th:name="applicationid"  th:value="${applicationid}" readonly="readonly" hidden="true" />
+	                                                </div>
+	                                                </div>
+													
+													<div class="form-group">
+														<label class="col-md-4 control-label"><!--Select DUS Test Center 1--> Viability/Moisture to be checked on <span style="color:red">*</span></label>
+														<div class="col-md-8">
+															<input type="date" name="moisture_tobe_checked_on"  th:field ="*{moisture_tobe_checked_on}" id="moisture_tobe_checked_on" class="form-control" >
+														<span id="moisture_tobe_checked_on_error" style="color:red"></span>
+													</div>
+													</div>
+													<div class="form-group">
+														
+														<div class="table-responsive col-sm-12">
+															<table class="table table-striped  table-bordered table-hover">
+							<!--Table head-->
+						<thead>
+							<tr></tr>
+						</thead>
+						<!--Table head-->
+					
+						<!--Table body-->
+						<tbody>
+							
+							<tr class="table-info">
+							<td>Line Type <span style="color:red">*</span></td>
+							
+							
+							<td th:if="${hybridtrue == 1}"> 
+							<select th:field="*{type_line}" class="form-control" name="type_line" id="type_line" th:onchange="'typelinevaluemts(\''+${applicationid}+'\',this)'">
+						    <option th:value="-1" >Select</option>
+				            <option th:each="dropDownItem : ${TypeLine}"
+				               th:value="${dropDownItem.id}"
+				               th:text="${dropDownItem.code}" />
+				         </select>
+				          <span id="type_lineerrormediumterm" style="color:red"></span>
+						  </td>
+						  	
+						  	<td th:unless="${hybridtrue == 1}"> 
+							<select th:field="*{type_line}" class="form-control" name="type_line" id="type_line" th:onchange="'typelinevaluemts(\''+${applicationid}+'\',this)'">
+						    <option th:value="-1" >Select</option>
+				            <option th:each="dropDownItem : ${typeline11}"
+				               th:value="${dropDownItem[0]}"
+				               th:text="${dropDownItem[1]}" />
+				        	</select>
+							<span id="type_lineerrormediumterm" style="color:red"></span>
+						 </td>
+						  	
+							 
+						   </tr>
+							
+							<tr class="table-info">
+								<td>Viability/Germination % <span style="color:red">*</span></td>
+								<td><input type="text"  th:field="*{viability}"  class="form-control" id="viability_medium">
+								<span id="viability_medium_error" style="color:red"></span>
+								</td>
+							</tr>
+							
+							<tr class="table-info">
+								<td>Moisture % <span style="color:red">*</span></td>
+								<td><input type="text" id="moisture_medium"  th:field="*{moisture}"  class="form-control" >
+								<span id="moisture_medium_error" style="color:red"></span>
+								</td>
+							</tr>
+							
+							<tr class="table-info">
+								<td>Weight <span style="color:red">*</span></td>
+								<td><input type="text" id="waight_medium"  th:field="*{weight}"  class="form-control"  >
+								<span id="waight_medium_error" style="color:red"></span>
+								</td>
+							</tr>
+							
+							<tr class="table-info">
+								<td>Seeds Discarded <span style="color:red">*</span></td>
+								<td><input type="text" id="seed_discarded_medium"  th:field="*{seeds_discarded}"  class="form-control"  >
+								<span id="seed_discarded_medium_error" style="color:red"></span>
+								</td>
+							</tr>
+							
+							<tr class="table-info">
+								<td>Date of Discard <span style="color:red">*</span></td>
+								<td><input type="date" id="date_of_discard_medium" name="date_of_discard"  class="form-control">
+								<span id="date_of_discard_medium_error" style="color:red"></span>
+								</td>
+							</tr>
+							
+							<tr class="table-info">
+								<td>Reasons <span style="color:red">*</span></td>
+								<td><input type="text" id="resion_medium"  th:field="*{reasons}"  class="form-control" >
+								<span id="resion_medium_error" style="color:red"></span>
+								</td>
+							</tr>
+							
+							<tr class="table-info">
+								<td>Checked By <span style="color:red">*</span></td>
+								<td><input type="text" id="checkedby_medium"  th:field="*{checked_by}"  class="form-control" >
+								<span id="checkedby_medium_error" style="color:red"></span>
+								</td>
+							</tr>
+							</tbody>
+							</table>
+															<!--Table-->
+															
+														</div>
+														</div>   
+													
+													<div class="form-group">
+													<!-- <span th:if="${role_granted != 'Super Administrator' && role_granted != 'PPVFRA Admin'}">
+													 -->
+													 <span>
+													 <span th:if="${sub13 == 'addpresent'}">
+														<button type="submit" id="btnsubmit1" name="btnsubmit1" value="btnsubmit1" class="btn btn-danger pull-right" onclick = "return validatemedium()"  style="display: block;  border-radius:5px;height: 32px; padding: 5px; position:relative; right:14px; border-left: none;">Add</button>
+													</span>
+													</span>
+													</div>
+													
+													<div class="table-responsive">
+														<table class="table table-striped  table-bordered table-hover">
+															<!--Table head-->
+															<thead>
+																<tr>
+																	<th>Sr. no.</th>
+																	<th>Viability/Moisture to be checked on</th>
+																	<th>LineType</th>
+																	<th> Viability/Germination </th>
+																	<th>Moisture</th>
+																	<th>Weight (g)</th>
+																	<th> Seeds Discarded</th>
+																	<th> Date of Discard</th>
+																	<th>Checked by</th>
+																	<th>Action</th>
+																</tr>
+															</thead>
+															<!--Table head-->
+
+															<!--Table body-->
+															<tbody>
+																<tr class="table-info" th:each="data,serial : ${mediumtermstoragedetails}">
+																	
+																	<td th:text="${serial.count}"></td>
+					 												<td th:text="${#dates.format(data[2],'yyyy-MM-dd')}"></td>
+																	<td th:text="${data[3]}"></td>
+																	<td th:text="${data[4]}"></td>
+																	<td th:text="${data[5]}"></td>
+																	<td th:text="${data[6]}"></td>
+																	<td th:text="${data[7]}"></td>
+																	<td th:text="${#dates.format(data[8],'yyyy-dd-MM')}"></td>
+																	<td th:text="${data[10]}"></td>
+																	<td><a th:href="@{'/editmediumtermstorage/'+${data[0]}+'/'+${applicationid}}">Edit</a></td>
+																</tr>
+																
+															</tbody>
+														<!--Table body-->
+														</table>
+														<!--Table-->
+														
+													</div>
+													
+													<hr>
+													
+													<div class="form-group">
+														<label class="col-md-3 control-label">Post registration <span style="color:red">*</span> </label>
+														<div class="col-md-6">
+															<input type="text" id="postregistration" th:field="*{postregistration}"  class="form-control" >
+															<span id="postregistration_error" style="color:red"></span>
+														</div>
+													</div>
+													<div class="form-group">
+														<label class="col-md-3 control-label">Handed Over to <span style="color:red">*</span> </label>
+														<div class="col-md-6">
+															<input type="text" id="handedoverto" th:field="*{handedoverto}"  class="form-control" >
+															<span id="handedoverto_error" style="color:red"></span>
+														</div>
+													</div>
+													
+													<div class="form-group">
+														<label class="col-md-3 control-label">Number of Packets <span style="color:red">*</span> </label>
+														<div class="col-md-6">
+															<input type="text" id="no_of_packets" th:field="*{no_of_packets}"  class="form-control" >
+															<span id="no_of_packets_error" style="color:red"></span>
+														</div>
+													</div>
+													
+													<div class="form-group">
+														<label class="col-md-3 control-label">Date <span style="color:red">*</span> </label>
+														<div class="col-md-6">
+															<input type="date" name="handingoverdate" id="handingoverdate"class="form-control" >
+															<span id="handingoverdate_error" style="color:red"></span>
+														</div>
+													</div>
+													
+													<div class="form-group">
+														<label class="col-md-3 control-label">Remarks <span style="color:red">*</span> </label>
+														<div class="col-md-6">
+															<textarea id="handingover_remarks" th:field="*{handingover_remarks}"  class="form-control"></textarea>
+															<span id="handingover_remarks_error" style="color:red"></span>
+														</div>
+													</div>
+													
+													<div class="form-group">
+														
+														<div class="col-sm-12">
+														<!-- <span th:if="${role_granted != 'Super Administrator' && role_granted != 'PPVFRA Admin'}">
+														 -->
+														 <span>
+														 <span th:if="${sub13 == 'addpresent'}">
+															<button type="submit" id="btnsubmit2medium" name="btnsubmit2medium" onclick="return mts_validate_medium_term_storage_two();" value="btnsubmit2" class="btn btn-info waves-effect waves-light">Save</button>
+														</span>	
+														</span>
+														</div>
+														
+													</div>
+													<br>    
+														
+													</div>
+													</div>
+													
+
+	 <script type = "text/javascript">
+      function validatemedium() {
+    	  //alert(document.getElementById("type_line").value);
+    	   if(document.form_medium.moisture_tobe_checked_on.value == "")
+    			  {
+    		  document.getElementById("moisture_tobe_checked_on_error").innerHTML="Please select date";
+              document.getElementById("moisture_tobe_checked_on").focus() ;
+              return false;
+    			  }else{document.getElementById("moisture_tobe_checked_on_error").innerHTML=" ";}
+    	  
+    	  if( document.form_medium.type_line.value == "-1") 
+    	  {
+    		 document.getElementById("type_lineerrormediumterm").innerHTML="Please select typeline";
+               document.getElementById("type_line").focus() ;
+               return false;
+            }
+    	  else{document.getElementById("type_lineerrormediumterm").innerHTML=" ";}
+    	 
+    	  if( document.form_medium.viability_medium.value == "") 
+    	  {
+    		 document.getElementById("viability_medium_error").innerHTML="Please enter Viability/Germination";
+               document.getElementById("viability_medium").focus() ;
+               return false;
+            }
+    	  else{document.getElementById("viability_medium_error").innerHTML=" ";}
+    	 
+    	  
+    	  if( document.form_medium.moisture_medium.value == "") 
+    	  {
+    		 document.getElementById("moisture_medium_error").innerHTML="Please enter moisture";
+               document.getElementById("moisture_medium").focus() ;
+               return false;
+            }
+    	  else{document.getElementById("moisture_medium_error").innerHTML=" ";}
+    	 
+    	  if( document.form_medium.waight_medium.value == "") 
+    	  {
+    		 document.getElementById("waight_medium_error").innerHTML="Please enter waight";
+               document.getElementById("waight_medium").focus() ;
+               return false;
+            }
+    	  else{document.getElementById("waight_medium_error").innerHTML=" ";}
+    	 
+    	  if( document.form_medium.seed_discarded_medium.value == "") 
+    	  {
+    		 document.getElementById("seed_discarded_medium_error").innerHTML="Please enter seed discarded";
+               document.getElementById("seed_discarded_medium").focus() ;
+               return false;
+            }
+    	  else{document.getElementById("seed_discarded_medium_error").innerHTML=" ";}
+    	 
+    	  if( document.form_medium.date_of_discard_medium.value == "") 
+    	  {
+    		 document.getElementById("date_of_discard_medium_error").innerHTML="Please enter date of discarded";
+               document.getElementById("date_of_discard_medium").focus() ;
+               return false;
+            }
+    	  else{document.getElementById("date_of_discard_medium_error").innerHTML=" ";}
+    	 
+    	  if( document.form_medium.resion_medium.value == "") 
+    	  {
+    		 document.getElementById("resion_medium_error").innerHTML="Please enter reasions";
+               document.getElementById("resion_medium").focus() ;
+               return false;
+            }
+    	  else{document.getElementById("resion_medium_error").innerHTML=" ";}
+    	 
+    	  if( document.form_medium.checkedby_medium.value == "") 
+    	  {
+    		 document.getElementById("checkedby_medium_error").innerHTML="Please enter checked by";
+               document.getElementById("checkedby_medium").focus() ;
+               return false;
+            }
+    	  else{document.getElementById("checkedby_medium_error").innerHTML=" ";}
+    	 
+    	     return(true);
+    	}
+      </script>
+      
+       <script type="text/javascript"  th:inline="javascript">
+   var dataval = [[${dataintab_rejuv}]];
+	function typelinevaluemts(Obj,that){
+// $(that).closest('form').find('input[type=submit]').attr("disabled", false);
+   $(that).closest('form').find(':submit').attr("disabled", false);
+   
+    var typelinedata= document.getElementById("type_line");
+    var response1 =null;
+  	//DOES NOT WORK
+  	//var text= typelinedata.options[typelinedata.selectedIndex].text;
+    //ENDS
+  	//var selected = $(that).val();
+  
+    var selected = $(that).closest('form').find("#type_line").val();
+
+    //	var selected = $(that).closest('form').find("#type_line  option:selected").text();
+	var text=selected;
+  
+	// alert("vvv"+text+""+selected);
+  /*
+   if(text !=null || text!= "")
+	   {
+   if(text=="Candidate"){text="C"}
+   else if(text=="A Line"){text="A"}
+   else if(text=="B Line"){text="B"}
+   else if(text=="R Line"){text="R"}
+	   }
+   */
+   
+    if(Obj != null)		 
+      	$.ajax({
+              type: "POST",
+              url: "/ppvfra/getdatasaved_formts",
+              data:Obj,
+              success: function (response) {
+
+            	for(var k=0; k< response.length ; k++)
+            		{
+            	//alert(""+k);
+            		var a = response[k][14];
+            		if(text == a)
+            			{
+            			alert("Value Already Exists.Please Select another Field Or Edit The Value Present in Table.");
+            			/*  $("#submitseedmodal").attr("disabled", true); */
+            			$(that).closest('form').find(':submit').attr("disabled", true);
+            			//curElement.closest('form').find(':submit');
+            			return false;
+            			}
+            		 
+            			
+            		}
+          	},
+            failure: function (response) {
+            alert(response.responseText);
+        },
+        error: function (response) {
+            alert(response.responseText);
+        }
+      	});           
+         
+    
+                  
+    
+}
+</script>
+
+       <script>
+      function mts_validate_medium_term_storage_two(){
+    	  if( document.getElementById("postregistration").value =="") {
+           	 document.getElementById("postregistration_error").innerHTML="Please enter post registration";
+           	 document.getElementById("postregistration").focus() ;
+               return false;
+            }
+            else{
+         	   document.getElementById("postregistration_error").innerHTML="";
+            }
+    	  if( document.getElementById("handedoverto").value =="") {
+         	 document.getElementById("handedoverto_error").innerHTML="Please enter handed over to";
+         	 document.getElementById("handedoverto").focus() ;
+             return false;
+          }
+          else{
+       	   document.getElementById("handedoverto_error").innerHTML="";
+          }
+     
+		   if( document.getElementById("no_of_packets").value =="") {
+	     	 document.getElementById("no_of_packets_error").innerHTML="Please enter no of packets";
+	     	 document.getElementById("no_of_packets").focus() ;
+	         return false;
+	      }
+	      else{
+	   	   document.getElementById("no_of_packets_error").innerHTML="";
+	      } 
+	  
+		 if( document.getElementById("handingoverdate").value =="") {
+		     	 document.getElementById("handingoverdate_error").innerHTML="Please select date ";
+		     	 document.getElementById("handingoverdate").focus() ;
+		         return false;
+		      }
+		      else{
+		   	   document.getElementById("handingoverdate_error").innerHTML="";
+		      } 
+		 if( document.getElementById("handingover_remarks").value =="") {
+	     	 document.getElementById("handingover_remarks_error").innerHTML="Please enter remarks ";
+	     	 document.getElementById("handingover_remarks").focus() ;
+	         return false;
+	      }
+	      else{
+	   	   document.getElementById("handingover_remarks_error").innerHTML="";
+	      } 
+		 return( true );
+      }
+      </script>
+ </form>
+	</span>
+<span th:unless="${MediumTermStorage != null && MediumTermStorage == 'MediumTermStorage' }">
+ <label>YOU ARE NOT AUTHORISED TO VIEW THIS PAGE.PLEASE CONTACT ADMINISTRATOR</label>
+ </span>
+
+</div>
+</html>

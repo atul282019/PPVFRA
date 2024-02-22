@@ -1,0 +1,369 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+	<div th:fragment="tabmenu">
+
+            <!-- ========== Left Sidebar Start ========== -->
+	  <ul class="nav nav-tabs tabs tabs-top" id="my_list"  style=" background-color: #f9fffa;">
+                <li class="active tab dashboard-bg-color" id="F2">
+                    <a href="#home-21"  data-toggle="tab" aria-expanded="false"> 
+                        <span class="visible-xs"><i class="fa fa-home"></i></span> 
+                        <span class="hidden-xs">Form 2</span> 
+                    </a> 
+                </li> 
+                 
+                <li class="tab payment dashboard-bg-color" id="F2_declare"> 
+                    <a href="#profile-21" data-toggle="tab" aria-expanded="true"> 
+                        <span class="visible-xs"><i class="fa fa-user"></i></span> 
+                        <span class="hidden-xs">Declaration</span> 
+                    </a> 
+                </li> 
+                <li class="tab dashboard-bg-color" id="F2_attach"> 
+                    <a href="#messages-21" data-toggle="tab" aria-expanded="true"> 
+                        <span class="visible-xs"><i class="fa fa-envelope-o"></i></span> 
+                        <span class="hidden-xs">Attachments</span> 
+                    </a> 
+                </li>
+                <li class="tab dashboard-bg-color" id="F2_tech"> 
+                    <a href="#technical" data-toggle="tab" aria-expanded="true"> 
+                        <span class="visible-xs"><i class="fa fa-envelope-o"></i></span> 
+                        <span class="hidden-xs">Technical Questionnaire</span> 
+                    </a> 
+                </li> 
+                <li class="tab dashboard-bg-color"> 
+                    <a href="#messages-23" data-toggle="tab" aria-expanded="true"> 
+                        <span class="visible-xs"><i class="fa fa-envelope-o"></i></span> 
+                        <span class="hidden-xs">Final Preview</span> 
+                    </a> 
+                </li> 
+			<li class="tab payment dashboard-bg-color" id="F2_pay"> 
+              <a href="#payment" data-toggle="tab" aria-expanded="true"> 
+                  <span class="visible-xs"><i class="fa fa-envelope-o"></i></span> 
+                  <span class="hidden-xs">Payment</span> 
+              </a> 
+          </li>
+          
+          <li class="tab dashboard-bg-color" onclick="clickfn2nd();"> 
+            <a href="#finalsubmit_f2" aria-expanded="true"> 
+                <span class="visible-xs"><i class="fa fa-envelope-o"></i></span> 
+                <span class="hidden-xs">Final Submit</span> 
+            </a> 
+        </li>
+    </ul>
+                                        
+         <div class="tab-pane my-pan2 dashboard-bg-color" id="payment">
+                 <div th:insert="application2/payment.html :: pay"> </div> 
+         </div> 
+         
+         <div class="tab-pane my-pan2 dashboard-bg-color" id="finalsubmit_f2">
+         	<div th:insert="application2/finalsubmitf_1.html :: fsubmit_f2"> </div>
+         </div>
+         
+         <div class="tab-pane my-pan2 dashboard-bg-color" id="profile-21">
+         		<div th:insert="application2/declaration.html :: declaration"> </div> 
+          </div> 
+          <div class="tab-pane my-pan2 dashboard-bg-color" id="messages-21">
+          		<div th:insert="application2/attachment.html :: attachement"> </div>
+          </div>
+          <div class="tab-pane my-pan2 dashboard-bg-color" id="technical">
+          		<div th:insert="application2/questionnaier.html :: question"> </div>
+          </div>
+          <div class="tab-pane my-pan2 dashboard-bg-color" id="messages-23">
+          		<div th:insert="application2/finalpreview_form1.html :: finalpreview_f2"> </div>
+          </div>
+            <!-- ========== Left Sidebar End ========== -->
+<script type="text/javascript">
+function clickfn2nd()
+{
+	sectiondataval2nd(); }
+</script>
+
+<script>
+$(document).on('click','.tab', function(){
+	var id = $(this).find('a').attr('href');
+	$('.my-pan2').hide();
+	$(id).show();
+	
+});
+</script>
+
+<script>
+function fntorun2nd(){
+	//alert("CALLED FN TO RUN");
+	var path= window.location.pathname;
+	/* int pos = path.LastIndexOf("/") + 1; */
+	var x= path.substring(path.lastIndexOf('/') - 4);
+	//alert("Printin rest path"+path.Substring(pos, path.Length - pos));
+	//alert("Printin rest path"+x);
+	if(x == '/F_1/Declaration')
+	{
+		//$("#F1").find('.nav li.active').siblings('li').removeClass('active');
+	    $('.tab').removeClass('active');
+	    $('.tab a').removeClass('active');	    
+	    
+		$("#F2_declare").addClass('active');
+		$("#F2_declare a").addClass('active');
+		
+		$('.tab-pane').hide();
+		$('.tab-pane#profile-21').show();
+	 
+	}else if(x == '/F_1/Attachments')
+	{
+		//$("#F1").find('.nav li.active').siblings('li').removeClass('active');
+	    $('.tab').removeClass('active');
+	    $('.tab a').removeClass('active');	    
+	    
+		$("#F2_attach").addClass('active');
+		$("#F2_attach a").addClass('active');
+		
+		$('.tab-pane').hide();
+		$('.tab-pane#messages-21').show();
+	
+	}else if(x =='/F_1/Questionaire')
+	{
+		//$("#F1").find('.nav li.active').siblings('li').removeClass('active');
+	    $('.tab').removeClass('active');
+	    $('.tab a').removeClass('active');	    
+	    
+		$("#F2_tech").addClass('active');
+		$("#F2_tech a").addClass('active');
+		
+		$('.tab-pane').hide();
+		$('.tab-pane#technical').show();
+		
+	}else if(x =='/F_1/Payments')
+	{
+		//$("#F1").find('.nav li.active').siblings('li').removeClass('active');
+	    $('.tab').removeClass('active');
+	    $('.tab a').removeClass('active');	    
+	    
+		$("#F2_pay").addClass('active');
+		$("#F2_pay a").addClass('active');
+		
+		$('.tab-pane').hide();
+		$('.tab-pane#payment').show();
+		
+	}
+	else{
+		//alert("inside subform case");
+		if(x == '/F_1/2')
+		{
+			//alert("formtabmenu2nd");
+			//$("#F1").find('.nav li.active').siblings('li').removeClass('active');
+		  	 $('.tab').removeClass('active');
+	   		 $('.tab a').removeClass('active');
+	   		
+	   		$("#F2").addClass('active');
+	   		$("#F_2_s2").addClass('active');
+			$("#F_2_s2 a").addClass('active');
+			$('.tab-pane').hide();
+			$('.tab-pane#home-21').show();
+			$('.tab-pane#form_2').show();
+			$('.tab-pane#form_2').addClass('active');
+			$('.tab-pane').find('a').click(function(){
+			  $('.tab-pane').find('a').removeClass('active');
+			  $('.tab-pane#form_2').hide();
+			  $(this).addClass('active');
+			  $(this).show();
+			});
+		 }else if(x == '/F_1/3')
+	{
+	//	alert("formtabmenu3rd");
+		//$("#F1").find('.nav li.active').siblings('li').removeClass('active');
+	  	 $('.tab').removeClass('active');
+   		 $('.tab a').removeClass('active');
+   		$("#F2").addClass('active');
+   		
+		$("#F_2_s3").addClass('active');
+		$("#F_2_s3 a").addClass('active');
+		$('.tab-pane').hide();
+		$('.tab-pane#home-21').show();
+		
+		$('.tab-pane#form_3').show();
+		$('.tab-pane#form_3').addClass('active');
+		$('.tab-pane').find('a').click(function(){
+		  $('.tab-pane').find('a').removeClass('active');
+		  $('.tab-pane#form_3').hide();
+		  $(this).addClass('active');
+		  $(this).show();
+		});
+	 }else if(x == '/F_1/4')
+		{
+		//	alert("formtabmenu4th");
+			//$("#F1").find('.nav li.active').siblings('li').removeClass('active');
+		  	 $('.tab').removeClass('active');
+	   		 $('.tab a').removeClass('active');
+	   		$("#F2").addClass('active');
+	   		 
+			$("#F_2_s4").addClass('active');
+			$("#F_2_s4 a").addClass('active');
+			//$('form_4').trigger('click');
+			$('.tab-pane').hide();
+			$('.tab-pane#home-21').show();
+			 
+			
+			$('.tab-pane#form_4').show();
+			$('.tab-pane#form_4').addClass('active');
+			$('.tab-pane').find('a').click(function(){
+			    $('.tab-pane').find('a').removeClass('active');
+			    $('.tab-pane#form_4').hide();
+			    $(this).addClass('active');
+			    $(this).show();
+			});
+			
+		 }else if(x == '/F_1/5')
+			{
+				//alert("formtabmenu5th");
+				//$("#F1").find('.nav li.active').siblings('li').removeClass('active');
+			  	 $('.tab').removeClass('active');
+		   		 $('.tab a').removeClass('active');
+		   		$("#F2").addClass('active');
+		   		$("#F_2_s5").addClass('active');
+				$("#F_2_s5 a").addClass('active');
+				$('.tab-pane').hide();
+				$('.tab-pane#home-21').show();
+				
+				$('.tab-pane#form_5').show();
+				$('.tab-pane#form_5').addClass('active');
+				$('.tab-pane').find('a').click(function(){
+				  $('.tab-pane').find('a').removeClass('active');
+				  $('.tab-pane#form_5').hide();
+				  $(this).addClass('active');
+				  $(this).show();
+				});
+				
+			 }else if(x == '/F_1/6')
+				{
+					//alert("formtabmenu6th");
+					//$("#F1").find('.nav li.active').siblings('li').removeClass('active');
+				  	 $('.tab').removeClass('active');
+			   		 $('.tab a').removeClass('active');
+			   		$("#F2").addClass('active'); 
+					$("#F_2_s6").addClass('active');
+					$("#F_2_s6 a").addClass('active');
+					$('.tab-pane').hide();
+					$('.tab-pane#home-21').show();
+					
+					$('.tab-pane#form_6').show();
+					$('.tab-pane#form_6').addClass('active');
+					$('.tab-pane').find('a').click(function(){
+					  $('.tab-pane').find('a').removeClass('active');
+					  $('.tab-pane#form_6').hide();
+					  $(this).addClass('active');
+					  $(this).show();
+					});
+					
+				 }else if(x == '/F_1/7')
+					{
+						//alert("formtabmenu7th");
+						//$("#F1").find('.nav li.active').siblings('li').removeClass('active');
+					  	 $('.tab').removeClass('active');
+				   		 $('.tab a').removeClass('active');
+				   		$("#F2").addClass('active'); 
+						$("#F_2_s7").addClass('active');
+						$("#F_2_s7 a").addClass('active');
+						$('.tab-pane').hide();
+						$('.tab-pane#home-21').show();
+						
+						$('.tab-pane#form_7').show();
+						$('.tab-pane#form_7').addClass('active');
+						$('.tab-pane').find('a').click(function(){
+						  $('.tab-pane').find('a').removeClass('active');
+						  $('.tab-pane#form_7').hide();
+						  $(this).addClass('active');
+						  $(this).show();
+						});
+						
+		}else if(x == '/F_1/8')
+		{
+			//alert("formtabmenu8th");
+			//$("#F1").find('.nav li.active').siblings('li').removeClass('active');
+		  	 $('.tab').removeClass('active');
+		  		 $('.tab a').removeClass('active');
+		  		$("#F2").addClass('active');	 
+			$("#F_2_s8").addClass('active');
+			$("#F_2_s8 a").addClass('active');
+			$('.tab-pane').hide();
+			$('.tab-pane#home-21').show();
+			
+			$('.tab-pane#form_8').show();
+			$('.tab-pane#form_8').addClass('active');
+			$('.tab-pane').find('a').click(function(){
+			  $('.tab-pane').find('a').removeClass('active');
+			  $('.tab-pane#form_8').hide();
+			  $(this).addClass('active');
+			  $(this).show();
+			});
+		 }else if(x == '/F_1/9')
+			{
+				//alert("formtabmenu9th");
+				//$("#F1").find('.nav li.active').siblings('li').removeClass('active');
+			  	 $('.tab').removeClass('active');
+		   		 $('.tab a').removeClass('active');
+		   		$("#F2").addClass('active');
+				$("#F_2_s9").addClass('active');
+				$("#F_2_s9 a").addClass('active');
+				$('.tab-pane').hide();
+				$('.tab-pane#home-21').show();
+				
+				$('.tab-pane#form_9').show();
+				$('.tab-pane#form_9').addClass('active');
+				$('.tab-pane').find('a').click(function(){
+				  $('.tab-pane').find('a').removeClass('active');
+				  $('.tab-pane#form_9').hide();
+				  $(this).addClass('active');
+				  $(this).show();
+				});
+			 }else if(x == '/F_1/10')
+				{
+				//	alert("formtabmenu10th");
+					//$("#F1").find('.nav li.active').siblings('li').removeClass('active');
+				  	 $('.tab').removeClass('active');
+			   		 $('.tab a').removeClass('active');
+			   		$("#F2").addClass('active'); 
+					$("#F_2_s10").addClass('active');
+					$("#F_2_s10 a").addClass('active');
+					$('.tab-pane').hide();
+					$('.tab-pane#home-21').show();
+					
+					$('.tab-pane#form_10').show();
+					$('.tab-pane#form_10').addClass('active');
+					$('.tab-pane').find('a').click(function(){
+					  $('.tab-pane').find('a').removeClass('active');
+					  $('.tab-pane#form_10').hide();
+					  $(this).addClass('active');
+					  $(this).show();
+					});
+				 }else if(x == '/F_1/11')
+					{
+					//	alert("formtabmenu11th");
+						//$("#F1").find('.nav li.active').siblings('li').removeClass('active');
+					  	 $('.tab').removeClass('active');
+				   		 $('.tab a').removeClass('active');
+				   		$("#F2").addClass('active'); 
+						$("#F_2_s11").addClass('active');
+						$("#F_2_s11 a").addClass('active');
+						$('.tab-pane').hide();
+						$('.tab-pane#home-21').show();
+						
+						$('.tab-pane#form_11').show();
+						$('.tab-pane#form_11').addClass('active');
+						$('.tab-pane').find('a').click(function(){
+						  $('.tab-pane').find('a').removeClass('active');
+						  $('.tab-pane#form_11').hide();
+						  $(this).addClass('active');
+						  $(this).show();
+						});
+						
+					 }else{
+			
+		 }
+				
+				
+			    }
+		}
+window.onload=fntorun2nd;
+</script>
+
+   </div>
+</html>

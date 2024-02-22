@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<body>
+	<div th:fragment="applicationfooterlibs">
+	
+	
+	 <script>
+            var resizefunc = [];
+        </script>
+
+        <!-- jQuery  -->
+        <script th:src="@{/dashboard/js/jquery.min.js}"></script>
+        <script th:src="@{/dashboard/js/bootstrap.min.js}"></script>
+        <script th:src="@{/dashboard/js/waves.js}"></script>
+        <script th:src="@{/dashboard/js/wow.min.js}"></script>
+        <script th:src="@{/dashboard/js/jquery.nicescroll.js}" type="text/javascript"></script>
+        <script th:src="@{/dashboard/js/jquery.scrollTo.min.js}"></script>
+        <script th:src="@{/dashboard/assets/jquery-detectmobile/detect.js}"></script>
+        <script th:src="@{/dashboard/assets/fastclick/fastclick.js}"></script>
+        <script th:src="@{/dashboard/assets/jquery-slimscroll/jquery.slimscroll.js}"></script>
+        <script th:src="@{/dashboard/assets/jquery-blockui/jquery.blockUI.js}"></script>
+
+
+        <!-- CUSTOM JS -->
+        <script th:src="@{/dashboard/js/jquery.app.js}"></script>
+
+
+
+<script>
+$(document).ready(function(){
+$("#myModal").modal('show');
+});
+</script>
+<script>
+    $(document).ready(function(){
+   	        if(document.getElementById("ddlcountry_f3").value != "1"){
+   	        $("#statecode").prop("disabled", true);
+   	 		$('#statecode').val('');
+   	 		$("#districtcode").prop("disabled", true);
+   	 		$("#districtcode").val('');
+   	 		$("#changestyle").hide();
+   	 		$("#changestyle1").hide();
+   	 		$("#pincode").prop("disabled",true);
+   	 		$("#pincode").val('');
+   	 		$("#changestyle2").hide();
+   	 		$("#nationality").prop("disabled",true);
+   	 		$("#nationality").val('');
+   	 		$("#changestyle3").hide();
+   			
+   	 		$("#statecode4").prop("disabled", true);
+   			$('#statecode4').val('');
+   			$("#changef3-s").hide();
+   			$("#districtcode4").prop("disabled", true);
+   			$("#districtcode4").val('');
+   			$("#changef3-d").hide();
+            }
+    });
+</script>
+
+<script>
+    $(document).ready(function(){
+   	        if(document.getElementById("ddlcountry_f3_3").value != "1"){
+   	        $("#statecode3").prop("disabled", true);
+   	 		$('#statecode3').val('');
+   	 		$("#districtcode3").prop("disabled", true);
+   	 		$("#districtcode3").val('');
+   	 		$("#pincodechk3").prop("disabled",true);
+   	 		$("#pincodechk3").val('');
+   	 		
+   	 		$("#changestyle4").hide();
+   	 		$("#changestyle5").hide();
+   	 		$("#changestyle6").hide()
+            }
+    });
+</script>
+
+
+<script>
+    $(document).ready(function(){
+   	        if(document.getElementById("checkbox4_f3").checked){
+   	        $("#other_text_div_f3").show();	
+           	$(".other-textbox_f3").css("display", "block");
+            }else{$("#other_text_div_f3").hide();}
+    });
+</script>
+
+
+
+<script>
+    $(document).ready(function(){
+   	        if(document.getElementById("ddlcountry_f3_6").value != "1"){
+   	        	$("#statecodef7").prop("disabled", true);
+   	 		$('#statecodef7').val('');
+   	 		$("#districtcodef7").prop("disabled", true);
+   	 		$("#districtcodef7").val('');
+   	 		$("#pincodechk7").prop("disabled",true);
+   	 		$("#pincodechk7").val('');
+   	 		$("#nationf7").prop("disabled",true);
+   	 		$("#nationf7").val('');
+   	 		
+   	 		$("#f7s").hide();
+   	 		$("#f7dc").hide();
+   	 		$("#f7pc").hide();
+   	 		$("#f7nc").hide();
+   	 		
+            }
+    });
+</script>
+
+
+</div>	
+</body>
+</html>

@@ -1,0 +1,355 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+	<head>
+	  <th:block th:include="fragments/headerlibs.html :: headerlibs"></th:block> 
+       <style>
+			.panel-default {
+				border-color: transparent;
+			}
+			 .login-frm-bg:before {
+				background-color: rgb(255, 255, 255);
+				content: '';
+				display: block;
+				height: 100%;
+				position: absolute;
+				width: 100%;
+				z-index: -9999999;
+			}
+			#login .container #login-row #login-column #login-box {
+  				margin: 0 auto;
+				height: 380px;
+				width: 300px;
+				border: 2px solid #ffffff;
+				color:#FFFFFF;
+				box-shadow: 0 0 0 7 !important;
+				border-radius:25px;
+				background-color: rgba(0,0,0,0.4) !important;
+			}
+			#login .container #login-row #login-column #login-box #login-form {
+				padding: 20px;
+			}
+			#login .container #login-row #login-column #login-box #login-form #register-link {
+				margin-top: -85px;
+			}
+			.header{
+				background-color: #FFFFFF;
+			}
+			.tab .tab-content{
+				height:auto;
+			}
+			.dashboard_enrollment {
+				background: #f7f7f7;
+				padding: 19px 15px;
+				font-size: 24px;
+				text-align: center;
+				border: 1px solid #3e7205;
+				color: #3e7205;
+			}
+			.dashboard_enrollment:hover {
+				-moz-box-shadow: 0 1px 20px 3px #A39EA0;
+				-webkit-box-shadow: 0 1px 20px 3px #A39EA0;
+				box-shadow: 0 1px 20px 3px #a29ea0;
+				border: 1px solid rgba(154, 151, 152, 0.18);
+			}
+			.padding-top-50 {
+				padding-top: 30px;
+			}
+			
+		</style>		
+	</head>
+	<body>
+		<header th:replace="fragments/header.html :: header"> </header>
+			<!-- content area -->
+			<section class="login-frm-bg">
+			<div class="container">
+				<div class="row">
+			<!-- panel body1 starts -->
+			<div class="col-sm-6">
+				<div class="tab" role="tabpanel">
+					<div class="panel panel-default panel-height">				
+						<ul class="nav nav-tabs" role="tablist">
+							<li role="presentation" class="active"><a aria-controls="home" role="tab" data-toggle="tab">Login</a></li>
+						</ul>
+						<div class="tab-content tabs">
+							<div class="panel-body">
+								<div id="login-box" >
+								<form action="login" th:action="@{/login}" method="post" id="register-form">
+										<h3 class="text-center">Login From</h3>
+
+										<div class="form-group">
+											<label for="username"><i class="fas fa-user"></i><span>Username:</span></label><br>
+											<input type="text" class="form-control" name="username" id="username" placeholder="username" />
+										</div>
+										<div class="form-group">
+											<label for="password"><i class="fas fa-key"></i><span>Password:</span></label><br>
+											<input type="password" class="form-control" name="password" placeholder="Password" />
+										</div>
+										
+										<div class="form-group">
+										<label class="col-md-3 control-label">Captcha</label>
+											<div id="captchaBlock">
+										        <div id="resource1" class="captchaWrap">  
+										            <div class="captcha-input">
+									                <input type="hidden" name="enc">
+									                <input type="hidden" name="salt">
+									               
+									                <div class="col-md-4">
+									                <div class="c-img">
+									                <div class="captchaContainer">
+									                </div>
+										            </div>
+										            </div>
+									                <span style="color:red" id="captchaMessage"></span>
+									                <input type="hidden" name="redirect" value="/signup">
+										            </div>
+										            <div class="col-md-1 captcha-refresh-btn" >
+										            <div class="refresh-wrap">
+										             <span id="searchButton"><i class="fa fa-refresh" aria-hidden="true"></i></span>
+										            </div>
+										            </div>
+										             <div class="form-group">
+									                <input type="text" name="code" class="form-control" placeholder="Enter Captcha">
+									                </div>
+											 </div>
+											 </div>
+											</div> 
+										
+										<div class="form-group">
+										<div id="register-link" class="text-right">
+										<a href="#" style="color:#6f6f6f;">Forgot Password</a>
+										</div>
+										</div>
+										<div class="form-group">
+								        <div th:if="${param.error}" class="alert alert-danger alert-dismissable">
+								         <p>
+								          <i class="icon fa fa-ban"></i> <span>Invalid Email and Password.</span>
+								         </p>
+								        </div>
+								        <div th:if="${param.logout}" class="alert alert-danger alert-dismissable">
+								         <p>
+								          <i class="icon fa fa-info"></i> <span >You have been logged out.</span>
+								         </p>
+								        </div>
+								        <div th:if="${msg!=null}" class="alert alert-danger alert-dismissable">
+								         <p>
+								          <i class="icon fa fa-warning"></i> <span th:text="${msg}"></span>
+								         </p>
+								        </div>
+								       </div>
+										<div class="form-group">	
+										
+										 <button type="submit" name="submit" class="btn btn-info btn-md" value="Login" style="background-color:#3e7205;">LogIn</button>
+										</div>
+										
+									</form>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+
+			</div>
+			<!-- panel body1 ends -->
+			<!-- panel body2 starts -->
+			<div class="col-sm-6">
+				<div class="tab panel-height" role="tabpanel">
+					<div class="panel panel-default ">
+						<!-- Nav tabs -->
+						<ul class="nav nav-tabs" role="tablist">
+							<li role="presentation" class="active"><a href="#Section1" aria-controls="home" role="tab" data-toggle="tab">New User Register Here</a></li>
+						</ul>
+						<!-- Tab panes -->
+						<div class="tab-content tabs">
+							<div role="tabpanel" class="tab-pane fade in active" id="Section1">
+								
+								<ul class="slFont text-justify pannel-text" style="padding-left: 0;">
+									<div class="pricing">
+										<div class="x_content">
+											<div class="">
+												<div class=" dashboard_enrollment">
+													<strong>Company Registration</strong>
+													<div class="padding-top-50">
+														<a href="/CompanyRegistration" class="btn btn-success waves-effect waves-light w-lg m-b-5 hover_effect"> Register </a>
+													</div>
+												</div>
+											</div>
+										</div>
+									</div>
+								</ul>
+								
+								<ul class="slFont text-justify pannel-text" style="padding-left: 0;">
+									<div class="pricing">
+										<div class="x_content">
+											<div class="">
+												<div class=" dashboard_enrollment">
+													<strong>Institution Registration</strong>
+													<div class="padding-top-50">
+														<a href="/InstitutionRegistration" class="btn btn-success waves-effect waves-light w-lg m-b-5 hover_effect"> Register </a>
+													</div>
+												</div>
+											</div>
+										</div>
+									</div>
+								</ul>
+								
+								<ul class="slFont text-justify pannel-text" style="padding-left: 0;">
+									<div class="pricing">
+										<div class="x_content">
+											<div class="">
+												<div class=" dashboard_enrollment">
+													<strong>Applicant Registration</strong>
+													<div class="padding-top-50">
+														<a href="/ApplicantRegistration" class="btn btn-success waves-effect waves-light w-lg m-b-5 hover_effect"> Register </a>
+													</div>
+												</div>
+											</div>
+										</div>
+									</div>
+								</ul>	
+							</div>	
+						</div>
+					</div>
+				</div>
+			</div>
+			<!-- panel body1 starts -->
+		</div>
+			</div>
+		</section>
+			
+			<!-- end content area -->
+	
+
+<div th:replace="fragments/footer.html :: footer"></div>
+<div th:replace="fragments/footerlibs.html :: footerlibs"></div>
+ <script>
+	$(document).ready(function() {
+			$('[data-toggle="tooltip"]').tooltip();
+			if($('#errorModal').length > 0){
+				$('#errorModal').modal('show');
+			}
+		});
+							   
+						  
+	    $( document ).ready(function() {
+	        getCaptcha();
+	         validateCaptcha();
+	        $("#searchButton").click(function(){
+	            console.log('inside call');
+	            getCaptcha();
+	        });
+	
+	    });
+	
+	    function getCaptcha(){
+	        var html = "<h2>Loading Captcha</h2>"
+	        console.log("/bin/captcha");
+	        var url = "/bin/captcha"; 
+	
+	        console.log(url);
+	
+	        $.ajax({
+	            url: url, 
+	            type: 'get',
+												 
+							   
+	            success: function (result) {
+	                html = "";
+	                var captchaImg = "", captcha="",salt="";
+	                if(result !== undefined || result !== null){
+	                    captchaImg  = result.image;
+	                    captcha = result.captcha;
+	                    salt = result.salt;
+	                     $('#resource1').find('.captchaContainer').html("<img id='captchaImage' src='data:image/png;base64,"+ captchaImg+"'></img>");
+	
+	                    $('#resource1').find('[name="enc"]').val(captcha);
+	                    $('#resource1').find('[name="salt"]').val(salt);
+	                }
+	
+	
+	            },
+	            error: function() {
+	                console.log("Error while creating captcha");
+	            }
+	        });
+	
+	
+	    }
+	   
+	   function validateCaptcha() {
+	        var isValid = false;
+	        $('#register-form').find('[type="submit"]').on('click', function(event) {
+	            if(event.hasOwnProperty('originalEvent')){
+	            $('#captchaMessage').html("");
+	            event.preventDefault();
+	                if($("[name='code']").val() != ""){
+	                var salt = $('[name="salt"]').val();
+	                var code = $('[name="code"]').val();
+	                var enc = $('[name="enc"]').val();
+	
+	                $.ajax({
+	                    url: '/bin/validateCaptcha',
+	                    type: 'post',
+	                    data: $('#register-form').find('[name="salt"], [name="code"], [name="enc"], [name="${_csrf.parameterName}"]').serialize(),    
+	                    success: function(data){
+	                        console.log("Inside success");
+	                        console.log(data.valid);
+	                        if(!data.valid){
+	                            $("#captchaMessage").html("You entered wrong captcha code, please enter again");
+	                            return false;
+	                        }
+	                        else{
+	                            console.log("now submit");
+	                            isValid = true;
+	                            //$('#' + "${formId}").submit();
+	                              $('#register-form').find('[type="submit"]').trigger('click');
+	                        }
+	                        return false;
+	                    },
+	                    error: function() {
+	                        console.log("An error occured while validating captcha");
+	                    },
+	                    complete: function(){
+	                        console.log("ajax completed ");
+	                    }
+	                });
+	
+	            }
+	
+	            else{
+	
+	                $("#captchaMessage").html("Please enter captcha code");
+	
+	                return false;
+	            }
+	        }
+	        });
+	
+	       return false;							  
+	    }
+	</script>
+	
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
+
+  <div th:if="${message != null}">
+ <div id="myModal1" class="modal fade">
+   <div class="modal-dialog">
+    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+        <div class="modal-content">
+         <div class="modal-body">
+				<p align="center" th:text="${message}" />
+            </div>
+        </div>
+    </div>
+</div>
+</div>
+
+    <script type="text/javascript">
+	      $(document).ready(function(){
+		  $("#myModal1").modal('show');
+	     });
+        </script>
+ 
+	
+</body>
+</html>

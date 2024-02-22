@@ -1,0 +1,830 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+	<head>
+		<meta charset="UTF-8">
+		<title>Plant Authority</title>
+
+		<!-- responsive meta -->
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		
+		<!-- master stylesheet -->
+		<link rel="stylesheet" href="css/style.css">
+		<!-- responsive stylesheet -->
+		<link rel="stylesheet" href="css/responsive.css">
+		<link href="css/Ticker.min.css" rel="stylesheet">
+		
+		
+		
+		
+	</head>
+	
+	<body>
+		<section class="top-bar">
+			<div class="container">
+				<div class="left-text pull-left">
+					<p><span>भारत सरकार </span> <a href="#">GOVERNMENT OF INDIA</a></p>
+				</div> <!-- /.left-text -->
+				<div class="social-icons pull-right">
+					<ul>
+						<li><a href="#">Skip to Main Content</a></li>
+						<li><a href="#">Screen Reader Access</a></li>
+						<li><a href="#">Sitemap</a></li>
+						<li><a href="#">Feedback</a></li>
+						<li><a href="#">Query</a></li>
+						<li><a href="#"><i class="fa fa-search"></i></a></li>
+					</ul>
+				</div> <!-- /.social-icons -->
+			</div>
+		</section> <!-- /.top-bar -->
+
+		<header class="header">
+			<div class="container">
+				<div class="row">
+					<div class="col-sm-12 col-xs-12">
+						<div class="col-sm-1 col-xs-2">
+							<div class="brand_logo">
+								<img src="img/plant2_logo.png" class="img-responsive">
+							</div>
+						</div>
+						
+						<div class="col-sm-9 col-xs-8">
+							<div class="brand_logo2">
+							<img src="img/plant_logo2.png" class="img-responsive">
+							</div>
+						</div>
+						
+						<div class="col-sm-1 col-xs-2">
+							<div class="brand_logo3" >
+								<img src="img/brand_logo3.png" class="img-responsive">
+							</div>
+						</div>
+						
+						<div class="col-sm-1 col-xs-2 col-xs-hidden ">
+							<div class="single-header-info" style="position:relative; top:20px;">
+								<a class="thm-btn" th:href="@{/login}" >Login</a>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</header> <!-- /.header -->
+
+		<nav class="mainmenu-area stricky">
+			<div class="container">
+				<div class="navigation pull-left">
+					<div class="nav-footer">
+						<button><i class="fa fa-bars"></i></button>
+					</div>
+					<div class="nav-header">
+						<ul>
+							
+						<li><a href="#">Home</a></li>
+						<li class="dropdown">
+							<a href="#">Authority</a>
+							<ul class="submenu">
+								<li><a href="#">About Authority </a></li>
+								<li><a href="#">About the Chairperson </a></li>
+								<li><a href="#">Task Force</a></li>
+								<li><a href="#">Committee</a></li>
+							</ul> 
+						</li>
+						<li><a href="#">DUS Center</a></li>
+						<li><a href="#">Publications</a></li>
+						<li class="dropdown">
+							<a href="#">Notification</a>
+							<ul class="submenu">
+								<li><a href="#">Tenders</a></li>
+								<li><a href="#">Downloads</a></li>
+								<li><a href="#">Vacancy</a></li>
+								<li><a href="#">Public Notice</a></li>
+							</ul> 
+						</li>
+						
+						<li><a href="#">Application</a></li>
+						<li><a href="#">FAQ’s</a></li>
+						<li class="dropdown">
+								<a href="#">Guidelines</a>
+								<ul class="submenu">
+									<li><a href="#">Dus Guidelines</a></li>
+									<li><a href="#">Time schedule for submission of application and seed of Crops</a></li>
+									<li><a href="#">Crop DUS Guidelines</a></li>
+									<li><a href="#">Draft DUS Guidelines</a></li>
+									<li><a href="#">General Guidelines regarding the Registration of EDV</a></li>
+									
+								</ul> 
+							</li>
+						<li><a href="#">RTI</a></li>
+						<li><a href="#">Contact Us</a></li>
+							
+						</ul>
+					</div>
+					
+				</div>
+				
+			</div>
+		</nav> <!-- /.mainmenu-area -->
+
+		<div class="container-fluid">
+			<div class="row">
+				<div id="myCarousel" class="carousel slide">
+					<ol class="carousel-indicators carousel-indicators-numbers">
+						<li data-target="#myCarousel" data-slide-to="0" class="active" contenteditable="false"></li>
+						<li data-target="#myCarousel" data-slide-to="1" class="" contenteditable="false"></li>
+					</ol>
+								
+					<div class="carousel-inner">
+						<div class="item active">
+							<img src="img/slides/2a.jpg" alt="" title="">
+						</div>
+						<div class="item ">
+							<img src="img/slides/1a.jpg" alt="" title="">
+						</div>
+					</div>
+								
+					<a class="left carousel-control" href="#myCarousel" data-slide="prev" title="previous">	
+						<span class="fa fa-chevron-left slide-left-icon"></span>
+					</a>
+					<a class="right carousel-control" href="#myCarousel" data-slide="next" title="Next">	
+						<span class="fa fa-chevron-right slide-right-icon"></span>
+					</a>
+				</div>
+			</div>
+		</div>
+		
+		<section class="ticker">
+				<div class="container-fluid">
+					<div class="row">
+						<div class="col-md-12 col-xs-12">
+							<div class="wrap">
+								<div class="jctkr-label">	<strong>Announcements</strong>
+								</div>
+								<div class="js-conveyor-example square-bulltes">
+									<ul class="b">
+										<li>
+										
+											<p><i class="fa fa-angle-double-right" aria-hidden="true"></i> <a href="#" target="_blank" title="" role="link">Recommendations of 15th Review meeting of DUS centres for kharif crops-2019" held on 25-26th April, 2019 at NASC Complex, New Delhi.</a></a>
+											</p>
+										</li>
+										<li>
+											<p><i class="fa fa-angle-double-right" aria-hidden="true"></i> <a href="" target="_blank" title="" role="link" >Public Notice No.10 of 2019, 11 of 2019 and 12 of 2019 </a>
+											</p>
+										</li>
+										<li>
+											<p> <i class="fa fa-angle-double-right" aria-hidden="true"></i> <a href="#" target="_blank" title="" role="link" >Advertisement No. PPV&FRA/DR/25-01/2017 for post of Deputy Registrar on Outsourced basis in branch office at Shivamogga, (UAHS, Karnataka).Last Date: 30 days from the publication of the advertisement.</a>
+											</p>
+										</li>
+										
+										
+									</ul>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</section>
+		
+			<!--section class="p_40" data-bg-color="#eee">
+		<div class="container">
+			<div class="row">
+				<div class="col-md-12">
+					<div class="clients-carousel owl-carousel owl-theme">
+						<div class="item">
+							<div class="img-box">
+								<img src="img/clients/logo-1.png" alt="">
+							</div>
+						</div>
+						<div class="item">
+							<div class="img-box">
+								<img src="img/clients/logo-2.png" alt="">
+							</div>
+						</div>
+						<div class="item">
+							<div class="img-box">
+								<img src="img/clients/logo-3.png" alt="">
+							</div>
+						</div>
+						<div class="item">
+							<div class="img-box">
+								<img src="img/clients/logo-4.png" alt="">
+							</div>
+						</div>
+						<div class="item">
+							<div class="img-box">
+								<img src="img/clients/logo-5.png" alt="">
+							</div>
+						</div>
+						<div class="item">
+							<div class="img-box">
+								<img src="img/clients/logo-6.png" alt="">
+							</div>
+						</div>
+						<div class="item">
+							<div class="img-box">
+								<img src="img/clients/logo-7.png" alt="">
+							</div>
+						</div>
+						<div class="item">
+							<div class="img-box">
+								<img src="img/clients/logo-8.png" alt="">
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</section-->
+		
+		
+		<section class="recent-causes">
+			<div class="container-fluid">
+				<div class="row">
+					<div class="col-sm-12">
+						<div class="heading_text sec-title style-two">
+							<h3>No. of Certificates issued crop group-wise (2017-18)</h3>
+							<span class="decor">
+								<span class="inner"></span>
+							</span>
+						</div>
+					</div>
+				</div>
+				
+				<div class="row">
+					<div class="col-md-3 col-xs-12 box_2">
+						<div class="online_application_issued">
+						  <h3>439</h3>
+						  <figure><img src="img/Cereals.png"></figure>
+						  <span>Cereals</span>
+						</div>
+					</div>
+	
+					<div class="col-md-3 col-xs-12 box_3">
+						<div class="online_application_entry">
+						  <h3>69</h3>
+						  <figure><img src="img/Fibre.png"></figure>
+						  <span>Fibre Crops</span>
+						</div>
+					</div>
+					
+					<div class="col-md-3 col-xs-12 box_4">
+						<div class="online_application_rejected">
+						  <h3>19</h3>
+						  <figure><img src="img/Legumes.png"></figure>
+						  <span>Legumes </span>
+						</div>
+					</div>
+					
+					<div  class="col-md-3 col-xs-12 box_5">
+						<div class="online_application_entry">
+						  <h3>19</h3>
+						  <figure><img src="img/oilseeds.png"></figure>
+						  <span>Oilseeds</span>
+						</div>
+					</div>
+				</div>
+				
+			</div>
+		</section>
+		
+		<section class="recent-causes sec-padding">
+			<div class="container-fluid">
+               <div class="row">
+                  <div class="col-md-6 col-xs-12" style="padding:0; text-align:center;">
+                     <div class="chart_box">
+                        <h4> No. of Registrantion Certificates issued (2013-2017)</h4>
+                        <div id="chart_id" style="height:300px;">
+                        </div>
+                     </div>
+                  </div>
+                  <div class="col-md-6 col-xs-12" style="padding:0;">
+                     <div class="chart_box" style="text-align:center;">
+                        <h4>No. of Registrantion certificates issued category wise (2017-2018)</h4>
+                        <div id="chart_id1" style="height:300px;">
+                        </div>
+                     </div>
+                  </div>
+               </div>
+            </div>
+		</section>
+	
+	<div class="background-img">
+	<section class="recent-causes sec-padding " >
+		<div class="container">
+			<div class="row">
+				
+				<div class="col-md-4 col-xs-12">
+					<div class="tab" role="tabpanel">
+						<!-- Nav tabs -->
+						<ul class="nav nav-tabs" role="tablist">
+							<li role="presentation" class="active"><a href="#Section1" aria-controls="home" role="tab" data-toggle="tab"> Journal</a></li>
+							
+							<li role="presentation"><a href="#Section2" aria-controls="profile" role="tab" data-toggle="tab"> Tender</a></li>
+							
+							<li role="presentation"><a href="#Section3" aria-controls="messages" role="tab" data-toggle="tab">Orders</a></li>
+							
+						</ul>
+						<!-- Tab panes -->
+						<div class="tab-content tabs">
+							<div role="tabpanel" class="tab-pane fade in active" id="Section1">
+								
+									<ul class="demo1 tabing-cs">
+										<li class="news-item">
+                                         <i class="fa fa-angle-double-right" aria-hidden="true"></i> <a href="#" target="_blank" title="" role="link">Plant Variety Journal of India-Twelveth Issue <br>(June, 2019)</a>
+                                       </li>
+									   
+									    <li class="news-item">
+                                         <i class="fa fa-angle-double-right" aria-hidden="true"></i> <a href="#" target="_blank" title="" role="link">Plant Variety Journal of India-Eleventh Issue <br> (November, 2018)</a>
+                                       </li>
+									   
+									    <li class="news-item">
+                                         <i class="fa fa-angle-double-right" aria-hidden="true"></i> <a href="#" target="_blank" title="" role="link">Plant Variety Journal of India-Tenth Issue <br> October, 2018</a>
+                                       </li>
+									   
+									</ul>
+								<a href="#" class="pull-right" style="color:#000; font-size:14px;">View More</a>
+							</div>
+							<div role="tabpanel" class="tab-pane fade" id="Section2">
+								
+								<ul class="demo1 tabing-cs">
+											<li class="news-item">
+                                         <i class="fa fa-angle-double-right" aria-hidden="true"></i> <a href="#" target="_blank" title="" role="link">Lorem ipsum dolor sit amet, consectetur adipiscing elit.</a>
+                                       </li>
+									   
+									    <li class="news-item">
+                                         <i class="fa fa-angle-double-right" aria-hidden="true"></i> <a href="#" target="_blank" title="" role="link">Lorem ipsum dolor sit amet, consectetur adipiscing elit.</a>
+                                       </li>
+									   
+									    <li class="news-item">
+                                         <i class="fa fa-angle-double-right" aria-hidden="true"></i> <a href="#" target="_blank" title="" role="link">Lorem ipsum dolor sit amet, consectetur adipiscing elit.</a>
+                                       </li>
+									   
+									</ul>
+								
+								
+								<a href="#" class="pull-right" style="color:#000; font-size:14px;">View More</a>
+							</div>
+							
+							<div role="tabpanel" class="tab-pane fade" id="Section3">
+								
+								<ul class="demo1 tabing-cs">
+											<li class="news-item">
+                                         <i class="fa fa-angle-double-right" aria-hidden="true"></i> <a href="#" target="_blank" title="" role="link">passed by Ld. Chairperson in Benefit Sharing matter relating 
+										 </a>
+                                       </li>
+									   
+									    <li class="news-item">
+                                         <i class="fa fa-angle-double-right" aria-hidden="true"></i> <a href="#" target="_blank" title="" role="link">passed by Ld. Chairperson in Revocation matter relating to C-96 </a>
+                                       </li>
+									   
+									    <li class="news-item">
+                                         <i class="fa fa-angle-double-right" aria-hidden="true"></i> <a href="#" target="_blank" title="" role="link">passed by Ld. Chairperson in MALLIKA-NCS 207.</a>
+                                       </li>
+									   
+									</ul>
+								
+								
+								<a href="#" class="pull-right" style="color:#000; font-size:14px;">View More</a>
+							</div>
+							
+							
+							
+							
+						</div>
+					</div>
+				</div>
+				
+				<!--div class="col-md-4">
+                  <div class="whatsnew">
+                     <div class="panel panel-default"> 
+                        <div class="panel-heading">Plant Variety Journal</div>
+                        <div class="panel-body">
+                           <div class="row">
+                              <div class="col-xs-12">
+									
+									<div class="plant_variety">
+										<ul class="demo1">
+											<li class="news-item">
+                                         <i class="fa fa-angle-double-right" aria-hidden="true"></i> <a href="#" target="_blank" title="" role="link" >Plant Variety Journal of India-Twelveth Issue <br>(June, 2019)</a>
+                                       </li>
+									   
+									    <li class="news-item">
+                                         <i class="fa fa-angle-double-right" aria-hidden="true"></i> <a href="#" target="_blank" title="" role="link" >Plant Variety Journal of India-Eleventh Issue <br> (November, 2018)</a>
+                                       </li>
+									   
+									    <li class="news-item">
+                                         <i class="fa fa-angle-double-right" aria-hidden="true"></i> <a href="#" target="_blank" title="" role="link" >Plant Variety Journal of India-Tenth Issue <br> October, 2018</a>
+                                       </li>
+									   
+										
+										</ul>
+										<br>
+										<a href="#" class="pull-right" style="color:#000; font-size:14px; padding-bottom:10px;">View More</a>
+										<br>
+										
+									</div>
+									
+									
+                                    
+                                </div>
+                            </div>
+                        </div>
+                     </div>
+                  </div>
+				</div-->
+				
+				<div class="col-md-4">
+					<div class="full-sec-content fullsec whatsnew" >
+						<!-- <div class="sec-title style-two"> -->
+							<!-- <h2>Photo Gallery</h2> -->
+							
+						<!-- </div> -->
+						<img class="full-width" alt="" src="img/resources/gallery.jpg">
+						<br>
+						<a href="#" class="thm-btn">View Gallery</a>
+					</div>
+					<!--div class="whatsnew">
+						<div class="plant_application">
+						<ul style="list-style:none; padding:0; position:relative;">
+							<li><a href="#"><img src="img/application_b.png"></a></li><br>
+							<li><a href="#"><img src="img/issued_b.png"></a></li><br>
+							<li><a href="#"><img src="img/img-3b.png"></a></li>
+						</ul>
+					</div>
+					</div-->
+				</div>
+			   
+			   
+			   
+			   
+			   <div class="col-md-4">
+                 <div class="whatsnew">
+						<div class="plant_application">
+						<ul style="list-style:none; padding:0; position:relative;">
+							<li><a href="#"><img src="img/application_b.png"></a></li><br>
+							<li><a href="#"><img src="img/issued_b.png"></a></li><br>
+							<li><a href="#"><img src="img/img-3b.png"></a></li>
+						</ul>
+					</div>
+					</div>
+               </div>
+			   
+			</div>
+		</div>
+	</section>
+	</div>
+	
+	
+	
+	
+	
+
+	<section class="p_40" data-bg-color="#eee">
+		<div class="container">
+			<div class="row">
+				<div class="col-md-12">
+					<div class="clients-carousel owl-carousel owl-theme">
+						<div class="item">
+							<div class="img-box">
+								<img src="img/clients/logo-1.png" alt="">
+							</div>
+						</div>
+						<div class="item">
+							<div class="img-box">
+								<img src="img/clients/logo-2.png" alt="">
+							</div>
+						</div>
+						<div class="item">
+							<div class="img-box">
+								<img src="img/clients/logo-3.png" alt="">
+							</div>
+						</div>
+						<div class="item">
+							<div class="img-box">
+								<img src="img/clients/logo-4.png" alt="">
+							</div>
+						</div>
+						<div class="item">
+							<div class="img-box">
+								<img src="img/clients/logo-5.png" alt="">
+							</div>
+						</div>
+						<div class="item">
+							<div class="img-box">
+								<img src="img/clients/logo-6.png" alt="">
+							</div>
+						</div>
+						<div class="item">
+							<div class="img-box">
+								<img src="img/clients/logo-7.png" alt="">
+							</div>
+						</div>
+						<div class="item">
+							<div class="img-box">
+								<img src="img/clients/logo-8.png" alt="">
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</section>
+	
+	<footer class="footer sec-padding">
+		<div class="container">
+			<div class="row">
+				<div class="col-md-5 col-sm-6">
+					<div class="footer-widget about-widget">
+						<!-- <h3 class="title">Address</h3> -->
+						<p><strong>Ministry of Agriculture &amp; Farmers Welfare,</strong><br>Department of Agriculture, Co-operation &amp; Farmers Welfare,<br>NASC Complex, DPS Marg, Opp- Todapur Village, <br> 	New Delhi-110 012</p>
+						<ul class="contact">
+							
+							<li><i class="fa fa-phone"></i> <span>+91-11-25848127</span></li>
+							<li><i class="fa fa-envelope-o" style="float:left;"></i> <a href="mailto:chairperson-ppvfra@nic.in" target="_blank" class="email" style="color:#fff;"> &nbsp;
+					chairperson-ppvfra[at]nic[dot]in</a></li>
+						</ul>
+						<ul class="social">
+							<li><a href="#"><i class="fa fa-facebook"></i></a></li>
+							<li><a href="#"><i class="fa fa-twitter"></i></a></li>
+							<li><a href="#"><i class="fa fa-google-plus"></i></a></li>
+							<li><a href="#"><i class="fa fa-pinterest"></i></a></li>
+							<li><a href="#"><i class="fa fa-youtube"></i></a></li>
+						</ul>
+					</div>
+				</div>
+				
+				
+				<div class="col-md-5 col-sm-6">
+					<div class="footer-widget quick-links">
+						<h3 class="title">Related Links</h3>
+						<ul>
+							<li><a href="#"> Haryana Kisan Ayog</a></li>
+							<li><a href="#">Patent Office of India</a></li>
+							<li><a href="#">The International Union for the Protection of New Varieties of Plants (UPOV)</a></li>
+							<li><a href="#">Seed Net Portal</a></li>
+							<li><a href="#">Notified and Released Varieties of India </a></li>
+							<li><a href="#">Department of Agriculture and Co-operation </a></li>
+							
+						</ul>
+					</div>
+				</div>
+				
+				<div class="col-md-2 col-sm-6">
+					<div class="footer-widget quick-links">
+						<h3 class="title">Policies</h3>
+						<ul>
+							<li><a href="#">FAQ's</a></li>
+							<li><a href="#">Grievances</a></li>
+							<li><a href="#">Terms & Conditions</a></li>
+							<li><a href="#">Whistle Blower Policy</a></li>
+							<li><a href="#">Website Policy</a></li>
+							<li><a href="#">Imprint</a></li>
+							
+						</ul>
+					</div>
+				</div>
+			</div>
+		</div>
+	</footer>
+
+
+	<section class="footer-bottom">
+		<div class="container text-center">
+			<p>© 2019 Ministry of Agriculture &amp; Farmers Welfare All Rights Reserved.</p>
+		</div>
+	</section>
+
+
+	<!-- main jQuery -->
+	<script src="js/jquery-1.11.1.min.js"></script>
+	<!-- bootstrap -->
+	<script src="js/bootstrap.min.js"></script>
+	<!-- bx slider -->
+	<script src="js/jquery.bxslider.min.js"></script>
+	<!-- owl carousel -->
+	<script src="js/owl.carousel.min.js"></script>
+	<!-- validate -->
+	<script src="js/jquery-parallax.js"></script>
+	<!-- validate -->
+	<script src="js/validate.js"></script>
+	<!-- mixit up -->
+	<script src="js/jquery.mixitup.min.js"></script>
+	<!-- fancybox -->
+	<script src="js/jquery.fancybox.pack.js"></script>
+	<!-- easing -->
+	<script src="js/jquery.easing.min.js"></script>
+	<!-- circle progress -->
+	<script src="js/circle-progress.js"></script>
+	<!-- appear js -->
+	<script src="js/jquery.appear.js"></script>
+	<!-- count to -->
+	<script src="js/jquery.countTo.js"></script>
+	<!-- gmap helper -->
+	<script src="http://maps.google.com/maps/api/js?sensor=true"></script>
+	<!-- gmap main script -->
+	
+
+	<!-- isotope script -->
+	<script src="js/isotope.pkgd.min.js"></script>
+	<!-- jQuery ui js -->
+	<script src="js/jquery-ui-1.11.4/jquery-ui.js"></script>
+	
+	<!-- revolution scripts -->
+
+	<script src="revolution/js/jquery.themepunch.tools.min.js"></script>
+	<script src="js/jquery.jConveyorTicker.min.js"></script>
+	<script src="revolution/js/jquery.themepunch.revolution.min.js"></script>
+	<script type="text/javascript" src="revolution/js/extensions/revolution.extension.actions.min.js"></script>
+	<script type="text/javascript" src="revolution/js/extensions/revolution.extension.carousel.min.js"></script>
+	<script type="text/javascript" src="revolution/js/extensions/revolution.extension.kenburn.min.js"></script>
+	<script type="text/javascript" src="revolution/js/extensions/revolution.extension.layeranimation.min.js"></script>
+	<script type="text/javascript" src="revolution/js/extensions/revolution.extension.migration.min.js"></script>
+	<script type="text/javascript" src="revolution/js/extensions/revolution.extension.navigation.min.js"></script>
+	<script type="text/javascript" src="revolution/js/extensions/revolution.extension.parallax.min.js"></script>
+	<script type="text/javascript" src="revolution/js/extensions/revolution.extension.slideanims.min.js"></script>
+	<script type="text/javascript" src="revolution/js/extensions/revolution.extension.video.min.js"></script>
+
+
+	<!-- thm custom script -->
+	<script src="js/custom.js"></script>
+	
+	
+	
+
+		<script>
+			$(document).ready(function() {
+	$(".dropdown").hover(
+		function() {
+			$('.dropdown-menu', this).stop(true, true).slideDown("fast");
+			$(this).toggleClass('open');
+		},
+		function() {
+			$('.dropdown-menu', this).stop(true, true).slideUp("fast");
+			$(this).toggleClass('open');
+		}
+	);
+});
+
+
+		</script>
+		
+		<script>
+			$(function() {
+					$('.js-conveyor-example').jConveyorTicker();
+				  });
+				  
+				  /* {reverse_elm: true} */
+		</script>
+		
+		<script src="js/echarts.min.js"></script>
+    <script>
+         $(function(){
+             var chart = document.getElementById('chart_id');
+             var myChart = echarts.init(chart);
+             var option = {
+                 color: ['#f9c60d'],
+         tooltip: {
+                     trigger: 'axis',
+                     axisPointer: {
+                         type: 'cross'
+                     }
+                 },
+                 grid: {
+                     right: '15%',
+                     containLabel: true
+                 },
+                 legend: {
+                     y: 'bottom', // 'center' | 'bottom' | {number}
+                     textStyle: {
+                         fontSize: 10,
+                         fontStyle: 'normal',
+                         fontWeight: 'normal',
+                         margin:10,
+                         },
+                     data: [
+                         
+                         {
+                             name:'Certificates issued (2013-2017)',
+                            
+                         },
+                         
+                     ]
+                 },
+            
+                 toolbox: {
+                     show: true,
+                     orient: 'vertical',
+                     left: 'right',
+                     top: 'center'
+                     
+                 },
+                 calculable: true,
+                 xAxis: [
+                     {
+                         type: 'category',
+                         axisTick: { alignWithLabel: true},
+                         data: ['2013-14','2014-15','2015-16','2016-17','2017-18']
+                     }
+                 ],
+                 yAxis: [
+                     {
+                         name: '',
+                         type: 'value',
+                         lineStyle: {
+                             color: "#26b99a",
+                         }
+                     },
+                 ],
+                 series: [
+                     {
+                         name: 'Certificates issued (2013-2017)',
+                         type: 'bar',
+                         barGap: 0,
+                         barMaxWidth: 30,
+                         data: [330,842,419,629,619]
+                     }
+                     
+                 ]
+             };
+         
+             myChart.setOption(option, true);
+         
+         
+             var chart = document.getElementById('chart_id1');
+             var myChart = echarts.init(chart);
+             var option = {
+         color: ['#69be28'],
+         tooltip: {
+                     trigger: 'axis',
+                     axisPointer: {
+                         type: 'cross'
+                     }
+                 },
+                 grid: {
+                     right: '15%',
+                     containLabel: true
+                 },
+                 legend: {
+                     y: 'bottom', // 'center' | 'bottom' | {number}
+                     textStyle: {
+                         fontSize: 10,
+                         fontStyle: 'normal',
+                         fontWeight: 'normal',
+                         margin:10,
+                         },
+                     data: [
+                         
+                         {
+                             name:'No. of Certificates Issued',
+                            
+                         },
+                       
+                     ]
+                 },
+            
+                 toolbox: {
+                     show: true,
+                     orient: 'vertical',
+                     left: 'right',
+                     top: 'center'
+                     
+                 },
+                 calculable: true,
+                 xAxis: [
+                     {
+                         type: 'category',
+                         axisTick: { alignWithLabel: true},
+                         data: ['Extant (Notified)', 'Extant (VCK)', 'Farmers','New']
+                     }
+                 ],
+                 yAxis: [
+                     {
+                         name: '',
+                         type: 'value',
+                         lineStyle: {
+                             color: "#26b99a",
+                         }
+                     },
+                 ],
+                 series: [
+                     {
+                         name: 'No. of Certificates Issued',
+                         type: 'bar',
+                         barGap: 0,
+                         barMaxWidth: 50,
+                         //data: [100, 1001, 1002,33]
+         data: [{value:83},
+         {value:99},
+         {value:361},
+         {value:76}],
+                     },
+         
+                   
+                 ]
+             };
+         
+             myChart.setOption(option, true);
+             
+         });
+      </script>
+		
+</body>
+</html>

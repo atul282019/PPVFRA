@@ -1,0 +1,352 @@
+	
+	
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+	<div th:fragment="formnine">
+	<form class="form-horizontal" role="form" name="form9" id="form-9" th:action="@{/saveapplication2form9}" th:object="${applications}" method="post" enctype="multipart/form-data">   <!--form_9 start -->                                       
+														<div class="form-group">
+                                                        <label class="col-md-12"><h4>9. Has the candidate variety been commercialised or otherwise exploited:<span style="color:red">*</span><h4></label>
+                                                    </div>
+													<div class="form-group">
+                                                        <label class="col-md-3 control-label"></label>
+                                                        <div class="col-md-9">
+                                                            Yes <input type="radio" th:field="*{is_commercialised}" id="iscommercialised1"  value="yes" class="radio-btn-position" onclick="ShowHideDivForm9Yes()"> &nbsp; &nbsp; 
+                                                            No <input type="radio" th:field="*{is_commercialised}" id="iscommercialised2"  value="no" class="radio-btn-position" onclick="HideForm9div()"> 
+                                                            <span id="commerceerror" style="color:red"></span>
+                                                         </div>
+                                                          
+														
+													</div>
+													
+														 <div id="dvPassport9" style="display: none">
+														 <div class="form-group">
+															<label class="col-md-3 control-label">Date of the first sale of the Essentially Derived Variety<span style="color:red">*</span></label>
+															<div class="col-md-6">
+																<input type="date" name="first_sale_date" class="form-control" id="firstsaledate" th:value="*{#dates.format(first_sale_date,'yyyy-MM-dd')}" onchange="Tdate9()">
+																
+															</div>
+															 <span id="saleerror" style="color:red"></span>
+														 </div>
+														
+														<div class="form-group">
+															<label class="col-md-3 control-label">Upload proof of first sale of Essentially Derived Variety<span style="color:red">*</span></label>
+															<div class="col-md-6">
+																<input type="file" value="" id="firstsaleproof" name="firstsaleproof" class="form-control" th:onchange="'javascript:uploadfilechk2(),validatePDF(this)'" >
+																	<a th:href="'/ppvfra/download/formvnotification/'+*{issue_first_sale_name}" target="_blank">
+																	<span id="file_f9" th:text="*{issue_first_sale_name}">
+																	</span></a>
+																
+															</div>
+															<span id="file_error" style="color:red"></span>
+														    <div class="help-block with-errors" id="docuploaderror3"></div>
+														</div>
+														
+														<div class="form-group">
+															<label class="col-md-3 control-label">Country of first sale of the Essentially Derived Variety<span style="color:red">*</span></label>
+															<div class="col-md-6">
+																<input type="text" th:field="*{protection_countries}" class="form-control"  id="protection" value="">
+															</div>
+															 <span id="countryerror" style="color:red"></span>
+														</div>
+														 
+														
+														<div class="form-group">
+															<label class="col-md-3 control-label">Denomination Used (In Block Letters)<span style="color:red">*</span></label>
+															<div class="col-md-6">
+																<input type="text" th:field="*{c_denomination}" class="form-control" id="used_denomination" value="" style="text-transform:uppercase">
+															</div>
+															 <span id="deno_used_error" style="color:red"></span>
+														</div>
+														<div class="form-group">
+															<label class="col-md-3 control-label">Trademark used, if any<span style="color:red">*</span></label>
+															<div class="col-md-6">
+																<input type="text" th:field="*{trademark}" class="form-control" id="trademark" value="">
+															</div>
+															<span id="tradeerror" style="color:red"></span>
+														</div>
+                                                       </div>
+														<hr/>
+														<div class="form-group" th:if="${appstatus ==1}">
+															<div class="col-sm-offset-10 col-sm-12">
+															    <input type="hidden" id="applicationidfromix" name="applicationidfromix" th:value="*{id}">
+																<input type="hidden" id="applicantidformix" name="applicantidformix"  th:value="${userapplicant[0]}">
+																<input type="hidden" id="applicanttypeidformix" name="applicanttypeidformix" th:value="*{applicanttypeid}" />
+																<input type="hidden" id="f9_id" name="f9_id" th:value="${f9_id}">
+																<input type="hidden" id="file_f9" name="file_f9" th:value="*{issue_first_sale_name}">
+																<input type="hidden" id="file_f9variation" name="file_f9variation" th:value="*{variation_name}">
+																
+																<button type="submit" id="submit1st-9th" onclick ="return valuechkfor9thform()" class="btn btn-info waves-effect waves-light">Save</button>
+																
+															</div>
+														</div>
+														
+									<script type="text/javascript">
+									function  valuechkfor9thform()
+									{
+										var deno_used = document.getElementById("used_denomination").value;
+										var trade = document.getElementById("trademark").value;
+										var country =document.getElementById("protection").value;
+										var fsale = document.getElementById("firstsaledate").value;
+										var sub = document.getElementById("submit1st-9th");
+										var fsaleproof = document.getElementById("firstsaleproof").value;
+										if (document.getElementById("iscommercialised1").checked == true) {
+										if(fsale=="" || fsale ==null )
+										{
+										 document.getElementById("saleerror").innerHTML="Please fill date of the first sale";
+										 document.getElementById("firstsaledate").focus() ;
+							        		return false;
+										}
+										else{
+											 document.getElementById("saleerror").innerHTML="";
+										}
+										
+										if(fsaleproof =="" || fsaleproof == null)
+										{
+											var fsale=$('#file_f9').text();
+											if(fsale.length>0 && !(fsale =="" || fsale ==null) )
+												{
+												 document.getElementById("file_error").innerHTML="";
+												}else{
+										 document.getElementById("file_error").innerHTML="Please upload proof of first sale";
+										 document.getElementById("firstsaleproof").focus() ;
+										// sub.disabled=true;
+							        		return false;
+												}
+										}
+										else{
+											document.getElementById("file_error").innerHTML="";
+										}
+										
+										if(country=="" || country ==null )
+										{
+										 document.getElementById("countryerror").innerHTML="Please enter country";
+										 document.getElementById("protection").focus();
+										
+							        		return false;
+										}
+										else{
+											 document.getElementById("countryerror").innerHTML="";
+										}
+										if(deno_used=="" || deno_used ==null )
+										{
+										 document.getElementById("deno_used_error").innerHTML="Please enter denomination used";
+										 document.getElementById("used_denomination").focus();
+										
+							        		return false;
+										}
+										else{
+											 document.getElementById("deno_used_error").innerHTML="";
+										}
+										if(trade =="" || trade ==null )
+										{
+										 document.getElementById("tradeerror").innerHTML="Please enter trademark used";
+										 document.getElementById("trademark").focus();
+										 //sub.disabled=true;
+							        		return false;
+										}
+										else{
+											document.getElementById("tradeerror").innerHTML="";
+										}
+										
+										
+										if(attachsheet =="" || attachsheet == null)
+										{
+											var vartrait=$('#file_f9variation').text();
+											if(vartrait.length>0 && !(vartrait ==null || vartrait==""))
+												{
+											document.getElementById("file_error2").innerHTML="";
+												}else{
+										 document.getElementById("file_error2").innerHTML="Please upload variation in important trait";
+										 //document.getElementById("variationtrait").focus();
+										 //sub.disabled=true;
+							        		return false;
+												}
+										}
+										else{
+											 document.getElementById("file_error2").innerHTML="";
+										}
+										
+										}
+										else if(document.getElementById("iscommercialised2").checked == true) {
+							        		  document.getElementById("commerceerror").innerHTML="";
+							        		  
+							        		  document.getElementById("used_denomination").value="";
+												document.getElementById("trademark").value="";
+												document.getElementById("protection").value="";
+												document.getElementById("firstsaledate").value="";
+												document.getElementById("submit1st-9th")="";
+												document.getElementById("firstsaleproof").value="";
+												//document.getElementById("variationtrait").value="";
+							                  //document.form9.is_commercialised[0].focus() ;
+							        	    return true;
+							        	  }
+										else{
+											document.getElementById("commerceerror").innerHTML="Please select candidate variety";
+							                document.form9.is_commercialised[0].focus() ;
+							                return false;
+										}
+										return true;		
+									}
+									</script>	
+									
+									<script type="text/javascript">
+									function isOneChecked() {
+										 if (document.form9.is_commercialised[0].checked == true) {
+							          	    return true;
+							          	  }
+								           else if (document.form9.is_commercialised[1].checked == true) {
+								        	    document.getElementById("used_denomination").value="";
+												document.getElementById("trademark").value="";
+												document.getElementById("protection").value="";
+												document.getElementById("firstsaledate").value="";
+												document.getElementById("submit1st-9th")="";
+												document.getElementById("firstsaleproof").value="";
+												//document.getElementById("variationtrait").value="";
+								          	    return true;
+								          	  }
+								          else {
+								        		  document.getElementById("commerceerror").innerHTML="Please select one radio type";
+								                  document.form9.is_commercialised[0].focus() ;
+								        	    return false;
+								        	  }
+										}
+									</script>	
+										
+										
+		 <script type="text/javascript">
+            function uploadfilechk1() {
+              var filename = document.getElementById('variationtrait').files[0].name;    
+                 //alert(filename);
+			
+			  var iFileSize = document.getElementById('variationtrait').files[0].size;
+               // alert(iFileSize);
+            
+               $.ajax({
+                type: "POST",
+                url: "/ppfvra/api/filesizecheck",
+                data:'filename='+filename+'&filesize='+iFileSize,
+               
+                success: function (data) {
+
+               if(data == false)
+				{ 
+        document.getElementById("file_error2").innerHTML = " <font color='red'>File size is greater than maximum allowed size of 500 KB.</font>";
+        var tst=document.getElementById('variationtrait');
+        		tst.value='';
+        $("#submit1st-9th").attr("disabled", true);
+         return false;
+                }
+			else if (data == true) {
+				document.getElementById("file_error2").innerHTML = " ";
+				$("#submit1st-9th").attr("disabled", false);
+			     return true;
+                    }
+                   
+                }
+            }); 
+            
+  }
+    </script>
+    
+     <script type="text/javascript">
+            function uploadfilechk2() {
+              var filename = document.getElementById('firstsaleproof').files[0].name;    
+                 //alert(filename);
+			
+			  var iFileSize = document.getElementById('firstsaleproof').files[0].size;
+               // alert(iFileSize);
+            
+               $.ajax({
+                type: "POST",
+                url: "/ppfvra/api/filesizecheck",
+                data:'filename='+filename+'&filesize='+iFileSize,
+               
+                success: function (data) {
+
+               if(data == false)
+				{ 
+        document.getElementById("file_error").innerHTML = " <font color='red'>File size is greater than maximum allowed size of 500 KB.</font>";
+        var tst=document.getElementById('firstsaleproof');
+        		tst.value='';
+        $("#submit1st-9th").attr("disabled", true);
+         return false;
+                }
+			else if (data == true) {
+				document.getElementById("file_error").innerHTML = " ";
+				$("#submit1st-9th").attr("disabled", false);
+			     return true;
+                    }
+                   
+                }
+            }); 
+            
+  }
+    </script>
+    
+ <script type="text/JavaScript">
+var formOK = false;
+
+function validatePDF(objFileControl){
+ var file = objFileControl.value;
+ var len = file.length;
+ var ext = file.slice(len - 4, len);
+ if(ext.toUpperCase() == ".PDF" || ext.toUpperCase() == ".PNG" || ext.toUpperCase() == ".JPG" || ext.toUpperCase() == ".GIF"){
+   formOK = true;
+ }
+ else{
+   formOK = false;
+   objFileControl.value =null;
+   alert("Only PDF/PNG/JPG/GIF files allowed.");
+ }
+}
+</script>			
+				
+<script type="text/javascript">
+    function ShowHideDivForm9Yes() {
+        var chkYes = document.getElementById("iscommercialised1");
+        var dvPassport = document.getElementById("dvPassport9");
+        dvPassport.style.display = iscommercialised1.checked ? "block" : "none";
+        /* $("#dvPassport9").prop("disabled", false); */
+    }
+</script>
+<script type="text/javascript">
+    function HideForm9div() {
+        var chkYes = document.getElementById("iscommercialised2");
+        var dvPassport = document.getElementById("dvPassport9");
+        dvPassport.style.display = iscommercialised2.checked ? "none" : "block";
+       /*  $("#dvPassport9").prop("disabled", true); */
+    }
+</script>	
+
+<script type="text/javascript">
+function Tdate9() {
+    var UserDate = document.getElementById("firstsaledate").value;
+    var ToDate = new Date();
+    
+    $("#submit1st-9th").attr("disabled",false);
+    
+    var chkYes_f9 = document.getElementById("iscommercialised1");
+    if(chkYes_f9.checked=true)
+    	{
+    if (new Date(UserDate).getTime() > ToDate.getTime()) {
+          alert("The Date must be not Greater than today's date");
+          document.getElementById("saleerror").innerHTML="Please select date less than or equal to present date";
+          document.form9.firstsaledate.focus() ;
+           $("#submit1st-9th").attr("disabled",true);
+          return false;
+     }else{
+    	 document.getElementById("saleerror").innerHTML="";
+          }
+    
+    
+    	}
+    
+    
+    return true;
+}
+</script>	
+								
+														
+</form>
+</div>
+</html>

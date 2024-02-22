@@ -1,0 +1,373 @@
+  
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+	<head>
+	  <th:block th:include="adminfragment/headerlibs.html :: headerlibs"></th:block> 
+	</head>
+
+    <body class="fixed-left">
+        <!-- Begin page -->
+<div id="wrapper">
+
+    <!-- Top Bar Start -->
+<header th:insert="adminfragment/header.html :: header"> </header>
+ <!-- Top Bar End -->
+
+
+<!-- ========== Left Sidebar Start ========== -->
+<header th:insert="adminfragment/sidenav.html :: sidevav"> </header>
+         <!-- Left Sidebar End --> 
+
+
+<!-- Start right Content here -->  
+
+<!-- ============================================================== -->                      
+<div class="content-page">
+    <!-- Start content -->
+ <div class="content">
+
+<!-- <span th:if="${actd_viewtrue != null && actd_viewtrue == 'valpresent' }">
+-->  <div class="container">
+
+         <!-- Page-Title -->
+<div class="row">
+<div class="col-sm-12">
+<h4 class="pull-left page-title">View Application Details</h4>
+<ol class="breadcrumb pull-right">
+<li><a href="#">Home</a></li>
+<li class="active">View Application</li>
+<li>
+    <a href="/submittedapplication" class="btn btn-purple waves-effect waves-light btn-xs m-b-5"><b>Back</b></a>
+</li>
+</ol>
+</div>
+</div>
+
+<div class="row">
+                 
+<form class="form-horizontal" role="form">                                    
+                                            
+<div class="table-responsive">
+		
+	<table class="table  table-bordered w-auto table-hover forward">
+
+		<!--Table head-->
+		<thead>
+			
+		</thead>
+		<!--Table head-->
+
+		<!--Table body-->
+		<tbody th:each="hdata : ${headerdata}">
+			 <tr>
+				<th>Name</th>
+				<span th:if="${hdata[0] != null}">
+				<td th:text="${hdata[0]}"></td>
+				</span>
+				<span th:unless="${hdata[0] != null}">
+				<td></td>
+				</span>
+			 </tr>
+			
+			<tr >
+				<th>Date</th>
+				<span th:if="${hdata[1] != null}">
+				<td th:text="${hdata[1]}"></td>
+				</span>
+				<span th:unless="${hdata[1] != null}">
+				<td></td>
+				</span>
+			</tr>
+		
+			<tr >
+				<th>PVP Number</th>
+				<span th:if="${hdata[2] != null}">
+				<td th:text="${hdata[2]}"></td>
+				</span>
+				<span th:unless="${hdata[2] != null}">
+				<td></td>
+				</span>
+			</tr>
+		
+			<tr >
+				<th>Type oF Variety</th>
+				<span th:if="${hdata[3] != null}">
+				<td th:text="${hdata[3]}"></td>
+				</span>
+				<span th:unless="${hdata[3] != null}">
+				<td></td>
+				</span>
+			</tr>
+		
+			<tr >
+				<th>Crop</th>
+				<span th:if="${hdata[4] != null}">
+				<td th:text="${hdata[4]}"></td>
+				</span>
+				<span th:unless="${hdata[4] != null}">
+				<td></td>
+				</span>
+			</tr>
+			<tr >
+				<th>Denomination of the Candidate Variety</th>
+				<span th:if="${hdata[5] != null}">
+				<td th:text="${hdata[5]}"></td>
+				</span>
+				<span th:unless="${hdata[5] != null}">
+				<td></td>
+				</span>
+			</tr>
+			<tr>
+			<th>Candidate Variety Type</th>
+			<span th:if="${can_var != null}">
+			<td th:text="${can_var}"></td>
+			</span>
+			<span th:unless="${can_var != null}">
+			<td></td>
+			</span>
+		</tbody>
+	<!--Table body-->
+	</table>
+	<!--Table-->
+	
+
+	</div>
+</form> <!-- content -->
+
+
+<form class="form-horizontal" role="form" th:action="@{/deficency_report_byapplicant}" th:object="${applicationscrutiny}" method="post" enctype="multipart/form-data" onsubmit="return check_defi_report()"> 
+<div class="panel panel-success">
+<div class="panel-heading">Deficiency Report</div>
+<div class="panel-body"> 
+<div class="">
+	<div>
+	<input type="hidden" th:value="${applicationid}" name="applicationid" id="applicationid" />
+	</div>	
+	<table class="table table-striped  table-bordered table-hover">
+
+		<!--Table head-->
+		<thead>
+			<tr>
+				<th>Last date of Submission</th>
+				<th th:if="${data_scr !=null}" colspan="4">
+				<span th:text="${data_scr[0]}"></span>
+				</th>
+				<th th:unless="${data_scr !=null}" colspan="4"></th> 
+			</tr>
+			<tr>
+				<th>Sr. no.</th>
+				<th>Category</th>
+				<th>Observation</th>
+				<th>Compliance</th>
+				<th>Document</th>
+			</tr>
+		</thead>
+		<!--Table head-->
+
+		<!--Table body-->
+		<tbody>
+			<tr class="table-info" th:each="list,serial : ${applicationscrutinydata}">
+				
+				<td th:text="${serial.count}"></td>
+				
+				<!-- <td th:text="${list.category}"></td>
+				<td th:text="${list.observation}"></td>
+				 -->
+				 
+				 <td th:text="${list[9]}"></td>
+				<td th:text="${list[3]}"></td>
+				 
+				<td>
+				<span th:if="${list[7] !=null}"> 
+				<input type="text" id="complaince" name="complaince" class="form-control" th:value="${list[7]}">
+				</span>
+				<span th:unless="${list[7] !=null}"> 
+				<input type="text" id="complaince" name="complaince" th:field="*{complaince}" class="form-control" value="">
+				</span>
+				</td>
+				
+				<td>
+				 
+				 <span th:if="${list[8] !=null}"> 
+					<a th:href="'/ppvfra/download/'+${list[1]}+'/'+${list[8]}" target="_blank">
+					<input type="file" class="form-control" th:id="'fname/'+${list[0]}" name="fileUpload" th:text="${list[8]}" th:onchange="'javascript:uploadfile_defireport_check(\''+${list[0]}+'\'),validatepdf_defireport(this)'">
+					</a>
+				<input type="hidden" id="fname_discrepant" name="fname_discrepant" th:value="${list[8]}">
+					
+				</span>
+				<span th:unless="${list[8] !=null}"> 
+					<input type="file" class="form-control" th:id="'fname/'+${list[0]}" name="fileUpload" th:onchange="'javascript:uploadfile_defireport_check(\''+${list[0]}+'\'),validatepdf_defireport(this)'">
+				</span>
+				<div class="help-block with-errors" th:id="'docuploaderror2/'+${list[0]}"></div>
+			
+			
+									 
+				 <!--
+				 //This Case Is Commneted For Future showing of
+				 //documents when once saved.  
+				 <span th:if="${list.documentname !=null}"> 
+					<a th:href="'/ppvfra/download/'+${list.applicationid}+'/'+${list.documentname}" target="_blank">
+					<span th:text="${list.documentname}"></span>
+					</a>
+				</span>
+				
+				-->
+			 
+				</td>
+				
+				
+				<span>
+				<input type="hidden" id="id" name="id" th:value="${list[0]}" />
+				</span>
+				
+			</tr>
+			
+		
+			
+		</tbody>
+		
+	<!--Table body-->
+	</table>
+		<div class="form-group">
+		<div class="col-md-12 text-center">
+		
+		<button name="submit_defi_report_applicant"  id="submit_defi_report_applicant" type="submit" class="btn btn-info waves-effect waves-light">Save</button>
+		<span th:if="${data_scr[2] !=null}">
+		<button name="submit_defi_report_final_applicant"  id="submit_defi_report_final_applicant" type="submit" class="btn btn-info waves-effect waves-light">Final Submit</button>
+		</span>
+		</div>
+		</div>
+		
+	
+	
+	<!--Table-->
+		
+
+	</div>
+	</div>
+	</div>
+		
+
+</form>
+		<script type="text/javascript">
+		function check_defi_report()
+		{
+			var defi_comp = document.getElementsByName("complaince");
+			for(var k=0;k<defi_comp.length;k++)
+			{ 
+				if(defi_comp[k].value == null || defi_comp[k].value =="")
+			 	{alert("Complaince Value Cannot be blank");
+			 	return false;
+			 	}
+			 }
+			var file_deficase= document.getElementsByName("fileUpload");
+			var file_post_upload =document.getElementsByName("fname_discrepant");
+			for(var pre=0;pre<file_post_upload.length;pre++)
+				{
+			if(file_post_upload[pre].value=="" || file_post_upload[pre].value==null )
+				{
+				for(var f=0;f<file_deficase.length;f++)
+				{
+				
+				if(file_deficase[f].value=="" || file_deficase[f].value==null)
+					{
+					alert("Please Upload File no"+(f+1));
+					return false;
+					}
+				}
+				}
+				
+				}
+		}
+		</script>										
+       
+       
+        <script type="text/javascript">
+        function uploadfile_defireport_check(Obj) {
+        	
+        	
+        	if (Obj == null) 
+            Obj = window.event.srcElement;
+            
+            if (Obj.value != "") 
+            {
+            var	filename = Obj;    
+            //alert(filename);
+			
+			var iFileSize = document.getElementById('fname/'+filename).files[0].size;
+           // alert(iFileSize);
+            
+            $.ajax({
+                type: "POST",
+                url: "/ppfvra/api/filesizecheck",
+                data:'filename='+filename+'&filesize='+iFileSize,
+               
+                success: function (data) {
+
+               if(data == false)
+				{ 
+        document.getElementById("docuploaderror2/"+filename).innerHTML = " <font color='red'>Try to upload file less than 500KB!</font>";
+        var tst=document.getElementById("fname/"+filename);
+        $("#submit_defi_report_applicant").attr("disabled", true);
+        $("#submit_defi_report_final_applicant").attr("disabled", true);
+
+        		tst.value='';
+         return false;
+                }
+			else if (data == true) {
+				$("#submit_defi_report_applicant").attr("disabled", false);
+		        $("#submit_defi_report_final_applicant").attr("disabled", false);
+
+				document.getElementById("docuploaderror2/"+filename).innerHTML = " ";
+			     return true;
+                    }
+                   
+                }
+            }); 
+            }
+  }
+    </script>
+    
+    <script type="text/javaScript">
+var formOK = false;
+
+function validatepdf_defireport(objFileControl){
+ var file = objFileControl.value;
+ var len = file.length;
+ var ext = file.slice(len - 4, len);
+ if(ext.toUpperCase() == ".PDF" || ext.toUpperCase() == ".PNG" || ext.toUpperCase() == ".JPG" || ext.toUpperCase() == ".GIF"){
+   formOK = true;
+ }
+ else{
+	 $("#gotosubattach").attr("disabled", true);
+	 formOK = false;
+   objFileControl.value =null;
+   alert("Only PDF/PNG/JPG/GIF files allowed.");
+ }
+}
+</script>
+       
+       
+
+    </div>
+</div>    
+    
+     <!-- container -->
+                
+ <!-- content -->
+
+<!-- start footer content here -->
+
+<!-- end footer content here -->
+
+
+<!-- END wrapper -->
+
+<!-- footer lib start here-->
+
+<div th:replace="adminfragment/footerlibs.html :: footerlibs"></div>
+<!-- end footer lib -->
+    
+    
+    </body>
+</html>

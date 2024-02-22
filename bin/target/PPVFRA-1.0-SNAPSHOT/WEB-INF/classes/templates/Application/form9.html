@@ -1,0 +1,263 @@
+	
+	
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+	<div th:fragment="formnine">
+	<form class="form-horizontal" role="form" name="form9" id="form-9" th:action="@{/saveapplicationformix}" th:object="${applications}" method="post" enctype="multipart/form-data">   <!--form_9 start -->                                       
+														<div class="form-group">
+                                                        <label class="col-md-12"><h4>9. Has the candidate variety been commercialised or otherwise exploited:<span style="color:red">*</span><h4></label>
+                                                    </div>
+													<div class="form-group">
+                                                        <label class="col-md-3 control-label"></label>
+                                                        <div class="col-md-9">
+                                                            Yes <input type="radio" th:field="*{is_commercialised}" id="iscommercialised"  value="yes" class="radio-btn-position"> &nbsp; &nbsp; 
+                                                            No <input type="radio" th:field="*{is_commercialised}" id="iscommercialised"  value="no" class="radio-btn-position"> 
+                                                         </div>
+                                                          <span id="commerceerror" style="color:red"></span>
+														
+													</div>
+													
+														 
+														 <div class="form-group">
+															<label class="col-md-3 control-label">Date of the first sale of the Variety<span style="color:red">*</span></label>
+															<div class="col-md-6">
+																<input type="date" th:field="*{first_sale_date}" class="form-control" id="firstsaledate">
+															</div>
+															 <span id="saleerror" style="color:red"></span>
+														 </div>
+														
+														<div class="form-group">
+															<label class="col-md-3 control-label">Upload proof of first sale of Variety<span style="color:red">*</span></label>
+															<div class="col-md-6">
+																<input type="file" value="" id="firstsaleproof" name="firstsaleproof" class="form-control" th:onchange="'javascript:uploadfilechk2(),validatePDF(this)'" >
+															</div>
+															<span id="file_error" style="color:red"></span>
+														    <div class="help-block with-errors" id="docuploaderror3"></div>
+														</div>
+														
+														<div class="form-group">
+															<label class="col-md-3 control-label">Country (ies) where Protection is made<span style="color:red">*</span></label>
+															<div class="col-md-6">
+																<input type="text" th:field="*{protection_countries}" class="form-control"  id="protection" value="">
+															</div>
+															 <span id="countryerror" style="color:red"></span>
+														</div>
+														 
+														
+														<div class="form-group">
+															<label class="col-md-3 control-label">Denomination Used<span style="color:red">*</span></label>
+															<div class="col-md-6">
+																<input type="text" th:field="*{c_denomination}" class="form-control" id="denomination" value="">
+															</div>
+															 <span id="denoerror" style="color:red"></span>
+														</div>
+														<div class="form-group">
+															<label class="col-md-3 control-label">Trademark used, if any<span style="color:red">*</span></label>
+															<div class="col-md-6">
+																<input type="text" th:field="*{trademark}" class="form-control" id="trademark" value="">
+															</div>
+															<span id="tradeerror" style="color:red"></span>
+														</div>
+														<div class="form-group">
+															<label class="col-md-3 control-label">Variation in important trait with respect to first filling(Attach sheet)<span style="color:red">*</span></label>
+															<div class="col-md-6">
+																<input type="file" class="form-control" id="variationtrait" name="variationtrait" th:onchange="'javascript:uploadfilechk1(),validatePDF(this)'">
+															</div>
+															<span id="file_error2" style="color:red"></span>
+															 <div class="help-block with-errors" id="docuploaderror2"></div> 
+                                                       </div>
+														<hr/>
+														<div class="form-group ">
+															<div class="col-sm-offset-10 col-sm-12">
+															    <input type="hidden" id="applicationidfromix" name="applicationidfromix" th:value="*{id}">
+																<input type="hidden" id="applicantidformix" name="applicantidformix"  th:value="${userapplicant[0]}">
+																<input type="hidden" id="applicanttypeidformix" name="applicanttypeidformix" th:value="*{applicanttypeid}" />
+																
+																<button type="submit" id="submit1st-9th" onclick ="return isOneChecked(),valuechkfor9thform()" class="btn btn-info waves-effect waves-light">Save</button>
+																<button type="submit" class="btn btn-info waves-effect waves-light">Next</button>
+															</div>
+														</div>
+														
+									<script type="text/javascript">
+									function  valuechkfor9thform()
+									{
+										
+										var deno = document.getElementById("denomination").value;
+										var trade = document.getElementById("trademark").value;
+										var country =document.getElementById("protection").value;
+										var fsale = document.getElementById("firstsaledate").value;
+										var sub = document.getElementById("submit1st-9th");
+										var fsaleproof = document.getElementById("firstsaleproof").value;
+										var attachsheet = document.getElementById("variationtrait").value;
+										if(fsale=="" || fsale ==null )
+										{
+										 document.getElementById("saleerror").innerHTML="Please Fill FirstSale Date";
+										 document.getElementById("firstsaledate").focus() ;
+							        		return false;
+										}
+										else if(fsaleproof =="" || fsaleproof == null)
+										{
+											//filename = document.getElementById("firstsaleproof").files[0].name;
+										 document.getElementById("file_error").innerHTML="Please Attach File Here";
+										 document.getElementById("firstsaleproof").focus() ;
+										// sub.disabled=true;
+							        		return false;
+										 
+										}
+										else if(country=="" || country ==null )
+										{
+										 document.getElementById("countryerror").innerHTML="Please Fill Country";
+										 document.getElementById("protection").focus();
+										// sub.disabled=true;
+							        		return false;
+										}
+										else if(deno =="" || deno ==null )
+											{
+											 document.getElementById("denoerror").innerHTML="Please Fill Denomination";
+											 document.getElementById("denomination").focus() ;
+											// sub.disabled=true;
+								        		return false;
+											}
+										else if(trade =="" || trade ==null )
+										{
+										 document.getElementById("tradeerror").innerHTML="Please Fill Trademark";
+										 document.getElementById("trademark").focus();
+										 //sub.disabled=true;
+							        		return false;
+										}
+										else if(attachsheet =="" || attachsheet == null)
+										{
+											//filename = document.getElementById("firstsaleproof").files[0].name;
+										 document.getElementById("file_error2").innerHTML="Please Attach File Here";
+										 document.getElementById("variationtrait").focus();
+										 //sub.disabled=true;
+							        		return false;
+										 
+										}
+										else{
+											//sub.disabled=false;
+											return true;
+											}
+										
+									}
+									</script>	
+									
+									<script type="text/javascript">
+									function isOneChecked() {
+										 if (document.form9.is_commercialised[0].checked == true) {
+							          	    return true;
+							          	  }
+								           else if (document.form9.is_commercialised[1].checked == true) {
+								          	    return true;
+								          	  }
+								          else {
+								        		  document.getElementById("commerceerror").innerHTML="Please Select Atleast One Radio Type";
+								                  document.form9.is_commercialised[0].focus() ;
+								        	    return false;
+								        	  }
+										/*  var chx = document.getElementsByName("is_commercialised");
+										  for (var i=0; i<chx.length; i++) {
+										    if (chx[i].type == 'radio' && chx[i].checked) {
+										      return true;
+										    }
+										    document.getElementById("commerceerror").innerHTML="Please Select Atleast One Radio Type";
+											return false;
+										  } */
+										  // End of the loop, return false
+										
+										}
+									</script>	
+										
+										
+		 <script type="text/javascript">
+            function uploadfilechk1() {
+              var filename = document.getElementById('variationtrait').files[0].name;    
+                 //alert(filename);
+			
+			  var iFileSize = document.getElementById('variationtrait').files[0].size;
+               // alert(iFileSize);
+            
+               $.ajax({
+                type: "POST",
+                url: "/ppfvra/api/filesizecheck",
+                data:'filename='+filename+'&filesize='+iFileSize,
+               
+                success: function (data) {
+
+               if(data == false)
+				{ 
+        document.getElementById("docuploaderror2").innerHTML = " <font color='red'>File size is greater than maximum allowed size of 500 KB.</font>";
+        var tst=document.getElementById('variationtrait');
+        		tst.value='';
+        $("#submit1st-9th").attr("disabled", true);
+         return false;
+                }
+			else if (data == true) {
+				document.getElementById("docuploaderror2").innerHTML = " ";
+				$("#submit1st-9th").attr("disabled", false);
+			     return true;
+                    }
+                   
+                }
+            }); 
+            
+  }
+    </script>
+    
+     <script type="text/javascript">
+            function uploadfilechk2() {
+              var filename = document.getElementById('firstsaleproof').files[0].name;    
+                 //alert(filename);
+			
+			  var iFileSize = document.getElementById('firstsaleproof').files[0].size;
+               // alert(iFileSize);
+            
+               $.ajax({
+                type: "POST",
+                url: "/ppfvra/api/filesizecheck",
+                data:'filename='+filename+'&filesize='+iFileSize,
+               
+                success: function (data) {
+
+               if(data == false)
+				{ 
+        document.getElementById("docuploaderror3").innerHTML = " <font color='red'>File size is greater than maximum allowed size of 500 KB.</font>";
+        var tst=document.getElementById('firstsaleproof');
+        		tst.value='';
+        $("#submit1st-9th").attr("disabled", true);
+         return false;
+                }
+			else if (data == true) {
+				document.getElementById("docuploaderror3").innerHTML = " ";
+				$("#submit1st-9th").attr("disabled", false);
+			     return true;
+                    }
+                   
+                }
+            }); 
+            
+  }
+    </script>
+    
+ <script type="text/JavaScript">
+var formOK = false;
+
+function validatePDF(objFileControl){
+ var file = objFileControl.value;
+ var len = file.length;
+ var ext = file.slice(len - 4, len);
+ if(ext.toUpperCase() == ".PDF" || ext.toUpperCase() == ".PNG" || ext.toUpperCase() == ".JPG" || ext.toUpperCase() == ".GIF"){
+   formOK = true;
+ }
+ else{
+   formOK = false;
+   objFileControl.value =null;
+   alert("Only PDF/PNG/JPG/GIF files allowed.");
+ }
+}
+</script>			
+														
+														
+</form>
+</div>
+</html>

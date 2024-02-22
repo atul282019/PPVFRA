@@ -1,0 +1,414 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+	<div th:fragment="formthree">
+
+									<form class="form-horizontal" role="form" id="form3" name="form3" th:action="@{/saveapplicationformiii}" th:object="${contact}" onsubmit = "return validateform3()" method="post">   <!--form_3 start --> 
+														<div class="form-group">
+															<label class="col-md-12 "><h4>3.Name and Address of the Person to whom Correspondence related to this application is to be sent:</h4></label>
+														</div>
+													<div class="form-group">
+                                                        <label class="col-md-3 control-label">Name<span style="color:red">*</span></label>
+                                                        <div class="col-md-6">
+                                                            <input type="text" class="form-control" th:field="*{name}" name="agentname" value="">
+                                                            <span id="agentnameerror" style="color:red"></span>
+                                                        </div>
+                                                    </div>
+													<div class="form-group">
+														<label class="col-md-3 control-label">Address<span style="color:red">*</span></label>
+														<div class="col-md-6">
+															<textarea class="form-control" th:field="*{address}" name="agentaddress"></textarea>
+															<span id="agentaddresserror" style="color:red"></span>
+                                                  
+														</div>
+													</div>
+													<div class="form-group">
+														<label class="col-md-3 control-label">Country<span style="color:red">*</span></label>
+														   <div class="col-md-6 col-sm-6 col-xs-12">
+														    <div th:if="${Country != null}">
+														        <select id="ddlcountry" class="form-control col-md-7 col-xs-12" th:field="*{countryid}" name="agentcountry">
+														        <option th:value="-1" >---Select---</option>
+														            <option th:each="dropDownItem : ${Country}"
+														               th:value="${dropDownItem.id}"
+														               th:text="${dropDownItem.country}" />
+														        </select>
+														        <span id="agentcountryerror" style="color:red"></span>
+														       	</div>
+													   	</div>
+														</div> 
+						
+												
+											     <div class="form-group">
+														<label class="col-md-3 control-label">State<span style="color:red">*</span></label>
+														   <div class="col-md-6 col-sm-6 col-xs-12">
+														    <div th:if="${State != null}">
+														        <select onchange="GetDistricts3();" id="statecode3" th:field="*{stateid}" class="form-control col-md-7 col-xs-12" name="agentstate">
+														        <option th:value="-1" >--Select--</option>
+														            <option th:each="dropDownItem : ${State}"
+														               th:value="${dropDownItem.statecode}"
+														               th:text="${dropDownItem.statename_inenglish}" />
+														        </select>
+														         <span id="agentstateerror" style="color:red"></span>
+														      	</div>
+														   	
+														   	</div>
+														</div> 
+
+														 <div class="form-group">
+														<label class="col-md-3 control-label">District<span style="color:red">*</span></label>
+														   <div class="col-md-6 col-sm-6 col-xs-12">
+														    <div  th:if="${District != null}">
+														        <select id="districtcode3" class="form-control col-md-7 col-xs-12" th:field="*{districtid}" name="agentdisdrict">
+														        <option th:value="-1" >--Select--</option>
+														            <option th:each="dropDownItem : ${District}"
+														               th:value="${dropDownItem.districtcode}"
+														               th:text="${dropDownItem.districtname_inenglish}" />
+														        </select>
+														         <span id="agentdisdricterror" style="color:red"></span>
+														      
+														      </div>
+														   	
+														   	</div>
+														</div> 													
+													
+														<div class="form-group">
+																<label class="control-label col-md-3 col-sm-3 col-xs-12">
+															Pincode/ZipCode<span style="color:red">*</span>
+															</label>
+																<div class="col-md-6">
+																	<input type="text" class="form-control" value="" th:field="*{pincode}" name="agentpincode">
+																	<span id="agentpincodeerror" style="color:red"></span>
+																</div>
+															</div>
+														
+														<div class="form-group"> 
+															<label class="control-label col-md-3 col-sm-3 col-xs-12">
+															City<span style="color:red">*</span>
+															</label>
+															<div class="col-md-6">
+																	<input type="text" class="form-control" th:field="*{city}" value="" name="agentcity" >
+																	<span id="agentcityerror" style="color:red"></span>
+																</div>
+															</div>
+															
+													<div class="form-group">
+                                                        <label class="col-md-3 control-label">Telephone<span style="color:red">*</span></label>
+                                                       <div class="col-md-1">
+                                                            <input type="text" class="form-control" th:field="*{telephone_stdcode}">
+                                                            <span id="telephone_stdcode_error" style="color:red"></span>
+                                                        </div>
+                                                        <div class="col-md-5">
+                                                            <input type="text" class="form-control" th:field="*{telephone_number}" value="" name="agenttelephone">
+                                                            <span id="agenttelephoneerror" style="color:red"></span>
+                                                        </div>
+                                                    </div>
+													<div class="form-group">
+                                                        <label class="col-md-3 control-label">Fax<span style="color:red">*</span></label>
+                                                         <div class="col-md-1">
+                                                            <input type="text" class="form-control" th:field="*{fax_stdcode}">
+                                                            <span id="fax_stdcode_error" style="color:red"></span>
+                                                        </div>
+                                                        <div class="col-md-5">
+                                                            <input type="text" class="form-control" value="" th:field="*{fax_number}" name="agentfax">
+                                                            <span id="agentfaxerror" style="color:red"></span>
+                                                        </div>
+                                                    </div>
+													<div class="form-group">
+                                                        <label class="col-md-3 control-label">Email<span style="color:red">*</span></label>
+                                                        <div class="col-md-6">
+                                                            <input type="email" class="form-control" value="" th:field="*{emailid}" name="agentemail">
+                                                            <span id="agentemailerror" style="color:red"></span>
+                                                        </div>
+                                                    </div>
+													<div th:object="${applications}">
+													<div class="form-group">
+                                                        <label class="col-md-3 control-label">3.(a)Principle place of business or domicile of applicant:</label>
+                                                        <div class="col-md-6">
+                                                        
+                                                            <textarea class="form-control" th:field="*{principalplace}" name="principaladdress"></textarea>
+                                                            <span id="principaladdresserror" style="color:red"></span>
+                                                           
+                                                        </div>
+                                                    </div>
+												 
+											     <div class="form-group">
+														<label class="col-md-3 control-label">State<span style="color:red">*</span></label>
+														   <div class="col-md-6 col-sm-6 col-xs-12">
+														    <div th:if="${State != null}">
+														        <select onchange="GetDistricts4();" th:field="*{domicile_statecode}" id="statecode4" class="form-control col-md-7 col-xs-12" name="principalstate">
+														        <option th:value="-1" >--Select--</option>
+														            <option th:each="dropDownItem : ${State}"
+														               th:value="${dropDownItem.statecode}"
+														               th:text="${dropDownItem.statename_inenglish}" />
+														        </select>
+														       <span id="principalstateerror" style="color:red"></span>
+														       	</div>
+														   	
+														   	</div>
+														</div> 
+
+														 <div class="form-group">
+														<label class="col-md-3 control-label">District<span style="color:red">*</span></label>
+														   <div class="col-md-6 col-sm-6 col-xs-12">
+														    <div  th:if="${District != null}">
+														        <select id="districtcode4" th:field="*{domicile_districtcode}" class="form-control col-md-7 col-xs-12"  name="principaldistrict">
+														        <option th:value="-1" >--Select--</option>
+														            <option th:each="dropDownItem : ${District}"
+														               th:value="${dropDownItem.districtcode}"
+														               th:text="${dropDownItem.districtname_inenglish}" />
+														        </select>
+														        <span id="principaldistricterror" style="color:red"></span>
+														        </div>
+														   	
+														   	</div>
+														</div> 													
+													 </div>
+													<hr/>
+													<div class="form-group ">
+															<div  th:if="${appstatus ==1}" class="col-sm-offset-10 col-sm-12">
+															
+															<input type="hidden" id="applicationidfromiii" name="applicationidfromiii" th:value="${applications.id}" />
+															<input type="hidden" id="applicantidformiii" name="applicantidformiii"  th:value="${userapplicant[0]}">
+															<input type="hidden" id="contactidformiii" name="contactidformiii" th:value="*{id}" />
+														   <button type="submit" class="btn btn-info waves-effect waves-light">Save</button>
+															<button type="submit" class="btn btn-info waves-effect waves-light">Next</button>
+															</div>
+													</div>
+													
+													<!--Table-->
+													<div class="table-responsive" th:if="${agentcontact !=1}">
+														<table class="table table-striped  table-bordered w-auto table-hover" >
+													<!--Table head-->
+													<thead>
+														<tr>
+															<th>S.No.</th>
+															<th>Name</th>
+															<th>Address</th>
+															<th>Telephone</th>
+															<th>Fax</th>
+															<th>Action</th>
+														</tr>
+													</thead>
+													<!--Table head-->
+													<!--Table body-->
+													<tbody>
+														<tr role="row" class="table-info" th:each="contactlist,serial : ${agentcontact}">
+											            <td th:text="${serial.count}"></td> 
+											            <td th:text="${contactlist[2]}"></td>   
+											            <td th:text="${contactlist[5]}"></td>
+											            <td th:text="${contactlist[6]}"></td> 
+											            <td th:text="${contactlist[7]}"></td> 
+											             <td>
+											               <a th:href="@{'/editagentcontact/'+${contactlist[1]}+'/'+${contactlist[0]}}" >
+											           Edit</a>
+											            <!--  <a onclick="javascript:if (confirm('Are you sure, you want to Remove this row?')) return true; else return false;" th:href="@{'/updaterow_form1_subform/'+${contactlist[0]}+'/'+${contactlist[1]}}" >
+											            Delete</a> -->
+											             </td> 	
+													</tr>
+												</tbody>
+												<!--Table body-->
+												</table>
+												</div>
+													
+												<!--Table-->
+													
+												</form>
+												
+	<script type = "text/javascript">
+      function validateform3() {
+         if( document.form3.name.value == "" ) {
+        	 document.getElementById("agentnameerror").innerHTML="name can't be blank";
+            document.form3.name.focus() ;
+            return false;
+         }
+         else{
+        	 document.getElementById("agentnameerror").innerHTML="";
+         }
+         if( document.form3.address.value == "" ) {
+        	 document.getElementById("agentaddresserror").innerHTML="address can't be blank";
+        	 document.form3.address.focus() ;
+            return false;
+         }
+         else{
+        	 document.getElementById("agentaddresserror").innerHTML="";
+         }
+          if( document.form3.countryid.value == "-1" ) {
+        	 document.getElementById("agentcountryerror").innerHTML="please select country";
+        	 document.form3.countryid.focus() ;
+            return false;
+         }
+          else{
+        	  document.getElementById("agentcountryerror").innerHTML="";
+          }
+          if( document.form3.stateid.value == "-1" ) {
+         	 document.getElementById("agentstateerror").innerHTML="please select state";
+         	 document.form3.stateid.focus() ;
+             return false;
+          }
+          else{
+        	  document.getElementById("agentstateerror").innerHTML="";
+          }
+          if( document.form3.districtid.value == "-1" ) {
+         	 document.getElementById("agentdisdricterror").innerHTML="please select district";
+         	 document.form3.districtid.focus() ;
+             return false;
+          }
+          else{
+        	  document.getElementById("agentdisdricterror").innerHTML="";
+          }
+          if( document.form3.pincode.value == "" || isNaN( document.form3.pincode.value ) || document.form3.pincode.value.length != 6 ) {
+              	 document.getElementById("agentpincodeerror").innerHTML="please enter 6 digit valid pincode ";
+              	document.form3.pincode.focus() ;
+                  return false;
+               }
+          else{
+        	  document.getElementById("agentpincodeerror").innerHTML="";
+          }
+          if( document.form3.city.value == "" ) {
+         	    document.getElementById("agentcityerror").innerHTML="city can't be blank";
+         		document.form3.city.focus() ;
+             return false;
+          } 
+          else{
+        	  document.getElementById("agentcityerror").innerHTML="";
+          }
+          if( document.form3.telephone_stdcode.value == "" || isNaN( document.form3.telephone_stdcode.value ) || document.form3.telephone_stdcode.value.length != 4 ) {
+            	 document.getElementById("telephone_stdcode_error").innerHTML="please enter 4 digit valid std code";
+            	document.form3.telephone_stdcode.focus() ;
+                return false;
+             }
+          else{
+        	  document.getElementById("telephone_stdcode_error").innerHTML="";
+          }
+          if( document.form3.telephone_number.value == "" || isNaN( document.form3.telephone_number.value ) || document.form3.telephone_number.value.length != 8 ) {
+           	 document.getElementById("agenttelephoneerror").innerHTML="please enter 8 dight valid telephone";
+           	document.form3.telephone_number.focus() ;
+               return false;
+            }
+          else{
+        	  document.getElementById("agenttelephoneerror").innerHTML="";
+          }
+         /*  if( document.form3.fax_stdcode.value == "" || isNaN( document.form3.fax_stdcode.value ) || document.form3.fax_stdcode.value.length != 3) {
+         	 document.getElementById("fax_stdcode_error").innerHTML="please enter a valid fax std code";
+         	document.form3.fax_stdcode.focus() ;
+             return false;
+          }
+          if( document.form3.fax_number.value == "" || isNaN( document.form3.fax_number.value ) || document.form3.fax_number.value.length != 8 ) {
+            	 document.getElementById("agentfaxerror").innerHTML="please enter a valid faxno";
+            	document.form3.fax_number.focus() ;
+                return false;
+             } */
+          if( document.form3.emailid.value == "" ) {
+         	 document.getElementById("agentemailerror").innerHTML="please enter a valid email";
+         	document.form3.emailid.focus() ;
+             return false;
+          }
+          else{
+        	  document.getElementById("agentemailerror").innerHTML="";
+          }
+          if( document.form3.domicile_statecode.value == "-1" ) {
+          	 document.getElementById("principalstateerror").innerHTML="please select state";
+          	 document.form3.domicile_statecode.focus() ;
+              return false;
+           }
+          else{
+        	  document.getElementById("principalstateerror").innerHTML="";
+          }
+          if( document.form3.domicile_districtcode.value == "-1" ) {
+           	 document.getElementById("principaldistricterror").innerHTML="please select district";
+           	 document.form3.domicile_districtcode.focus() ;
+               return false;
+            }
+          else{
+        	  document.getElementById("principaldistricterror").innerHTML="";
+          }
+         return( true );
+      }
+</script>
+
+
+<script type="text/javascript">
+   function GetDistricts3()
+  {
+       var ddlState= document.getElementById("statecode3");
+       var district=document.getElementById("districtcode3");
+       var district1=$("#districtcode3");
+       if(ddlState.value != null)	
+       	$.ajax({
+               type: "POST",
+               url: "/ppvfra/getDistricts",
+               data: 'stateCode='+ddlState.value,
+               dataType:"json",
+               success: function (response) {
+               	
+              district1.empty().append('<option selected="selected" value="-1">Please select</option>');
+                for(var k=0;k<response.length;k++)
+     	  {
+     	  var opt = response[k];
+     	   var el = document.createElement("option");
+     	   el.textContent = opt[1];
+     	   el.value = opt[0];
+     	   district.appendChild(el);
+																	 
+     	}
+ 
+ 
+               },
+               failure: function (response) {
+                   alert(response.responseText);
+					  
+               },
+               error: function (response) {
+                   alert(response.responseText);
+					   
+										  
+														
+               }
+      });
+   	
+   }
+ </script>
+ 
+ <script type="text/javascript">
+   function GetDistricts4()
+  {
+       var ddlState= document.getElementById("statecode4");
+       var district=document.getElementById("districtcode4");
+       var district1=$("#districtcode4");
+       if(ddlState.value != null)	
+       	$.ajax({
+               type: "POST",
+               url: "/ppvfra/getDistricts",
+               data: 'stateCode='+ddlState.value,
+               dataType:"json",
+               success: function (response) {
+               	
+              district1.empty().append('<option selected="selected" value="-1">Please select</option>');
+                for(var k=0;k<response.length;k++)
+     	  {
+     	  var opt = response[k];
+     	   var el = document.createElement("option");
+     	   el.textContent = opt[1];
+     	   el.value = opt[0];
+     	   district.appendChild(el);
+																	 
+     	}
+ 
+ 
+               },
+               failure: function (response) {
+                   alert(response.responseText);
+					  
+               },
+               error: function (response) {
+                   alert(response.responseText);
+					   
+										  
+														
+               }
+      });
+   	
+   }
+ </script>
+</div>
+</html>

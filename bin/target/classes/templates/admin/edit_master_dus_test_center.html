@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+	<head>
+	  <th:block th:include="adminfragment/headerlibs.html :: headerlibs"></th:block> 
+	</head>
+
+    <body class="fixed-left">
+        <!-- Begin page -->
+        <div id="wrapper">
+        
+            <!-- Top Bar Start -->
+           <header th:insert="adminfragment/header.html :: header"> </header>
+            <!-- Top Bar End -->
+
+
+            <!-- ========== Left Sidebar Start ========== -->
+			<header th:insert="adminfragment/sidenav.html :: sidevav"> </header>
+            <!-- Left Sidebar End --> 
+            
+  
+             <!-- Start right Content here -->
+            <!-- ============================================================== -->                      
+            <div class="content-page">
+                <!-- Start content -->
+                <div class="content">
+                    <div class="container">
+
+                        <!-- Page-Title -->
+                        <div class="row">
+                            <div class="col-sm-12">
+                                <h4 class="pull-left page-title">Master</h4>
+                                <ol class="breadcrumb pull-right">
+                                    <li><a href="/admin">Home</a></li>
+                                    <li class="active">Add Dust Test Centers</li>
+                                     <button action="action" type="button" onclick="history.go(-1);" class="btn btn-purple waves-effect waves-light btn-xs m-b-5">Back</button>
+                                    
+                                </ol>
+                            </div>
+                        </div>
+            
+            
+            
+            
+            <div class="row">
+                            <div class="col-sm-12">
+                                <div class="panel panel-default">
+                                    <div class="panel-heading"><h3 class="panel-title">Master Dus Test Center</h3></div>
+                                     <span th:if="${actd_viewtrue != null && actd_viewtrue == 'valpresent' }">
+									
+                                    <div class="panel-body">
+                                        <form  class="form-horizontal" role="form"  th:action="@{/adddustestcentermethod}" th:object="${adddustestcenter}" method="post">                                    
+                                           <div class="form-group">
+                                                <label class="col-md-2 control-label" > </label>
+                                                <div class="col-md-10">
+                                                    <input type="text" th:field="*{id}" readonly="readonly" hidden="true" />
+                                                    
+                                                </div>
+                                                </div>
+                                                
+                                                
+                                                	
+											<div class="form-group">
+                                                <label class="col-sm-2 control-label">Crop group</label>
+                                                <div class="col-sm-6">
+                                                <div th:if="${Crop_Group != null}">
+                                                    <select th:field="*{cropgroup_id}" class="form-control">
+       														 <option th:value="-1">---Select---</option>
+          													  <option th:each="dropDownItem : ${Crop_Group}"
+              														  th:value="${dropDownItem.id}"
+                  													  th:text="${dropDownItem.crop_group}" />
+       										 			</select>
+       										 			<!-- <div class="error" th:if="${#fields.hasErrors('Crop_Group')}" th:errors="*{Crop_Group}">Crop_Group Error</div> -->
+                                                </div>
+                                            </div>
+                                            </div>
+                                              <div class="form-group">
+                                                <label class="col-sm-2 control-label">Crop Name</label>
+                                                <div class="col-sm-6">
+                                                <div th:if="${Crop != null}">
+                                                     <select th:field="*{crop_id}" class="form-control">
+       														 <option th:value="-1">---Select---</option>
+          													  <option th:each="dropDownItem : ${Crop}"
+              														  th:value="${dropDownItem.id}"
+                  													  th:text="${dropDownItem.crop_common_name}" />
+       										 			</select>
+       										 			<div class="error" th:if="${#fields.hasErrors('crop_id')}" th:errors="*{crop_id}">crop_id Error</div>
+                                                </div>
+                                            </div>	
+                                            </div>		
+                                            							
+											 <div class="form-group">
+														<label class="col-sm-2 control-label">State</label>
+														   <div class="col-sm-6">
+														    <div th:if="${State != null}">
+														        <select th:field="*{state_id}" class="form-control">
+														        <option th:value="-1" >---Select---</option>
+														            <option th:each="dropDownItem : ${State}"
+														               th:value="${dropDownItem.statecode}"
+														               th:text="${dropDownItem.statename_inenglish}" />
+														        </select>
+														        <div class="error" th:if="${#fields.hasErrors('state_id')}" th:errors="*{state_id}">state_id Error</div>
+														   	</div>
+														   	
+														   	</div>
+														</div> 
+														
+														
+														
+														
+														 <div class="form-group">
+														<label class="col-sm-2 control-label">District</label>
+														   <div class="col-sm-6">
+														    <div th:if="${District != null}">
+														        <select th:field="*{district_id}" class="form-control">
+														        <option th:value="-1" >---Select---</option>
+														            <option th:each="dropDownItem : ${District}"
+														               th:value="${dropDownItem.districtcode}"
+														               th:text="${dropDownItem.districtname_inenglish}" />
+														        </select>
+														       <div class="error" th:if="${#fields.hasErrors('district_id')}" th:errors="*{district_id}">district_id Error</div>
+														   	</div>
+														   	
+														   	</div>
+														</div> 
+																								
+											<div class="form-group">
+                                                <label class="col-md-2 control-label">Dus Test Center</label>
+                                                <div class="col-md-6">
+                                                    <input type="text" th:field="*{dus_test_center}" class="form-control"  placeholder="Enter the Dus Test Center">
+                                                    <div class="error" th:if="${#fields.hasErrors('dus_test_center')}" th:errors="*{dus_test_center}">dus_test_center Error</div>
+                                                </div>
+                                            </div>
+                                           
+                                           <div class="form-group">
+					                <label class="col-sm-2 control-label">Status</label>
+					                <div class="col-sm-6">
+					                  <select class="form-control" th:field="*{isactive}">
+					                 <option th:value="1" th:text = "Active"></option>
+					                 <option th:value="0" th:text="Inactive"></option>
+					             </select>
+					                </div>
+					            </div> 
+                                
+                                <div class="form-group">
+					                <label class="col-sm-2 control-label">Center Type</label>
+					                <div class="col-sm-6">
+					                  <select class="form-control" th:field="*{centertype}">
+					                 <option th:value="LC" th:text = "Lead_Centre"></option>
+					                 <option th:value="CNC" th:text="Co_Nodal_Centre"></option>
+					             </select>
+					                </div>
+					            </div> 
+					            
+                                            <div class="form-group m-b-0">
+                                                <div class="col-sm-offset-2 col-sm-9">
+                                                      <span th:each="sec_chk : ${actd}">
+													  <span th:if="${sec_chk == 'Edit'}">
+													  <button type="submit" class="btn btn-info waves-effect waves-light">Submit</button>
+													  </span>
+													  </span>
+                                                </div>
+                                            </div>
+                                                                       
+                                        </form>
+                                    </div> <!-- panel-body -->
+                                    
+                                    </span>
+                                    <span th:unless="${actd_viewtrue != null && actd_viewtrue == 'valpresent' }">
+									 <label>YOU ARE NOT AUTHORISED TO VIEW THIS PAGE.PLEASE CONTACT ADMINISTRATOR</label>
+									 </span>
+                                </div> <!-- panel -->
+                            </div> <!-- col -->
+                        </div> <!-- End row -->
+
+                    </div> <!-- container -->
+                               
+                </div> <!-- content -->
+<!-- 
+                <footer class="footer text-right">
+                    2019 © PPVFRA.
+                </footer> -->
+
+            </div>
+            <!-- ============================================================== -->
+            <!-- End Right content here -->
+           
+           
+          <div th:replace="adminfragment/footer.html :: footer"></div>
+           </div> <!-- container -->
+                               
+                <!-- content -->
+
+			<!-- start footer content here -->
+			
+			<!-- end footer content here -->
+
+      
+        <!-- END wrapper -->
+
+<!-- footer lib start here-->
+
+<div th:replace="adminfragment/footerlibs.html :: footerlibs"></div>
+<!-- end footer lib -->
+    
+    </body>
+</html>

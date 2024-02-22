@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<div th:fragment="forwardaction">
+<span th:if="${Forward != null && Forward == 'Forward' }"> 
+	
+<form class="form-horizontal" role="form"> 
+																<div class="panel panel-success">
+																<div class="panel-heading">Forward</div>
+																<div class="panel-body">
+																<div class="form-group">
+																	<label class="col-md-2 control-label">Forward to</label>
+																	<div class="col-md-3">
+																		 <select class="form-control">
+																			<option>Select Role</option>
+																			<option>Select Role</option>
+																			<option>Select Role</option>
+																			<option>Select Role</option>
+																		   
+																		</select>
+																	</div>
+																	<div class="col-md-3">
+																		 <select class="form-control">
+																			<option>Select Value</option>
+																			<option>Select Value</option>
+																			<option>Select Value</option>
+																			<option>Select Value</option>
+																		</select>
+																	</div>
+																</div>
+																																	  
+																<div class="form-group">
+																	<label class="col-md-2 control-label">Remarks</label>
+																	<div class="col-md-6">
+																		<textarea class="form-control" rows="5"></textarea>
+																	</div>
+																</div>
+																
+															   
+																<div class="form-group m-b-0">
+																	<div class="col-sm-7" style="float: right;">
+																		<button type="submit" class="btn btn-info waves-effect waves-light">Save</button>
+																	</div>
+																	
+																</div>
+																</div>
+																</div>
+																<br>                                                            
+															</form>
+   </span>
+<span th:unless="${Forward != null && Forward == 'Forward' }">
+ <label>YOU ARE NOT AUTHORISED TO VIEW THIS PAGE.PLEASE CONTACT ADMINISTRATOR</label>
+ </span> 
+
+
+
+
+</div>
+
+
+</html>

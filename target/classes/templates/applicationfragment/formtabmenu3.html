@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+	<div th:fragment="formtabmenu">
+
+<ul class="nav nav-tabs tabs tabs-top"  style="margin-bottom: 10px;background-color: rgb(249, 255, 250);width: 100%;">
+               <li class="active tab" id="F_3_s1">
+                   <a href="#form_1" data-toggle="tab" aria-expanded="false"> 
+                       <span class="visible-xs"><i class="fa fa-home"></i></span> 
+                       <span class="hidden-xs">1</span> 
+                   </a> 
+               </li> 
+               <li class="tab" id="F_3_s2"> 
+                   <a href="#form_2" data-toggle="tab" aria-expanded="true"> 
+                       <span class="visible-xs"><i class="fa fa-envelope-o"></i></span> 
+                       <span class="hidden-xs">2</span> 
+                   </a> 
+               </li> 
+               <li class="tab" id="F_3_s3"> 
+                   <a href="#form_3" data-toggle="tab" aria-expanded="false"> 
+                       <span class="visible-xs"><i class="fa fa-user"></i></span> 
+                       <span class="hidden-xs">3</span> 
+                   </a> 
+               </li> 
+               <li class="tab" id="F_3_s4"> 
+                   <a href="#form_4" data-toggle="tab" aria-expanded="true"> 
+                       <span class="visible-xs"><i class="fa fa-envelope-o"></i></span> 
+                       <span class="hidden-xs">4</span> 
+                   </a> 
+               </li>
+               <li class="tab" id="F_3_s5"> 
+                   <a href="#form_5" data-toggle="tab" aria-expanded="true"> 
+                       <span class="visible-xs"><i class="fa fa-envelope-o"></i></span> 
+                       <span class="hidden-xs">5</span> 
+                   </a> 
+               </li> 
+               <li class="tab" id="F_3_s6"> 
+                   <a href="#form_6" data-toggle="tab" aria-expanded="true"> 
+                       <span class="visible-xs"><i class="fa fa-envelope-o"></i></span> 
+                       <span class="hidden-xs">6</span> 
+                   </a> 
+               </li> 
+					
+					<li class="tab" id="F_3_s7"> 
+                   <a href="#form_7" data-toggle="tab" aria-expanded="true"> 
+                       <span class="visible-xs"><i class="fa fa-envelope-o"></i></span> 
+                       <span class="hidden-xs">7</span> 
+                   </a> 
+               </li> 
+ 
+        </ul> 
+                                        
+         <div class="tab-pane" id="form_1">
+         <div th:insert="application3/form1.html :: formone"> </div>
+         </div>
+         
+          <div class="tab-pane" id="form_2">
+         <div th:insert="application3/form2.html :: formtwo"> </div>
+         </div>
+         
+          <div class="tab-pane" id="form_3">
+         <div th:insert="application3/form3.html :: formthree"> </div>
+         </div>
+         
+          <div class="tab-pane" id="form_4">
+         <div th:insert="application3/form4.html :: formfour"> </div>
+         </div>
+          <div class="tab-pane" id="form_5">
+         <div th:insert="application3/form5.html :: formfive"> </div>
+         </div>
+          <div class="tab-pane" id="form_6">
+         <div th:insert="application3/form6.html :: formsix"> </div>
+         </div>
+          <div class="tab-pane" id="form_7">
+         <div th:insert="application3/form7.html :: formseven"> </div>
+         </div>
+                                          
+                                  
+ </div>
+</html>
+
+                                       

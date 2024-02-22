@@ -1,0 +1,366 @@
+
+
+
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+	<div th:fragment="formeight">
+
+<form class="form-horizontal" id="f_8" role="form" name="myFormviii" th:action="@{/saveapplication2form8}" th:object="${convention}" onsubmit = "return validateformviii()" method="post">   <!--form_8 start -->                                       
+														<div class="form-group">
+															<label class="col-md-12 "><h4>8.(a)Details of all other earlier applications made on the candidate variety in convention countries or other countries (if applicable)<span style="color:red">*</span></h4></label>
+														</div>
+														
+														<div class="form-group">
+															<label class="col-md-3 control-label"></label>
+															<div class="col-md-9">
+															<div>
+															   <span  th:object="${applications}">
+															   Yes <input type="radio" id="is_convention_applicable3" th:field="*{is_convention_applicable}" value="true" class="radio-btn-position" onchange="ShowHideDivformYes()" /> &nbsp; &nbsp; 
+															   No  <input type="radio" id="is_convention_applicable4"  th:field="*{is_convention_applicable}" value="false" class="radio-btn-position" onchange="ShowHideDivNo()" />                                                        <br>
+															  </span>
+															   <span id="radioerrors" style="color:red"></span>
+															   </div>
+															   
+														   </div>
+														    
+														</div>
+														<div id="dvPassportform8" style="display: none">
+														<div class="form-group">
+															<label class="col-md-3 control-label">Variety Denomination<span style="color:red">*</span></label>
+															<div class="col-md-6">
+																<input type="text" class="form-control" th:field="*{denomination}" value="">
+																<span id="varietydenominationerrors" style="color:red"></span>
+															</div>
+														</div>
+														<div class="form-group">
+															<label class="col-md-3 control-label">Nature of right applied for<span style="color:red">*</span></label>
+															<div class="col-md-9">
+																 Plant Breeder's Rights <input type="radio" th:field="*{nature}" value="Plant Breeder's Rights" id="nature1" class="radio-btn-position"> &nbsp; &nbsp; 
+																 Patent  <input type="radio" th:field="*{nature}"  value="Patent" id="nature2" class="radio-btn-position">
+                                                                 <span id="natureerrors" style="color:red"></span>
+														
+                                                        </div>
+                                                    </div>
+														<div class="form-group">
+															<label class="col-md-3 control-label">Filing  Date<span style="color:red">*</span></label>
+															<div class="col-md-6">
+																<input type="date" class="form-control" name="fillingdate" id="fillingdate" th:value="*{#dates.format(fillingdate,'yyyy-MM-dd')}" onchange="Tdate8()" />
+															    <span id="fillingdateerrors" style="color:red"></span>
+														
+															</div>
+														</div>
+														<div class="form-group"> 
+															<label class="control-label col-md-3 col-sm-3 col-xs-12">
+															Name of Country<span style="color:red">*</span><span class="required"></span>
+															</label>
+															
+															<div class="col-md-6 col-sm-6 col-xs-12" th:if="${Country != null}">
+														        <select id="ddlcountry" th:field="*{country}" class="form-control col-md-7 col-xs-12">
+														        <option th:value="-1" >---Select---</option>
+														            <option th:each="dropDownItem : ${Country}"
+														               th:value="${dropDownItem.id}"
+														               th:text="${dropDownItem.country}" />
+														        </select>
+														        <span id="countryerrors" style="color:red"></span>
+														       </div>
+														</div>
+														<div class="form-group">
+															<label class="col-md-3 control-label">Name of Authority<span style="color:red">*</span></label>
+															<div class="col-md-6">
+																<input type="text" class="form-control" th:field="*{authority}" value="">
+																<span id="authoritynameerrors" style="color:red"></span>
+															</div>
+														</div>
+														<div class="form-group">
+															<label class="col-md-3 control-label">Application Number<span style="color:red">*</span></label>
+															<div class="col-md-6">
+																<input type="text" class="form-control" th:field="*{application_number}" value=""  maxlength="10" size="10">
+																<span id="applicationumbererrors" style="color:red"></span>
+															</div>
+														</div>
+														<div class="form-group">
+															<label class="col-md-3 control-label">Status of Application<span style="color:red">*</span></label>
+															<div class="col-md-9">
+																Under process <input type="radio" th:field="*{applicationstatus}"  value="Under process" class="radio-btn-position"> &nbsp; &nbsp; 
+																Approved <input type="radio" th:field="*{applicationstatus}"  value="Approved" class="radio-btn-position"> &nbsp; &nbsp; 
+																Rejected <input type="radio" th:field="*{applicationstatus}"  value="Rejected" class="radio-btn-position">
+																<span id="statuserrors" style="color:red"></span>
+																<br>
+																<sub>(If required, repeat the above for each applicable country and attach separate sheet)</sub>
+															</div>
+														</div>
+														
+														<div class="form-group">
+															<label class="col-md-12"><h4>(b.) Priority is now claimed in respect of the earliest application for a candidate variety of said denomination (if applicable)<span style="color:red">*</span></h4></label>
+														</div>
+														<div class="form-group"> 
+															<label class="control-label col-md-3 col-sm-3 col-xs-12">
+															In(Country)<span style="color:red">*</span>
+															</label>
+															<div class="col-md-6 col-sm-6 col-xs-12" th:if="${Country != null}">
+														        <select id="ddlcountry" th:field="*{incountries}" class="form-control col-md-7 col-xs-12">
+														        <option th:value="-1" >---Select---</option>
+														            <option th:each="dropDownItem : ${Country}"
+														               th:value="${dropDownItem.id}"
+														               th:text="${dropDownItem.country}" />
+														        </select>
+														        <span id="incountrynameerrors" style="color:red"></span>
+														     </div>
+														</div>
+														<div class="form-group">
+															<label class="col-md-3 control-label">On (Date of Application)<span style="color:red">*</span></label>
+															<div class="col-md-6">
+																<input type="date" class="form-control" name="ondateofapplication" id="ondateofapplication" th:value="*{#dates.format(ondateofapplication,'yyyy-MM-dd')}" onchange="Tdate8()">
+																<span id="ondateerrors" style="color:red"></span>
+																	</div>
+														</div>
+														</div>
+														<hr/>
+														<div class="form-group" th:if="${appstatus ==1}">
+															<div class="col-sm-offset-10 col-sm-12">
+															<input type="hidden" id="applicationidfromviii" name="applicationidfromviii" th:value="${applications.id}" />
+															<input type="hidden" id="conventionid" name="conventionid" th:value="*{id}" />
+																<input type="hidden" id="applicantidformviii" name="applicantidformviii"  th:value="${userapplicant[0]}">
+																<input type="hidden" id="f8_id" name="f8_id" th:value="${f8_id}">
+																
+																
+																<button id="submit_f8" type="submit" class="btn btn-info waves-effect waves-light">Save</button>
+														
+															</div>
+														</div>
+														
+														<div class="table-responsive" th:if="${conventioncontry !=1}">
+															<table class="table table-striped  table-bordered w-auto table-hover">
+																<!--Table head-->
+																<thead>
+																	<tr>
+																		<th>S.No.</th>
+																		<th>Variety Denomination</th>
+																		<th>Nature of right applied for</th>
+																		<th>Filing Date</th>
+																		<th>Name of Country</th>
+																		<th>Name of Authority</th>
+																		<th>Application Number</th>
+																		<th>Status of Application</th>
+																		<th>In(Country)</th>
+																		<th>On (Date of Application)</th>
+																		<th>Action</th>
+																	</tr>
+																</thead>
+																<!--Table head-->
+																<!--Table body-->
+																<tbody>		
+																	<tr role="row" class="table-info" th:each="convention,serial : ${conventioncontry}">
+														            <td th:text="${serial.count}"></td>
+														            <td th:text="${convention[2]}"></td>
+														            <td th:text="${convention[3]}"></td> 
+														            <td th:text="${convention[11]}"></td> 
+														            <td th:text="${convention[5]}"></td> 
+														            <td th:text="${convention[6]}"></td>
+														            <td th:text="${convention[7]}"></td>
+														            <td th:text="${convention[8]}"></td>
+														            <td th:text="${convention[9]}"></td>
+														             <td th:text="${convention[10]}"> </td>
+														           	<th>
+
+ 																	<div th:with="formno=F_1,formid=8">
+																        <a th:href="@{'/editapplication2convention/'+${convention[1]}+'/'+${convention[0]}+'/'+${formno}+'/'+${formid}}">
+																    <!--  <a th:href="@{'/editapplicationconvention/'+${convention[1]}+'/'+${convention[0]}}" > -->
+																		Edit</a>
+																		</div>
+														            <!--  <a onclick="javascript:if (confirm('Are you sure, you want to Remove this row?')) return true; else return false;" th:href="@{'/updaterow_form1_subform/'+${convention[1]}+'/'+${convention[0]}}" >
+														             Delete</a> -->
+											            
+																	</th>
+																</tr>
+																</tbody>
+															<!--Table body-->
+															</table>
+															
+														</div>
+														
+													</form>	
+	<script type = "text/javascript">
+      function validateformviii() {
+          if (document.myFormviii.is_convention_applicable[0].checked == true) {
+        	  if( document.myFormviii.denomination.value == "" ) {
+               	 document.getElementById("varietydenominationerrors").innerHTML="Please enter variety denomination";
+               	 document.myFormviii.denomination.focus() ;
+                   return false;
+                }
+        	  else{
+        		  document.getElementById("varietydenominationerrors").innerHTML="";
+        	  }
+        	  if( document.myFormviii.fillingdate.value == "" ) {
+             	 document.getElementById("fillingdateerrors").innerHTML="Please enter date";
+             	 document.myFormviii.fillingdate.focus() ;
+                 return false;
+              }
+        	  else{
+        		  document.getElementById("fillingdateerrors").innerHTML="";
+        	  }
+        	  if( document.myFormviii.country.value == "-1" ) {
+              	 document.getElementById("countryerrors").innerHTML="Please select country";
+              	 document.myFormviii.country.focus() ;
+                  return false;
+               }
+        	  else{
+        		  document.getElementById("countryerrors").innerHTML="";
+        	  }
+        	  if( document.myFormviii.authority.value == "" ) {
+               	 document.getElementById("authoritynameerrors").innerHTML="Please enter authority name";
+               	 document.myFormviii.authority.focus() ;
+                   return false;
+                }
+        	  else{
+        		  document.getElementById("authoritynameerrors").innerHTML="";
+        	  }
+        	  if( document.myFormviii.application_number.value == "" ) {
+                	 document.getElementById("applicationumbererrors").innerHTML="Please enter application number";
+                	 document.myFormviii.application_number.focus() ;
+                    return false;
+                 }
+        	  else{
+        		  document.getElementById("applicationumbererrors").innerHTML="";
+        	  }
+        	  if( document.myFormviii.incountries.value == "-1" ) {
+             	 document.getElementById("incountrynameerrors").innerHTML="Please select country";
+             	 document.myFormviii.incountries.focus() ;
+                 return false;
+              }
+        	  else{
+        		  document.getElementById("incountrynameerrors").innerHTML="";
+        	  }
+        	  if( document.myFormviii.ondateofapplication.value == "" ) {
+              	 document.getElementById("ondateerrors").innerHTML="Please enter date";
+              	 document.myFormviii.ondateofapplication.focus() ;
+                  return false;
+               }
+        	  else{
+        		  document.getElementById("ondateerrors").innerHTML="";
+        	  }
+        	  if (document.getElementById("nature1").checked == true) {
+        		  document.getElementById("natureerrors").innerHTML="";
+        		  if (document.getElementById("applicationstatus1").checked == true) {
+        			  document.getElementById("statuserrors").innerHTML="";
+            		  return true;
+            	  }
+            	  else if (document.getElementById("applicationstatus2").checked == true) {
+            		  document.getElementById("statuserrors").innerHTML="";
+              	    return true;
+              	  }
+            	  else if (document.getElementById("applicationstatus3").checked == true) {
+            		  document.getElementById("statuserrors").innerHTML="";
+                	    return true;
+                	  }
+            	  else {
+            		  document.getElementById("statuserrors").innerHTML="Please select status of application";
+                      document.getElementById("applicationstatus1").focus() ;
+            	    return false;
+            	  }
+        		  return true;
+        	  }
+        	  else if (document.getElementById("nature2").checked == true) {
+        		  document.getElementById("natureerrors").innerHTML="";
+        		  if (document.getElementById("applicationstatus1").checked == true) {
+        			  document.getElementById("statuserrors").innerHTML="";
+            		  return true;
+            	  }
+            	  else if (document.getElementById("applicationstatus2").checked == true) {
+            		  document.getElementById("statuserrors").innerHTML="";
+              	    return true;
+              	  }
+            	  else if (document.getElementById("applicationstatus3").checked == true) {
+            		  document.getElementById("statuserrors").innerHTML="";
+                	    return true;
+                	  }
+            	  else {
+            		  document.getElementById("statuserrors").innerHTML="Please select status of application";
+                      document.getElementById("applicationstatus1").focus() ;
+            	    return false;
+            	  }
+          	    return true;
+          	  }
+        	  else {
+        		  document.getElementById("natureerrors").innerHTML="Please select nature";
+                  document.getElementById("nature1").focus() ;
+        	    return false;
+        	  }
+        	
+               return true;
+                 
+        	  }
+         else if (document.myFormviii.is_convention_applicable[1].checked == true) {
+	        	 document.myFormviii.denomination.value == "";
+	        	 document.myFormviii.fillingdate.value == "";
+	        	 document.myFormviii.country.value == "-1";
+	        	 document.myFormviii.authority.value == "";
+	        	 document.myFormviii.application_number.value == "";
+	        	 document.myFormviii.incountries.value == "-1";
+	        	 document.myFormviii.ondateofapplication.value == "";
+        	     return true;
+        	  }
+           else {
+                  document.getElementById("radioerrors").innerHTML="Please select any one option";
+                  alert('Please select candidate variety');
+        	    return false;
+        	  }
+        
+ }
+</script>
+<script type="text/javascript">
+    function ShowHideDivformYes() {
+        var chkYes = document.getElementById("is_convention_applicable3");
+        var dvPassport = document.getElementById("dvPassportform8");
+        dvPassport.style.display = is_convention_applicable3.checked ? "block" : "none";
+    }
+</script>
+<script type="text/javascript">
+    function ShowHideDivNo() {
+        var chkYes = document.getElementById("is_convention_applicable4");
+        var dvPassport = document.getElementById("dvPassportform8");
+        dvPassport.style.display = is_convention_applicable4.checked ? "none" : "block";
+    }
+</script>
+
+<script type="text/javascript">
+function Tdate8() {
+    var UserDate = document.getElementById("fillingdate").value;
+    var ToDate = new Date();
+    
+    var UserDate1 = document.getElementById("ondateofapplication").value;
+    var ToDate1 = new Date();
+	
+    $("#submit_f8").attr("disabled",false);
+    
+    var chkYes_f8 = document.getElementById("is_convention_applicable3");
+    if(chkYes_f8.checked=true)
+    	{
+    if (new Date(UserDate).getTime() > ToDate.getTime()) {
+          alert("The date must be not Greater than today's date");
+          document.getElementById("fillingdateerrors").innerHTML="Please select date less than or equal to present date";
+          document.myFormviii.fillingdate.focus() ;
+           $("#submit_f8").attr("disabled",true);
+          return false;
+     }else{
+    	 document.getElementById("fillingdateerrors").innerHTML="";
+          }
+    
+    if (new Date(UserDate1).getTime() > ToDate1.getTime()) {
+        alert("The date must be not greater than today's date");
+        document.getElementById("ondateerrors").innerHTML="Please select date less than or equal to present date";
+        document.myFormviii.ondateofapplication.focus() ;
+         $("#submit_f8").attr("disabled",true);
+        return false;
+   }else{
+  	 document.getElementById("ondateerrors").innerHTML="";
+        }
+    
+    	} 
+    return true;
+}
+</script>	
+							
+</div>
+</html>

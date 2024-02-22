@@ -1,0 +1,281 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<div th:fragment="formten">
+
+<form class="form-horizontal" role="form" id="form_10" name="form_10" th:action="@{/saveapplicationformx}" th:object="${parental}" method="post">   <!--form_10 start -->                                       
+													<div class="form-group">
+                                                        <label class="col-md-12"><h4>10.(a.) If the candidate variety is a hybrid, state whether all the parental lines required for the repeated propagation of the hybrid are bred exclusively by the applicant(s)<span style="color:red">*</span></h4></label>
+                                                    </div>
+                                                    <div th:object="${applications}">
+                                                    <div class="form-group">
+                                                        <label class="col-md-3 control-label"></label>
+                                                        <div class="col-md-9">
+                                                            Yes <input type="radio" th:field="*{is_parental_required}" value="y" class="radio-btn-position"> &nbsp; &nbsp; 
+                                                            No <input type="radio" th:field="*{is_parental_required}" value="n" class="radio-btn-position">
+															<span id="radioerrorss" style="color:red"></span>
+															<a href="#" title="" data-toggle="popover" data-trigger="focus" data-content="If no, mention which of the parental line is outsourced, whether letter of agreement is obtained for each of the outsourced protected parental lines in compliance with Section 30 of the Protection of the Plant Varieties and Farmers' Rights Act and also provide following information on each of them"><span class="badge">i</span></a>
+                                                            <br>
+                                                            
+                                                       </div>
+													</div>
+													</div>
+														<div class="form-group">
+															<label class="col-md-3 control-label">Parental line(s)<span style="color:red">*</span></label>
+															<div class="col-md-2 col-sm-4 col-xs-12">
+																<select class="form-control" th:field="*{typeline}" id="">
+                                                                   <option th:value="-1" >---Select---</option>
+														            <option th:each="dropDownItem : ${typeline}"
+														               th:value="${dropDownItem.id}"
+														               th:text="${dropDownItem.code}" />
+														        </select> 
+																<span id="parentlineerror" style="color:red"></span>
+															</div>
+															
+															<div class="col-md-4">
+																<input type="text" class="form-control" th:field="*{parental_line}" name="line" value="">
+																<span id="lineerror" style="color:red"></span>
+															</div>
+															
+														</div>
+														<div class="form-group">
+															<label class="col-md-3 control-label">Source<span style="color:red">*</span></label>
+															<div class="col-md-6">
+																<input type="text" class="form-control" th:field="*{source}" value="">
+																<span id="sourceerror" style="color:red"></span>
+															</div>
+														</div>
+														<div class="form-group">
+															<label class="col-md-3 control-label">
+																Denominations (In Block Letters)<span style="color:red">*</span> 
+															</label>
+															<div class="col-md-6">
+																<input type="text" class="form-control" th:field="*{denominations}" value="">
+																<span id="denominationxerror" style="color:red"></span>
+															</div>
+															<a href="#" title="" data-toggle="popover" data-trigger="focus" data-content="Denomination should not be altered from what was used at the source. Information on source may include name of breeder or institution or farmer or farming community who had bred and maintained the parental line. Repeat above information for additional applicable parental line."><span class="badge">i</span></a>
+															</div>
+														<div class="form-group">
+                                                        <label class="col-md-3 control-label">Authorized Letter Obtained<span style="color:red">*</span></label>
+                                                        <div class="col-md-6">
+                                                           Attached <input type="radio" th:field="*{authorised_letter_obtained}" value="attached" class="radio-btn-position"> &nbsp; &nbsp; 
+                                                           Not Attached <input type="radio" th:field="*{authorised_letter_obtained}" value="notattached" class="radio-btn-position">
+                                                           <span id="lettererrors" style="color:red"></span>
+                                                           <hr/>
+                                                        </div>
+														</div>
+														<div class="">
+														<table class="table table-striped  table-bordered w-auto table-hover" th:if="${parentaline !=1}">
+													<!--Table head-->
+													<thead>
+														<tr>
+															<th>S.No.</th>
+															<th>Parenal Line(s)</th>
+															<th>Source</th>
+															<th>Denominations</th>
+															<th>Authorized Letter Obtained</th>
+															<th>Action</th>
+														</tr>
+													</thead>
+													<!--Table head-->
+													<!--Table body-->
+													<tbody>
+													    <tr role="row" class="table-info" th:each="parentaline,serial : ${parentaline}">
+											            <td th:text="${serial.count}"></td> 
+											            <td th:text="${parentaline[2]}"></td>
+											            <td th:text="${parentaline[3]}"></td> 
+											            <td th:text="${parentaline[4]}"></td> 
+											            <td th:text="${parentaline[5]}"></td> 
+											            <td>
+											              <a th:href="@{'/editapplicationparentalline/'+${parentaline[1]}+'/'+${parentaline[0]}}" >
+											           Edit</a>
+											            <!--  <a onclick="javascript:if (confirm('Are you sure, you want to Remove this row?')) return true; else return false;" th:href="@{'/updaterow_form1_subform/'+${parentaline[0]}+'/'+${parentaline[1]}}" >
+											           Delete</a> -->
+											            
+											            </td>
+											            
+											           </tr>
+											         </tbody>
+												<!--Table body-->
+												</table>
+														<div class="form-group">
+															<button type="submit" id="btnadd" class="btn btn-danger pull-right" name="addrecord" onclick ="return validateform10()" style="display: block;  border-radius:5px;height: 32px; padding: 5px; position:relative; right:25px; border-left: none;">Add</button>
+														</div>
+													</div>
+													<!-- </div> -->
+													
+														<div class="form-group">
+                                                        <label class="col-md-12"><h4>(b.) State if any Farmers' Variety or Variety of Common Knowledge or variety in public domain is used as parental line for the repeated propagation of the hybrid.<span style="color:red">*</span></h4></label>
+                                                    </div>
+                                                      <div th:object="${applications}">
+                                                    <div class="form-group">
+                                                        <label class="col-md-3 control-label"></label>
+                                                        
+                                                      
+                                                        <div class="col-md-9">
+                                                           Yes <input type="radio" th:field="*{is_farmer_variety_required}" value="y" class="radio-btn-position"> &nbsp; &nbsp; 
+                                                           No <input type="radio" th:field="*{is_farmer_variety_required}" value="n" class="radio-btn-position">                                                        <br>
+                                                           <span id="commonvarietyerrors" style="color:red"></span>
+                                                         </div>
+                                                        
+													</div>
+														<div class="form-group">
+															<label class="col-md-3 control-label">Denomination<span style="color:red">*</span></label>
+															<div class="col-md-6">
+																<input type="text" th:field="*{denominationsx}" class="form-control" value="">
+																<span id="denominationerrorss" style="color:red"></span>
+															</div>
+														</div>
+														<div class="form-group">
+															<label class="col-md-3 control-label">Geographical Source<span style="color:red">*</span></label>
+															<div class="col-md-6">
+																<input type="text" class="form-control" th:field="*{geographical_source}" value="">
+																<span id="graphicalsourceerror" style="color:red"></span>
+															</div>
+														</div>
+														<div class="form-group">
+															<label class="col-md-3 control-label">Detail of Attribution(origion)<span style="color:red">*</span></label>
+															<div class="col-md-6">
+																<input type="text" class="form-control" th:field="*{attribution}" value="">
+																<span id="attributionerror" style="color:red"></span>
+																
+															</div>
+														</div>
+														<div class="form-group">
+															<label class="col-md-3 control-label">Details of owner farmer/village community/Institution/Organisation<span style="color:red">*</span></label>
+															<div class="col-md-6">
+																<input type="text" class="form-control" th:field="*{owners}" value="">
+																<span id="farmercomunityerror"  style="color:red"></span>
+															</div>
+														</div>
+														   <hr/> 
+																												
+														<div class="form-group">
+															<label class="col-md-12"><h4>(c.) The Protection of Plant Varieties and Farmers' Rights Act, 2001 provides access to benefit sharing to farmers who have conserved the genetic resource that has contributed towards variety development. In this particular case what sort of farmer/community recognition the Applicant has planned:</h4></label>
+															</div>
+															<!-- <div th:object="${applications}"> -->
+															<div class="form-group">
+																<label class="col-md-3 control-label"></label>
+															<div class="col-md-9">
+																<textarea class="form-control" th:field="*{planning_benefit_sharing}" ></textarea>
+															    <span id="plantvarietieserror" style="color:red"></span>
+															</div>
+														</div>
+														
+													 </div>
+													    <hr/> 
+                                                     	<div class="form-group ">
+															<div class="col-sm-offset-10 col-sm-12">
+															
+																<input type="hidden" id="applicationidfromx" name="applicationidfromx" th:value="${applications.id}" />
+																<input type="hidden" id="parental" name="parental" th:value="*{id}" />
+																<input type="hidden" id="applicantidformx" name="applicantidformx"  th:value="${userapplicant[0]}">
+																<button type="submit" onclick ="return validateform10commonvariety()" class="btn btn-info waves-effect waves-light">Save</button>
+																<button type="submit" class="btn btn-info waves-effect waves-light">Next</button>
+															</div>
+														</div>
+														
+											
+													</form>
+<script type = "text/javascript">
+function validateform10(){
+	if (document.getElementById("is_parental_required1").checked == true){
+		 if( document.form_10.typeline.value == "-1" ) {
+          	 document.getElementById("parentlineerror").innerHTML="please select parentline";
+          	document.form_10.typeline.focus() ;
+              return false;
+           }
+		if( document.form_10.parental_line.value == "" ) {
+          	 document.getElementById("lineerror").innerHTML="Field can't be null";
+          	 document.form_10.parental_line.focus() ;
+              return false;
+           }
+		if( document.form_10.source.value == "" ) {
+         	 document.getElementById("sourceerror").innerHTML="Field can't be null";
+         	 document.form_10.source.focus() ;
+             return false;
+          }
+		if( document.form_10.denominations.value == "" ) {
+         	 document.getElementById("denominationxerror").innerHTML="Field can't be null";
+         	 document.form_10.denominations.focus() ;
+             return false;
+          }
+		if (document.getElementById("authorised_letter_obtained1").checked == true){
+			return true;
+		}
+		else if (document.getElementById("authorised_letter_obtained2").checked == true){
+			return true;
+		}
+		else {
+			  document.getElementById("lettererrors").innerHTML="please select yes or no ";
+	          document.getElementById("authorised_letter_obtained1").focus() ;
+		    return false;
+		  }
+		 return true;
+	}
+
+	else if (document.getElementById("is_parental_required2").checked == true) {
+	    return true;
+	  }
+   else {
+		  document.getElementById("radioerrorss").innerHTML="please select yes or no ";
+          document.getElementById("is_parental_required1").focus() ;
+	    return false;
+	  }
+	return( true );
+	
+}
+</script>
+
+
+<script type = "text/javascript">
+function validateform10commonvariety(){
+	validateform10plantvarieties();
+	if (document.getElementById("is_farmer_variety_required1").checked == true){
+		 if( document.form_10.denominationsx.value == "" ) {
+        	 document.getElementById("denominationerrorss").innerHTML="Field can't be null";
+        	document.form_10.denominationsx.focus() ;
+            return false;
+         }
+		 if( document.form_10.geographical_source.value == "" ) {
+        	 document.getElementById("graphicalsourceerror").innerHTML="Field can't be null";
+        	document.form_10.geographical_source.focus() ;
+            return false;
+         }
+		 if( document.form_10.attribution.value == "" ) {
+        	 document.getElementById("attributionerror").innerHTML="Field can't be null";
+        	document.form_10.attribution.focus() ;
+            return false;
+         }
+		 if( document.form_10.owners.value == "" ) {
+        	 document.getElementById("farmercomunityerror").innerHTML="Field can't be null";
+        	document.form_10.owners.focus() ;
+            return false;
+         }
+		 return true;
+	}
+	else if (document.getElementById("is_farmer_variety_required2").checked == true) {
+	    return true;
+	  }
+ else {
+		  document.getElementById("commonvarietyerrors").innerHTML="please select yes or no";
+        document.getElementById("is_farmer_variety_required1").focus() ;
+	    return false;
+	  }
+	return( true );
+}
+
+</script>
+
+<script type = "text/javascript">
+function validateform10plantvarieties(){
+	if( document.form_10.planning_benefit_sharing.value == "" ) {
+    	 document.getElementById("plantvarietieserror").innerHTML="Fields can't be null";
+    	document.form_10.planning_benefit_sharing.focus() ;
+        return false;
+     }
+	return( true );
+}
+</script>
+</div>
+</html>

@@ -1,0 +1,164 @@
+  
+  <!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+	<head>
+	  <th:block th:include="adminfragment/headerlibs.html :: headerlibs"></th:block> 
+	</head>
+
+    <body class="fixed-left">
+        <!-- Begin page -->
+        <div id="wrapper">
+        
+            <!-- Top Bar Start -->
+           <header th:insert="adminfragment/header.html :: header"> </header>
+            <!-- Top Bar End -->
+
+
+            <!-- ========== Left Sidebar Start ========== -->
+			<header th:insert="adminfragment/sidenav.html :: sidevav"> </header>
+            <!-- Left Sidebar End --> 
+
+  
+            <!-- Start right Content here -->  
+            <div class="content-page">
+                <!-- Start content -->
+                <div class="content">
+                    <div class="container">
+
+                        <!-- Page-Title -->
+                        <div class="row">
+                            <div class="col-sm-12">
+                                <h4 class="pull-left page-title">Audit Log</h4>
+                                <ol class="breadcrumb pull-right">
+                                    <li><a href="/admin">Home</a></li>
+                                    <li class="active">Login Log</li>
+                                </ol>
+                            </div>
+                        </div>
+						
+						 <span th:if="${actd_viewtrue != null && actd_viewtrue == 'valpresent' }">
+											
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="panel panel-default">
+                                    <div class="panel-heading">
+                                        <h3 class="panel-title">Login Logs</h3>
+                                    </div>
+                                    
+                                    <div class="panel-body" style="padding: 10px 0 0 0;">
+															<form action="" method="post" accept-charset="utf-8">
+																<div class="col-lg-3">
+																	<div class="form-group">
+																		<label>From Date:</label>
+																		<input type="date" class="form-control" id="fromdate" name="fromDate">                                                     
+																	</div>
+																</div>
+																<div class="col-lg-3">
+																	<div class="form-group">
+																		<label>To Date:</label>
+																		<input type="date" class="form-control" name="todate" id="todate">                                                    
+																	</div>
+																</div>
+																		   
+																<div class="col-lg-3">
+																	<div class="form-group">
+																		<button type="button" class="btn btn-success waves-effect waves-light margin_top_25" onclick='getfromlogdata()' style="top: 25px;">Search</button>
+																	</div>
+																</div>
+															</form>
+															</div>
+                                    <div class="panel-body">
+                                        <div class="row">
+                                            <div class="col-md-12 col-sm-12 col-xs-12">
+                                                <table id ="shortstorage" class="table table-hover table-bordered dataTable no-footer">
+                                                    <thead>
+                                                        <tr>
+                                                            <th>S.No</th>
+                                                            <th>Login User</th>
+                                                            <th>Status</th>
+                                                            <th>Login Date Time</th>
+                                                            
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                    
+                                                        <tr th:each="logdata,sno  : ${logdata}">
+                                                            <td th:text="${sno.count}"></td>
+                                                            <td th:text="${logdata.username}"></td>
+                                                            <td th:text="${logdata.logintype}"></td>
+                                                            <td th:text="${logdata.login_time_stamp}"></td>
+                                                          
+                                                        </tr>
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div> <!-- End Row -->
+                        
+                        </span>
+                        <span th:unless="${actd_viewtrue != null && actd_viewtrue == 'valpresent' }">
+					 <label>YOU ARE NOT AUTHORISED TO VIEW THIS PAGE.PLEASE CONTACT ADMINISTRATOR</label>
+					 </span>
+
+
+                    </div> <!-- container -->
+                               
+                </div> <!-- content -->
+
+
+            </div>
+          
+            <!-- End Right content here -->
+          <div th:replace="adminfragment/footer.html :: footer"></div>
+           </div> <!-- container -->
+                               
+                <!-- content -->
+
+			<!-- start footer content here -->
+			
+			<!-- end footer content here -->
+
+      
+        <!-- END wrapper -->
+
+<!-- footer lib start here-->
+
+<div th:replace="adminfragment/footerlibs.html :: footerlibs"></div>
+<!-- end footer lib -->
+
+<script type="text/javascript">
+        function getfromlogdata() {
+        	//$("#shortstorage tbody").empty();
+            var f_date =document.getElementById("fromdate").value;
+            var to_date =document.getElementById("todate").value;
+          //alert(f_date);
+          //alert(to_date);
+            $.ajax({
+                type: "POST",
+                url: "/getLogData",
+                data:'f_date='+f_date+'&to_date='+to_date,
+            	  
+                success: function (data) { 
+                	 
+                	 $("#shortstorage tbody").html(''); 
+	                   for (var i=0;i<data.length;i++)
+	               	{
+	                   	var str = i+1;
+	                   	var str1 = data[i][0];
+	                   	var str2 = data[i][1];
+	                   	var str3 = data[i][2];
+	                   	var html_data = '<tr><td>'+str+'</td><td> '+str1+'</td><td>'+str2+'</td><td>'+str3+'</td></tr>';
+	                   
+					 	$("#shortstorage tbody").append(html_data);
+	                   	
+	               	}  
+                }
+            }); 
+  }
+    </script> 
+        
+    </body>
+</html>

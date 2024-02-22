@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+	<div th:fragment="formfour">
+<form class="form-horizontal" role="form" name="myFormiv" id="myFormiv" th:action="@{/saveapplicationformiv}" th:object="${applications}" onsubmit = "return validateformiv()" method="post">                                        
+														<div class="form-group">
+															<label class="col-md-6 "><h4>4.General Information of Candidate variety:</h4> </label>
+														</div>
+														<div class="form-group">
+															<label class="col-md-3 control-label">Crop Details<span style="color:red">*</span> </label>
+															<div class="col-md-3">
+																<input type="radio" th:field="*{cropdetail}"  class="" value="Trees/Vines" > Trees/Vines
+																<input type="radio" th:field="*{cropdetail}"   class="" value="Other Crops" >Other Crops
+																<span id="cropdadioerror" style="color:red"></span>
+															</div>
+															   
+														</div>
+														<div class="form-group">
+															<label class="col-md-3 control-label">Common name of Crop<span style="color:red">*</span></label>
+															<div class="col-md-6 col-sm-6 col-xs-12">
+															<div th:if="${addcroplist != null}">
+														        <select onchange="GetBotanicalName();" id="ddlcrops" class="form-control col-md-7 col-xs-12" th:field="*{cropid}">
+														        <option th:value="-1" >---Select---</option>
+														            <option th:each="cropsitem : ${addcroplist}"
+														               th:value="${cropsitem.id}"
+														               th:text="${cropsitem.crop_common_name}" />
+														        </select>
+														        </div>
+														           <span id="cropnameerror" style="color:red"></span>
+																
+															</div>
+														</div>
+														<div class="form-group">
+															<label class="col-md-3 control-label"><i>Botanical Name</i><span style="color:red">*</span></label>
+															<div class="col-md-6 col-sm-6 col-xs-12">
+																<div class="font_style" th:if="${cropspecieslist != null}">
+														        <select  onchange="GetFamilyName();"  id="ddlbotanicalname" class="form-control col-md-7 col-xs-12" th:field="*{cropspeciesid}">
+														        <option th:value="-1" >---Select---</option>
+														            <option th:each="speciesitem : ${cropspecieslist}"
+														               th:value="${speciesitem.id}"
+														               th:text="${speciesitem.crop_botanical_name}" />
+														        </select>
+														       	</div>
+												     	<span id="botanicalnameerror" style="color:red"></span>
+															</div>
+															<a href="#" title="" data-toggle="popover" data-trigger="focus" data-content="Botanical name mean the scientific name approved by the International code nomenclature of cultivated plants,2004"><span class="badge">i</span></a>
+															
+														</div>
+														<div class="form-group">
+															<label class="col-md-3 control-label">Family</label>
+															<div class="col-md-6 col-sm-6 col-xs-12">
+															<div th:if="${cropspecieslist != null}">
+														        <select id="ddlfamilyname" class="form-control col-md-7 col-xs-12" name="cropfamily">
+														        <option th:value="null" >---Select---</option>
+														            <option th:each="speciesitem : ${cropspecieslist}"
+														               th:value="${speciesitem.id}"
+														               th:text="${speciesitem.Family}" />
+														        </select>
+														   	</div>
+												     	</div>
+														</div>
+														<div class="form-group">
+															<label class="col-md-3 control-label">Denomination(in Block letters)<span style="color:red">*</span></label>
+															<div class="col-md-6">
+																<input  id="deno_f4" type="text" style="text-transform:uppercase" class="form-control" value="" th:field="*{denomination}" onkeyup='javascript:validate_denomination()'>
+															</div>
+															<span id="denominationerror" style="color:red"></span>
+														</div>
+														
+														
+														<hr/>
+														<div div th:if="${appstatus ==1}" class="form-group ">
+															<div class="col-sm-offset-10 col-sm-12">
+															
+																<input type="hidden" id="applicationidfromiv" name="applicationidfromiv" th:value="*{id}">
+																<input type="hidden" id="applicantidformiv" name="applicantidformiv"  th:value="${userapplicant[0]}">
+																<input type="hidden" id="applicanttypeidformiv" name="applicanttypeidformiv" th:value="*{applicanttypeid}" />
+																<input type="hidden" id="f4_id" name="f4_id" th:value="${f4_id}">
+				
+																<button id="f4_submit" type="submit" class="btn btn-info waves-effect waves-light">Save</button>
+															</div>
+														</div>
+
+<script type = "text/javascript">
+      function validateformiv() {
+    	   if (document.getElementById("cropdetail1").checked == false && document.getElementById("cropdetail2").checked == false) {
+        	 document.getElementById("cropdadioerror").innerHTML="Please select any one";
+        	 document.getElementById("cropdetail1").focus();
+             return false;
+        	  }
+         else {
+        	  document.getElementById("cropdadioerror").innerHTML="";
+            
+         }
+    	  if( document.myFormiv.cropid.value == "-1" ) {
+          	 document.getElementById("cropnameerror").innerHTML="Please select crop name";
+          	 document.myFormiv.cropid.focus() ;
+              return false;
+           }
+    	  else{
+    		  document.getElementById("cropnameerror").innerHTML="";
+    	  }
+           if( document.myFormiv.cropspeciesid.value == "-1" ) {
+          	 document.getElementById("botanicalnameerror").innerHTML="Please select botanical name";
+          	 document.myFormiv.cropspeciesid.focus() ;
+              return false;
+           }
+           else{
+        	   document.getElementById("botanicalnameerror").innerHTML="";
+           }
+           if( document.myFormiv.denomination.value == "" ) {
+          	 document.getElementById("denominationerror").innerHTML="Please fill denomination";
+          	 document.myFormiv.denomination.focus() ;
+              return false;
+           }
+           else{
+        	   document.getElementById("denominationerror").innerHTML="";
+           }
+         return( true );
+      }
+</script>
+
+</form>		
+
+
+
+ <script type="text/javascript">
+   function GetBotanicalName()
+  {
+       var cropname= document.getElementById("ddlcrops");
+       var botanicalname=document.getElementById("ddlbotanicalname");
+       var botanicalname1=$("#ddlbotanicalname");
+       if(cropname.value != null)	
+       	$.ajax({
+               type: "POST",
+               url: "/ppvfra/getBotanicalName",
+               data: 'ddlcrops='+cropname.value,
+               dataType:"json",
+               success: function (response) {
+               	
+            	   botanicalname1.empty().append('<option selected="selected" value="-1">---Select---</option>');
+                for(var k=0;k<response.length;k++)
+     	  {
+     	  var opt = response[k];
+     	   var el = document.createElement("option");
+     	   el.textContent = opt[1];
+     	   el.value = opt[0];
+     	  botanicalname.appendChild(el);
+     	}
+               },
+               failure: function (response) {
+                   alert(response.responseText);
+               },
+               error: function (response) {
+                   alert(response.responseText);
+               }
+      });
+   	
+   }
+ </script>	
+ 
+ 
+	<script type="text/javascript">
+   function GetFamilyName()
+  {
+       var botanicalname= document.getElementById("ddlbotanicalname");
+       var text= botanicalname.options[botanicalname.selectedIndex].text
+       var familyname=document.getElementById("ddlfamilyname");
+       var familyname1=$("#ddlfamilyname");
+       if(botanicalname.value != null)	
+       	$.ajax({
+               type: "POST",
+               url: "/ppvfra/getFamilyName",
+               data: 'ddlbotanicalname='+text,
+               dataType:"json",
+               success: function (response) {
+               	
+            	   familyname1.empty().append('<option selected="selected" value="-1">---Select---</option>');
+                for(var k=0;k<response.length;k++)
+     	  {
+     	  var opt = response[k];
+     	   var el = document.createElement("option");
+     	   el.textContent = opt[1];
+     	   el.value = opt[0];
+     	  familyname.appendChild(el);
+     	}
+               },
+               failure: function (response) {
+                   alert(response.responseText);
+               },
+               error: function (response) {
+                   alert(response.responseText);
+               }
+      });
+   	
+   }
+ </script>	
+ 
+ 
+<script type="text/javascript" th:inline="javascript">
+        var takenalready= [[${applications}]];
+        function validate_denomination() {
+        	
+            var emailid =document.getElementById("deno_f4").value;
+          // alert(emailid);
+            $.ajax({
+                type: "POST",
+                url: "/ppvfra/checkdenomination",
+                data:emailid,
+                contentType:'application/json',
+                success: function (data) {
+                 
+                if(data == 'taken' && emailid != takenalready.denomination)
+				{
+                //Email not available.
+        		document.getElementById("denominationerror").innerHTML = " <font color='red'>Denomination Already present.Please Enter Another Unique Denomination.</font>";
+        		document.myFormiv.deno_f4.focus() ;
+        		document.getElementById("deno_f4").value="";
+        		$("#f4_submit").attr("disabled",true);
+        		return false;
+                }
+				else if (data == 'not taken') 
+				{
+				document.getElementById("denominationerror").innerHTML = "";
+				$("#f4_submit").attr("disabled",false);
+				}
+                   
+                }
+            }); 
+  }
+    </script>
+
+ 
+ 
+ 
+</div>
+</html>

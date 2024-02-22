@@ -1,0 +1,78 @@
+	
+	
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+	<div th:fragment="formnine">
+	<form class="form-horizontal" role="form" id="form-9" th:action="@{/saveapplicationformix}" th:object="${applications}" method="post" enctype="multipart/form-data">   <!--form_9 start -->                                       
+														<div class="form-group">
+                                                        <label class="col-md-12"><h4>9. Has the candidate variety been commercialised or otherwise exploited:<h4></label>
+                                                    </div>
+													<div class="form-group">
+                                                        <label class="col-md-3 control-label"></label>
+                                                        <div class="col-md-9">
+                                                            Yes <input type="radio" name="iscommercialised"  value="yes" class="radio-btn-position"> &nbsp; &nbsp; 
+                                                            No <input type="radio" name="iscommercialised"  value="no" class="radio-btn-position"> 
+                                                         </div>
+													</div>
+													
+													<hr>
+													
+														 
+														 <div class="form-group">
+															<label class="col-md-3 control-label">Date of the first sale of the Variety</label>
+															<div class="col-md-6">
+																<!-- <input type="text" class="form-control" value=""> -->
+																<input type="date" class="form-control" name="firstsaledate">
+															</div>
+															
+														</div>
+														
+														<div class="form-group">
+															<label class="col-md-3 control-label">Upload proof of first sale of Variety</label>
+															<div class="col-md-6">
+																<input type="file" value="" name="firstsaleproof" class="form-control" >
+															</div>
+															
+														</div>
+														
+														<div class="form-group">
+															<label class="col-md-3 control-label">Country (ies) where Protection is made</label>
+															<div class="col-md-6">
+																<input type="text" class="form-control" name="protection" value="">
+															</div>
+														</div>
+														 
+														
+														<div class="form-group">
+															<label class="col-md-3 control-label">Denomination Used</label>
+															<div class="col-md-6">
+																<input type="text" class="form-control" name="denomination" value="">
+															</div>
+														</div>
+														<div class="form-group">
+															<label class="col-md-3 control-label">Trademark used, if any</label>
+															<div class="col-md-6">
+																<input type="text" class="form-control" name="trademark" value="">
+															</div>
+														</div>
+														<div class="form-group">
+															<label class="col-md-3 control-label">Variation in important trait with respect to first filling(Attach sheet)</label>
+															<div class="col-md-6">
+																<input type="file" class="form-control" name="variationtrait" >
+															</div>
+														</div>
+														<hr/>
+														<div class="form-group ">
+															<div class="col-sm-offset-10 col-sm-12">
+															   <!--  <input type="hidden" id="applicationidfromix" name="applicationidfromix" th:value="*{id}">
+																<input type="hidden" id="applicantidformix" name="applicantidformix"  th:value="${userapplicant[0]}">
+																<input type="hidden" id="applicanttypeidformix" name="applicanttypeidformix" th:value="*{applicanttypeid}" />
+																 -->
+																<button type="submit" class="btn btn-info waves-effect waves-light">Save</button>
+																<button type="submit" class="btn btn-info waves-effect waves-light">Next</button>
+															</div>
+														</div>
+													</form>
+													</div>
+													</html>
+													

@@ -1,0 +1,393 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+	<head>
+	  <th:block th:include="adminfragment/headerlibs.html :: headerlibs"></th:block> 
+	</head>
+
+    <body class="fixed-left">
+        <!-- Begin page -->
+        <div id="wrapper">
+        
+            <!-- Top Bar Start -->
+           <header th:insert="adminfragment/header.html :: header"> </header>
+            <!-- Top Bar End -->
+
+
+            <!-- ========== Left Sidebar Start ========== -->
+		    <nav th:insert="adminfragment/sidenav.html :: sidevav"> </nav> 
+            <!-- Left Sidebar End --> 
+
+
+            <!-- Start right Content here -->                  
+            <div class="content-page">
+                <!-- Start content -->
+                <div class="content">
+                    <div class="container">
+
+                        <!-- Page-Title -->
+                        <div class="row">
+                            <div class="col-sm-12">
+                                <h4 class="pull-left page-title">Dashboard</h4>
+                                <ol class="breadcrumb pull-right">
+                                    <li><a href="/admin">Home</a></li>
+                                    <li class="active">Dashboard</li>
+                                </ol>
+                            </div>
+                        </div>
+
+                        <!-- Start Widget -->
+                        <div class="row">
+                            <div class="col-md-6 col-sm-6 col-lg-4">
+                                <div class="mini-stat clearfix bx-shadow">
+                                    <span class="mini-stat-icon bg-purple"><i class="ion-android-contacts"></i></span>
+                                    <div class="mini-stat-info text-right text-muted">
+                                        <span class="counter" th:text="${company_total_count}" ></span>
+                                        Company
+                                    </div>
+                                    <div class="tiles-progress">
+                                        <div class="m-t-20">
+                                            <h5 class="text-uppercase">Company <span class="pull-right"></span></h5>
+                                            <div class="progress progress-sm m-0">
+                                                <div class="progress-bar progress-bar-purple" role="progressbar" aria-valuenow="90" aria-valuemin="0" aria-valuemax="100" style="width: 100%;">
+                                                    <span class="sr-only"></span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="col-md-6 col-sm-6 col-lg-4">
+                                <div class="mini-stat clearfix bx-shadow">
+                                    <span class="mini-stat-icon bg-success"><i class="ion-android-contacts"></i></span>
+                                    <div class="mini-stat-info text-right text-muted">
+                                        <span class="counter" th:text="${institute_total_count}" ></span>
+                                        Institutions
+                                    </div>
+                                    <div class="tiles-progress">
+                                        <div class="m-t-20">
+                                            <h5 class="text-uppercase">Institutions <span class="pull-right"></span></h5>
+                                            <div class="progress progress-sm m-0">
+                                                <div class="progress-bar progress-bar-success" role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" style="width: 100%;">
+                                                    <span class="sr-only"></span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-md-6 col-sm-6 col-lg-4">
+                                <div class="mini-stat clearfix bx-shadow">
+                                    <span class="mini-stat-icon bg-primary"><i class="ion-android-contacts"></i></span>
+                                    <div class="mini-stat-info text-right text-muted">
+                                        <span class="counter" th:text="${applicant_total_count}"></span>
+                                        Applicants
+                                    </div>
+                                    <div class="tiles-progress">
+                                        <div class="m-t-20">
+                                            <h5 class="text-uppercase">Applicants <span class="pull-right"></span></h5>
+                                            <div class="progress progress-sm m-0">
+                                                <div class="progress-bar progress-bar-primary" role="progressbar" aria-valuenow="57" aria-valuemin="0" aria-valuemax="100" style="width: 100%;">
+                                                    <span class="sr-only"></span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div> 
+                        <!-- End row-->
+
+                        <div class="row">
+                            <div class="col-lg-4">
+                                <div class="portlet"><!-- /portlet heading -->
+                                    <div class="portlet-heading">
+                                        <h3 class="portlet-title text-dark text-uppercase">
+                                            Company
+                                        </h3>
+                                        <div class="clearfix"></div>
+                                    </div>
+                                    <div id="portlet1" class="panel-collapse collapse in">
+                                        <div class="portlet-body">
+                                            <div class="row">
+                                                <div class="col-md-12">
+                                                    <div id="company-id" style="position: relative;height: 320px;"></div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div> <!-- /Portlet -->
+                            </div> <!-- end col -->
+
+                            <div class="col-lg-4">
+                                    <div class="portlet"><!-- /portlet heading -->
+                                        <div class="portlet-heading">
+                                            <h3 class="portlet-title text-dark text-uppercase">
+                                                Institutions
+                                            </h3>
+                                            <div class="clearfix"></div>
+                                        </div>
+                                        <div id="portlet1" class="panel-collapse collapse in">
+                                            <div class="portlet-body">
+                                                <div class="row">
+                                                    <div class="col-md-12">
+                                                        <div id="institutions-id" style="position: relative;height: 320px;"></div>
+                                                        
+                                                    </div>
+                                                  
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div> <!-- /Portlet -->
+                                </div> <!-- end col -->
+
+                                <div class="col-lg-4">
+                                        <div class="portlet"><!-- /portlet heading -->
+                                            <div class="portlet-heading">
+                                                <h3 class="portlet-title text-dark text-uppercase">
+                                                    Applicants
+                                                </h3>
+                                                <div class="clearfix"></div>
+                                            </div>
+                                            <div id="portlet1" class="panel-collapse collapse in">
+                                                <div class="portlet-body">
+                                                    <div class="row">
+                                                        <div class="col-md-12">
+                                                            <div id="applicants-id" style="position: relative;height: 320px;"></div>
+                                                            
+                                                        </div>
+                                                      
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div> <!-- /Portlet -->
+                                    </div> <!-- end col -->
+                                    
+                                    
+                                    <div class="col-lg-12">
+                                        <div class="portlet"><!-- /portlet heading -->
+                                            <div class="portlet-heading">
+                                                <h3 class="portlet-title text-dark text-uppercase">
+                                                    Applications
+                                                </h3>
+                                                <div class="clearfix"></div>
+                                            </div>
+                                            <div id="portlet1" class="panel-collapse collapse in">
+                                                <div class="portlet-body">
+                                                    <div class="row">
+                                                        <div class="col-md-12">
+                                                            <div id="applications-id" style="position: relative;height: 420px;"></div>
+                                                            
+                                                        </div>
+                                                      
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div> <!-- /Portlet -->
+                                    </div> <!-- end col -->
+
+                        </div> <!-- End row -->
+                        
+                        <!-- After the display of chaarts -->
+                  <span th:if="${usertypeid_role[0] =='Company'}">
+			      
+			       <div class="col-lg-4 col-md-4 col-xs-12 well">
+			
+			<div class="row">
+					<div class="portlet-title text-dark text-uppercase"><h4>Company Users Details</h4></div>	
+				<form>
+			<div class="col-sm-12">
+				<div class="row">
+	
+		<div class="col-sm-12 form-group">
+				<label  class="col-sm-7 font_weight_form company_position_set">New </label>
+				<!-- <span class="mini-stat-icon bg-pink color_bg"><a href="viewnewmanu?status=TmV3&amp;roleId=NA==">45</a></span>
+			 -->
+		 
+			 <span class="mini-stat-icon1 bg-blue"><a href="/view_details_applicants/New"><span  th:text="${count_new}"></span></a></span>
+			 </div>
+	
+	
+			
+			<div class="col-sm-12 form-group">
+					<label class="col-sm-7 font_weight_form company_position_set">Accepted</label>
+					<span class="mini-stat-icon1 bg-green"><a href="/view_details_applicants/Accepted"><span th:text="${count_accepted}"></span></a></span>
+			</div>
+	
+				<div class="col-sm-12 form-group">
+						<label class="col-sm-7 font_weight_form company_position_set">Rejected</label>
+					<span class="mini-stat-icon1 bg-orange"><a href="/view_details_applicants/Rejected"><span th:text="${count_rejected}"></span></a></span>
+				</div>
+				
+			
+					<!-- 
+					<div class="col-sm-12 form-group">
+							<label class="col-sm-7 font_weight_form">Active</label>
+						<span class="mini-stat-icon1 bg-purple" th:text="${count_active}"><a href=""></a></span>
+					</div> 
+					-->
+				
+					</div>
+				
+						
+						<br>
+						
+						
+						</div>
+			
+								
+							</form>
+						 
+					</div>
+					
+					
+				</div>
+				</span>
+
+                    </div> <!-- container -->
+                               
+                </div> <!-- content -->
+
+			<!-- start footer content here -->
+			<div th:replace="adminfragment/footer.html :: footer"></div>
+			<!-- end footer content here -->
+
+            </div>
+       
+        </div>
+        <!-- END wrapper -->
+
+<!-- footer lib start here-->
+
+<div th:replace="adminfragment/footerlibs.html :: footerlibs"></div>
+<!-- end footer lib -->
+<script src="/dashboard/js/echarts/echarts.min.js"></script>
+        <script type="text/javascript" th:inline="javascript">
+            // Company start
+            var chart = document.getElementById('company-id');
+            var myChart = echarts.init(chart);
+            option = {
+                legend: {
+                    x: 'center',
+                    data: ["New", "Accepted","Rejected"]
+                },
+                tooltip : {
+                    trigger: 'item',
+                    formatter: "{a} <br/>{b} : {c} "
+                },
+                calculable : true,
+                series : [
+                    {
+                        name:'Company',
+                        type:'pie',
+                        radius : '45%',
+                        center: ['50%', '60%'],
+                        data:[
+                            {value:[[${company_count_new}]],itemStyle:{normal:{color:"#72aae4"}},name:'New'},
+                            {value:[[${company_count_accepted}]],itemStyle:{normal:{color:"#3e7205"}},name:'Accepted'},
+                            {value:[[${company_count_rejected}]],itemStyle:{normal:{color:"#f77809"}},name:'Rejected'}
+                        ]
+                    }
+                ]
+            };
+
+            myChart.setOption(option, true);
+            // Company end 
+
+            // Company start
+            var chart = document.getElementById('institutions-id');
+            var myChart = echarts.init(chart);
+            option = {
+                legend: {
+                    x: 'center',
+                    data: ["New", "Accepted","Rejected"]
+                },
+                tooltip : {
+                    trigger: 'item',
+                    formatter: "{a} <br/>{b} : {c} "
+                },
+                calculable : true,
+                series : [
+                    {
+                        name:'Institutions',
+                        type:'pie',
+                        radius : '45%',
+                        center: ['50%', '60%'],
+                        data:[
+                            {value:[[${institution_count_new}]],itemStyle:{normal:{color:"#72aae4"}},name:'New'},
+                            {value:[[${institution_count_accepted}]],itemStyle:{normal:{color:"#3e7205"}},name:'Accepted'},
+                            {value:[[${institution_count_rejected}]],itemStyle:{normal:{color:"#f77809"}},name:'Rejected'}
+                        ]
+                    }
+                ]
+            };
+
+            myChart.setOption(option, true);
+
+            // applicants start
+            var chart = document.getElementById('applicants-id');
+            var myChart = echarts.init(chart);
+            option = {
+                legend: {
+                    x: 'center',
+                    data: ["New", "Accepted","Rejected"]
+                },
+                tooltip : {
+                    trigger: 'item',
+                    formatter: "{a} <br/>{b} : {c} "
+                },
+                calculable : true,
+                series : [
+                    {
+                        name:'Applicants',
+                        type:'pie',
+                        radius : '45%',
+                        center: ['50%', '60%'],
+                        data:[
+                            {value:[[${applicant_count_new}]],itemStyle:{normal:{color:"#72aae4"}},name:'New'},
+                            {value:[[${applicant_count_accepted}]],itemStyle:{normal:{color:"#3e7205"}},name:'Accepted'},
+                            {value:[[${applicant_count_rejected}]],itemStyle:{normal:{color:"#f77809"}},name:'Rejected'}
+                        ]
+                    }
+                ]
+            };
+
+            myChart.setOption(option, true);
+            
+            // Company start
+            var chart = document.getElementById('applications-id');
+            var myChart = echarts.init(chart);
+            option = {
+                legend: {
+                    x: 'center',
+                    data: ["New", "Accepted","Rejected",'Submitted','Application Closed','Application Withdrawn','Certificate to be issued']
+                },
+                tooltip : {
+                    trigger: 'item',
+                    formatter: "{a} <br/>{b} : {c} "
+                },
+                calculable : true,
+                series : [
+                    {
+                        name:'Applications',
+                        type:'pie',
+                        radius : '55%',
+                        center: ['50%', '60%'],
+                        data:[
+                            {value:[[${application_count_new}]],itemStyle:{normal:{color:"#72aae4"}},name:'New'},
+                            {value:[[${application_count_accepted}]],itemStyle:{normal:{color:"#3e7205"}},name:'Accepted'},
+                            {value:[[${application_count_rejected}]],itemStyle:{normal:{color:"#f77809"}},name:'Rejected'},
+                            {value:[[${application_count_submitted}]],name:'Submitted'},
+                            {value:[[${application_count_closed}]],name:'Application Closed'},
+                            {value:[[${application_count_withdrawn}]],name:'Application Withdrawn'},
+                            {value:[[${application_count_cert_issued}]],name:'Certificate to be issued'},
+                        ]
+                    }
+                ]
+            };
+
+            myChart.setOption(option, true);
+        </script>    
+    </body>
+</html>

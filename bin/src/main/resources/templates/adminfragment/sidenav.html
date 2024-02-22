@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+	<div th:fragment="sidevav">
+
+            <!-- ========== Left Sidebar Start ========== -->
+
+            <div class="left side-menu">
+                    <div class="sidebar-inner slimscrollleft">
+                        
+                        <!--- Divider -->
+                        <div id="sidebar-menu">
+                            <ul>
+                             <!--  <th:block data-th-each="field, iter : ${modulelist}" data-th-if="${field.modulename} != null">
+							        <li data-th-if="${field.orderofappearance}" class="has_sub">
+							            <span data-th-if="${field.linkname == null}" data-th-utext="${field.modulename}" ></span>
+							            <a  class="waves-effect"> <i data-th-class="${field.module_icon}"></i><span data-th-unless="${field.linkname == null}" data-th-href="${field.linkname}" data-th-utext="${field.modulename}"></span><span class="pull-right"><i class="md md-add"></i></span></a>
+											 <ul>
+							                   <th:block data-th-each="field2, iter : ${modulelist}" data-th-if="${field.modulename} != null">
+							                    <span data-th-if="${field2.linkname == null}" data-th-utext="${field2.modulename}" ></span>
+							                   <li data-th-if="${field.id == field2.parentid}" class="list-unstyled">
+							                    <a data-th-unless="${field.linkname == null}" data-th-href="${field2.linkname}" data-th-utext="${field2.modulename}" ></a>
+							                   </li>
+							                   </th:block>
+							                 </ul>      
+							         </li>   
+							    </th:block>  -->
+							     
+							    
+							    <th:block data-th-each="field, iter : ${modulelist}" data-th-if="${field[1]} != null">
+							       
+							        <li data-th-if="${field[5]}" class="has_sub">
+							        
+							            <span data-th-if="${field[3] == null}" data-th-utext="${field[0]}" ></span>
+							            <a  class="waves-effect"> <i data-th-class="${field[10]}"></i><span data-th-unless="${field[3] == null}" data-th-href="${field[3]}" data-th-utext="${field[1]}"></span><span class="pull-right"><i class="md md-add"></i></span></a>
+											 <ul>
+							                   <th:block data-th-each="field2, iter : ${modulelist2}" data-th-if="${field[2]} != null">
+							                    <span data-th-if="${field2[4] == null}" data-th-utext="${field2[1]}" ></span>
+							                   <li data-th-if="${field[0] == field2[3]}" class="list-unstyled">
+							                    <a data-th-unless="${field2[4] == null}" data-th-href="${field2[4]}" data-th-utext="${field2[1]}" ></a>
+							                   </li>
+							                   </th:block>
+							                 </ul>     
+							         </li>   
+							    </th:block>  
+							    	  
+                            </ul>
+                            <div class="clearfix"></div>
+                        </div>
+                        <div class="clearfix"></div>
+                    </div>
+                </div>
+               <!-- ========== Left Sidebar End ========== -->
+
+            </div>
+</html>

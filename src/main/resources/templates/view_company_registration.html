@@ -1,0 +1,332 @@
+  
+  <!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+	<head>
+	  <th:block th:include="adminfragment/headerlibs.html :: headerlibs"></th:block> 
+	</head>
+
+    <body class="fixed-left">
+        <!-- Begin page -->
+        <div id="wrapper">
+        
+            <!-- Top Bar Start -->
+           <header th:insert="adminfragment/header.html :: header"> </header>
+            <!-- Top Bar End -->
+
+
+            <!-- ========== Left Sidebar Start ========== -->
+			<header th:insert="adminfragment/sidenav.html :: sidevav"> </header>
+            <!-- Left Sidebar End --> 
+
+  
+             <!-- Start right Content here -->
+            <!-- ============================================================== -->                      
+            <div class="content-page">
+                <!-- Start content -->
+                <div class="content">
+                    <div class="container">
+
+                        <!-- Page-Title -->
+                        <div class="row">
+                            <div class="col-sm-12">
+                                <h4 class="pull-left page-title">User Management</h4>
+                                <ol class="breadcrumb pull-right">
+                                    <li><a href="#">Home</a></li>
+                                 <li>    
+                                  <button action="action" type="button" onclick="history.go(-1);" class="btn btn-purple waves-effect waves-light btn-xs m-b-5">Back</button>
+                                  </li>
+                                </ol>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-sm-12">
+                                <div class="panel panel-default">
+                                    <div class="panel-heading"><h3 class="panel-title">Company Registration View</h3></div>
+                                    <div class="panel-body">
+                                     	<form id="register-form" class="form form-horizontal login-form-padding" th:action="@{/newcompanyregistration}" th:object="${companyregistration}" data-toggle="validator" enctype="multipart/form-data"  method="post">
+												
+													<h3 class="text-center"><b>Company Registration</b></h3><br>
+													<div th:each="data :${details}">
+													<div class="form-group">
+														<label class="col-md-3 control-label">Name of Company:</label>
+														<div class="col-md-9">
+															<label th:style="${'color: Grey;'}" th:text="${data[1]}" ></label>
+															 </div>
+													</div>
+													
+													<div class="form-group">
+														<label class="col-md-3 control-label">Acronym:</label>
+														<div class="col-md-9">
+															<label th:style="${'color: Grey;'}" th:text="${data[2]}"></label>
+													 	</div>
+													</div>
+													
+													<div class="form-group">
+														<label class="col-md-3 control-label"> Year of Incorporation:</label>
+														<div class="col-md-9">
+															<label th:style="${'color: Grey;'}" th:text="${data[3]}"></label>
+														</div>
+													</div>
+													
+													<div class="form-group">
+														<label class="col-md-3 control-label">CIN Number:</label>
+														<div class="col-md-9">
+															<label th:style="${'color: Grey;'}" th:text="${data[4]}"></label>
+													        
+														</div>
+													</div>
+													
+													<div class="form-group">
+														<label class="col-md-12 text-center"> Address of its seat or establishment </label>
+													</div>
+													
+													<div class="form-group">
+														<label class="col-md-3 control-label">Address:</label>
+														<div class="col-md-9">
+															<label th:style="${'color: Grey;'}"  th:text="${data[27]}"></label>
+														</div>
+													</div>
+
+												 <div class="form-group" th:if="${data[5] != 'India'}">
+														<label class="col-md-3 control-label">Country:</label>
+														   <div class="col-md-9">
+														        <label th:style="${'color: Grey;'}"  th:text="${data[5]}"></label> 
+													   	</div>
+														</div> 
+														
+														<div  th:if="${data[5] == 'India'}">
+															<div class="form-group">
+														        <label class="col-md-3 control-label">Country:</label>
+														              <div class="col-md-9">
+														                 <label th:style="${'color: Grey;'}"  th:text="${data[5]}"></label> 
+													   	              </div>
+														    </div> 
+														
+											     		<div class="form-group">
+														<label class="col-md-3 control-label">State:</label>
+														   <div class="col-md-9">
+														    <label th:style="${'color: Grey;'}"  th:text="${data[6]}"></label>
+														   	
+														   	</div>
+														</div> 
+
+														 <div class="form-group">
+														<label class="col-md-3 control-label">District:</label>
+														   <div class="col-md-9">
+														    <label  th:style="${'color: Grey;'}" th:text="${data[7]}"></label>
+														   	
+														   	</div>
+														</div> 													
+													</div>
+												
+												    <div class="form-group">
+														<label class="col-md-3 control-label">City/Town/Village:</label>
+														<div class="col-md-9">
+															<label th:style="${'color: Grey;'}"  th:text="${data[8]}"></label>
+														 </div>
+														</div>
+													
+													
+													<div class="form-group">
+														<label class="col-md-3 control-label">Pincode/ZipCode:</label>
+														<div class="col-md-9">
+															<label th:style="${'color: Grey;'}" th:text="${data[9]}"></label>
+															</div>
+													</div>
+													
+													<div class="form-group">
+														<label class="col-md-12 text-center"> Registered Address</label>
+													</div>
+
+													 
+													
+													
+													<div class="form-group">
+														<label class="col-md-3 control-label">Address:</label>
+														<div class="col-md-9">
+															<label th:style="${'color: Grey;'}"  th:text="${data[28]}"></label>
+														</div>
+													</div>
+													
+													 <div class="form-group" th:if="${data[10] != 'India'}">
+														<label class="col-md-3 control-label">Country:</label>
+														   <div class="col-md-9">
+														        <label  th:style="${'color: Grey;'}" th:text="${data[10]}"></label> 
+													   	</div>
+														</div> 
+														
+														<div  th:if="${data[10] == 'India'}">
+															<div class="form-group">
+														        <label class="col-md-3 control-label">Country:</label>
+														              <div class="col-md-9">
+														                 <label th:style="${'color: Grey;'}"  th:text="${data[10]}"></label> 
+													   	              </div>
+														    </div> 
+														
+											     		<div class="form-group">
+														<label class="col-md-3 control-label">State:</label>
+														   <div class="col-md-9">
+														    <label  th:style="${'color: Grey;'}" th:text="${data[11]}"></label>
+														   	
+														   	</div>
+														</div> 
+
+														 <div class="form-group">
+														<label class="col-md-3 control-label">District:</label>
+														   <div class="col-md-9">
+														    <label th:style="${'color: Grey;'}"  th:text="${data[12]}"></label>
+														   	
+														   	</div>
+														</div> 													
+													</div>
+						
+													<div class="form-group">
+														<label class="col-md-3 control-label">City/Town/Village:</label>
+														<div class="col-md-9">
+															<label  th:style="${'color: Grey;'}" th:text="${data[13]}"></label>
+															</div>
+													</div>
+													<div class="form-group">
+														<label class="col-md-3 control-label">Pincode/ZipCode:</label>
+														<div class="col-md-9">
+															<label  th:style="${'color: Grey;'}" th:text="${data[14]}"></label>
+														</div>
+													</div>
+
+													<div class="form-group">
+														<label class="col-md-12 text-center"> Contact Details of Authorized Signatory</label>
+													</div>
+													
+													 
+													
+													<div class="form-group">
+														<label class="col-md-3 control-label">Name:</label>
+														<div class="col-md-9">
+														<label  th:style="${'color: Grey;'}" th:text="${data[15]}"></label>
+															</div>
+													</div>
+													
+													
+													<div class="form-group">
+														<label class="col-md-3 control-label">Designation:</label>
+														<div class="col-md-9">
+															<label  th:style="${'color: Grey;'}" th:text="${data[16]}"></label>
+															</div>
+													</div>
+													
+													
+													<div class="form-group">
+														<label class="col-md-3 control-label">Address:</label>
+														<div class="col-md-9">
+															<label  th:style="${'color: Grey;'}" th:text="${data[17]}"></label>
+														</div>
+													</div>
+													
+													
+													<div class="form-group" th:if="${data[18] != 'India'}">
+														<label class="col-md-3 control-label">Country:</label>
+														   <div class="col-md-9">
+														        <label th:style="${'color: Grey;'}"  th:text="${data[18]}"></label> 
+													   	</div>
+														</div> 
+														
+														<div  th:if="${data[18] == 'India'}">
+															<div class="form-group">
+														        <label class="col-md-3 control-label">Country:</label>
+														              <div class="col-md-9">
+														                 <label  th:style="${'color: Grey;'}" th:text="${data[18]}"></label> 
+													   	              </div>
+														    </div> 
+														
+											     		<div class="form-group">
+														<label class="col-md-3 control-label">State:</label>
+														   <div class="col-md-9">
+														    <label  th:style="${'color: Grey;'}" th:text="${data[19]}"></label>
+														   	
+														   	</div>
+														</div> 
+
+														 <div class="form-group">
+														<label class="col-md-3 control-label">District:</label>
+														   <div class="col-md-9">
+														    <label th:style="${'color: Grey;'}" th:text="${data[20]}"></label>
+														   	
+														   	</div>
+														</div> 													
+													</div> 
+													<div class="form-group">
+														<label class="col-md-3 control-label">City/Town/Village:</label>
+														<div class="col-md-9">
+															<label th:style="${'color: Grey;'}"  th:text="${data[21]}"></label>
+														</div>
+													</div>
+													<div class="form-group">
+														<label class="col-md-3 control-label">Pincode/ZipCode:</label>
+														<div class="col-md-9">
+															<label  th:style="${'color: Grey;'}" th:text="${data[22]}"></label>
+														</div>
+													</div>
+												
+													<div class="form-group">
+														<label class="col-md-3 control-label">Mobile:</label>
+														<div class="col-md-2">
+															<label th:style="${'color: Grey;'}"  th:text="${data[23]}"></label>
+														</div>
+													 </div>
+													
+													<div class="form-group">
+														<label class="col-md-3 control-label">Fax:</label>
+														<div class="col-md-1">
+															<label th:style="${'color: Grey;'}"  th:text="${data[24]}"></label>
+														</div>
+													</div>
+													
+													<div class="form-group">
+														<label class="col-md-3 control-label">Email:</label>
+														<div class="col-md-9">
+															<label  th:style="${'color: Grey;'}" th:text="${data[25]}"></label>
+														</div>
+													</div>
+													<div class="form-group">
+														<label class="col-md-3 control-label">Username:</label>
+														<div class="col-md-9">
+															<label  th:style="${'color: Grey;'}" th:text="${data[26]}"></label>
+														   </div>
+														
+													</div>
+											 
+													 </div>
+													
+													
+												</form>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+				</div>
+			</div>
+			
+		
+
+	<div th:replace="adminfragment/footer.html :: footer"></div>
+           </div> <!-- container -->
+                               
+                <!-- content -->
+
+			<!-- start footer content here -->
+			
+			<!-- end footer content here -->
+
+      
+        <!-- END wrapper -->
+
+<!-- footer lib start here-->
+
+<div th:replace="adminfragment/footerlibs.html :: footerlibs"></div>
+<!-- end footer lib -->
+
+
+</body>
+</html>

@@ -1,0 +1,370 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+	<head>
+	  <th:block th:include="adminfragment/headerlibs.html :: headerlibs"></th:block> 
+	</head>
+
+    <body class="fixed-left">
+        <!-- Begin page -->
+        <div id="wrapper">
+        
+            <!-- Top Bar Start -->
+           <header th:insert="adminfragment/header.html :: header"> </header>
+            <!-- Top Bar End -->
+
+
+            <!-- ========== Left Sidebar Start ========== -->
+			<header th:insert="adminfragment/sidenav.html :: sidevav"> </header>
+            <!-- Left Sidebar End --> 
+            
+  
+             <!-- Start right Content here -->
+            <!-- ============================================================== -->                      
+            <div class="content-page">
+                <!-- Start content -->
+                <div class="content">
+                    <div class="container">
+
+                        <!-- Page-Title -->
+                        <div class="row">
+                            <div class="col-sm-12">
+                                <h4 class="pull-left page-title"></h4>
+                                <ol class="breadcrumb pull-right">
+                                    
+                                     <button action="action" type="button" onclick="history.go(-1);" class="btn btn-purple waves-effect waves-light btn-xs m-b-5">Back</button>
+                                    
+                                </ol>
+                            </div>
+                        </div>
+            
+            
+            
+            
+            <div class="row">
+                            <div class="col-sm-12">
+                                <div class="panel panel-default">
+                                    <div class="panel-heading"><h3 class="panel-title"> Short Term Storage Edit</h3></div>
+                                     <!-- <span th:if="${actd_viewtrue != null && actd_viewtrue == 'valpresent' }"> -->
+									
+                                    <div class="panel-body">
+<span th:if="${ShortTermStorage != null && ShortTermStorage == 'ShortTermStorage' }"> 
+                                        
+<form class="form-horizontal" role="form" th:action="@{/shorttermstorage}" th:object="${shorttermstorage}" method="post">  
+<div th:each="data,serial : ${shorttermstorage}">
+<div class="form-group">
+         		<div class="col-md-10">
+					<input type="text" id="applicationid" th:name="applicationid"  th:value="${applicationid}"  hidden="true" />
+         			<input type="text" id="id" th:name="id"  th:value="${id}"  hidden="true" />
+         			<input type="text" id="secondid" th:name="secondid" th:value="${secondid}" hidden="true" />
+         		</div>
+              </div>		
+						<div class="panel panel-success">
+						<div class="panel-heading"><!--Dispatch of Seeds to DUS TEST Centres-->Short Term Storage</div>
+						<div class="panel-body">
+							
+						<div class="form-group">
+                    	<label class="col-md-2 control-label" > </label>
+                        		<div class="col-md-10">
+         							<input type="text" id="applicationid" th:name="applicationid"  th:value="${applicationid}" readonly hidden="true" />
+                        		</div>
+                        </div>
+					
+					
+					<div class="form-group">
+					<label class="col-md-3 control-label">Test Type</label>
+					<div class="col-md-6">
+						<select id="test" th:field="*{testtype}" th:name="testtype" class="form-control">
+							<option th:value="DUS" th:selected="${data.testtype == 'DUS'}">DUS Test</option>
+							<option class="test" th:value="Hybridity" th:selected="${data.testtype == 'Hybridity'}">Test for Hybridity</option>
+						</select>
+					</div>
+				</div>
+					
+					
+					<div class="form-group">
+					<label class="col-md-3 control-label"> Line Type</label>
+					<div class="col-md-6">
+						<select class="form-control" name="type_line" id="type_line">
+					    <option th:value="-1" >Select</option>
+					    <option th:each="dropDownItem : ${TypeLine}"
+			               th:value="${dropDownItem.id}"
+			               th:text="${dropDownItem.code}" th:selected= "${dropDownItem.id == astsdetails.type_line}" />
+			        	</select>
+					</div>
+				</div>
+				
+				
+				
+				
+				<div class="form-group">
+					<label class="col-md-3 control-label"><!--Select DUS Test Center 1--> Year</label>
+					<div class="col-md-6">
+						<select th:field="*{year}" class="form-control">
+							<option th:value="2011">2011</option>
+							<option th:value="2012">2012</option>
+							<option th:value="2013">2013</option>
+							<option th:value="2014">2014</option>
+							<option th:value="2015">2015</option>
+							<option th:value="2016">2016</option>
+							<option th:value="2017">2017</option>
+							<option th:value="2018">2018</option>
+							<option th:value="2019">2019</option>
+							<option th:value="2020">2020</option>
+							<option th:value="2021">2021</option>
+							<option th:value="2022">2022</option>
+							<option th:value="2023">2023</option>
+							<option th:value="2024">2024</option>
+							<option th:value="2025">2025</option>
+							<option th:value="2026">2026</option>
+							<option th:value="2027">2027</option>
+						</select>
+					</div>
+				</div>
+				
+				<div class="form-group">
+					<label class="col-md-3 control-label">Season</label>
+					<div class="col-md-6">
+						<select th:field="*{season}" class="form-control">
+							<option th:value="1">Select1</option>
+							<option th:value="2">Select2</option>
+							<option th:value="3">Select3</option>
+							<option th:value="4">Select4</option>
+						</select>
+					</div>
+				</div>
+		
+		<div class="form-group">
+		<label class="col-md-3 control-label"> Lead center</label>
+		<div class="col-md-6">
+			<select onchange="getdiv();" th:field="*{lead_center}" class="form-control">
+		    <option th:value="-1" >Select</option>
+            <option th:each="dropDownItem : ${lc_center}"
+               th:value="${dropDownItem[0]}"
+               th:text="${dropDownItem[1]}" />
+        	</select>
+		</div>
+	</div>
+													 
+	 
+		<div class="form-group" th:object="${astsdetails}">
+		<label class="col-md-3 control-label">Seed sent</label>
+		<div class="col-md-6">
+		<input type="text" class="form-control" th:value="*{seed_sent_to_leadcenter}" name="seed_sent_to_leadcenter1" id="seed_sent_to_leadcenter1" value="">
+		</div>
+		</div>
+		 
+		
+		<div class="form-group">
+		<label class="col-md-3 control-label">Cell/Location</label>
+		<div class="col-md-6">
+			<input type="text" th:field="*{cell_location}" name="cell_location" class="form-control" value="">
+		</div>
+	</div>
+		
+		
+
+	
+	<div class="form-group">
+		<label class="col-md-3 ">Mode of Delivery </label>
+		<div class="col-md-6">
+			<input class="received" type="radio" th:field="*{mode_of_delivery}" name="radio" value="manual" onclick="delivery_mode(this.value);">Manual &nbsp;
+			<input class="oppositionn-1" type="radio" th:field="*{mode_of_delivery}" name="radio" value="speed_post" onclick="delivery_mode(this.value);">Speed Post
+		</div>
+	</div>
+
+	
+	<div class="speed_post-select">
+	
+		 <div class="form-group">
+			<label class="col-md-3 control-label">Speed post no</label>
+			<div class="col-md-6">
+				<input type="text"  th:name="speedpost_no" th:field="*{speedpost_no}" class="form-control">
+			</div>
+		</div> 
+		
+		
+		
+		 <div class="form-group">
+			<label class="col-md-3 control-label">Tracking</label>
+			<div class="col-md-6">
+				<input type="text"  th:name="tracking" th:field="*{tracking}" class="form-control">
+			</div>
+		</div> 
+	
+	</div>
+	
+	<div class="form-group">
+		<label class="col-md-3 control-label">Date of seed sent</label>
+		<div class="col-md-6">
+		
+			<input type="date" th:value="*{#dates.format(dateof_seadsent, 'yyyy-MM-dd')}" id="dateof_seadsent" name="dateof_seadsent" class="form-control">
+		</div>
+	</div>
+	
+	   
+			<div class="form-group"  th:object="${astsdetails}">
+				<label class="col-md-3 control-label">Additional Seed </label>
+				<div class="col-md-6">
+					 <input type="text" class="form-control" th:value="*{additional_seed}" id="additional_seed1" name="additional_seed1" value="">
+				</div>
+			 </div>
+		 
+		
+		<div class="form-group" th:object="${astsdetails}">
+			<label class="col-md-3 ">Date of Additional Seed Sent</label>
+			<div class="col-md-6">
+				<input type="date" th:value="*{#dates.format(dateof_additionalseadsent,'yyyy-MM-dd')}"  id="dateof_additional_seadsent"  name="dateof_additional_seadsent" class="form-control" value="">
+			</div>
+		</div>
+		
+													
+	
+	<div class="form-group" th:object="${astsdetails}">
+	<label class="col-md-3 control-label">Seeds Discarded</label>
+	<div class="col-md-6">
+		<input type="text" th:value="*{seed_discarded}"  id="seed_discarded1" name="seed_discarded1" class="form-control" value="">
+	</div>
+</div>
+
+ 		<div class="form-group" th:object="${astsdetails}">
+			<label class="col-md-3 control-label">Date of Discard</label>
+			<div class="col-md-6">
+			<input type="date" th:value="*{#dates.format(date_of_discard,'yyyy-MM-dd')}" id="date_of_discard1" name="date_of_discard1" class="form-control"  >
+		</div>
+</div> 
+
+	<div class="form-group"  th:object="${astsdetails}">
+			<label class="col-md-3 control-label">Reasons </label>
+			<div class="col-md-6">
+			<input type="text" th:value="*{reason_of_discard}" id="reason_of_discard1" name="reason_of_discard1" class="form-control"  >
+	</div>
+</div>
+
+
+	
+
+		
+	<div class="form-group">
+	<button type="submit" id="btnsubmit1" name="btnsubmit1" value="btnsubmit1" class="btn btn-danger pull-right" style="display: block;  border-radius:5px;height: 32px; padding: 5px; position:relative; right:14px; border-left: none;">Add</button>
+</div>
+	
+ 
+
+		
+		
+		
+		<!--dicard-->
+		
+	  	
+		</div>
+		</div>
+		
+		<script type="text/javascript">
+		function getdiv()
+		{
+			var typelineselected = document.getElementById("type_line");
+			var selectedtext = $("#type_line option:selected");
+		//alert("Selected value is ="+typelineselected.value);
+		//alert("Selected text is ="+selectedtext.text());
+		if(typelineselected.value ==1)
+			{
+			$("#id_div1").show();
+			$("#id_div11").show();
+			$("#id_div111").show();
+			$("#id_div1111").show();
+			$("#id_div11111").show();
+			}
+			else
+			{
+				$("#id_div1").hide();
+				$("#id_div11").hide();
+				$("#id_div111").hide();
+				$("#id_div1111").hide();
+				$("#id_div11111").hide();
+			}
+		if(typelineselected.value ==2)
+		{
+		$("#id_div2").show();
+		$("#id_div22").show();
+		$("#id_div222").show();
+		$("#id_div2222").show();
+		$("#id_div22222").show();
+		}
+		else
+		{
+			$("#id_div2").hide();
+			$("#id_div22").hide();
+			$("#id_div222").hide();
+			$("#id_div2222").hide();
+			$("#id_div22222").hide();
+		}
+		if(typelineselected.value ==3)
+		{
+		$("#id_div3").show();
+		$("#id_div33").show();
+		$("#id_div333").show();
+		$("#id_div3333").show();
+		$("#id_div33333").show();
+		}
+		else
+		{
+			$("#id_div3").hide();
+			$("#id_div33").hide();
+			$("#id_div333").hide();
+			$("#id_div3333").hide();
+			$("#id_div33333").hide();
+		}
+		
+		}
+		</script>
+	</div>	
+	</form>
+                                      
+    </span>
+<span th:unless="${ShortTermStorage != null && ShortTermStorage == 'ShortTermStorage' }">
+ <label>YOU ARE NOT AUTHORISED TO VIEW THIS PAGE.PLEASE CONTACT ADMINISTRATOR</label>
+ </span>                                     
+                                      
+                                    </div> <!-- panel-body -->
+                                    
+                                    <!-- </span>
+                                    <span th:unless="${actd_viewtrue != null && actd_viewtrue == 'valpresent' }">
+									 <label>YOU ARE NOT AUTHORISED TO VIEW THIS PAGE.PLEASE CONTACT ADMINISTRATOR</label>
+									 </span> -->
+                                </div> <!-- panel -->
+                            </div> <!-- col -->
+                        </div> <!-- End row -->
+
+                    </div> <!-- container -->
+                               
+                </div> <!-- content -->
+<!-- 
+                <footer class="footer text-right">
+                    2019 © PPVFRA.
+                </footer> -->
+
+            </div>
+            <!-- ============================================================== -->
+            <!-- End Right content here -->
+           
+           
+          <div th:replace="adminfragment/footer.html :: footer"></div>
+           </div> <!-- container -->
+                               
+                <!-- content -->
+
+			<!-- start footer content here -->
+			
+			<!-- end footer content here -->
+
+      
+        <!-- END wrapper -->
+
+<!-- footer lib start here-->
+
+<div th:replace="applicationprocessing/footerlibs.html :: footerlibs"></div>
+<!-- end footer lib -->
+
+ 
+</body>
+</html>

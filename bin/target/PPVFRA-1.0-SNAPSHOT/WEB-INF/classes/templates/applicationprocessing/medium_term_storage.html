@@ -1,0 +1,281 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<div th:fragment="medium_term_storage">
+ <span th:if="${MediumTermStorage != null && MediumTermStorage == 'MediumTermStorage' }"> 
+     
+<form class="form-horizontal" role="form" th:action="@{/mediumtermstorage}" th:object="${mediumtermstorage}" method="post" id="form_medium" name="form_medium" onsubmit = "return validatemedium();">  
+												<div class="panel panel-success">
+												<div class="panel-heading"><!--Dispatch of Seeds to DUS TEST Centres-->Medium term storage</div>
+												<div class="panel-body">
+													<div class="form-group">
+	                                                <label class="col-md-2 control-label" > </label>
+	                                                <div class="col-md-10">
+	                                 				<input type="text" id="applicationid" th:name="applicationid"  th:value="${applicationid}" readonly="readonly" hidden="true" />
+	                                                </div>
+	                                                </div>
+													
+													<div class="form-group">
+														<label class="col-md-4 control-label"><!--Select DUS Test Center 1--> Viability/Moisture to be checked on</label>
+														<div class="col-md-8">
+															<input type="date" name="moisture_tobe_checked_on"  th:field ="*{moisture_tobe_checked_on}" id="moisture_tobe_checked_on" class="form-control" >
+														<span id="date_error" style="color:red"></span>
+													</div>
+													</div>
+													
+													
+													
+													<div class="form-group">
+														
+														<div class="table-responsive col-sm-12">
+															<table class="table table-striped  table-bordered table-hover">
+							<!--Table head-->
+						<thead>
+							<tr></tr>
+						</thead>
+						<!--Table head-->
+					
+						<!--Table body-->
+						<tbody>
+							
+							<tr class="table-info">
+							<td>Line Type</td>
+							<td> 
+							<select th:field="*{type_line}"  class="form-control" name="type_line" id="type_line" th:onchange="'typelinevaluemts(\''+${applicationid}+'\',this)'">
+						    <option th:value="-1" >Select</option>
+				            <option th:each="dropDownItem : ${TypeLine}"
+				               th:value="${dropDownItem.id}"
+				               th:text="${dropDownItem.code}" />
+				        	</select>
+				        	<span id="type_lineerror" style="color:red"></span>
+						  	</td>
+						   </tr>
+							
+							<tr class="table-info">
+								<td>Viability/Germination %</td>
+								<td><input type="text"  th:field="*{viability}"  class="form-control"></td>
+							</tr>
+							
+							<tr class="table-info">
+								<td>Moisture %</td>
+								<td><input type="text"  th:field="*{moisture}"  class="form-control" ></td>
+							</tr>
+							
+							<tr class="table-info">
+								<td>Weight</td>
+								<td><input type="text"  th:field="*{weight}"  class="form-control"  ></td>
+							</tr>
+							
+							<tr class="table-info">
+								<td>Seeds Discarded</td>
+								<td><input type="text"  th:field="*{seeds_discarded}"  class="form-control"  ></td>
+							</tr>
+							
+							<tr class="table-info">
+								<td>Date of Discard</td>
+								<td><input type="date" name="date_of_discard" id="date_of_discard" class="form-control"></td>
+							</tr>
+							
+							<tr class="table-info">
+								<td>Reasons</td>
+								<td><input type="text"  th:field="*{reasons}"  class="form-control" ></td>
+							</tr>
+							
+							<tr class="table-info">
+								<td>Checked By</td>
+								<td><input type="text"  th:field="*{checked_by}"  class="form-control" ></td>
+							</tr>
+							</tbody>
+							</table>
+															<!--Table-->
+															
+														</div>
+														</div>   
+													
+													<div class="form-group">
+														<button type="submit" id="btnsubmit1" name="btnsubmit1" value="btnsubmit1" class="btn btn-danger pull-right" style="display: block;  border-radius:5px;height: 32px; padding: 5px; position:relative; right:14px; border-left: none;">Add</button>
+													</div>
+													
+													<div class="table-responsive">
+														<table class="table table-striped  table-bordered table-hover">
+															<!--Table head-->
+															<thead>
+																<tr>
+																	<th>Sr. no.</th>
+																	<th>Viability/Moisture to be checked on</th>
+																	<th>LineType</th>
+																	<th> Viability/Germination </th>
+																	<th>Moisture</th>
+																	<th>Weight (g)</th>
+																	<th> Seeds Discarded</th>
+																	<th> Date of Discard</th>
+																	<th>Checked by</th>
+																	<th>Action</th>
+																</tr>
+															</thead>
+															<!--Table head-->
+
+															<!--Table body-->
+															<tbody>
+																<tr class="table-info" th:each="data,serial : ${mediumtermstoragedetails}">
+																	
+																	<td th:text="${serial.count}"></td>
+					 												<td th:text="${#dates.format(data[2],'yyyy-MM-dd')}"></td>
+																	<td th:text="${data[3]}"></td>
+																	<td th:text="${data[4]}"></td>
+																	<td th:text="${data[5]}"></td>
+																	<td th:text="${data[6]}"></td>
+																	<td th:text="${data[7]}"></td>
+																	<td th:text="${#dates.format(data[8],'yyyy-dd-MM')}"></td>
+																	<td th:text="${data[10]}"></td>
+																	<td><a th:href="@{'/editmediumtermstorage/'+${data[0]}}">Edit</a></td>
+																</tr>
+																
+															</tbody>
+														<!--Table body-->
+														</table>
+														<!--Table-->
+														
+													</div>
+													
+													<hr>
+													
+													<div class="form-group">
+														<label class="col-md-3 control-label">Post registration</label>
+														<div class="col-md-6">
+															<input type="text" th:field="*{postregistration}"  class="form-control" >
+														</div>
+													</div>
+													<div class="form-group">
+														<label class="col-md-3 control-label">Handed Over to</label>
+														<div class="col-md-6">
+															<input type="text" th:field="*{handedoverto}"  class="form-control" >
+														</div>
+													</div>
+													
+													<div class="form-group">
+														<label class="col-md-3 control-label">Number of Packets</label>
+														<div class="col-md-6">
+															<input type="text" th:field="*{no_of_packets}"  class="form-control" >
+														</div>
+													</div>
+													
+													<div class="form-group">
+														<label class="col-md-3 control-label">Date</label>
+														<div class="col-md-6">
+															<input type="date" name="handingoverdate" id="handingoverdate"class="form-control" >
+														</div>
+													</div>
+													
+													<div class="form-group">
+														<label class="col-md-3 control-label">Remarks</label>
+														<div class="col-md-6">
+															<textarea th:field="*{handingover_remarks}"  class="form-control"></textarea>
+														</div>
+													</div>
+													
+													<div class="form-group m-b-0">
+														
+														<div class="col-sm-12">
+															<button type="submit" id="btnsubmit2" name="btnsubmit2" value="btnsubmit2" class="btn btn-info waves-effect waves-light">Save</button>
+														</div>
+														
+													</div>
+													<br>    
+														
+													</div>
+													</div>
+													
+	 <script type = "text/javascript">
+      function validatemedium() {
+    	  //alert(document.getElementById("type_line").value);
+    	  if( document.form_medium.type_line.value == "-1") 
+    	  {
+    		 document.getElementById("type_lineerror").innerHTML="please select typeline";
+               document.getElementById("type_line").focus() ;
+               return false;
+            } 
+    	  if(document.form_medium.moisture_tobe_checked_on.value == "")
+    			  {
+    		  document.getElementById("date_error").innerHTML="please select date";
+              document.getElementById("moisture_tobe_checked_on").focus() ;
+              return false;
+    			  }
+    	  
+    	     return true;
+    	}
+      </script>
+      
+       <script type="text/javascript"  th:inline="javascript">
+   var dataval = [[${dataintab_rejuv}]];
+	function typelinevaluemts(Obj,that){
+// $(that).closest('form').find('input[type=submit]').attr("disabled", false);
+   $(that).closest('form').find(':submit').attr("disabled", false);
+   
+    var typelinedata= document.getElementById("type_line");
+    var response1 =null;
+  	//DOES NOT WORK
+  	//var text= typelinedata.options[typelinedata.selectedIndex].text;
+    //ENDS
+  	//var selected = $(that).val();
+  
+    var selected = $(that).closest('form').find("#type_line").val();
+
+    //	var selected = $(that).closest('form').find("#type_line  option:selected").text();
+	var text=selected;
+  
+	// alert("vvv"+text+""+selected);
+  /*
+   if(text !=null || text!= "")
+	   {
+   if(text=="Candidate"){text="C"}
+   else if(text=="A Line"){text="A"}
+   else if(text=="B Line"){text="B"}
+   else if(text=="R Line"){text="R"}
+	   }
+   */
+   
+    if(Obj != null)		 
+      	$.ajax({
+              type: "POST",
+              url: "/ppvfra/getdatasaved_formts",
+              data:Obj,
+              success: function (response) {
+
+            	for(var k=0; k< response.length ; k++)
+            		{
+            	//alert(""+k);
+            		var a = response[k][14];
+            		if(text == a)
+            			{
+            			alert("Value Already Exists.Please Select another Field Or Edit The Value Present in Table.");
+            			/*  $("#submitseedmodal").attr("disabled", true); */
+            			$(that).closest('form').find(':submit').attr("disabled", true);
+            			//curElement.closest('form').find(':submit');
+            			return false;
+            			}
+            		 
+            			
+            		}
+          	},
+            failure: function (response) {
+            alert(response.responseText);
+        },
+        error: function (response) {
+            alert(response.responseText);
+        }
+      	});           
+         
+    
+                  
+    
+}
+</script>
+
+ </form>
+	</span>
+<span th:unless="${MediumTermStorage != null && MediumTermStorage == 'MediumTermStorage' }">
+ <label>YOU ARE NOT AUTHORISED TO VIEW THIS PAGE.PLEASE CONTACT ADMINISTRATOR</label>
+ </span>
+
+</div>
+</html>

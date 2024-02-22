@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<div th:fragment="dus_test_results">
+
+<span th:if="${DusTestResults != null && DusTestResults == 'DusTestResults' }"> 
+
+<form class="form-horizontal" role="form" th:action="@{/dustestresults}" th:object="${dustestresults}" method="post" enctype="multipart/form-data">  
+												<div class="panel panel-success">
+													<div class="panel-heading">DUS TEST Results</div>
+														<div class="panel-body">
+														<span th:if= "${editmode ==0}">	
+															<div class="form-group">
+			                                                	<label class="col-md-2 control-label" > </label>
+			                                                		<div class="col-md-10">
+			                                 							<input type="text" id="applicationid" th:name="applicationid"  th:value="${applicationid}" readonly="readonly" hidden="true" />
+			                                                		</div>
+			                                                </div>
+															
+															<div class="form-group">
+																<label class="col-md-3 ">DUS Test Completed </label>
+																<div class="col-md-6">
+																	<input th:field="*{dus_test_completed}" class="received" type="radio" id="radio" name="radio" value="Y">Yes &nbsp;
+																	<input th:field="*{dus_test_completed}" class="oppositionn-1" type="radio" id="radio" name="radio" value="N">No
+																</div>
+															</div>
+															
+															<div class="form-group">
+																<label class="col-md-3 control-label">Date of Completion </label>
+																<div class="col-md-6">
+																	<input type="date" th:field="*{date_of_completion}" class="form-control" value="">
+																</div>
+															</div>
+														
+															<div class="form-group">
+																<label class="col-md-3 control-label">DUS Test Report</label>
+																<div class="col-md-6">
+																<div th:if="${reportstatus != null}">
+																	<select th:field="*{dus_test_report_status}" class="form-control">
+																		<option th:value="-1">Select</option>
+																		<option th:each="dropDownItem : ${reportstatus}"
+														               th:value="${dropDownItem[0]}"
+														               th:text="${dropDownItem[1]}" />
+																	</select>
+																	</div>
+																</div>
+															</div>
+															
+															<div class="form-group">
+																<label class="col-md-3 control-label">Remarks </label>
+																<div class="col-md-6">
+																	<textarea  th:field="*{remarks}" cols="62" rows="4" >
+																	</textarea>
+																</div>
+															</div>
+															
+															<div class="form-group">
+																<label class="col-md-3 control-label">Upload DUS Test Report </label>
+																<div class="col-md-6">
+																	<input type="file" class="form-control" id="fname" name="fileUpload" >
+																</div>
+															</div>
+														
+														<br> 
+														<input type="hidden" name="editmode" id="editmode" th:value="${editmode}">
+														<input type="hidden" name="id" id="id" th:value="0">
+														<div class="form-group m-b-0">
+															<label class="col-md-3 control-label">&nbsp;</label>
+															<div class="col-sm-7">
+																<button type="submit" class="btn btn-info waves-effect waves-light">Save</button>
+															</div>
+															
+														</div>
+														</span>
+														
+														
+														<span th:if= "${editmode ==1}">
+														
+														<div class="form-group">
+			                                                	<label class="col-md-2 control-label" > </label>
+			                                                		<div class="col-md-10">
+			                                 							<input type="text" id="applicationid" th:name="applicationid"  th:value="${applicationid}" readonly="readonly" hidden="true" />
+			                                                		</div>
+			                                                </div>
+															
+															<div class="form-group">
+																<label class="col-md-3 ">DUS Test Completed </label>
+																<div class="col-md-6">
+																	<input   class="received" type="radio" id="radio" name="radio" value="Y" th:checked="${dustestdata[2] =='Y'}">Yes &nbsp;
+																	<input   class="oppositionn-1" type="radio" id="radio" name="radio" value="N" th:checked="${dustestdata[2] =='N'}">No
+																</div>
+															</div>
+															
+															<div class="form-group">
+																<label class="col-md-3 control-label">Date of Completion </label>
+																<div class="col-md-6">
+																	<input type="date"  id="date_of_completion" name="date_of_completion"  class="form-control" th:value="${dustestdata[3]}">
+																</div>
+															</div>
+														
+															<div class="form-group">
+																<label class="col-md-3 control-label">DUS Test Report</label>
+																<div class="col-md-6">
+																<div th:if="${reportstatus != null}">
+																	<select  name="dus_test_report_status" id="dus_test_report_status" class="form-control">
+																		<option th:value="-1">Select</option>
+																		<option th:each="dropDownItem : ${reportstatus}"
+														                th:text="${dropDownItem[1]}"   th:value="${dropDownItem[0]}"
+														                th:selected="${dropDownItem[0] == dustestdata[4]}"  />
+																	</select>
+																 
+																	 
+																	</div>
+																</div>
+															</div>
+															
+															<div class="form-group">
+																<label class="col-md-3 control-label">Remarks </label>
+																<div class="col-md-6">
+																	<textarea id="remarks" name="remarks" th:text="${dustestdata[5]}" cols="62" rows="4" >
+																	</textarea>
+																</div>
+															</div>
+															
+															<div class="form-group">
+																<label class="col-md-3 control-label">Upload DUS Test Report </label>
+																<div class="col-md-6">
+																<a th:href="'/ppvfra/download/dustestresult/'+${dustestdata[1]}+'/'+${dustestdata[6]}" target="_blank">
+																<input type="file" class="form-control" id="fname" name="fileUpload" th:text="${dustestdata[6]}">
+																</a>	
+																</div>
+															</div>
+														
+														<br> 
+														
+														<input type="hidden" name="editmode" id="editmode" th:value="${editmode}">
+														<input type="hidden" name="id" id="id" th:value="${dustestdata[0]}">
+														<div class="form-group m-b-0">
+															<label class="col-md-3 control-label">&nbsp;</label>
+															<div class="col-sm-7">
+																<button type="submit" class="btn btn-info waves-effect waves-light">Save</button>
+															</div>
+															
+														</div>	
+														</span>
+													</div>
+												</div>
+											</form>
+           </span>
+<span th:unless="${DusTestResults != null && DusTestResults == 'DusTestResults' }">
+ <label>YOU ARE NOT AUTHORISED TO VIEW THIS PAGE.PLEASE CONTACT ADMINISTRATOR</label>
+ </span>
+ 										
+
+
+</div>
+
+
+</html>

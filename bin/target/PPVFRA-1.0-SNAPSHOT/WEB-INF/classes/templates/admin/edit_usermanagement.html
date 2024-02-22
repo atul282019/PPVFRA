@@ -1,0 +1,460 @@
+  
+  <!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+	<head>
+	  <th:block th:include="adminfragment/headerlibs.html :: headerlibs"></th:block> 
+	</head>
+
+    <body onload="fetchroleidval();" class="fixed-left">
+        <!-- Begin page -->
+        <div id="wrapper">
+        
+            <!-- Top Bar Start -->
+           <header th:insert="adminfragment/header.html :: header"> </header>
+            <!-- Top Bar End -->
+
+
+            <!-- ========== Left Sidebar Start ========== -->
+			<header th:insert="adminfragment/sidenav.html :: sidevav"> </header>
+            <!-- Left Sidebar End --> 
+
+
+  			<!-- ============================================================== -->                      
+            <div class="content-page">
+                <!-- Start content -->
+                <div class="content">
+                    <div class="container">
+
+                        <!-- Page-Title -->
+                        <div class="row">
+                            <div class="col-sm-12">
+                                <h4 class="pull-left page-title">User Management</h4>
+                                <ol class="breadcrumb pull-right">
+                                    <li><a href="/admin">Home</a></li>
+                                    <li class="active">Add User</li>
+                                </ol>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-sm-12">
+                                <div class="panel panel-default">
+                                    <div class="panel-heading"><h3 class="panel-title">Add User</h3></div>
+                                     <span th:if="${actd_viewtrue != null && actd_viewtrue == 'valpresent' }">
+											
+                                    <div class="panel-body">
+                                        <form class="form-horizontal" role="form" action="#" th:action="@{/edituseradminmethod}" th:object="${edituserinternalmethod}" method="post" id="register-form12" >
+                                          
+                                          <div class="col-md-10">
+                                        <input th:type="text" name="user_id" id="user_id" th:field="*{id}"  hidden="true"/> 
+                                              </div>
+                                                
+                                          <div class="form-group">
+											<div class="col-md-3">
+												<label for="Firstname">First name</label>
+												<input th:type="text" th:field="*{firstname}" class="form-control"/>
+												 <div class="error" th:if="${#fields.hasErrors('firstname')}" th:errors="*{firstname}">First Name Error</div>
+											</div>
+											
+											<div class="col-md-3">
+											<label for="Middlename">Middle name</label>
+												 <input th:type="text" th:field="*{middlename}" class="form-control"/>
+                                                 <div class="error" th:if="${#fields.hasErrors('middlename')}" th:errors="*{middlename}">Middle Name Error</div>
+											</div>
+											
+											<div class="col-md-3">
+											<label for="Lastname">Last name</label>
+											 <input th:type="text" th:field="*{lastname}" class="form-control"/>
+                                               <div class="error" th:if="${#fields.hasErrors('lastname')}" th:errors="*{lastname}">Last Name Error</div>
+											</div>
+											
+										</div>
+                                            <div class="form-group">
+                                                <label class="col-md-3 control-label" for="example-email">Designation</label>
+                                                <div class="col-md-6">
+                                                  <input th:type="text" id="designation" th:field="*{designation}" onblur='javascript:designationcheck()' class="form-control"/>
+                                                     <div class="error" th:if="${#fields.hasErrors('designation')}" th:errors="*{designation}">Designation Error</div>
+                                                  <div class="help-block with-errors" id="designationerror"></div>
+                                                 </div>
+                                            </div>
+                                           <div class="form-group">
+                                      <label class="col-md-3 control-label" for="example-email">Email</label>
+                                      <div class="col-md-6">
+                                          <input  th:type="email" id="emailidfeild" onblur='javascript:emailchks()' class="form-control" data-remote-error="Email is already registered." th:field="*{email}"/>
+                                			<div class="error"  th:if="${#fields.hasErrors('email')}" th:errors="*{email}">Email Error</div>
+                                			<div class="error" id="emailiderror"></div>
+                                </div>
+                                 </div>
+                                            
+                                             <div class="form-group">
+                                     <label class="col-md-3 control-label" for="example-email">Mobile Number</label>
+                                     <div class="col-md-6">
+                                         <input th:type="text" id="mobile_number" onblur='javascript:mobilecheck()' name="mobile_number" th:field="*{mobile_number}" class="form-control"/>
+                                         <div class="error" th:if="${#fields.hasErrors('mobile_number')}" th:errors="*{mobile_number}">Mobile Error</div>
+                                    	 <div class="error" id="mobileerror"></div>
+                                     </div>
+                                 </div>
+                                            <!-- 
+                                             	<div class="form-group">
+                                                <label class="col-md-3 control-label" for="example-email">Office</label>
+                                                <div class="col-md-6">
+                                                   <div th:if="${office_state != null}">
+											         <select th:field="*{stateid}" class="form-control">
+											         <option th:value="-1" >---Select State---</option>
+											         <option th:each="dropDownItem : ${office_state}" 
+											             th:value="${dropDownItem.statecode}" th:text="${dropDownItem.statename_inenglish}" />
+											       </select>
+											        <div class="error" th:if="${#fields.hasErrors('stateid')}" th:errors="*{stateid}">Stateid Error</div>
+											        	</div>
+                                                    
+                                                </div>
+                                            </div>
+                                            -->
+                                            <div class="form-group m-b-0">
+                                                <div class="col-sm-offset-2 col-sm-9">
+                                                    <!-- <button type="submit" class="btn btn-info waves-effect waves-light">Submit</button> -->
+                                                </div>
+                                            </div>
+                                                                       
+                                       <!--  </form> 
+                                    </div>
+                                    </div> 
+                                    -->
+								
+								<div class="form-group">
+			                                     <label class="col-md-3 control-label" for="example-email">Office</label>
+			                                     <div class="col-md-6">
+			                                      <div th:if="${office_state != null}">
+			         <select th:field="*{office_id}" class="form-control">
+			         <option th:value="-1" >---Select State---</option>
+			         <option th:each="dropDownItem : ${office_state}" 
+			             th:value="${dropDownItem[0]}" th:text="${dropDownItem[1]}" />
+			       </select>
+			        <div class="error" th:if="${#fields.hasErrors('office_id')}" th:errors="*{office_id}">Stateid Error</div>
+			        	</div>
+			                                         
+			                                     </div>
+			                                 </div>
+			                                 
+								
+								<div class="panel panel-default">
+                                    <div class="panel-heading"><h3 class="panel-title">User Login Account Details</h3></div>
+                                    <div class="panel-body">
+                                       <!--  <form class="form-horizontal" role="form">    -->                                 
+                                         
+                                           <div class="form-group">
+						       <label class="col-md-3 control-label" for="Username">Username</label>
+						       <div class="col-md-6">
+						           <input th:type="text" id="username" th:field="*{username}" onblur='javascript:usernamecheck()' class="form-control"/>
+						   		 <div class="error" th:if="${#fields.hasErrors('username')}" th:errors="*{username}">Username Error</div>
+						 		<div class="help-block with-errors" id="emailerror"></div>
+						 </div>
+                          </div>
+											<!--  <div class="form-group">
+                                                <label class="col-md-3 control-label" for="password">Password</label>
+                                                <div class="col-md-6">
+                                                    <input type="text" id="example-email" name="example-email" class="form-control" placeholder="password">
+                                                </div>
+                                            </div> -->
+											<div class="form-group">
+												<label class="col-md-3 control-label">Roles</label>
+													<div class="col-md-9">
+														 <th:block th:each="certificate : ${certificates}">
+											                <input  id="role_id" th:name="role" th:field="*{role}" type="checkbox" th:text="${certificate.description}" th:value="${certificate.id}" /><br>
+											              </th:block>
+											  <div class="error" th:if="${#fields.hasErrors('role')}" th:errors="*{role}">Role Error</div>
+													</div>
+											</div>
+                                            <div class="form-group">
+                                                        <label class="col-md-3 control-label">Status</label>
+                                                        <div class="col-md-6">
+                                                            <select class="form-control" th:field="*{isactive}">
+	                 <option th:value="true" th:text = "Active" selected></option>
+	                 <option th:value="false" th:text="Inactive"></option>
+	             </select> 
+                                                            
+                                                        </div>
+                                                    </div>
+
+                                            <div class="form-group m-b-0">
+                                                <div class="col-sm-offset-2 col-sm-9">
+                                                    <span th:each="sec_chk : ${actd}">
+												      <span th:if="${sec_chk == 'Edit'}">
+                                                    <button type="submit" class="btn btn-info waves-effect waves-light">Submit</button>
+                                                    </span></span>
+                                                </div>
+                                            </div>
+                                                                       
+                                        </form>
+                                    </div> 
+                                    </span>
+                                    <span th:unless="${actd_viewtrue != null && actd_viewtrue == 'valpresent' }">
+									<label>YOU ARE NOT AUTHORISED TO VIEW THIS PAGE.PLEASE CONTACT ADMINISTRATOR</label>
+									</span>
+                                    <!-- panel-body -->
+                                </div> <!-- panel -->
+								
+								
+								</div>
+								</div>
+								
+								
+								
+                            </div> <!-- col -->
+                        </div> <!-- End row -->
+
+                    </div> <!-- container -->
+                               
+                </div> <!-- content -->
+
+                <footer class="footer text-right">
+                    2019 © PPVFRA.
+                </footer>
+
+            </div>
+            <!-- ============================================================== -->
+
+   			
+          <div th:replace="adminfragment/footer.html :: footer"></div>
+           </div> <!-- container -->
+                               
+                <!-- content -->
+
+			<!-- start footer content here -->
+			
+			<!-- end footer content here -->
+
+      
+        <!-- END wrapper -->
+
+<!-- footer lib start here-->
+
+<div th:replace="adminfragment/footerlibs.html :: footerlibs"></div>
+<!-- end footer lib -->
+<script type="text/javascript" th:inline="javascript">
+      function fetchroleidval() 
+        {    	  
+    	 // var totalrolesfromcontroller = [[${rolesbindingval}]];
+    	
+    	  
+    	  var moduledata= document.getElementById("user_id");
+    	     //   var moduledata1 = document.getElementById("role_id");
+    	        var moduledata2 = document.getElementsByName("role");
+    	        
+    	     //  alert("Moduledata2="+moduledata2);
+    	       
+    	     for (var unchk=0; unchk< moduledata2.length; unchk++)
+    	    	 {
+    	    	 moduledata2[unchk].checked=false;
+    	    	 }
+    	       
+    	       if(moduledata.value != null)		 
+    	        	$.ajax(
+    	        			{
+    	                type: "POST",
+    	                url: "/ppvfra/getroleidvalue",
+    	                data: 'user_id='+moduledata.value,
+    	                //contentType: "application/json charset=utf-8",
+    	                //dataType: "json",
+    	                success: function (response) {
+    	                	
+    	                	 if(response.length != null)
+    	                	{  
+    	                		 for (var i=0;i<response.length;i++)
+    	                		{
+    	                    	var str = response[i].toString();
+    	                    	 //for (var k=0; k<totalrolesfromcontroller.length; k++)
+    	                    	for (var k=0; k<moduledata2.length; k++)	 
+ 	                			{
+    	                    		//var roleval = totalrolesfromcontroller[k][0].toString();
+    	                    		var roleval = moduledata2[k].value;
+    	                    		
+    	                    		 if (str == roleval)
+    	                    	{
+    	                    			// document.getElementById("role_id").checked = true;
+    	                    			 moduledata2[k].checked = true;
+    	                    	}
+    	                		}
+    	                			}
+    	                	} 
+    	                	
+    												}
+    						});
+        }
+    	        </script> 
+<!-- <script type="text/javascript">
+        function emailchks() {
+            var emailid =document.getElementById("emailidfeild").value;
+           //alert(emailid);
+            $.ajax({
+                type: "POST",
+                url: "/ppvfra/checkmail",
+                data:emailid,
+                contentType:'application/json',
+                success: function (data) {
+                 
+                if(data == 'taken')
+				{
+                //Email not available.
+        		document.getElementById("emailiderror").innerHTML = " <font color='red'>Email Id is already present.</font>";
+        		document.forms["register-form12"]["emailidfeild"].focus();
+        		return false;
+                }
+				else if (data == 'not taken') 
+				{
+				document.getElementById("emailiderror").innerHTML = " ";
+			     return true;
+                    }
+                   
+                }
+            }); 
+  }
+    </script> -->
+    
+   	<script type="text/javascript" th:inline="javascript">
+        function emailchks() {
+        	var chk =  [[${edituserinternalmethod}]];
+            var emailid =document.getElementById("emailidfeild").value;
+            
+          // alert(emailid);
+            $.ajax({
+                type: "POST",
+                url: "/ppvfra/checkmail",
+                data:emailid,
+                contentType:'application/json',
+                success: function (data) {
+                 
+                if((data == 'taken')&& (chk.email.trimRight() == emailid))
+                	{
+                	document.getElementById("emailiderror").innerHTML = " ";
+   			     return true;
+                	}else if((data == 'taken')&& (chk != emailid))
+                	{
+                	
+                //Email not available.
+        		document.getElementById("emailiderror").innerHTML = " <font color='red'>email is already present.</font>";
+        		document.forms["register-form12"]["emailidfeild"].focus();
+        		return false;
+                }
+				else (data == 'not taken') 
+				{
+				document.getElementById("emailiderror").innerHTML = " ";
+			     return true;
+                    }
+                   
+                }
+            }); 
+  }
+        </script>   
+        
+      <script type="text/javascript" th:inline="javascript">
+        function mobilecheck() {
+        	var chk =  [[${edituserinternalmethod}]];
+        	var emailid =document.getElementById("mobile_number").value;
+            $.ajax({
+                type: "POST",
+                url: "/ppvfra/checkmobile",
+                data:emailid,
+                contentType:'application/json',
+                success: function (data) {
+                 
+                if((data == 'taken')&& (chk.mobile_number == emailid))
+                	{
+                		document.getElementById("mobileerror").innerHTML = " ";
+       			        return true;
+                	}
+                else if((data == 'taken')&& (chk != emailid))
+				{
+                //Email not available.
+        		document.getElementById("mobileerror").innerHTML = " <font color='red'>mobile no is already present.</font>";
+        		document.forms["register-form12"]["mobile_number"].focus();
+        		return false;
+                }
+				else(data == 'not taken') 
+				{
+				document.getElementById("mobileerror").innerHTML = " ";
+			     return true;
+                    }
+                   
+                }
+            }); 
+  }
+    </script>
+
+  
+  
+  
+   <script type="text/javascript" th:inline="javascript">
+        function usernamecheck() {
+        	var chk =  [[${edituserinternalmethod}]];
+            var emailid =document.getElementById("username").value;
+          // alert(emailid);
+            $.ajax({
+                type: "POST",
+                url: "/ppvfra/checkusername",
+                data:emailid,
+                contentType:'application/json',
+                success: function (data) {
+                 
+                
+                	if((data == 'taken')&& (chk.username == emailid))
+    				{
+                   
+            		document.getElementById("emailerror").innerHTML = " ";
+           			        return true;
+                    }
+    				else if ((data == 'taken')&& (chk != emailid))
+    				{
+    				
+    				document.getElementById("emailerror").innerHTML = " <font color='red'>Username is already present.</font>";
+            		document.forms["register-form12"]["username"].focus();
+            		return false;
+    				}
+    				
+    				else if(data == 'not taken')
+    				{
+						if( (isNaN(emailid)))
+						{	document.getElementById("emailerror").innerHTML = " ";
+    						return true;  
+    	    			}
+    					else
+    					{
+    						document.getElementById("emailerror").innerHTML = " <font color='red'>Username cannot be fully numeric.</font>";
+    						document.forms["register-form12"]["username"].focus();
+    		        		return false;  
+    					}
+    				}
+    			     
+                   
+                }
+            }); 
+  }
+    </script>   
+
+    <script type="text/javascript">
+        function designationcheck() {
+            var emailid =document.getElementById("designation").value;
+            var letters = /^[ A-Za-z_@./#&+-]*$/;
+				 var format = /^[!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?]*$/;
+				 if(format.test(emailid)){
+					 document.getElementById("designationerror").innerHTML = " <font color='red'>Designation in special characters not accepted.</font>";
+					 document.forms["register-form12"]["designation"].focus();
+		        		return false;  
+					 
+				 }else if(letters.test(emailid))
+            	     {
+            		   document.getElementById("designationerror").innerHTML = " ";
+					   return true;
+            	     }
+            	   else
+            	     {
+            		   document.getElementById("designationerror").innerHTML = " <font color='red'>Designation cannot be numeric.</font>";
+            		   document.forms["register-form12"]["designation"].focus();
+		        		return false;  
+            	     }
+            	}
+</script>
+    
+    
+    </body>
+</html>

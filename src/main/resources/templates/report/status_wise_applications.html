@@ -1,0 +1,143 @@
+  
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+	<head>
+	  <th:block th:include="adminfragment/headerlibs.html :: headerlibs"></th:block> 
+	</head>
+
+    <body class="fixed-left">
+        <!-- Begin page -->
+        <div id="wrapper">
+        
+            <!-- Top Bar Start -->
+           <header th:insert="adminfragment/header.html :: header"> </header>
+            <!-- Top Bar End -->
+
+
+            <!-- ========== Left Sidebar Start ========== -->
+			<header th:insert="adminfragment/sidenav.html :: sidevav"> </header>
+            <!-- Left Sidebar End --> 
+
+   		
+            <!-- Start right Content here -->
+            <!-- ============================================================== -->                      
+            <div class="content-page">
+                <!-- Start content -->
+                <div class="content">
+                    <div class="container">
+
+                        <!-- Page-Title -->
+                        <div class="row">
+                            <div class="col-sm-12">
+                                <h4 class="pull-left page-title">Application List</h4>
+                                <ol class="breadcrumb pull-right">
+                                    <li><a href="/admin">Home</a></li>
+                                    <li class="active">Application List</li>
+                                </ol>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="panel panel-default">
+                                    <div class="panel-heading">
+                                        <h3 class="panel-title">
+                                        <span th:if="${stat != null}" th:text="${stat}">Application </span>
+                                        <span th:unless="${stat != null}">Application Details</span>
+                                        </h3>
+                                    </div>
+                                    <div class="panel-body">
+                                        <div class="row">
+                                            <div class="col-md-12 col-sm-12 col-xs-12">
+                                              <div class="table-responsive">
+                                           
+											  <table id="statuswiseyear" class="table table-hover table-bordered">
+                                                    <thead>
+                                                        <tr>
+                                                            <th>S.No</th>
+                                                            <th>Application ID</th>
+                                                             <th>Application Form</th>
+                                                             <span th:if="${status_no >= 4}">
+                                                             <th>PVP Number</th>
+                                                             </span>
+                                                            <th>Application Date</th>
+															<th>Name</th>
+                                                            <th>Crop</th>
+                                                            <th>Botanical Name</th>
+                                                            <th>Denomination</th>
+                                                            <th>View</th>
+																
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                       <tr th:each="applications,seq : ${all_applications}">
+                                                          <td th:text="${seq.count}"></td>
+                                                          <td th:text="${applications[6]}"></td>
+                                                          <td th:text="${applications[7]}"></td>
+                                                          <span  th:if="${status_no >= 4}">
+                                                          <td th:text="${applications[8]}"></td>
+                                                          </span>
+														  <td th:text="${applications[1]}"></td>
+                                                          <td th:text="${applications[2]}"></td>
+                                                          <td th:text="${applications[4]}"></td>
+                                                          <td th:text="${applications[5]}"></td>
+                                                          <td th:text="${applications[3]}"></td>
+                                                          
+                                                          <td th:if="${applications[7] == 'Form1'}">
+															<a class="btn btn-success btn-xs" th:href="@{'/show_application_details/'+${applications[6]}}">View Application
+															</a>
+															</td>
+															<td th:if="${applications[7] == 'Form2'}">
+															<a class="btn btn-success btn-xs" th:href="@{'/show_application_details_f2/'+${applications[6]}}">View Application
+															</a>
+															</td>
+															<td th:if="${applications[7] == 'Form3'}">
+															<a class="btn btn-success btn-xs" th:href="@{'/show_application_details_f3/'+${applications[6]}}">View Application
+															</a>
+															</td>
+							
+							
+														</tr>
+                                                    </tbody>
+                                                </table>
+                                                
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div> <!-- End Row -->
+
+
+                    </div> <!-- container -->
+                               
+                </div> <!-- content -->
+
+            <!--     <footer class="footer text-right">
+                    2019 © PPVFRA.
+                </footer> -->
+
+            </div>
+            <!-- ============================================================== -->
+                 
+            <!-- End Right content here -->
+          <div th:replace="adminfragment/footer.html :: footer"></div>
+           </div> <!-- container -->
+                               
+                <!-- content -->
+
+			<!-- start footer content here -->
+			
+			<!-- end footer content here -->
+
+      
+        <!-- END wrapper -->
+
+<!-- footer lib start here-->
+
+<div th:replace="adminfragment/footerlibs.html :: footerlibs"></div>
+<!-- end footer lib -->
+    
+    </body>
+</html>

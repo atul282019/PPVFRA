@@ -1,0 +1,392 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+	<head>
+	  <th:block th:include="adminfragment/headerlibs.html :: headerlibs"></th:block> 
+	</head>
+    <body class="fixed-left">
+        <!-- Begin page -->
+        <div id="wrapper">
+            <!-- Top Bar Start -->
+            <header th:insert="adminfragment/header.html :: header"> </header>
+            <!-- Top Bar End -->
+            <!-- ========== Left Sidebar Start ========== -->
+			<header th:insert="adminfragment/sidenav.html :: sidevav"> </header>
+            <!-- Left Sidebar End --> 
+ 			<!-- ============================================================== -->
+            <!-- Start right Content here -->
+            <!-- ============================================================== -->                      
+            <div class="content-page">
+                <!-- Start content -->
+                <div class="content">
+                    <div class="container">
+
+                        <!-- Page-Title -->
+                        <div class="row">
+                            <div class="col-sm-12">
+                                <h4 class="pull-left page-title">Table of Characteristics</h4>
+                                <ol class="breadcrumb pull-right">
+                                    <li><a href="/admin">Home</a></li>
+                                    <li>
+                                     <a th:href="@{'/applicationform/'+${applications.id}}" class="btn btn-purple waves-effect waves-light btn-xs m-b-5"><b>Back</b></a>
+                                    </li>
+                                </ol>
+                            </div>
+                        </div>	
+                        <form class="form-horizontal" id="tocform" name="tocform" th:action="@{/savecharacteristics}" method="post" role="form" onsubmit = "return validatetocform()">
+						<div class="row">
+							<div class="table-responsive">
+									<table class="table table-striped  table-bordered w-auto table-hover">
+									<!--Table head-->
+									<thead>
+										<tr>
+										<th class="col-md-4">TQ Sno</th>
+										<td class="col-md-8"><span id="22" th:text="${dustqgroup[1]}"> </span></td>
+										</tr>
+									</thead>
+									<!--Table head-->
+
+									<!--Table body-->
+									<tbody>
+										<tr>
+										<th class="col-md-4">TQ Group</th>
+										<td class="col-md-8"><span id="22" th:text="${dustqgroup[2]}"> </span></td>
+										</tr>
+									</tbody>
+								<!--Table body-->
+								</table>
+								<!--Table-->
+								</div>
+							</div>
+							<div class="form-horizontal" role="form">  
+								<div class="form-group">
+									<label class="col-md-2 control-label">Variety</label>
+									<div class="col-md-4" th:object="${dusvarietybyid}">
+									<select class="form-control" th:field="*{typeline}" id="typeline">
+                                    <option th:value="-1" >---Select---</option>
+					                <option th:each="dropDownItem : ${typeline}"
+					                th:value="${dropDownItem.id}"
+					                th:text="${dropDownItem.code}" />
+					                </select> 
+					                <span id="typelineerror" style="color:red"></span>
+									</div>
+									<div class="col-md-4">
+									<input type="text" class="form-control" th:value="${deno[0]}" name="typelinedenomination" id="denomination">
+									<span id="denominationerror" style="color:red"></span>
+								   </div>
+								</div>
+							</div>
+							<div class="row">
+                            <div class="col-sm-12">
+                                <div class="panel panel-default">
+                                    <div class="panel-body">
+                                    <div class="table-responsive" th:if="${editmode ==0}">
+													<table class="table table-striped  table-bordered w-auto table-hover">
+													<!--Table head-->
+													<thead>
+														<tr>
+														<th class="col-md-4">Characteristics</th>
+														<th class="col-md-8">Remarks</th>
+														</tr>
+													</thead>
+													<!--Table head-->
+
+													<!--Table body-->
+													
+													<tbody class="input_fields_wrap">
+														<tr class="table-info " id="cloneoftable" >
+															<td>
+																
+															<select class="form-control col-md-7 col-xs-12  charactesisticid " name="duscharistics" id="charactesisticid" >
+					                                        <option th:value="-1" >---Select---</option>
+											                <option th:each="characteristics : ${duscharacteristicslist}"
+											                th:value="${characteristics[0]}"
+											                th:text="${characteristics[4]+' : '+characteristics[2]}" />
+											                </select> 
+														    <span id="characteristicserror" style="color:red"></span>
+															</td>
+															<td>
+																
+															<select class="form-control col-md-7 col-xs-12 stateid " name="remarks" id="remark" >
+															<option value="-1">---Select---</option>
+															</select>
+															<span id="remarkerror" style="color:red"></span>
+															</td>
+														</tr>
+													</tbody>
+													
+												<!--Table body-->
+												</table>
+												<!--Table-->
+											</div>
+											<div th:if="${editmode == 1}"> 
+											<div class="table-responsive">
+													<table class="table table-striped  table-bordered w-auto table-hover">
+													<!--Table head-->
+													<thead>
+														<tr>
+														
+														<th class="col-md-4">Edit Characteristics</th>
+														<th class="col-md-8">Edit Remarks</th>
+														</tr>
+													</thead>
+													<!--Table head-->
+
+													<!--Table body-->
+													
+													<tbody class="input_fields_wrap">
+														<tr class="table-info " id="cloneoftable" th:each=" editcharacteristicsdata : ${editcharacteristicsdata}" >
+															<td>
+															<input type="hidden"  id="characteristicid" name="characteristicid" th:value="${editcharacteristicsdata[1]}" />
+															<select class="form-control col-md-7 col-xs-12  charactesisticid " name="duscharistics" id="charactesisticid" >
+					                                        <option th:value="-1" >---Select---</option>
+											                <option th:each="characteristics : ${duscharacteristicslist}" 
+											                th:value="${characteristics[0]}"
+											                th:selected="${editcharacteristicsdata[1] ==characteristics[0] }"
+											                th:text="${characteristics[4]+' : '+characteristics[2]}"  />
+											                </select> 
+														    <span id="characteristicserror" style="color:red"></span>
+															</td>
+															<td>
+																
+															<select class="form-control col-md-7 col-xs-12 stateid " name="remarks" id="remark" >
+															<option value="-1" >---Select---</option>
+															</select>
+															<span id="remarkerror" style="color:red"></span>
+															</td>
+														</tr>
+													</tbody>
+													
+												<!--Table body-->
+												</table>
+												<!--Table-->
+											</div>
+											</div>
+                                            <div class="form-group m-b-0">
+                                                <div class="col-sm-7" style="float: right;">
+                                                 <input type="hidden" id="tqserialnumber" name="tqserialnumber" th:value="${sno}" />
+                                                 <input type="hidden" id="tqdusgroupid" name="tqdusgroupid" th:value="${dustqgroup[0]}" />
+                                                 <input type="hidden" id="tqdusgroup" name="tqdusgroup" th:value="${dustqgroup[1]}" />
+                                            	 <input type="hidden" id="tocapplicationid" name="tocapplicationid" th:value="${applications.id}" />
+                                            	 <div th:object="${dusvarietybyid}">
+                                            	 <input type="hidden" id="typelinevalue" name="typelinevalue" th:field="*{typeline}" />
+                                            	 <input type="hidden" id="id" name="id" th:field="*{id}" />
+                                            	 </div>
+                                            	 <input type="hidden" id="editmode" name="editmode" th:value="${editmode}" />
+                                            	
+                                                 <button type="submit" class="btn btn-info waves-effect waves-light">Save</button>
+												<button type="button" class="btn btn-purple waves-effect waves-light add_field_button " id="addButton_char" >Add New Characteristics</button>
+												<button type="button" class="btn btn-purple waves-effect waves-light remove_field " id="addButton_char" >Remove New Characteristics</button> 
+												</div>
+                                              </div>
+                                             <br>                                                            
+                                            <div class="table-responsive" th:if="${characteristics != 1}">
+													<table class="table table-striped  table-bordered w-auto table-hover">
+													<!--Table head-->
+													<thead>
+														<tr>
+															<th>Id</th>
+															<th>Variety</th>
+															<th>Denomination</th>
+															<th>
+															<div align="left">Characteristics</div><div align="right">Remarks</div>
+															</th>
+															<th>Action</th>
+														</tr>
+													</thead>
+													<!--Table head-->
+													<!--Table body-->
+													<tbody>
+														<tr role="row" class="table-info" th:each="applicationvariety,serial : ${applicationvariety}">
+											            <td th:text="${serial.count}"></td> 
+											            <td th:text="${applicationvariety[4]}"></td> 
+											            <td th:text="${applicationvariety[5]}"></td> 
+											            <td>
+											            <table class="table table-striped  table-bordered w-auto table-hover">
+													    <tbody>
+														<tr role="row" class="table-info" th:each="characteristics,serial : ${characteristics}">
+											            <div th:if="${applicationvariety[0] == characteristics[2]}">
+											            <div th:text="${characteristics[6]}" align="left"></div> 
+											            <div th:text="${characteristics[9]}" align="right"></div>
+											           </div>
+													    </tr>
+														</tbody>
+														<!--Table body-->
+														</table>
+														</td>
+														<!--Table-->
+											            <td>
+											            <a th:href="@{'/editcharacteristics/'+${applicationvariety[1]}+'/'+${applicationvariety[0]}+'/'+${sno}}" >
+											             Edit</a>
+											             <a onclick="javascript:if (confirm('Are you sure, you want to Remove this row?')) return true; else return false;" th:href="@{'/deletecharacteristics/'+${applicationvariety[1]}+'/'+${applicationvariety[0]}+'/'+${sno}}" >
+											             Delete</a>
+											             </td>
+														</tr>
+														</tbody>
+												<!--Table body-->
+												</table>
+												<!--Table-->
+												
+												 <div class="table-responsive" th:if="${pivotcharacteristics != 1}" >
+													<table class="table table-striped  table-bordered w-auto table-hover">
+													<!--Table head-->
+													<thead>
+														<tr>
+															<th>characteristics</th>
+															<th>A Line</th>
+															<th>B Line</th>
+															<th>R Line</th>
+															<th>Candidate</th>
+															
+														</tr>
+													</thead>
+													<!--Table head-->
+													<!--Table body-->
+													<tbody>
+														<tr role="row" class="table-info" th:each="charecteristics,serial : ${pivotcharacteristics}" >
+											           <!-- <td th:text="${serial.count}"></td>  -->
+											            <td th:text="${charecteristics[1]+' :'+ charecteristics[0]}"></td> 
+											            <td th:text="${charecteristics[4]}"></td> 
+											            <td th:text="${charecteristics[5]}"></td> 
+											            <td th:text="${charecteristics[6]}"></td>
+											            <td th:text="${charecteristics[7]}"></td>  
+														</tr>
+														</tbody>
+												<!--Table body-->
+												</table>
+												<!--Table-->
+											</div>	
+                                    </div> <!-- panel-body -->
+                                </div> <!-- panel -->
+                            </div> <!-- col -->
+                        </div> <!-- End row -->
+                        </form>
+					 </div> <!-- container -->
+                   </div> <!-- content -->
+            </div>
+            <!-- End Right content here -->
+            <!-- ============================================================== -->	
+           <div th:replace="adminfragment/footer.html :: footer"></div>
+           </div> <!-- container -->
+            
+           <!-- content -->
+      
+        <!-- END wrapper -->
+
+<!-- footer lib start here-->
+
+<div th:replace="adminfragment/footerlibs.html :: footerlibs"></div>     
+ <div th:if="${message != null}">
+ <div id="myModal1" class="modal fade">
+   <div class="modal-dialog">
+        <div class="modal-content">
+         <div class="modal-body">
+				<p align="center" th:text="${message}" />
+         </div>
+          <div align="right">
+          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        </div>
+        </div>
+       
+    </div>
+</div>
+</div>
+
+ <script type="text/javascript">
+	      $(document).ready(function(){
+		  $("#myModal1").modal('show');
+		  
+		  
+	     });
+  </script>   
+     
+  <script type="text/javascript">
+   $(document).on('change', '.charactesisticid ', function(){
+	    var ev = $(this);
+		var ddlState = $(this).val();
+		var district1 = $(this).closest('tr').find('.stateid');
+        if(ddlState != null)	
+       	$.ajax({
+               type: "POST",
+               url: "/ppvfra/getCharacteristicsStates",
+               data: 'stateCode='+ddlState,
+               dataType:"json",
+               success: function (response) {
+            	   //console.log(response);
+            	   var html = "<option value='-1'>select value</option>";
+            	   $.each( response, function( key, value ) {
+            		   html+='<option value="'+value[0]+'">'+value[1]+'</option>';
+            		 });
+            	   $(district1).html(html);
+               	 //alert(html);
+        
+ 			   },
+               failure: function (response) {
+                   alert(response.responseText);
+					  
+               },
+               error: function (response) {
+                   alert(response.responseText);										
+               }
+      });
+   	
+   });
+ </script>
+<script>
+$(document).ready(function() {
+	var max_fields      = 10; //maximum input boxes allowed
+	var wrapper   		= $(".input_fields_wrap"); //Fields wrapper
+	var add_button      = $(".add_field_button"); //Add button ID
+	var x = 1; //initlal text box count
+	$(add_button).click(function(e){ //on add input button click
+		e.preventDefault();
+		var tr    = $('#cloneoftable');
+		var clones = tr.clone();
+		if(x < max_fields){ //max input box allowed
+			x++; //text box increment
+			//alert(x);
+			$(wrapper).append(clones); //add input box
+		}
+	});
+	
+	$(document).on("click",".remove_field", function(e){ //user click on remove text
+	e.preventDefault(); 
+	//alert('test');
+	if(x >1){
+	 $('.input_fields_wrap tr:last').remove();
+	 x--;
+	}
+	
+	})
+});
+
+</script>
+     
+<script type = "text/javascript">
+      function validatetocform() {
+    	  if( document.getElementById("typeline").value == "-1" ) {
+         	 document.getElementById("typelineerror").innerHTML="please select variety";
+         	 document.getElementById("typeline").focus();
+             return false;
+          }
+    	  if (document.tocform.denomination.value =="") {
+    		  document.getElementById("denominationerror").innerHTML="please fill denomination";
+    		  document.tocform.denomination.focus();
+      	    return false;
+      	  }
+    	  if( document.tocform.charactesisticid.value == "-1" ) {
+          	 document.getElementById("characteristicserror").innerHTML="please select characteristics";
+              document.tocform.charactesisticid.focus() ;
+              return false;
+           }
+      	   
+           if( document.tocform.remark.value == "-1" ) {
+          	 document.getElementById("remarkerror").innerHTML="please select remarks";
+          	 document.tocform.remark.focus() ;
+              return false;
+           }
+     	 return( true );
+      }
+	</script>
+
+</body>
+</html>

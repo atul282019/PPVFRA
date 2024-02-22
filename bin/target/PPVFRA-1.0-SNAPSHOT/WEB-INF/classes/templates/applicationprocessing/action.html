@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+    <head>
+	  <th:block th:include="applicationprocessing/headerlibs.html :: headerlibs"></th:block> 
+      <style>
+			.modal-dialog {
+				width: 700px;
+			}
+			.modal-content{
+				color:#000;
+			}
+			.certificate{
+				display:none;
+			}
+			.opposition{
+				display:none;
+			}
+			.opposition-1{
+				display:none;
+			}
+			.save-1{
+				display:none;
+			}
+			
+			
+			
+		</style>
+    
+    </head>
+
+    <body class="fixed-left">
+        
+        <!-- Begin page -->
+        <div id="wrapper">
+        
+            <!-- Top Bar Start -->  
+        		 <header th:insert="applicationprocessing/header.html :: header"> </header>
+                    <!-- ========== Left Sidebar Start ========== -->
+        
+                    <header th:insert="applicationprocessing/sidenav.html :: sidevav"> </header>
+                    <!-- Left Sidebar End --> 
+
+                    <div class="content-page">
+                        <!-- Start content -->
+                        <div class="content">
+                            <div class="container">
+        
+                                <!-- Page-Title -->
+                                <div class="row">
+                                    <div class="col-sm-12">
+                                        <h4 class="pull-left page-title">Applications</h4>
+                                        <ol class="breadcrumb pull-right">
+                                            <li><a href="/admin">Home</a></li>
+                                            <li class="active">Applications</li>
+                                        </ol>
+                                    </div>
+                                </div>
+                                <!-- end row -->
+                                <!-- Start of row -->
+                                <div class="row">
+                                        
+                                        
+                                    <div class="col-lg-12"> 
+                                    <div class="card">
+                                  <!--  start main tab menu include -->
+                                    <div th:insert="applicationprocessing/tabmenu.html :: tabmenu"> </div>
+                                   		 <!--  end  main tab menu include -->
+											
+                                    </div> 
+                                </div>
+                                 <!-- end row -->
+         
+                            </div> <!-- container -->
+                                       
+                        </div> <!-- content -->
+				  </div>                      
+				         <!--        <footer class="footer text-right">
+				                    2019 © PPVFRA.
+				                </footer>
+				 -->		
+            </div>
+            <!-- ============================================================== -->
+            <!-- End Right content here -->
+            <!-- ============================================================== -->
+		<div th:replace="applicationprocessing/footer.html :: footer"></div>
+        </div>
+        <!-- END wrapper -->
+    
+      <div th:replace="applicationprocessing/footerlibs.html :: footerlibs"></div>
+</body>
+</html>

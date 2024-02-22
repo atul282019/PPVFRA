@@ -1,0 +1,674 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<div th:fragment="short_term_storage">
+<span th:if="${ShortTermStorage != null && ShortTermStorage == 'ShortTermStorage' }"> 
+
+<div role="tabpanel" class="form-group table-responsive" id="drug">
+	 <div class="table-responsive">
+	 <div class="panel panel-success">
+	<div class="panel-heading">Short-term Storage Seeds/ Planting Details</div>
+	<div class="panel-body">
+		
+		<div class="form-group">
+          <label class="col-md-2 control-label" ></label>
+            <!-- <div class="col-md-10">
+              <input id="id" name="id" type="text" th:field="*{id}" readonly="readonly" hidden="true"/>
+              </div> -->
+         </div>
+                  
+         <div class="form-group">
+			<label class="col-md-2 control-label" > </label>
+				<div class="col-md-10">
+				<input type="text" id="applicationid" th:name="applicationid"  th:value="${applicationid}"  hidden="true" />
+       			</div>
+		</div>         
+                                 
+		<div class="form-group">
+		<div class="table-responsive col-sm-12">
+		
+	<table id="tdata" class="table table-striped  table-bordered table-hover">
+<!--Table head-->
+<thead>
+   <tr>
+     <th>S.No</th>
+     <th>Line Type</th>
+     <th>SeedOrPlant</th>
+     <th>Date of Submission</th>
+	<th>Seeds Requirement as per guidelines</th>
+    <th>Approx weight of packet</th>
+    <th>Quantity of seeds(g)</th>
+    <th>Number of packets</th>
+	<th>Moisture %</th>
+	<th>Germination %</th>
+	<th>Purity %</th>
+	<!-- <th>Action</th> -->
+	<th>PDF Uploaded</th>
+ </tr>
+                                      </thead>
+						
+						
+						
+						<tbody>
+					
+						<tr class="table-info">
+						</tr>
+						</tbody>
+						</table> 
+		
+		</div>
+		</div>
+	</div>
+	</div>
+	<script src="https://code.jquery.com/jquery-1.9.1.min.js"></script>
+	 <script type="text/javascript"  th:inline="javascript">
+	 $(document).ready(function() {
+		 var applicationid = ''+[[${applicationid}]]+''; 
+		 //alert(applicationid);
+		populatedata(applicationid);	 
+	});
+ </script> 
+ <script>
+   function populatedata(applicationid) {  
+  var tabledata=$("#tdata");
+  if(applicationid != null)		 
+  	$.ajax({
+          type: "POST",
+          url: "/ppvfra/getdatasaved",
+          data:applicationid,
+          success: function (response) {
+
+        	  $("#tdata tbody").html(''); 
+              for (var i=0;i<response.length;i++)
+          	{
+              	
+            	  if(response[i][1] !=null)
+            	  var str = response[i][1].toString();
+              	
+              	if(response[i][8] !=null)
+              	var linetype = response[i][8].toString();
+              	if(linetype !=null)
+              		{
+              	if(linetype =="C"){linetype ="Candidate Variety";}
+              	else if(linetype =="R"){linetype ="R Line (Male)";}
+              	else if(linetype =="A"){linetype ="A Line (female)";}
+              	else if(linetype =="B"){linetype ="B Line (Maintainer)";}
+              		}
+              	
+              	var count= i+1;
+               
+              	if(response[i][0] !=null)
+                var zerof = response[i][0].toString();
+              	else var zerof ='';
+              	
+              	if(response[i][2] !=null)
+              	var secondf = response[i][2].toString();
+            	else var secondf ='';
+              	
+              	if(response[i][9] !=null)
+                var ninef = response[i][9].toString();
+              	else var ninef ='';
+              	
+              	if(response[i][3] !=null)
+                var thirdf = response[i][3].toString();
+              	else var thirdf ='';
+              	
+              	
+              	if(response[i][4] !=null)
+                var fourf = response[i][4].toString();
+              	else var fourf ='';
+              	
+              	if(response[i][5] !=null)
+                var fivef = response[i][5].toString();
+              	else var fivef ='';
+              	
+              	if(response[i][6] !=null)
+                var sixf = response[i][6].toString();
+              	else var sixf ='';
+              	
+              	if(response[i][7] !=null)
+                var sevenf = response[i][7].toString();
+              	else var sevenf ='';
+              	
+              	if(response[i][10] !=null)
+                 var tenf = response[i][10].toString();
+              	else var tenf ='';
+              	
+              	if(response[i][11] !=null && response[i][11] !="" && response[i][11] !="undefined")
+                    var elevenf = response[i][11].toString();
+              	else var elevenf ='';
+              	
+              	//var html_data = '<tr><td>'+count+'</td><td>'+linetype+'</td><td>'+tenf+'</td><td>'+str+'</td><td>'+secondf+'</td><td>'+ninef+'</td><td>'+thirdf+'</td><td>'+fourf+'</td><td>'+fivef+'</td><td>'+sixf+'</td><td>'+sevenf+'</td><td><a href="/editseedplantdetails/'+zerof+'">Edit</a></td><td><a href="/ppvfra/download/'+elevenf+'" target="_blank">'+elevenf+'</a></td></tr>';
+              	var html_data = '<tr><td>'+count+'</td><td>'+linetype+'</td><td>'+tenf+'</td><td>'+str+'</td><td>'+secondf+'</td><td>'+ninef+'</td><td>'+thirdf+'</td><td>'+fourf+'</td><td>'+fivef+'</td><td>'+sixf+'</td><td>'+sevenf+'</td><td><a href="/ppvfra/download/'+elevenf+'" target="_blank">'+elevenf+'</a></td></tr>';
+              	$("#tdata tbody").append(html_data);
+              	
+          	}    
+
+    },
+        failure: function (response) {
+        alert(response.responseText);
+    },
+    error: function (response) {
+        alert(response.responseText);
+    }
+});
+}
+ </script>
+													
+												
+	 </div>
+</div>
+ 
+
+<form class="form-horizontal" role="form" th:action="@{/shorttermstorage}" th:object="${shorttermstorage}" method="post">  
+					<input type="text" id="id" th:name="id"  th:value="0"  hidden="true" />
+       			<input type="text" id="secondid" th:name="secondid" th:value="0" hidden="true" />
+       			
+									<div class="panel panel-success">
+				<div class="panel-heading"><!--Dispatch of Seeds to DUS TEST Centres-->Short Term Storage</div>
+				<div class="panel-body">
+					
+				<div class="form-group">
+                                           	<label class="col-md-2 control-label" > </label>
+                                           		<div class="col-md-10">
+                            							<input type="text" id="applicationid" th:name="applicationid"  th:value="${applicationid}" readonly hidden="true" />
+                                           		</div>
+                                           </div>
+					<div class="form-group">
+						<label class="col-md-3 control-label">Test Type</label>
+						<div class="col-md-6">
+							<select id="test"  th:name="testtype" class="form-control">
+								<option th:value="DUS">DUS Test</option>
+								<option class="test" th:value="Hybridity">Test for Hybridity</option>
+							</select>
+						</div>
+					</div>
+					
+					
+					<div class="form-group">
+						<label class="col-md-3 control-label"> Line Type</label>
+						<div class="col-md-6">
+							<select onchange="getdiv();" class="form-control" name="type_line" id="type_line">
+						    <option th:value="-1" >Select</option>
+				            <option th:each="dropDownItem : ${TypeLine}"
+				               th:value="${dropDownItem.id}"
+				               th:text="${dropDownItem.code}" />
+				        	</select>
+						</div>
+					</div>
+
+			
+			
+			
+			<div class="form-group">
+				<label class="col-md-3 control-label"><!--Select DUS Test Center 1--> Year</label>
+				<div class="col-md-6">
+					<select th:field="*{year}" class="form-control">
+						<option th:value="2011">2011</option>
+						<option th:value="2012">2012</option>
+						<option th:value="2013">2013</option>
+						<option th:value="2014">2014</option>
+						<option th:value="2015">2015</option>
+						<option th:value="2016">2016</option>
+						<option th:value="2017">2017</option>
+						<option th:value="2018">2018</option>
+						<option th:value="2019">2019</option>
+						<option th:value="2020">2020</option>
+						<option th:value="2021">2021</option>
+						<option th:value="2022">2022</option>
+						<option th:value="2023">2023</option>
+						<option th:value="2024">2024</option>
+						<option th:value="2025">2025</option>
+						<option th:value="2026">2026</option>
+						<option th:value="2027">2027</option>
+					</select>
+				</div>
+			</div>
+
+		<div class="form-group">
+			<label class="col-md-3 control-label">Season</label>
+			<div class="col-md-6">
+				<select th:field="*{season}" class="form-control">
+					<option th:value="1">Select1</option>
+					<option th:value="2">Select2</option>
+					<option th:value="3">Select3</option>
+					<option th:value="4">Select4</option>
+				</select>
+			</div>
+		</div>
+		
+		<!-- 
+		<div class="form-group">
+			<label class="col-md-3 control-label">Lead center</label>
+			<div class="col-md-6">
+				<select th:field="*{lead_center}" class="form-control">
+					<option th:value="1">Select1</option>
+					<option th:value="2">Select2</option>
+					<option th:value="3">Select3</option>
+					<option th:value="4">Select4</option>
+				</select>
+			</div>
+		</div>
+		 -->
+		 
+		
+		<div class="form-group">
+						<label class="col-md-3 control-label"> Lead center</label>
+						<div class="col-md-6">
+							<select  th:field="*{lead_center}" class="form-control">
+						    <option th:value="-1" >Select</option>
+				            <option th:each="dropDownItem : ${lc_center}"
+				               th:value="${dropDownItem[0]}"
+				               th:text="${dropDownItem[1]}" />
+				        	</select>
+						</div>
+					</div>
+		<div class="test-hybridity">
+																
+			<div class="form-group">
+				<label class="col-md-3 control-label">Seed sent</label>
+				<div class="col-md-6">
+					<input type="text" name="seed_sent_to_leadcenter" id="seed_sent_to_leadcenter" class="form-control" value="">
+				</div>
+			</div>
+			<!--  
+			<div class="form-group">
+				<label class="col-md-3 control-label">  COP Center</label>
+				<div class="col-md-6">
+					<select th:field="*{coopcenter}" class="form-control">
+					<option th:value="1">Select1</option>
+					<option th:value="2">Select2</option>
+					<option th:value="3">Select3</option>
+					<option th:value="4">Select4</option>
+					</select>
+				</div>
+			</div>
+			-->
+			
+		
+			
+				<div class="form-group">
+						<label class="col-md-3 control-label">  COP Center</label>
+						<div class="col-md-6">
+							<select  th:field="*{coopcenter}"  class="form-control">
+						    <option th:value="-1" >Select</option>
+				            <option th:each="dropDownItem : ${cnc_center}"
+				               th:value="${dropDownItem[0]}"
+				               th:text="${dropDownItem[1]}" />
+				        	</select>
+						</div>
+					</div>
+			
+			<div class="form-group">
+				<label class="col-md-3 control-label">Seed sent</label>
+				<div class="col-md-6">
+					<input type="text"  th:name="seed_sent_to_coopcenter" class="form-control" value="">
+				</div>
+			</div>
+		</div>
+		
+		 <div class="test-dus">
+			<div class="form-group">
+				<label class="col-md-3 control-label">Seed sent</label>
+				<div class="col-md-6" style="display:none;" id="id_div1">
+					<!-- <span>A Line (female) </span> -->
+					<input type="text" class="form-control" name="seed_sent_to_leadcenter1" id="seed_sent_to_leadcenter1" value="">
+				</div>
+				<!-- 
+				
+				<div class="col-md-6" style="display:none;" id="id_div2">
+					<span>B Line (Maintainer)</span>
+					<input type="text" class="form-control" name="seed_sent_to_coopcenter11" id="seed_sent_to_coopcenter11" value="">
+				</div>
+				
+				<div class="col-md-6" style="display:none;" id="id_div3">
+					<span>R Line (Male)</span>
+					<input type="text" class="form-control" name="seed_sent_to_coopcenter111" id="seed_sent_to_coopcenter111" value="">
+				</div> 
+				
+				-->
+			</div>
+		</div> <!-- sample -->
+		
+		<div class="form-group">
+			<label class="col-md-3 control-label">Cell/Location</label>
+			<div class="col-md-6">
+				<input type="text" th:field="*{cell_location}" name="cell_location" class="form-control" value="">
+			</div>
+		</div>
+			
+			
+	
+		
+		<div class="form-group">
+			<label class="col-md-3 ">Mode of Delivery </label>
+			<div class="col-md-6">
+				<input class="received" type="radio" th:field="*{mode_of_delivery}" name="radio" value="manual" onclick="delivery_mode(this.value);">Manual &nbsp;
+				<input class="oppositionn-1" type="radio" th:field="*{mode_of_delivery}" name="radio" value="speed_post" onclick="delivery_mode(this.value);">Speed Post
+			</div>
+		</div>
+
+		
+		<div class="speed_post-select">
+		
+			 <div class="form-group">
+				<label class="col-md-3 control-label">Speed post no</label>
+				<div class="col-md-6">
+					<input type="text"  th:name="speedpost_no" class="form-control">
+				</div>
+			</div> 
+														
+			
+			
+			 <div class="form-group">
+				<label class="col-md-3 control-label">Tracking</label>
+				<div class="col-md-6">
+					<input type="text"  th:name="tracking" class="form-control">
+				</div>
+			</div> 
+		
+		</div>
+		
+		<div class="form-group">
+			<label class="col-md-3 control-label">Date of seed sent</label>
+			<div class="col-md-6">
+				<input type="date" th:name="dateof_seadsent" class="form-control" value="">
+			</div>
+		</div>
+		<div  class="test-hybridity">
+		<div class="form-group">
+			<label class="col-md-3 control-label">Additional seed</label>
+			<div class="col-md-6">
+				<input type="text"  th:name="additional_seed" class="form-control" >
+			</div>
+		</div>
+		</div>
+		 <div class="test-dus">
+			<div class="form-group">
+				<label class="col-md-3 control-label">Additional Seed </label>
+				<div class="col-md-6"  style="display:none;" id="id_div11">
+					<!-- <span>A Line (female) </span> -->
+					<input type="text" class="form-control" name="additional_seed1" id="additional_seed1" value="">
+				</div>
+				
+				<!-- 
+				<div class="col-md-6"  style="display:none;" id="id_div22">
+					<span>B Line (Maintainer)</span>
+					<input type="text" class="form-control" name="additional_seed11" id="additional_seed11" value="">
+				</div>
+				
+				<div class="col-md-6"  style="display:none;" id="id_div33">
+					<span>R Line (Male)</span>
+					<input type="text" class="form-control" name="additional_seed111" id="additional_seed111" value="">
+				</div>
+				
+				 -->
+			</div>
+		</div> 
+		
+		<div class="form-group">
+			<label class="col-md-3 ">Date of Additional Seed Sent</label>
+			<div class="col-md-6">
+				<input type="date"  name="dateof_additional_seadsent" id="dateof_additional_seadsent" class="form-control" value="">
+			</div>
+		</div>
+		
+													
+	
+	<!--dicard-->
+	
+	<div class="test-hybridity">
+															
+		<div class="form-group">
+			<label class="col-md-3 control-label">Seeds Discarded</label>
+			<div class="col-md-6">
+				<input type="text"  name="seed_discarded" id="seed_discarded" class="form-control" value="">
+			</div>
+		</div>
+		
+		 <div class="form-group">
+			<label class="col-md-3 control-label">Date of Discard</label>
+			<div class="col-md-6">
+				<input type="date" name="date_of_discard" id="date_of_discard" class="form-control"  >
+			</div>
+		</div> 
+		
+		<div class="form-group">
+			<label class="col-md-3 control-label">Reasons </label>
+			<div class="col-md-6">
+				<input type="text"  name="reason_of_discard" id="reason_of_discard" class="form-control"  >
+			</div>
+		</div>
+		
+	</div>
+	
+
+			<div class="test-dus">
+		<div class="form-group">
+			<label class="col-md-3 control-label">Seeds Discarded</label>
+			<div class="col-md-6"  style="display:none;" id="id_div111">
+				<!-- <span>A Line (female) </span> -->
+				<input type="text" class="form-control" name="seed_discarded1" id="seed_discarded1" value="">
+			</div>
+			<!-- 
+			
+			<div class="col-md-6"  style="display:none;" id="id_div222">
+				<span>B Line (Maintainer)</span>
+				<input type="text" class="form-control" name="seed_discarded11" id="seed_discarded11" value="">
+			</div>
+			
+			<div class="col-md-6"  style="display:none;" id="id_div333">
+				<span>R Line (Male)</span>
+				<input type="text" class="form-control" name="seed_discarded111" id="seed_discarded111" value="">
+			</div>
+			 -->
+			 
+		</div>
+		
+		<div class="form-group">
+			<label class="col-md-3 control-label">Date of Discard</label>
+			<div class="col-md-6"  style="display:none;" id="id_div1111">
+				<!-- <span>A Line (female) </span> -->
+				<input type="date" class="form-control" name="date_of_discard1" id="date_of_discard1" value="">
+			</div>
+			<!-- 
+			<div class="col-md-6"  style="display:none;" id="id_div2222">
+				<span>B Line (Maintainer)</span>
+				<input type="date" class="form-control" name="date_of_discard11" id="date_of_discard11" value="">
+			</div>
+			
+			<div class="col-md-6"  style="display:none;" id="id_div3333">
+				<span>R Line (Male)</span>
+				<input type="date" class="form-control" name="date_of_discard111" id="date_of_discard111" value="">
+			</div>
+			 -->
+			 
+		</div>
+		
+		<div class="form-group">
+			<label class="col-md-3 control-label">Reasons </label>
+			<div class="col-md-6"  style="display:none;" id="id_div11111">
+				<!-- <span>A Line (female) </span> -->
+				<input type="text" class="form-control" th:name="reason_of_discard1" th:id="reason_of_discard1" value="">
+			</div>
+			<!-- 
+			<div class="col-md-6"  style="display:none;" id="id_div22222">
+				<span>B Line (Maintainer)</span>
+				<input type="text" class="form-control" th:name="reason_of_discard11" th:id="reason_of_discard11" value="">
+			</div>
+			
+			<div class="col-md-6"  style="display:none;" id="id_div33333">
+				<span>R Line (Male)</span>
+				<input type="text" class="form-control" th:name="reason_of_discard111" th:id="reason_of_discard111" value="">
+			</div>
+			 -->
+			 
+		</div>
+	</div>
+	
+	
+ 
+
+		
+		
+		
+		<!--dicard-->
+		
+		
+		<div class="form-group">
+			<button type="submit" id="btnsubmit1" name="btnsubmit1" value="btnsubmit1" class="btn btn-danger pull-right" style="display: block;  border-radius:5px;height: 32px; padding: 5px; position:relative; right:14px; border-left: none;">Add</button>
+		</div>
+		
+		<div class="table-responsive">
+			<table class="table table-striped  table-bordered table-hover">
+				<!--Table head-->
+				<thead>
+					<tr>
+						<th>Sr. no.</th>
+						<th>Test type</th>
+						<th>Year</th>
+						<th>Season</th>
+						<th>Lead center</th>
+						<th>Seed sent</th>
+						<th>COP Center</th>
+						<th>Seed sent</th>
+						<th>Date of seed sent</th>
+						<th>Speed post no</th>
+						<th>Tracking</th>
+						<th>Additional seed</th>
+						<th>Action</th>
+					</tr>
+				</thead>
+				<!--Table head-->
+
+				<!--Table body-->
+				<tbody>
+					<tr class="table-info" th:each="data,serial : ${details}">
+						 
+						<td th:text="${serial.count}"></td>
+						<td th:text="${data[4]}"></td>
+						<td th:text="${data[5]}"></td>
+						<td th:text="${data[6]}"></td>
+						<td th:text="${data[16]}"></td>
+						<td th:text="${data[8]}"></td>
+						<td th:text="${data[17]}"></td>
+						<td th:text="${data[10]}"></td>
+						<td th:text="${#dates.format(data[11],'yyyy-MM-dd')}"></td>
+						<td th:text="${data[12]}"></td>
+						<td th:text="${data[13]}"></td>
+						<td th:text="${data[14]}"></td> 
+						  
+						<div th:if="${data[4] == 'DUS'}">
+						<td><a th:href="@{'/editshorttermstorage/'+${data[0]}+'/'+${applicationid}+'/'+${data[1]}}">Edit</a></td>
+						</div>
+						<div th:unless="${data[4] == 'DUS'}">
+						<!-- <div th:if="${data[4] == 'Hybridity'}"> -->
+						<td><a th:href="@{'/editshort_termstorage_hybrid/'+${data[0]}+'/'+${applicationid}+'/'+${data[1]}}">Edit</a></td>
+						</div>
+					</tr>
+					
+				</tbody>
+			<!--Table body-->
+			</table>
+			<!--Table-->
+			
+		</div>
+		
+		<hr>
+		
+		<div class="form-group">
+			<label class="col-md-3 control-label">No of Final Packets</label>
+			
+			<div th:if="${ssp != null}" class="col-md-6">
+				<input type="text" th:value="${sumpackets}" name="no_of_final_packets" id="no_of_final_packets" class="form-control" >
+			</div>
+			<div th:unless="${ssp != null}" class="col-md-6">
+				<input type="text" value="" th:field ="*{no_of_final_packets}" name="no_of_final_packets" id="no_of_final_packets" class="form-control" >
+			</div>
+			
+		</div>
+		
+		
+		<div class="form-group m-b-0">
+			<div class="col-sm-12">
+				<button type="submit" id="btnsubmit2" name="btnsubmit2" value="btnsubmit2" class="btn btn-info waves-effect waves-light">Save</button>
+			</div>
+		</div>
+		
+		
+		<br>    
+			
+		</div>
+		</div>
+		
+		<script type="text/javascript">
+		function getdiv()
+		{
+			var typelineselected = document.getElementById("type_line");
+			var selectedtext = $("#type_line option:selected");
+		//alert("Selected value is ="+typelineselected.value);
+		//alert("Selected text is ="+selectedtext.text());
+		if(typelineselected.value ==1 || typelineselected.value ==2 || typelineselected.value ==3)
+			{
+			$("#id_div1").show();
+			$("#id_div11").show();
+			$("#id_div111").show();
+			$("#id_div1111").show();
+			$("#id_div11111").show();
+			}
+			else
+			{
+				$("#id_div1").hide();
+				$("#id_div11").hide();
+				$("#id_div111").hide();
+				$("#id_div1111").hide();
+				$("#id_div11111").hide();
+			}
+		/*
+		if(typelineselected.value ==2)
+		{
+		$("#id_div2").show(); 
+		$("#id_div22").show();
+		$("#id_div222").show();
+		$("#id_div2222").show();
+		$("#id_div22222").show();
+		}
+		else
+		{
+		 	$("#id_div2").hide(); 
+			$("#id_div22").hide();
+			$("#id_div222").hide();
+			$("#id_div2222").hide();
+			$("#id_div22222").hide();
+		}
+		*/
+		
+		/*
+		if(typelineselected.value ==3)
+		{
+		$("#id_div3").show(); 
+		$("#id_div33").show();
+		$("#id_div333").show();
+		$("#id_div3333").show();
+		$("#id_div33333").show();
+		}
+		else
+		{
+			$("#id_div3").hide(); 
+			$("#id_div33").hide();
+			$("#id_div333").hide();
+			$("#id_div3333").hide();
+			$("#id_div33333").hide();
+		}
+		*/
+		
+		}
+		</script>
+		
+	</form>
+</span>
+<span th:unless="${ShortTermStorage != null && ShortTermStorage == 'ShortTermStorage' }">
+ <label>YOU ARE NOT AUTHORISED TO VIEW THIS PAGE.PLEASE CONTACT ADMINISTRATOR</label>
+ </span>
+
+</div>
+</html>

@@ -1,0 +1,2246 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+	<head>
+	  <th:block th:include="adminfragment/headerlibs.html :: headerlibs"></th:block> 
+	</head>
+
+    <body class="fixed-left">
+        <!-- Begin page -->
+        <div id="wrapper">
+        
+            <!-- Top Bar Start -->
+           <header th:insert="adminfragment/header.html :: header"> </header>
+            <!-- Top Bar End -->
+
+
+            <!-- ========== Left Sidebar Start ========== -->
+			<header th:insert="adminfragment/sidenav.html :: sidevav"> </header>
+            <!-- Left Sidebar End --> 
+
+   		
+            <!-- Start right Content here -->
+            <!-- ============================================================== -->                      
+     
+     
+      <div class="content-page">
+                <!-- Start content -->
+                <div class="content">
+                    <div class="container">
+
+                        <!-- Page-Title -->
+                        <div class="row">
+                            <div class="col-sm-12">
+                                <h4 class="pull-left page-title">Application List</h4>
+                                <ol class="breadcrumb pull-right">
+                                    <li><a href="/admin">Home</a></li>
+                                    <li class="active">Application List</li>
+                                </ol>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="panel panel-default">
+                                    <div class="panel-heading">
+                                        <h3 class="panel-title">Submitted Applications</h3>
+                                    </div>
+                                    <div class="panel-body">
+                                        <div class="row">
+                                            <div class="col-md-12 col-sm-12 col-xs-12">
+                                            
+                                            <div class="table-responsive">
+                                            <span th:if="${actd_viewtrue != null && actd_viewtrue == 'valpresent' }">
+											
+                                                <table id="shortstorage" class="table table-hover table-bordered">
+                                                    <thead>
+                                                        <tr>
+                                                            <th>S.No</th>
+                                                            <th>Form Type</th>
+                                                            <th>Application  ID</th>
+                                                            <th>PVP NO</th>
+                                                            <th>Application Date</th>
+															<th>Name</th>
+                                                            <th>Crop</th>
+                                                            <th>Crop Group</th>
+                                                            <th>Denomination</th>
+															<!-- <th>Application Stage</th> -->
+															<th>Application status</th>
+														 <span th:each="sec_chk : ${actd}">
+														<span th:if="${sec_chk == 'View'}">
+														<th>view</th>
+														</span>
+														</span>
+														
+														<span th:each="sec_chk : ${actd}">
+														<span th:if="${sec_chk == 'Edit'}">
+															<th>Action</th>
+														</span>
+														</span>
+														
+														 </tr>
+                                                    </thead>
+                                                    <tbody>
+                          <tr th:each="status_application,serial :${statuswise_application}">
+                              <td th:text="${serial.count}"></td>
+                              <td th:text="${status_application[15]}"></td>
+                              <td th:text="${status_application[6]}"></td>
+                              <td th:text="${status_application[13]}"></td>
+							  <td th:text="${status_application[1]}"></td>
+                              <td th:text="${status_application[2]}"></td>
+                              <td th:text="${status_application[4]}"></td>
+                              <td th:text="${status_application[5]}"></td>
+                              <td th:text="${status_application[3]}"></td>
+							 <!--  <td th:text="${status_application[7]}"></td> -->
+							  <td th:text="${status_application[8]}"></td>
+						    
+						    <span th:each="sec_chk : ${actd}">
+							<span th:if="${sec_chk == 'View'}">
+							<td th:if="${status_application[15] == 'Form1'}">
+							<a class="btn btn-success btn-xs" th:href="@{'/show_application_details/'+${status_application[6]}}">View Application
+							</a>
+							</td>
+							<td th:if="${status_application[15] == 'Form2'}">
+							<a class="btn btn-success btn-xs" th:href="@{'/show_application_details_f2/'+${status_application[6]}}">View Application
+							</a>
+							</td>
+							<td th:if="${status_application[15] == 'Form3'}">
+							<a class="btn btn-success btn-xs" th:href="@{'/show_application_details_f3/'+${status_application[6]}}">View Application
+							</a>
+							</td>
+							</span>
+							</span>
+							
+							<span th:each="sec_chk : ${actd}">
+						     <span th:if="${sec_chk == 'Edit'}">
+							<td class="action_btn_line-height">
+							<a class="btn btn-success btn-xs" th:onclick="'populatedata(\''+${status_application[6]}+'\')'" data-toggle="modal" th:data-target="'#myModal'+${status_application[6]}" href="#">Seeds/Planting Material Submit</a>
+							
+							
+							<div class="modal"  th:id="'myModal'+${status_application[6]}" style="display: none;" >
+							<div class="modal-dialog" style="width:1024px;">
+								<!-- Modal content-->
+								<div class="modal-content">
+									<div class="modal-header">
+										<button type="button" class="close" data-dismiss="modal"><i class="fa fa-close"></i></button>
+										<h4 class="modal-title">Seeds/ Planting Material Submission <br>Application Id-<span th:text="${status_application[6]}"></span></h4>
+									</div>
+	<div class="modal-body">
+		<div role="tabpanel" class="tab-pane table-responsive active" id="receive">
+			<form class="form-horizontal active" th:action="@{'/form_openingseed_details/'+${status_application[6]}}" th:object="${seedinfo}" role="form" id="form_seed_details"  method="post" enctype="multipart/form-data">   <!--form_4 start -->                                       
+	 
+	<div class="panel panel-success">
+		<div class="panel-heading">Seeds/ Planting Material Submission</div>
+			<div class="panel-body">
+		
+		<div class="form-group">
+		<div class="table-responsive col-sm-12">
+		<table id="shortstorage" class="table table-striped  table-bordered table-hover">
+				<!--Table head-->
+			<tbody>
+			<tr>
+				<td>Seed Or Plant <span style="color:red">*</span></td>
+				<td>
+					<input type="radio" th:id="'seed_plant_one'+${status_application[6]}" name="radio" th:field="*{seedorplant}"  value="Seeds">Seeds
+					<input type="radio" th:id="'seed_plant_two'+${status_application[6]}" name="radio" th:field="*{seedorplant}" value="Planting Material">Planting Material
+				   
+				    <span th:id="'radio_seed_error'+${status_application[6]}" style="color:red"></span>
+				</td>
+				
+			</tr>
+			<tr>
+				<td>Date of Submission <span style="color:red">*</span></td>
+				<td>
+				<input type="date" th:id="'receiptdate'+${status_application[6]}" name="receiptdate" th:field="*{receiptdate}"  class="form-control" />
+				<span th:id="'receiptdate_error'+${status_application[6]}" style="color:red"></span>
+				 </td>
+				
+			</tr>
+								
+		</tbody>
+	</table>
+	</div>
+<div class="table-responsive col-sm-12">
+	<table class="table table-striped  table-bordered table-hover">
+		<!--Table head-->
+	<thead>
+		<tr></tr>
+	</thead>
+	<!--Table head-->
+
+	<!--Table body-->
+	<tbody>
+		<tr class="table-info">
+		<td>Line Type <span style="color:red">*</span></td>
+		<td> 
+	<span th:if="${status_application[9] != null}">
+	<select class="form-control" name="typeline" th:id="'typeline'+${status_application[6]}" th:onchange="'typelinevalue(\''+${status_application[6]}+'\',this)'">
+    <option value="Selectdd">Select</option>
+    <option th:each="dropDownItem : ${TypeLine}"
+     th:value="${dropDownItem.id}"
+     th:text="${dropDownItem.code}" />   
+</select>
+	</span>
+	<span th:if="${status_application[9] == null}">
+	<select class="form-control" name="typeline" th:id="'typeline'+${status_application[6]}" th:onchange="'typelinevalue(\''+${status_application[6]}+'\',this)'">
+	   <option value="Selectdd">Select</option>
+	   <option th:id="'Candidate Variety'+${status_application[6]}" value="Candidate Variety">Candidate Variety</option>
+	   </select>
+	</span>
+	<span th:id="'typeline_error'+${status_application[6]}" style="color:red"></span>
+	
+	</td>
+		</tr>
+		
+		<tr class="table-info">
+			<td>Seeds Requirement as per guidelines <span style="color:red">*</span> </td>
+			<td>
+			<input type="text" th:id="'seed_req_asper_guideline'+${status_application[6]}" name="seed_req_asper_guideline" th:field="*{seed_req_asper_guideline}" class="form-control" value="">
+			<span th:id="'seed_req_asper_guideline_error'+${status_application[6]}" style="color:red"></span>
+			</td>
+			
+		</tr>
+		
+		<tr class="table-info">
+			<td>Approx weight of packet <span style="color:red">*</span> </td>
+			<td><input type="text" name="approx_weight" th:id="'approx_weight'+${status_application[6]}" th:field="*{approx_weight}" class="form-control" onkeyup="NumAndTwoDecimals(event , this);" pattern="\d*" maxlength="5"  >
+			<span th:id="'approx_weight_error'+${status_application[6]}" style="color:red"></span>
+			</td>
+		</tr>
+		
+		<tr class="table-info">
+			<td>Quantity of seeds(g) <span style="color:red">*</span> </td>
+			<td><input type="text" name="quantityofseed_recd" th:id="'quantityofseed_recd'+${status_application[6]}" th:field="*{quantityofseed_recd}" class="form-control" onkeyup="NumAndTwoDecimals(event , this);" pattern="\d*" maxlength="5" >
+			<span th:id="'quantityofseed_recd_error'+${status_application[6]}" style="color:red"></span>
+			</td>
+		</tr>
+		
+		<tr class="table-info">
+			<td>Number of packets <span style="color:red">*</span> </td>
+			<td><input type="text" name="no_of_packets" th:id="'no_of_packets'+${status_application[6]}" th:field="*{no_of_packets}" class="form-control" onkeyup="NumAndTwoDecimals(event , this);" pattern="\d*" maxlength="5" >
+			<span th:id="'no_of_packets_error'+${status_application[6]}" style="color:red"></span>
+			</td>
+		</tr>
+		
+		<tr class="table-info">
+			<td>Moisture % <span style="color:red">*</span> </td>
+			<td><input type="text" name="moisture_ptg" th:id="'moisture_ptg'+${status_application[6]}" th:field="*{moisture_ptg}" class="form-control" onkeyup="NumAndTwoDecimals(event , this);" pattern="\d*" maxlength="5" >
+			<span th:id="'moisture_ptg_error'+${status_application[6]}" style="color:red"></span>
+			</td>
+		</tr>
+		
+		<tr class="table-info">
+			<td>Germination % <span style="color:red">*</span> </td>
+			<td>
+				<input type="text" name="germination_ptg" th:id="'germination_ptg'+${status_application[6]}" th:field="*{germination_ptg}"class="form-control" onkeyup="NumAndTwoDecimals(event , this);" pattern="\d*" maxlength="5" >
+				<span th:id="'germination_ptg_error'+${status_application[6]}" style="color:red"></span>
+			</td>
+		</tr>
+		
+		<tr class="table-info">
+			<td>Purity % <span style="color:red">*</span> </td>
+			<td>
+				<input type="text" name="purity_ptg" th:id="'purity_ptg'+${status_application[6]}" th:field="*{purity_ptg}" class="form-control" onkeyup="NumAndTwoDecimals(event , this);" pattern="\d*" maxlength="5" >
+				<span th:id="'purity_ptg_error'+${status_application[6]}" style="color:red"></span>
+			</td>
+		</tr>
+		
+		<tr class="table-info">
+			<td>Upload Seed Testing Report <span style="color:red">*</span></td>
+			<td>
+				<input type="file"  th:id="'fileUpload_m/'+${status_application[6]}" name="fileUpload" class="form-control"  th:onchange="'javascript:uploadfilechkattachments1(\''+${status_application[6]}+'\',this),validatePDF(\''+${status_application[6]}+'\',this)'">
+
+			 <div class="help-block with-errors" th:id="'docuploaderror2/'+${status_application[6]}" style="color:red"></div> 
+		    </td>
+		 </tr>
+		
+		<tr class="table-info">
+			<td></td>
+			<span th:each="sec_chk : ${actd}">
+			   <span th:if="${sec_chk == 'Edit'}">
+				  <td colspan="4">
+				<div th:with="serialNumber=${status_application[6]}">
+				<button th:id="'submitseedmodal'+${status_application[6]}" th:onclick="'return validate_seeds_planting_material_submission(\''+${serialNumber}+'\');'"  type="submit" class="btn btn-info waves-effect waves-light"> Submit </button>
+				  </div>
+				  </td>
+			  </span>
+			</span>
+			
+		</tr>
+		
+	</tbody>
+<!--Table body-->
+</table>
+<!--Table-->
+<div class="table-responsive col-sm-12">
+<div class="panel-heading">SAVED DETAILS</div>
+
+	<table id="tdata" class="table table-striped  table-bordered table-hover">
+<!--Table head-->
+<thead>
+                                          <tr>
+     <th>S.No</th>
+     <th>Line Type</th>
+     <th>SeedOrPlant</th>
+     <th>Date of Submission</th>
+	<th>Seeds Requirement as per guidelines</th>
+    <th>Approx weight of packet</th>
+    <th>Quantity of seeds(g)</th>
+    <th>Number of packets</th>
+	<th>Moisture %</th>
+	<th>Germination %</th>
+	<th>Purity %</th>
+	<th>Action</th>
+	<th>Seed Testing Report</th>
+ </tr>
+                                      </thead>
+						
+						
+						
+						<tbody>
+					
+						<tr class="table-info">
+						 
+						 </tr> 
+						</tbody>
+						</table> 
+						</div>
+														
+														</div>
+														</div>
+													</div>
+ 
+
+   
+ 	</div>
+ 	
+
+											</form>
+										
+										</div>
+									</div>
+								  <div class="modal-footer">
+									<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+								  </div>
+								</div>
+							</div>
+						</div>
+						
+						<br>
+				<!-- ADDING BUTTON HERE 06-12-2019 -->
+	<a class="btn btn-success btn-xs" th:onclick="'getpaymentfeesdata(\''+${status_application[6]}+'\'),getpaymentfees(\''+${status_application[6]}+'\')'" data-toggle="modal" th:data-target="'#myPayModal'+${status_application[6]}" href="#">Dus Test Fee</a>
+	<div class="modal"  th:id="'myPayModal'+${status_application[6]}" style="display: none;" >
+	<div class="modal-dialog annual_payments_view">
+		<!-- Modal content-->
+		<div class="modal-content">
+			<div class="modal-header">
+				<button  type="button" class="close" data-dismiss="modal"><i class="fa fa-close"></i></button>
+				<h4 class="modal-title">Dus Test Fee <br>Application Id-<span th:text="${status_application[6]}"></span></h4>
+			</div>
+			<div class="modal-body">
+				<div role="tabpanel" class="tab-pane table-responsive active" id="receive">
+					<form class="form-horizontal active" th:action="@{'/saveduspayment/'+${status_application[6]}}" th:object="${duspayment}"  role="form" id="form_seed_details"  method="post" enctype="multipart/form-data">   <!--form_4 start -->                                       
+			 
+						<div class="panel panel-success">
+							<div class="panel-heading">Dus Test Fee</div>
+							<div class="panel-body">
+								
+								<div class="form-group">
+								<div class="table-responsive col-sm-12">
+								<table class="table table-striped  table-bordered table-hover">
+										<!--Table head-->
+									<tbody>
+										<tr>
+											<td>Crop Name</td>
+											<td>
+										 
+									<div class="col-md-6">
+										<select disabled class="form-control" name="cropid" id="cropid">
+									    <option th:value="-1" >Select</option>
+							            <option th:each="dropDownItem : ${cropdata}"
+							               th:value="${dropDownItem.id}"
+							               th:text="${dropDownItem.crop_common_name}" th:selected="${status_application[10] == dropDownItem.id}" />
+							        	</select>
+										</div>
+											</td>
+											
+										</tr>
+										<tr>
+										<td>Amount</td>
+										<td>
+										<div class="col-md-6" th:object="${dusfee}">
+									   <div>
+											 <!-- <label id="amount"></label> -->
+										<input class="form-control" type="text" th:id="'dustestfee'+${status_application[6]}" th:field="*{dustestfee}" readonly>
+										</div>
+										
+										</div>	 
+										</td>	
+										</tr>
+										<tr>
+										<td>Payment Type <span style="color:red">*</span></td>
+										<td>
+										<div  class="col-md-6">
+									 	  <div  class="form-control">
+											<input type="radio" th:id="'pay1'+${status_application[6]}" th:field="*{paymentmode}"   value="offline"> Offline
+											<input type="radio" th:id="'pay2'+${status_application[6]}" th:field="*{paymentmode}"  value="online"> Online
+										 	</div>
+											<span th:id="'paymentmode_error'+${status_application[6]}" style="color:red"></span>	  
+										</div>
+										</td>
+										</tr>
+										<tr>
+										<td>DD Number: <span style="color:red">*</span></td>
+										<td>
+										 <div class="col-md-6">
+										 <div>
+                                         <input type="text" th:id="'ddnumber'+${status_application[6]}"  class="form-control" th:field="*{ddnumber}">
+                                         <span th:id="'ddnumber_error'+${status_application[6]}" style="color:red"></span>	
+                                         </div>
+                                     	</div>
+										</td>
+										</tr>
+										<tr>
+										<td>DD Date <span style="color:red">*</span></td>
+										<td>
+										<div class="col-md-6">
+										<div>
+                                         <input type="date" th:id="'dddate'+${status_application[6]}" th:field="*{dddate}" class="form-control" >
+                                         <span th:id="'dddate_error'+${status_application[6]}" style="color:red"></span>
+                                         </div>
+                                         </div>
+										</td>
+										</tr>
+										<tr>
+										<td>Bank Name <span style="color:red">*</span></td>
+										<td>
+										<div class="col-md-6">
+                                        <input type="text" class="form-control" th:field="*{bankname}" th:id="'bankname'+${status_application[6]}">
+                                        <span th:id="'bankname_error'+${status_application[6]}" style="color:red"></span>
+                                         </div>
+                                       	</td>
+										</tr>
+										<tr>
+										<td>Branch Name <span style="color:red">*</span></td>
+										<td>
+										<div class="col-md-6">
+                                        <input type="text" th:id="'branchname'+${status_application[6]}" class="form-control" th:field="*{branchname}" >
+                                        <span th:id="'branchname_error'+${status_application[6]}" style="color:red"></span>
+                                         </div>
+                                       	</td>
+										</tr>
+										<tr>
+										<td>Upload Scanned Documents:</td>
+										<td>
+										<div class="col-md-6">
+										<input type="file" id="file2" name="paymentfile" class="form-control" th:onchange="'validatePDF(\''+${status_application[6]}+'\',this)'">
+										</div>
+	                                    </td>
+	                                    </tr>
+										
+								 <tr class="table-info">
+								<td></td>
+								   <td colspan="4">
+								<input type="hidden" id="paymentid"  name ="paymentid" th:value="0">
+                                <input type="hidden" id="applicationid"  name ="applicationid" th:value="${status_application[6]}">
+                                 <input type="hidden" id="applicantid" name="applicantid"  th:value="${status_application[0]}">
+									<div>  <!-- th:if="${btenable== 0}"> -->
+									<div th:with="serialNumber=${status_application[6]}">
+									<button th:id="'pay_submit'+${status_application[6]}" type="submit" th:onclick="'return validate_seeds_additional_payment(\''+${serialNumber}+'\');'" class="btn btn-info waves-effect waves-light">Submit</button>
+									</div>
+									</div>
+									  </td>
+							  </tr>
+										
+									</tbody>
+								</table>
+								</div>
+								<div class="table-responsive col-sm-12">
+									 
+								 
+								<div class="table-responsive">
+								<div class="panel-heading">Payment Details:</div>
+								
+									<table id="tdatasecond" class="table table-striped  table-bordered table-hover">
+								<!--Table head-->
+								<thead>
+								      <tr>
+								     <th>S.No</th>
+								     <th>Payment Type</th>
+								     <!-- <th>Category</th> -->
+								     <th>Mode Of Payment</th>
+								     <th>Amount</th>
+								     <th>DD No</th>
+								     <th>TransactionID</th>
+								     <th>Date</th>
+								    <!--  <th>Status</th> -->
+									</tr>
+								    </thead>
+									 <tbody>
+									 <tr class="table-info">
+									 </tr> 
+									 </tbody>
+									 </table> 
+								   </div>
+								 </div>
+								 </div>
+									 </div>
+								 
+								 </div>
+								 	
+								 </form>
+									 </div>
+									</div>
+								  <div class="modal-footer">
+									<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+								  </div>
+								</div>
+							</div>
+						</div>	
+						
+						
+		<!-- ADDING ANNUAL/RENEWAL BUTTON HERE -->
+		
+		<!-- <a class="btn btn-success btn-xs" th:onclick="'getpaymentfees(\''+${status_application[6]}+'\'),getpaymentfeesdata(\''+${status_application[6]}+'\')'" data-toggle="modal" th:data-target="'#myPayModal'+${status_application[6]}" href="#">Dus Test Fee</a> -->
+	
+	<a class="btn btn-success btn-xs" 
+	th:onclick="'getpaymentanualrenewaldata(\''+${status_application[6]}+'\')'" 
+	data-toggle="modal" th:data-target="'#myAnnual_Renewal'+${status_application[6]}" 
+	href="#">Annual Fee</a>
+	
+	<div class="modal"  th:id="'myAnnual_Renewal'+${status_application[6]}" style="display: none;" >
+	<div class="modal-dialog annual_payments_view" >
+		<!-- Modal content-->
+		<div class="modal-content">
+			<div class="modal-header">
+				<button  type="button" class="close" data-dismiss="modal"><i class="fa fa-close"></i></button>
+				<h4 class="modal-title">Annual Payments <br>Application Id-<span th:text="${status_application[6]}"></span><br>VarietyType-<span th:if="${status_application[11] != null}"><span  th:text="${status_application[11]}"></span></span>&nbsp;&nbsp;&nbsp;SubVarietyType-<span th:if="${status_application[12] != null}"><span  th:text="${status_application[12]}"></span></span></h4>
+			</div>
+			<div class="modal-body">
+				<div role="tabpanel" class="tab-pane table-responsive active" id="receive">
+  <form class="form-horizontal active" th:action="@{'/saveanualrenewal/'+${status_application[6]}}" th:object="${duspayment}"  role="form" id="form_seed_details"  method="post" enctype="multipart/form-data">   <!--form_4 start -->                                       
+			 
+     <div class="panel panel-success">
+	  <div class="panel-heading">Annual Payments</div>
+	   <div class="panel-body">
+		
+		<div class="form-group">
+		<div class="table-responsive col-sm-12">
+		<table class="table table-striped  table-bordered table-hover">
+				<!--Table head-->
+			<tbody>
+				
+	<div class="view_fees">
+	<button  data-toggle="modal" 
+	th:onclick="'getanualpaymentfee_details_pop(\''+${status_application[6]}+'\')'" 
+	th:data-target="'#annualfeesdetails_pop'+${status_application[6]}" type="button" 
+	>View Fees</button>
+	</div> 
+	
+		
+				<tr>
+					<td>Crop Name</td>
+					<td>
+				 
+			<div class="col-md-6">
+				<select disabled class="form-control" name="cropid" id="cropid">
+			    <option th:value="-1" >Select</option>
+	            <option th:each="dropDownItem : ${cropdata}"
+	               th:value="${dropDownItem.id}"
+	               th:text="${dropDownItem.crop_common_name}" th:selected="${status_application[10] == dropDownItem.id}" />
+	        	</select>
+				</div>
+					</td>
+					
+				</tr>
+				
+				<tr>
+				<td>Fee Type <span style="color:red">*</span> </td>
+				<td>
+				<div class="col-md-6">
+				 <select class="form-control feetype" th:id="'feestype'+${status_application[6]}" th:onchange="'getannualrenewalfees(\''+${status_application[6]}+'\',this)'" th:field="*{paymenttype}">
+                 <option th:value="-1" >Select</option>
+                 <option th:value="Annual" th:text = "Annual"></option>
+                 <!-- <option th:value="Renewal" th:text="Renewal"></option> -->
+                 	</select>
+                 	<span th:id="'feestype_error'+${status_application[6]}" style="color:red"></span>
+				</div>
+				</td>
+				
+				</tr>
+				<tr>
+				<td>Amount </td>
+				 
+				<td>
+				<div class="col-md-6" th:object="${dusfee}">
+			   <div>
+					 <!-- <label id="amount"></label> -->
+				<input class="form-control dustestfeeanualrenewal" type="text"  readonly>
+				</div>
+				
+				</div>	 
+				</td>
+				</tr>
+				<tr>
+				<td>Sales% <span style="color:red">*</span></td>
+				
+				
+				<td>
+				<div class="col-md-5">
+				<input class="form-control samount" th:id="'saamountt'+${status_application[6]}" type="text" onkeyup="NumAndTwoDecimals(event , this);" pattern="\d*" maxlength="5"  th:onchange="'focusFunction(this,\''+${status_application[6]}+'\')'">
+				<span th:id="'saamountt_error'+${status_application[6]}" style="color:red"></span>
+				</div>
+				<!-- <div class="col-md-1 cl-ose-icon"><i class="fa fa-times" aria-hidden="true"></i></div>-->
+				<div class="col-md-1 cl-ose-icon"><span>x</span></div>
+				<div class="col-md-3" th:object="${anualrenewal}">
+				<input class="form-control salespercent" type="text"  readonly>
+				</div>
+				<div class="col-md-1 cl-ose-icon2"><span>=</span></div>
+				<div class="col-md-2">
+				<input class="form-control salesamount" type="text"  readonly>
+				</div>
+				</td>
+				</tr>
+				<tr>
+				<td>Royal% <span style="color:red">*</span> </td>
+				<td>
+				<div class="col-md-5">
+				<input class="form-control ramount" pattern="\d*" maxlength="5" onkeyup="NumAndTwoDecimals(event , this);" th:id="'royalid'+${status_application[6]}" type="text" th:onchange="'focusFunction1(this,\''+${status_application[6]}+'\')'">
+				<span th:id="'royalid_error'+${status_application[6]}" style="color:red"></span>
+				</div>
+				<div class="col-md-1 cl-ose-icon"><span>x</span></div>
+				<div class="col-md-3" th:object="${anualrenewal}">
+				<input class="form-control royalpercent" type="text"  readonly>
+				</div>
+				<div class="col-md-1 cl-ose-icon2"><span>=</span></div>
+				<div class="col-md-2">
+				<input class="form-control royalamount" type="text"  readonly>
+				</div>
+				
+				</td>
+				</tr>
+				<tr>
+				<td>TotalAmount <span style="color:red">*</span> </td>
+				<td>
+				<div class="col-md-6" th:object="${anualrenewal}">
+				<input class="form-control totalamount" type="text" th:id="'amount'+${status_application[6]}" name="amount" readonly>
+				</div>
+				</td>
+				 	
+				</tr>
+				<tr>
+				<td>Payment Type <span style="color:red">*</span> </td>
+				<td>
+				<div  class="col-md-6">
+			 	  <div  class="form-control">
+					<input type="radio" th:id="'paymentmoderenew1'+${status_application[6]}" th:field="*{paymentmode}"   value="offline"> Offline
+					<input type="radio" th:id="'paymentmoderenew2'+${status_application[6]}" th:field="*{paymentmode}"  value="online"> Online
+				 	<span th:id="'paymentmoderenew_error'+${status_application[6]}" style="color:red"></span>
+				 	</div>
+					  
+				</div>
+				</td>
+				 </tr>
+				<tr>
+				<td>DD Number: <span style="color:red">*</span> </td>
+				<td>
+				 <div class="col-md-6">
+				 <div>
+                 <input type="text" th:id="'renewddnumber'+${status_application[6]}" class="form-control" th:field="*{ddnumber}">
+                 <span th:id="'renewddnumber_error'+${status_application[6]}" style="color:red"></span>
+                     </div>
+                     </div>
+				</td>
+				 </tr>
+				<tr>
+				<td>DD Date <span style="color:red">*</span> </td>
+				<td>
+				<div class="col-md-6">
+				<div>
+                <input type="date" th:id="'renewdddate'+${status_application[6]}" th:field="*{dddate}" class="form-control">
+                <span th:id="'renewdddate_error'+${status_application[6]}" style="color:red"></span>
+                </div>
+                </div>
+				</td>
+				</tr>
+				<tr>
+				<td>Bank Name <span style="color:red">*</span> </td>
+				<td>
+				<div class="col-md-6">
+                <input type="text" th:id="'renewbankname'+${status_application[6]}" class="form-control" th:field="*{bankname}">
+                <span th:id="'renewbankname_error'+${status_application[6]}" style="color:red"></span>
+                 </div>
+               	</td>
+				</tr>
+				<tr>
+				<td>Branch Name <span style="color:red">*</span> </td>
+				<td>
+				<div class="col-md-6">
+                <input type="text" th:id="'renewbranchname'+${status_application[6]}" class="form-control" th:field="*{branchname}">
+                 <span th:id="'renewbranchname_error'+${status_application[6]}" style="color:red"></span>
+                 </div>
+               	</td>
+				</tr>
+				<tr>
+				<td>Upload Scanned Documents:</td>
+				<td>
+				<div class="col-md-6">
+				<input type="file" id="file2" name="paymentfile" class="form-control" th:onchange="'validatePDF(\''+${status_application[6]}+'\',this)'">
+				</div>
+                 </td>
+                </tr>
+				
+		 <tr class="table-info">
+		<td></td>
+		   <td colspan="4">
+		   <input type="hidden" id="paymentid"  name ="paymentid" th:value="0">
+           <input type="hidden" id="applicationid"  name ="applicationid" th:value="${status_application[6]}">
+           <input type="hidden" id="applicantid" name="applicantid"  th:value="${status_application[0]}">
+			<div>
+			<div th:with="serialNumber=${status_application[6]}">
+			<button  type="submit" th:onclick="'return validate_seeds_Annual_Renewal_Payment(\''+${serialNumber}+'\');'" class="btn btn-info waves-effect waves-light">Submit</button>
+			</div>
+			</div>
+			  </td>
+			  </tr>
+			  </tbody>
+				</table>
+				</div>
+				<div class="table-responsive col-sm-12">
+					 
+				 
+				<div class="table-responsive">
+				<div class="panel-heading">Payment Details:</div>
+				
+					<table id="tdatathird" class="table table-striped  table-bordered table-hover">
+				<!--Table head-->
+				<thead>
+				      <tr>
+				     <th>S.No</th>
+				     <th>Payment Type</th>
+				     <!-- <th>Category</th> -->
+				     <th>Mode Of Payment</th>
+				     <th>Amount</th>
+				     <th>DD No</th>
+				     <th>TransactionID</th>
+				     <th>Date</th>
+				    <!--  <th>Status</th> -->
+					</tr>
+				    </thead>
+					 <tbody>
+					 <tr class="table-info">
+					 </tr> 
+					 </tbody>
+					 </table> 
+				   </div>
+				 </div>
+				 </div>
+					 </div>
+				 
+				 </div>
+				 	
+				 </form>
+					 </div>
+					</div>
+				  <div class="modal-footer">
+					<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+				  </div>
+				</div>
+			</div>
+		</div>	
+						
+	<!-- Adding here on 16-03-2020  
+		Adding For Renewal Fee here 
+		-->					
+	
+	
+	<a class="btn btn-success btn-xs" th:onclick="'getpaymentanualrenewaldata2nd(\''+${status_application[6]}+'\')'" data-toggle="modal" th:data-target="'#myRenewal_fee'+${status_application[6]}" href="#">Renewal Fee</a>
+	<div class="modal"  th:id="'myRenewal_fee'+${status_application[6]}" style="display: none;" >
+	<div class="modal-dialog annual_payments_view">
+		<!-- Modal content-->
+		<div class="modal-content">
+			<div class="modal-header">
+				<button  type="button" class="close" data-dismiss="modal"><i class="fa fa-close"></i></button>
+				<h4 class="modal-title">Renewal Payments <br>Application Id-<span th:text="${status_application[6]}"></span><br>VarietyType-<span th:if="${status_application[11] != null}"><span  th:text="${status_application[11]}"></span></span>&nbsp;&nbsp;&nbsp;SubVarietyType-<span th:if="${status_application[12] != null}"><span  th:text="${status_application[12]}"></span></span></h4>
+			</div>
+			<div class="modal-body">
+				<div role="tabpanel" class="tab-pane table-responsive active" id="receive">
+					<!-- <form class="form-horizontal active" th:action="@{'/saveanualrenewal/'+${status_application[6]}}" th:object="${duspayment}"  role="form" th:id="'renewal_fdata'+${status_application[6]}"  method="post" enctype="multipart/form-data" onsubmit="return validate_seeds_Renewal_Payment();"> -->   <!--form_4 start -->                                       
+			 <form class="form-horizontal active" th:action="@{'/saveanualrenewal/'+${status_application[6]}}" th:object="${duspayment}"  role="form" th:id="'renewal_fdata'+${status_application[6]}"  method="post" enctype="multipart/form-data">
+			 
+						<div class="panel panel-success">
+							<div class="panel-heading">Renewal Payments</div>
+							<div class="panel-body">
+								
+								<div class="form-group">
+								<div class="table-responsive col-sm-12">
+								<table class="table table-striped  table-bordered table-hover">
+										<!--Table head-->
+									<tbody>
+										<tr>
+											<td>Crop Name</td>
+											<td>
+										 
+									<div class="col-md-6">
+										<select disabled class="form-control" name="cropid" id="cropid">
+									    <option th:value="-1" >Select</option>
+							            <option th:each="dropDownItem : ${cropdata}"
+							               th:value="${dropDownItem.id}"
+							               th:text="${dropDownItem.crop_common_name}" th:selected="${status_application[10] == dropDownItem.id}" />
+							        	</select>
+										</div>
+											</td>
+											
+										</tr>
+										
+										<tr>
+										<td>Fee Type <span style="color:red">*</span> </td>
+										<td>
+										<div class="col-md-6">
+										 <select class="form-control feetype" th:id="'feestype_r'+${status_application[6]}" th:onchange="'getrenewalfees_obj(\''+${status_application[6]}+'\',this)'" th:field="*{paymenttype}">
+						                 <option th:value="-1" >Select</option>
+						                 <!-- <option th:value="Annual" th:text = "Annual"></option> -->
+						                  <option th:value="Renewal" th:text="Renewal"></option> 
+					                  	</select>
+					                  	<span th:id="'feestype_r_error'+${status_application[6]}" style="color:red"></span>
+										</div>
+										</td>
+										
+										</tr>
+										<tr>
+										<td>Amount </td>
+										 
+										<td>
+										<div class="col-md-6" th:object="${dusfee}">
+									   <div>
+											 <!-- <label id="amount"></label> -->
+										<input class="form-control dustestfeeanualrenewal" type="text"  readonly>
+										</div>
+										
+										</div>	 
+										</td>
+										</tr>
+										<tr>
+										<td>Sales% <span style="color:red">*</span></td>
+										
+										
+										<td>
+										<div class="col-md-5">
+										<input class="form-control samount" th:id="'saamountt_r'+${status_application[6]}" type="text" onkeyup="NumAndTwoDecimals(event , this);" pattern="\d*" maxlength="5"  th:onchange="'focusFunction_renewal(this,\''+${status_application[6]}+'\')'">
+										<span th:id="'saamountt_r_error'+${status_application[6]}" style="color:red"></span>
+										</div>
+										<!-- <div class="col-md-1 cl-ose-icon"><i class="fa fa-times" aria-hidden="true"></i></div>-->
+										<div class="col-md-1 cl-ose-icon"><span>x</span></div>
+										<div class="col-md-3" th:object="${anualrenewal}">
+										<input class="form-control salespercent" type="text"  readonly>
+										</div>
+										<div class="col-md-1 cl-ose-icon2"><span>=</span></div>
+										<div class="col-md-2">
+										<input class="form-control salesamount" type="text"  readonly>
+										</div>
+										</td>
+										</tr>
+										<tr>
+										<td>Royal% <span style="color:red">*</span> </td>
+										<td>
+										<div class="col-md-5">
+										<input class="form-control ramount" pattern="\d*" maxlength="5" onkeyup="NumAndTwoDecimals(event , this);" th:id="'royalid_r'+${status_application[6]}" type="text" th:onchange="'focusFunctionrenewal2(this,\''+${status_application[6]}+'\')'">
+										<span th:id="'royalid_r_error'+${status_application[6]}" style="color:red"></span>
+										</div>
+										<div class="col-md-1 cl-ose-icon"><span>x</span></div>
+										<div class="col-md-3" th:object="${anualrenewal}">
+										<input class="form-control royalpercent" type="text"  readonly>
+										</div>
+										<div class="col-md-1 cl-ose-icon2"><span>=</span></div>
+										<div class="col-md-2">
+										<input class="form-control royalamount" type="text"  readonly>
+										</div>
+										
+										</td>
+										</tr>
+										<tr>
+										<td>TotalAmount <span style="color:red">*</span> </td>
+										<td>
+										<div class="col-md-6" th:object="${anualrenewal}">
+										<input class="form-control totalamount" type="text" th:id="'amount_r'+${status_application[6]}" name="amount_r" readonly>
+										<span th:id="'amount_r_error'+${status_application[6]}" style="color:red"></span>
+										</div>
+										</td>
+										 	
+										</tr>
+										<tr>
+										<td>Payment Type <span style="color:red">*</span> </td>
+										<td>
+										<div  class="col-md-6">
+									 	  <div  class="form-control">
+											<input type="radio" th:id="'paymentmoderenew1_r'+${status_application[6]}" th:field="*{paymentmode}"   value="offline"> Offline
+											<input type="radio" th:id="'paymentmoderenew2_r'+${status_application[6]}" th:field="*{paymentmode}"  value="online"> Online
+										 	<span th:id="'paymentmoderenew_r_error'+${status_application[6]}" style="color:red"></span>
+										 	</div>
+											  
+										</div>
+										</td>
+										 </tr>
+										<tr>
+										<td>DD Number: <span style="color:red">*</span> </td>
+										<td>
+										 <div class="col-md-6">
+										 <div>
+                                         <input type="text" th:id="'renewddnumber_r'+${status_application[6]}" class="form-control" th:field="*{ddnumber}">
+                                         <span th:id="'renewddnumber_r_error'+${status_application[6]}" style="color:red"></span>
+                                         </div>
+                                         </div>
+										</td>
+										 </tr>
+										<tr>
+										<td>DD Date <span style="color:red">*</span> </td>
+										<td>
+										<div class="col-md-6">
+										<div>
+                                         <input type="date" th:id="'renewdddate_r'+${status_application[6]}" th:field="*{dddate}" class="form-control">
+                                         <span th:id="'renewdddate_r_error'+${status_application[6]}" style="color:red"></span>
+                                         </div>
+                                         </div>
+										</td>
+										</tr>
+										<tr>
+										<td>Bank Name <span style="color:red">*</span> </td>
+										<td>
+										<div class="col-md-6">
+                                        <input type="text" th:id="'renewbankname_r'+${status_application[6]}" class="form-control" th:field="*{bankname}">
+                                        <span th:id="'renewbankname_r_error'+${status_application[6]}" style="color:red"></span>
+                                         </div>
+                                       	</td>
+										</tr>
+										<tr>
+										<td>Branch Name <span style="color:red">*</span> </td>
+										<td>
+										<div class="col-md-6">
+                                        <input type="text" th:id="'renewbranchname_r'+${status_application[6]}" class="form-control" th:field="*{branchname}">
+                                         <span th:id="'renewbranchname_r_error'+${status_application[6]}" style="color:red"></span>
+                                         </div>
+                                       	</td>
+										</tr>
+										<tr>
+										<td>Upload Scanned Documents:</td>
+										<td>
+										<div class="col-md-6">
+										<input type="file" id="file2" name="paymentfile" class="form-control" th:onchange="'validatePDF(\''+${status_application[6]}+'\',this)'">
+										</div>
+	                                    </td>
+	                                    </tr>
+										
+								 <tr class="table-info">
+								<td></td>
+								   <td colspan="4">
+								<input type="hidden" id="paymentid"  name ="paymentid" th:value="0">
+                                <input type="hidden" id="applicationid"  name ="applicationid" th:value="${status_application[6]}">
+                                 <input type="hidden" id="applicantid" name="applicantid"  th:value="${status_application[0]}">
+									<div>
+									<div th:with="serialNumber=${status_application[6]}">
+									<button th:id="'sub_renewal_form1'+${status_application[6]}" type="submit"   class="btn btn-info waves-effect waves-light"  th:onclick="'return validate_seeds_Renewal_Payment(\''+${serialNumber}+'\');'">Submit</button>
+									</div>
+									</div>
+									  </td>
+							  </tr>
+							  </tbody>
+								</table>
+								</div>
+								<div class="table-responsive col-sm-12">
+									 
+								 
+								<div class="table-responsive">
+								<div class="panel-heading">Payment Details:</div>
+								
+									<table id="tdatafourth" class="table table-striped  table-bordered table-hover">
+								<!--Table head-->
+								<thead>
+								      <tr>
+								     <th>S.No</th>
+								     <th>Payment Type</th>
+								     <!-- <th>Category</th> -->
+								     <th>Mode Of Payment</th>
+								     <th>Amount</th>
+								     <th>DD No</th>
+								     <th>TransactionID</th>
+								     <th>Date</th>
+								    <!--  <th>Status</th> -->
+									</tr>
+								    </thead>
+									 <tbody>
+									 <tr class="table-info">
+									 </tr> 
+									 </tbody>
+									 </table> 
+								   </div>
+								 </div>
+								 </div>
+									 </div>
+								 
+								 </div>
+								 	
+								 </form>
+									 </div>
+									</div>
+								  <div class="modal-footer">
+									<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+								  </div>
+								</div>
+							</div>
+						</div>						
+						
+						
+	<!-- Adding Here Ends For Renewal Fee-->								
+				
+				
+<div th:if="${message != null}">
+ <div id="myModalmessage" class="modal fade">
+   <div class="modal-dialog">
+    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+        <div class="modal-content">
+         <div class="modal-body">
+				<p align="center" th:text="${message}" />
+            </div>
+             <div align="right">
+          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        </div>
+        </div>
+    </div>
+</div>
+</div>	
+				
+				<!-- Adding Here On 13-02-2020 -->
+			<!-- 	<span th:text="${status_application[16]}"></span>
+				<span th:text="${status_application[17]}"></span> -->
+				<span th:if="${status_application[14] == 37}">
+				<!-- <input type="hidden" th:id="'rid1'+${status_application[6]}" th:value="${status_application[16]}">
+				<input type="hidden" th:id="'rid2'+${status_application[6]}" th:value="${status_application[17]}">
+ 				 -->
+ 				 <div th:id="'btn_showhide'+${status_application[6]}" style="display:none">
+ 				<a class="btn btn-success btn-xs" th:href="@{'/discrepancyreport_filling_applicant/'+${status_application[6]}}">Fill Discrepancy Report</a>
+ 				</div>
+ 				<span th:id="'report_expired'+${status_application[6]}" style="color:red">
+ 			   </span>
+ 			   
+ 				</span>	
+ 				
+ 				
+ 				     <!-- Modal -->
+<div class="modal fade" th:id="'annualfeesdetails_pop'+${status_application[6]}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">View Annual Fees</h5>
+      
+      </div>
+      <div class="modal-body table-responsvie">
+        <table id="annualtable_pop" class="table table-hover table-bordered dataTable no-footer">
+        <thead>
+         <tr>
+        <th>S.No</th>
+        <th>Variety Type</th>
+        <th>Payment Type</th>
+        <th>Fees</th>
+        <th>Sales Value%</th>
+        <th>Royalty%</th>
+        </tr></thead>
+        <tbody>
+       </tbody>
+        </table>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        </div>
+    </div>
+  </div>
+</div>
+ 				
+ 				
+ 				
+ 				
+ 				
+ 				
+ 				
+ 				
+ 				
+ 				</td>
+				<!-- Adding here Ends On 13-02-2020 -->											
+				
+				
+				 
+				
+				</span>
+							</span>
+				
+                
+                                                        </tr>
+                       
+						                      </tbody>
+                                                </table>
+                                                
+                                                </span>
+                                                <span th:unless="${actd_viewtrue != null && actd_viewtrue == 'valpresent' }">
+												<label>YOU ARE NOT AUTHORISED TO VIEW THIS PAGE.PLEASE CONTACT ADMINISTRATOR</label>
+												</span>
+                                                </div>
+                                           
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div> <!-- End Row -->
+
+
+                    </div> <!-- container -->
+                               
+                </div> <!-- content -->
+            </div>
+				
+				
+		
+            <!-- ============================================================== -->
+                 
+            <!-- End Right content here -->
+          <div th:replace="adminfragment/footer.html :: footer"></div>
+           </div> <!-- container -->
+                               
+                <!-- content -->
+
+			<!-- start footer content here -->
+			
+			<!-- end footer content here -->
+
+      
+        <!-- END wrapper -->
+
+<!-- footer lib start here-->
+
+<div th:replace="adminfragment/footerlibs.html :: footerlibs"></div>
+<!-- end footer lib -->
+<script>
+$(document).ready(function(){
+$("#myModalmessage").modal('show');
+});
+</script>
+
+<script type="text/javascript" th:inline="javascript">
+var chk_bt = [[${statuswise_application}]];
+//alert(chk_bt);
+    $(document).ready(function(){
+    	/* alert(iniside loop); */
+    	for (var i =0 ;i<chk_bt.length; i++)
+    		{
+   if(chk_bt[i][16] != null && !(chk_bt[i][16] == "") && (chk_bt[i][14] == 37 && chk_bt[i][14] !="" && !(chk_bt[i][14] == null)))
+	   {
+	   var dategiven =new Date(chk_bt[i][16]);
+	   var presentdate = new Date(chk_bt[i][17]);
+	   if(presentdate<=dategiven)
+		   {
+	   $("#btn_showhide"+chk_bt[i][6]).show();
+		   }else{$("#btn_showhide"+chk_bt[i][6]).hide();
+		   document.getElementById("report_expired"+chk_bt[i][6]).innerHTML="Discrepancy Report Filling Period Expired";
+         	 }
+	   }else{$("#btn_showhide"+chk_bt[i][6]).hide();}
+    		}
+    	
+    });
+    </script>
+			
+<script>
+      function validate_seeds_planting_material_submission(that)
+      {
+    	 // alert('printing that as ='+that);
+    	  
+    	  if( document.getElementById("seed_plant_one"+that).checked ==true || document.getElementById("seed_plant_two"+that).checked ==true) 
+        	  {
+    		  document.getElementById("radio_seed_error"+that).innerHTML="";
+        		  
+    		  if( document.getElementById("receiptdate"+that).value =="") {
+    	          	 document.getElementById("receiptdate_error"+that).innerHTML="Please select date";
+    	          	 document.getElementById("receiptdate"+that).focus();
+    	              return false;
+    	           }
+    	           else{
+    	        	   document.getElementById("receiptdate_error"+that).innerHTML="";
+    	           }
+    		  
+	    		  if( document.getElementById("typeline"+that).value =="Selectdd") {
+	 	          	 document.getElementById("typeline_error"+that).innerHTML="Please select typeline";
+	 	          	 document.getElementById("typeline"+that).focus();
+	 	              return false;
+	 	           }
+	 	           else{
+	 	        	   document.getElementById("typeline_error"+that).innerHTML="";
+	 	           }
+	    		
+	    		  if( document.getElementById("seed_req_asper_guideline"+that).value =="") {
+		 	          	 document.getElementById("seed_req_asper_guideline_error"+that).innerHTML="Please enter seed requirement";
+		 	          	 document.getElementById("seed_req_asper_guideline"+that).focus();
+		 	              return false;
+		 	           }
+		 	           else{
+		 	        	   document.getElementById("seed_req_asper_guideline_error"+that).innerHTML="";
+		 	           }
+
+		    		  if( document.getElementById("approx_weight"+that).value =="" || 
+	    				  document.getElementById("approx_weight"+that).value =="0") {
+		 	          	 document.getElementById("approx_weight_error"+that).innerHTML="Please enter approx weight";
+		 	          	 document.getElementById("approx_weight"+that).focus();
+		 	              return false;
+		 	           }
+		 	           else{
+		 	        	   document.getElementById("approx_weight_error"+that).innerHTML="";
+		 	           }
+
+			     if( document.getElementById("quantityofseed_recd"+that).value =="" || 
+			    		 document.getElementById("quantityofseed_recd"+that).value =="0") {
+		 	          	 document.getElementById("quantityofseed_recd_error"+that).innerHTML="Please enter quantity of seeds";
+		 	          	 document.getElementById("quantityofseed_recd"+that).focus();
+		 	              return false;
+		 	           }
+		 	           else{
+		 	        	   document.getElementById("quantityofseed_recd_error"+that).innerHTML="";
+		 	           }
+	    		  if( document.getElementById("no_of_packets"+that).value =="" || 
+	    				  document.getElementById("no_of_packets"+that).value =="0") {
+		 	          	 document.getElementById("no_of_packets_error"+that).innerHTML="Please enter no of packets";
+		 	          	 document.getElementById("no_of_packets"+that).focus() ;
+		 	              return false;
+		 	           }
+		 	           else{
+		 	        	   document.getElementById("no_of_packets_error"+that).innerHTML="";
+		 	           }
+	    		  if( document.getElementById("moisture_ptg"+that).value =="" || 
+	    				  document.getElementById("moisture_ptg"+that).value =="0") {
+		 	          	 document.getElementById("moisture_ptg_error"+that).innerHTML="Please enter moisture";
+		 	          	 document.getElementById("moisture_ptg"+that).focus() ;
+		 	              return false;
+		 	           }
+		 	           else{
+		 	        	   document.getElementById("moisture_ptg_error"+that).innerHTML="";
+		 	           }
+	    		  if( document.getElementById("germination_ptg"+that).value =="" || 
+	    				  document.getElementById("germination_ptg"+that).value =="0") {
+		 	          	 document.getElementById("germination_ptg_error"+that).innerHTML="Please enter germination";
+		 	          	 document.getElementById("germination_ptg"+that).focus() ;
+		 	              return false;
+		 	           }
+		 	           else{
+		 	        	   document.getElementById("germination_ptg_error"+that).innerHTML="";
+		 	           }
+	 	           
+	    		  if( document.getElementById("purity_ptg"+that).value =="" || 
+	    				  document.getElementById("purity_ptg"+that).value =="0") {
+		 	          	 document.getElementById("purity_ptg_error"+that).innerHTML="Please enter purity";
+		 	          	 document.getElementById("purity_ptg"+that).focus() ;
+		 	              return false;
+		 	           }
+		 	           else{
+		 	        	   document.getElementById("purity_ptg_error"+that).innerHTML="";
+		 	           }
+	    		  
+	    		  if( document.getElementById("fileUpload_m/"+that).value =="") {
+		 	          	 document.getElementById("docuploaderror2/"+that).innerHTML="Please Attach a file.";
+		 	          	 document.getElementById("fileUpload_m/"+that).focus() ;
+		 	              return false;
+		 	           }
+		 	           else{
+		 	        	   document.getElementById("docuploaderror2/"+that).innerHTML="";
+		 	           }
+	    		  
+    	  }
+           else{
+        	   document.getElementById("radio_seed_error"+that).innerHTML=" Please select seeds or plant";
+        	   return false;
+           }
+           
+         return( true );
+      }
+</script>
+
+<script>
+      function validate_seeds_additional_payment(that) {
+    	
+    	  $('#pay_submit'+that).attr("disabled",false);
+    	  
+    		if( (document.getElementById("pay1"+that).checked == true) || 
+    	      			 (document.getElementById("pay2"+that).checked == true) )
+    	      		 {
+    	      		 document.getElementById("paymentmode_error"+that).innerHTML="";
+    	      	     }else
+    	      	 	{	  document.getElementById("paymentmode_error"+that).innerHTML="Must select an option";
+    	      	         document.getElementById("pay1"+that).focus() ;
+    	      		    return false;
+    	      		  } 
+    		  
+    		  if( document.getElementById("ddnumber"+that).value =="") {
+    	          	 document.getElementById("ddnumber_error"+that).innerHTML="Please enter dd number";
+    	          	 document.getElementById("ddnumber"+that).focus() ;
+    	              return false;
+    	           }
+    	           else{
+    	        	   document.getElementById("ddnumber_error"+that).innerHTML="";
+    	           }
+	    		  if( document.getElementById("dddate"+that).value =="") {
+	 	          	 document.getElementById("dddate_error"+that).innerHTML="Please enter date";
+	 	          	 document.getElementById("dddate"+that).focus() ;
+	 	              return false;
+	 	           }
+	 	           else{
+	 	        	   document.getElementById("dddate_error"+that).innerHTML="";
+	 	           }
+	    		  if( document.getElementById("bankname"+that).value =="") {
+		 	          	 document.getElementById("bankname_error"+that).innerHTML="Please enter bank name";
+		 	          	 document.getElementById("bankname"+that).focus() ;
+		 	              return false;
+		 	           }
+		 	           else{
+		 	        	   document.getElementById("bankname_error"+that).innerHTML="";
+		 	           }
+	    		  if( document.getElementById("branchname"+that).value =="") {
+		 	          	 document.getElementById("branchname_error"+that).innerHTML="Please enter branch name";
+		 	          	 document.getElementById("branchname"+that).focus() ;
+		 	              return false;
+		 	           }
+		 	           else{
+		 	        	   document.getElementById("branchname_error"+that).innerHTML="";
+		 	           }
+
+	    		  if( document.getElementById("dustestfee"+that).value =="" ||
+	    				  document.getElementById("dustestfee"+that).value ==null ||
+	    				  document.getElementById("dustestfee"+that).value ==0) {
+	    			  alert("Amount Not Found Please Contact Administrator.");
+	    			  $('#pay_submit'+that).attr("disabled",true);
+		 	          	 return false;
+		 	           }
+		 	           
+	    		  
+            
+         return( true );
+      }
+</script>
+
+<script>
+      function validate_seeds_Annual_Renewal_Payment(that) {
+    	  
+    	  if(document.getElementById("feestype"+that).value =="-1"){
+    		  document.getElementById("feestype_error"+that).innerHTML="Please select payment type";
+	          	 document.getElementById("feestype"+that).focus() ;
+	             
+	             return false;
+    	  }
+    	  else{
+    		    document.getElementById("feestype_error"+that).innerHTML="";
+    	  }
+    	  
+    	  if(document.getElementById("saamountt"+that).value ==""){
+    		  document.getElementById("saamountt_error"+that).innerHTML="Please enter sales";
+	          	 document.getElementById("saamountt"+that).focus() ;
+	          	 
+	          	  return false;
+    	  }
+    	  else{
+    		   document.getElementById("saamountt_error"+that).innerHTML="";
+    	  }
+    	  
+    	  if(document.getElementById("royalid"+that).value ==""){
+    		  document.getElementById("royalid_error"+that).innerHTML="Please enter royal";
+	          	 document.getElementById("royalid"+that).focus() ;
+	          	  
+	          	  return false;
+    	  }
+    	  else{
+    		   document.getElementById("royalid_error"+that).innerHTML="";
+    	  }
+    	  
+    	
+    	  
+    	           if( (document.getElementById("paymentmoderenew1"+that).checked == true) || 
+    	      			 (document.getElementById("paymentmoderenew2"+that).checked == true) )
+    	      		 {
+    	      		 document.getElementById("paymentmoderenew_error"+that).innerHTML="";
+    	      	     }else
+    	      	 	{	  document.getElementById("paymentmoderenew_error"+that).innerHTML="Must select an option";
+    	      	         document.getElementById("paymentmoderenew1"+that).focus() ;
+    	      		    return false;
+    	      		  }
+    	         
+    	           if( document.getElementById("renewddnumber"+that).value =="") {
+      	          	 document.getElementById("renewddnumber_error"+that).innerHTML="Please enter dd number";
+      	          	 document.getElementById("renewddnumber"+that).focus() ;
+      	          	  
+      	          	  return false;
+      	           }
+      	           else{
+      	        	     document.getElementById("renewddnumber_error"+that).innerHTML="";
+      	           }
+    	           
+	    		  if( document.getElementById("renewdddate"+that).value =="") {
+	 	          	 document.getElementById("renewdddate_error"+that).innerHTML="Please enter date";
+	 	          	 document.getElementById("renewdddate"+that).focus() ;
+	 	          
+	 	            return false;
+	 	           }
+	 	           else{
+	 	        	  document.getElementById("renewdddate_error"+that).innerHTML="";
+	 	           }
+	    		  
+	    		  if( document.getElementById("renewbankname"+that).value =="") {
+		 	          	 document.getElementById("renewbankname_error"+that).innerHTML="Please enter bank name";
+		 	          	 document.getElementById("renewbankname"+that).focus() ;
+		 	           
+		 	            return false;
+		 	           }
+		 	           else{
+		 	        	   document.getElementById("renewbankname_error"+that).innerHTML="";
+		 	           }
+	    		  
+	    		  if( document.getElementById("renewbranchname"+that).value =="") {
+		 	          	 document.getElementById("renewbranchname_error"+that).innerHTML="Please enter branch name";
+		 	          	 document.getElementById("renewbranchname"+that).focus() ;
+		 	           
+		 	            return false;
+		 	           }
+		 	           else{
+		 	        	   document.getElementById("renewbranchname_error"+that).innerHTML="";
+		 	         }
+
+    	 /*  }
+           else{
+        	   document.getElementById("paymentmoderenew_error").innerHTML=" Please select payment mode";
+        	   return false;
+           }
+            */
+         return( true );
+      }
+</script>
+
+<script>
+      function validate_seeds_Renewal_Payment(that) {
+    	 // alert(that);
+    	 var ftype=  document.getElementById("feestype_r"+that).value;
+    	 var s_per= document.getElementById("saamountt_r"+that).value;
+    	 var r_per= document.getElementById("royalid_r"+that).value;
+    	 var amount_r= document.getElementById("amount_r"+that).value;
+    	 var ddrenew= document.getElementById("renewddnumber_r"+that).value;
+    	 var date_renew= document.getElementById("renewdddate_r"+that).value;
+    	 var bank_renew= document.getElementById("renewbankname_r"+that).value;
+    	 var branch_renew= document.getElementById("renewbranchname_r"+that).value;
+    	 
+		if(ftype=="-1")
+			{  document.getElementById("feestype_r_error"+that).innerHTML="Please select payment type";
+	          	 document.getElementById("feestype_r"+that).focus() ;
+	           return false;
+    	  }
+    	  else{
+    		  document.getElementById("feestype_r_error"+that).innerHTML="";
+    	  }
+		
+		if(s_per=="" || s_per==null)
+			{  document.getElementById("saamountt_r_error"+that).innerHTML="Please fill sales percent";
+         	 document.getElementById("saamountt_r"+that).focus() ;
+          return false;
+	  }
+	  else{
+		  document.getElementById("saamountt_r_error"+that).innerHTML="";
+	  }
+		
+   if(r_per=="" || r_per==null)
+		{  document.getElementById("royalid_r_error"+that).innerHTML="Please fill royal percent";
+     	 document.getElementById("royalid_r"+that).focus() ;
+      return false;
+  }
+  else{
+	  document.getElementById("royalid_r_error"+that).innerHTML="";
+  }
+   
+   
+   if(amount_r=="" || amount_r==null)
+	{  document.getElementById("amount_r_error"+that).innerHTML="Amount Missing";
+     	 document.getElementById("amount_r"+that).focus() ;
+      return false;
+ }
+ else{
+	  document.getElementById("amount_r_error"+that).innerHTML="";
+ }
+	
+   if( (document.getElementById("paymentmoderenew1_r"+that).checked == true) || 
+			 (document.getElementById("paymentmoderenew2_r"+that).checked == true) )
+		 {
+		 document.getElementById("paymentmoderenew_r_error"+that).innerHTML="";
+	     }else
+	 	{	  document.getElementById("paymentmoderenew_r_error"+that).innerHTML="Must select an option";
+	         document.getElementById("paymentmoderenew1_r"+that).focus() ;
+		    return false;
+		  }
+ 
+ if(ddrenew=="" || ddrenew==null)
+	{  document.getElementById("renewddnumber_r_error"+that).innerHTML="Please fill DD Number";
+	 document.getElementById("renewddnumber_r"+that).focus() ;
+return false;
+}
+else{
+document.getElementById("renewddnumber_r_error"+that).innerHTML="";
+}
+ 
+ 
+ 
+ if(date_renew=="" || date_renew==null)
+	{  document.getElementById("renewdddate_r_error"+that).innerHTML="Please fill Date";
+	 document.getElementById("renewdddate_r"+that).focus() ;
+return false;
+}
+else{
+document.getElementById("renewdddate_r_error"+that).innerHTML="";
+}
+ 
+ 
+ if(bank_renew=="" || bank_renew==null)
+	{  document.getElementById("renewbankname_r_error"+that).innerHTML="Please enter bank name";
+	 document.getElementById("renewbankname_r"+that).focus() ;
+return false;
+}
+else{
+document.getElementById("renewbankname_r_error"+that).innerHTML="";
+}
+ 
+ if(branch_renew=="" || branch_renew==null)
+	{  document.getElementById("renewbranchname_r_error"+that).innerHTML="Please enter branch name";
+	 document.getElementById("renewbranchname_r"+that).focus() ;
+return false;
+}
+else{
+document.getElementById("renewbranchname_r_error"+that).innerHTML="";
+}
+  
+		
+		return true;
+	 
+      }
+</script>
+ 
+<script type="text/javascript" th:inline="javascript">
+function focusFunction(that,category)
+{
+	//alert(that.value);
+	//var samount=$('#myAnnual_Renewal'+category).find(".salesamount").val();
+	//alert(samount);
+	if(that.value!=null)
+		{
+	var aa=$('#myAnnual_Renewal'+category).find(".salespercent").val();
+	//var bb=$('#myAnnual_Renewal'+category).find(".salespercent").text();
+		//alert(aa);
+		var total=(aa/100)*that.value;
+		//alert(total);
+	$('#myAnnual_Renewal'+category).find(".salesamount").val(total); 
+ 	$('#myAnnual_Renewal'+category).find(".salesamount").text(total); 
+ 		
+ 		}
+}
+</script>
+
+<script type="text/javascript" th:inline="javascript">
+function focusFunction1(that,category)
+{
+	//alert(that.value);
+	//var samount=$('#myAnnual_Renewal'+category).find(".salesamount").val();
+	//alert(samount);
+	if(that.value!=null)
+		{
+	var aa=$('#myAnnual_Renewal'+category).find(".royalpercent").val();
+	//var bb=$('#myAnnual_Renewal'+category).find(".salespercent").text();
+	//	alert(aa);
+		var total=(aa/100)*that.value;
+	//	alert(total);
+	$('#myAnnual_Renewal'+category).find(".royalamount").val(total); 
+ 	$('#myAnnual_Renewal'+category).find(".royalamount").text(total); 
+ //	$('#myAnnual_Renewal'+category).find(".totalamount").val(); 
+//	$('#myAnnual_Renewal'+category).find(".totalamount").text(); 
+	var t=Number($('#myAnnual_Renewal'+category).find(".samount").val());
+	var r=Number($('#myAnnual_Renewal'+category).find(".ramount").val());
+	var a=Number($('#myAnnual_Renewal'+category).find(".dustestfeeanualrenewal").val());
+	var s=Number($('#myAnnual_Renewal'+category).find(".salesamount").val());
+   var ra=Number($('#myAnnual_Renewal'+category).find(".royalamount").val()); 
+
+	//alert("Print total as t="+t+"r="+r+" a="+a+ " s="+s+" total="+total);
+	//alert("Print total as a="+a+" s="+s+"ra = "+ra);
+
+	//var setamount=a+t+r+total+s;
+	
+	var setamount=a+s+ra;
+	
+	//alert(setamount);
+	$('#myAnnual_Renewal'+category).find(".totalamount").val(setamount);
+	$('#myAnnual_Renewal'+category).find(".totalamount").text(setamount)
+	}
+}
+</script>
+
+
+<script type="text/javascript" th:inline="javascript">
+function focusFunctionrenewal2(that,category)
+{
+	 
+	if(that.value!=null)
+		{
+	var aa=$('#myRenewal_fee'+category).find(".royalpercent").val();
+	 //	alert(aa);
+		var total=(aa/100)*that.value;
+	//	alert(total);
+	$('#myRenewal_fee'+category).find(".royalamount").val(total); 
+ 	$('#myRenewal_fee'+category).find(".royalamount").text(total); 
+  	var t=Number($('#myRenewal_fee'+category).find(".samount").val());
+	var r=Number($('#myRenewal_fee'+category).find(".ramount").val());
+	var a=Number($('#myRenewal_fee'+category).find(".dustestfeeanualrenewal").val());
+	var s=Number($('#myRenewal_fee'+category).find(".salesamount").val());
+	var rp=Number($('#myRenewal_fee'+category).find(".royalamount").val()); 
+	//alert("t="+t+"r="+r);
+	
+	//var setamount=a+t+r+total+s;
+	var setamount=a+s+rp;
+	
+	//alert(setamount);
+	//alert("a="+a+"t ="+t+"r= "+r+" s="+s+" rp="+rp);
+	
+	
+	$('#myRenewal_fee'+category).find(".totalamount").val(setamount);
+	$('#myRenewal_fee'+category).find(".totalamount").text(setamount)
+	}
+}
+</script>
+
+<script type="text/javascript" th:inline="javascript">
+function focusFunction_renewal(that,category)
+{
+	//alert(that.value);
+	 if(that.value!=null)
+		{
+	var aa=$('#myRenewal_fee'+category).find(".salespercent").val();
+	//var bb=$('#myAnnual_Renewal'+category).find(".salespercent").text();
+		//alert(aa);
+		var total=(aa/100)*that.value;
+		//alert(total);
+	$('#myRenewal_fee'+category).find(".salesamount").val(total); 
+ 	$('#myRenewal_fee'+category).find(".salesamount").text(total); 
+ 		
+ 		}
+}
+</script>
+ 
+<script type="text/javascript" th:inline="javascript">
+  function getannualrenewalfees(Obj,that)
+  {
+       var category=Obj;
+       
+       var a = $('#myAnnual_Renewal'+category).find(".feetype").val();
+	var b = $('#myAnnual_Renewal'+category).find(".feetype").text();
+	 
+	//alert(a);
+		
+       //alert(category);
+       if(category != null)	
+       	$.ajax({
+               type: "POST",
+               url: "/ppvfra/getannualrenewalfees",
+               data: 'variety='+category+'&tt='+a,
+               //dataType:'text/application',
+               success: function (data) {
+            	$('#myAnnual_Renewal'+category).find(".dustestfeeanualrenewal").val(data[0][0]);
+                $('#myAnnual_Renewal'+category).find(".dustestfeeanualrenewal").text(data[0][0]);
+         		$('#myAnnual_Renewal'+category).find(".salespercent").val(data[0][1]); 
+         		$('#myAnnual_Renewal'+category).find(".salespercent").text(data[0][1]); 
+         		$('#myAnnual_Renewal'+category).find(".royalpercent").val(data[0][2]); 
+         		$('#myAnnual_Renewal'+category).find(".royalpercent").text(data[0][2]); 
+         		//$('#myAnnual_Renewal'+category).find(".totalamount").val(data[0][10]); 
+         	//	$('#myAnnual_Renewal'+category).find(".totalamount").text(data[0][10]); 
+         		
+         		
+         		//  	   $('#dustestfee').val(response);
+          //       $('#dustestfee').text(response);
+                 },
+               failure: function (response) {
+            	   
+                   alert(response.responseText);
+					  
+               },
+               error: function (response) {
+                   alert(response.responseText);
+					   
+															
+              }
+      });
+   	
+   }
+ </script>
+ 
+ 
+ <script type="text/javascript" th:inline="javascript">
+  function getrenewalfees_obj(Obj,that)
+  {
+       var category=Obj;
+       $('#sub_renewal_form1'+Obj).attr("disabled",false);
+       
+       var a = $('#myRenewal_fee'+category).find(".feetype").val();
+	var b = $('#myRenewal_fee'+category).find(".feetype").text();
+	 
+	//alert(a);
+		
+       //alert(category);
+       if(category != null)	
+       	$.ajax({
+               type: "POST",
+               url: "/ppvfra/getannualrenewalfees",
+               data: 'variety='+category+'&tt='+a,
+               //dataType:'text/application',
+               success: function (data) {
+            	   if(data.length>0)
+            		   {
+            	$('#myRenewal_fee'+category).find(".dustestfeeanualrenewal").val(data[0][0]);
+                $('#myRenewal_fee'+category).find(".dustestfeeanualrenewal").text(data[0][0]);
+         		$('#myRenewal_fee'+category).find(".salespercent").val(data[0][1]); 
+         		$('#myRenewal_fee'+category).find(".salespercent").text(data[0][1]); 
+         		$('#myRenewal_fee'+category).find(".royalpercent").val(data[0][2]); 
+         		$('#myRenewal_fee'+category).find(".royalpercent").text(data[0][2]); 
+         
+            		   }else{
+            			   alert("No Amount Found.Please Contact Administrator");
+            			   $('#sub_renewal_form1'+Obj).attr("disabled",true);
+            		   }
+                 },
+               failure: function (response) {
+            	   
+                   alert(response.responseText);
+					  
+               },
+               error: function (response) {
+                   alert(response.responseText);
+					   
+															
+              }
+      });
+   	
+   }
+ </script>
+ 
+ 
+<script type="text/javascript" th:inline="javascript">
+  function getpaymentfees(Obj)
+  {
+       var category=Obj;
+       //alert(category);
+       if(category != null)	
+       	$.ajax({
+               type: "POST",
+               url: "/ppvfra/getpaymentfees",
+               data: 'variety='+category,
+               //dataType:'application/json',
+               success: function (response) {
+            	   $('#dustestfee'+Obj).val(response);
+                 $('#dustestfee'+Obj).text(response);
+                 },
+               failure: function (response) {
+            	   
+                 //  alert(response.responseText);
+					  
+               },
+               error: function (response) {
+                //   alert(response.responseText);
+					   
+															
+              }
+      });
+   	
+   }
+ </script>
+ 
+ <script type="text/javascript" th:inline="javascript">
+  function getpaymentfeesdata(Obj)
+  {
+	  $('#pay_submit'+Obj).attr("disabled",false);
+       var category=Obj;
+       
+      // alert(category);
+       if(category != null)	
+       	$.ajax({
+               type: "POST",
+               url: "/ppvfra/getpaymentfeesdata",
+               data: 'variety='+category,
+               //dataType:'application/json',
+               success: function (response) {
+            	   $("#tdatasecond tbody").html('');
+            	   for (var i=0;i<response.length;i++)
+                 	{
+            		   //alert(response);
+            		   var count=i+1;
+            		   if(response[i][3] !=null && response[i][3] !="" && response[i][3] !="undefined")
+            		   var c1= response[i][3].toString();
+            		   
+            		   var c2="";
+            		   if(response[i][2] !=null)
+            		   var c3= response[i][2].toString();
+            		   
+            		   if(response[i][4] !=null)
+            		   var c4= response[i][4].toString();
+            		   
+            		   if(response[i][5] !=null)
+                	   var c5= response[i][5].toString();
+            		   
+            		   var c6="";
+            		   
+            		   if(response[i][6] !=null)
+                	   var c7= new Date(response[i][6]);
+            		   var date = c7.getFullYear()+'-'+(c7.getMonth()+1)+'-'+c7.getDate();
+            		   
+            		   if(response[i][12] !=null)
+                       var c8= response[i][12].toString();
+            		   
+            		   if(response[i][13] !=null)
+                       var c9= response[i][13].toString();
+            		   
+            			//var html_data = '<tr><td>'+count+'</td><td>'+c1+'</td><td>'+c2+'</td><td>'+c3+'</td><td>'+c4+'</td><td>'+c5+'</td><td>'+c6+'</td><td>'+date+'</td><td>'+c8+'</td></tr>';
+                      	var html_data = '<tr><td>'+count+'</td><td>'+c1+'</td><td>'+c3+'</td><td>'+c4+'</td><td>'+c5+'</td><td>'+c6+'</td><td>'+date+'</td></tr>';
+                      	$("#tdatasecond tbody").append(html_data);
+            		   
+                 	}
+            	   
+            	   
+                 },
+               failure: function (response) {
+            	   
+                   alert(response.responseText);
+					  
+               },
+               error: function (response) {
+                   alert(response.responseText);
+					   
+															
+              }
+      });
+   	
+   }
+ </script>
+  
+ <script type="text/javascript" th:inline="javascript">
+  function getpaymentanualrenewaldata(Obj)
+  {
+       var category=Obj;
+       //alert(category);
+       if(category != null)	
+       	$.ajax({
+               type: "POST",
+               url: "/ppvfra/getpaymentanualdatafee",
+               data: 'variety='+category,
+               //dataType:'application/json',
+               success: function (response) {
+            	   $("#tdatathird tbody").html('');
+            	   for (var i=0;i<response.length;i++)
+                 	{
+            		   //alert(response);
+            		   var count=i+1;
+            		   if(response[i][3] !=null)
+            		   var c1= response[i][3].toString();
+            		   
+            		   var c2="";
+            		   if(response[i][2] !=null)
+            		   var c3= response[i][2].toString();
+            		   
+            		   if(response[i][4] !=null)
+            		   var c4= response[i][4].toString();
+            		   
+            		   if(response[i][5] !=null)
+                	   var c5= response[i][5].toString();
+            		   
+            		   var c6="";
+            		   
+            		   if(response[i][6] !=null)
+                	   var c7= new Date(response[i][6]);
+            		   var date = c7.getFullYear()+'-'+(c7.getMonth()+1)+'-'+c7.getDate();
+            		   
+            		   if(response[i][12] !=null)
+                       var c8= response[i][12].toString();
+            		   
+            		   if(response[i][13] !=null)
+                       var c9= response[i][13].toString();
+            		   
+            			//var html_data = '<tr><td>'+count+'</td><td>'+c1+'</td><td>'+c2+'</td><td>'+c3+'</td><td>'+c4+'</td><td>'+c5+'</td><td>'+c6+'</td><td>'+date+'</td><td>'+c8+'</td></tr>';
+                      var html_data = '<tr><td>'+count+'</td><td>'+c1+'</td><td>'+c3+'</td><td>'+c4+'</td><td>'+c5+'</td><td>'+c6+'</td><td>'+date+'</td></tr>';
+                      $("#tdatathird tbody").append(html_data);
+            		   
+                 	}
+            	   
+            	   
+                 },
+               failure: function (response) {
+            	   
+                   alert(response.responseText);
+					  
+               },
+               error: function (response) {
+                   alert(response.responseText);
+					   
+															
+              }
+      });
+   	
+   }
+ </script>
+ 
+ 
+ <script type="text/javascript" th:inline="javascript">
+  function getpaymentanualrenewaldata2nd(Obj)
+  {
+       var category=Obj;
+       //alert(category);
+       if(category != null)	
+       	$.ajax({
+               type: "POST",
+               url: "/ppvfra/getrenewaldatafee",
+               data: 'variety='+category,
+               //dataType:'application/json',
+               success: function (response) {
+            	   $("#tdatafourth tbody").html('');
+            	   for (var i=0;i<response.length;i++)
+                 	{
+            		   //alert(response);
+            		   var count=i+1;
+            		   if(response[i][3] !=null)
+            		   var c1= response[i][3].toString();
+            		   
+            		   var c2="";
+            		   if(response[i][2] !=null)
+            		   var c3= response[i][2].toString();
+            		   
+            		   if(response[i][4] !=null)
+            		   var c4= response[i][4].toString();
+            		   
+            		   if(response[i][5] !=null)
+                	   var c5= response[i][5].toString();
+            		   
+            		   var c6="";
+            		   
+            		   if(response[i][6] !=null)
+                	   var c7= new Date(response[i][6]);
+            		   var date = c7.getFullYear()+'-'+(c7.getMonth()+1)+'-'+c7.getDate();
+            		   
+            		   if(response[i][12] !=null)
+                       var c8= response[i][12].toString();
+            		   
+            		   if(response[i][13] !=null)
+                       var c9= response[i][13].toString();
+            		   
+            		   var html_data = '<tr><td>'+count+'</td><td>'+c1+'</td><td>'+c3+'</td><td>'+c4+'</td><td>'+c5+'</td><td>'+c6+'</td><td>'+date+'</td></tr>';
+                      $("#tdatafourth tbody").append(html_data);
+            		   
+                 	}
+            	   
+            	   
+                 },
+               failure: function (response) {
+            	   
+                   alert(response.responseText);
+					  
+               },
+               error: function (response) {
+                   alert(response.responseText);
+					   
+															
+              }
+      });
+   	
+   }
+ </script>
+ 
+<script type="text/javascript"  th:inline="javascript">
+     function populatedata(Obj) {
+    //var crop= document.getElementById("cname");
+    // var dataval = [[${dataintab}]];         
+      var tabledata=$("#tdata");
+      if(Obj != null)		 
+      	$.ajax({
+              type: "POST",
+              url: "/ppvfra/getdatasaved",
+              data:Obj,
+              success: function (response) {
+					
+            	  $("#tdata tbody").html(''); 
+                  for (var i=0;i<response.length;i++)
+              	{
+                  	
+                	  if(response[i][1] !=null)
+                	  var str = response[i][1].toString();
+                  	
+                  	if(response[i][8] !=null)
+                  	var linetype = response[i][8].toString();
+                  	if(linetype !=null)
+                  		{
+                  	if(linetype =="4"){linetype ="Candidate";}
+                  	else if(linetype =="3"){linetype ="R Line";}
+                  	else if(linetype =="1"){linetype ="A Line";}
+                  	else if(linetype =="2"){linetype ="B Line";}
+                  		}
+                  	
+                  	var count= i+1;
+                   
+                  	if(response[i][0] !=null)
+                    var zerof = response[i][0].toString();
+                  	
+                  	if(response[i][2] !=null)
+                  	var secondf = response[i][2].toString();
+                  	
+                  	if(response[i][9] !=null)
+                    var ninef = response[i][9].toString();
+                  	
+                  	if(response[i][3] !=null)
+                    var thirdf = response[i][3].toString();
+                  	
+                  	if(response[i][4] !=null)
+                    var fourf = response[i][4].toString();
+                  	
+                  	if(response[i][5] !=null)
+                    var fivef = response[i][5].toString();
+                  	
+                  	if(response[i][6] !=null)
+                    var sixf = response[i][6].toString();
+                  	
+                  	if(response[i][7] !=null)
+                    var sevenf = response[i][7].toString();
+                  	
+                  	if(response[i][10] !=null)
+                     var tenf = response[i][10].toString();
+                  	
+                  	if(response[i][11] !=null)
+                        var elevenf = response[i][11].toString();
+                  	
+                  	var html_data = '<tr><td>'+count+'</td><td>'+linetype+'</td><td>'+tenf+'</td><td>'+str+'</td><td>'+secondf+'</td><td>'+ninef+'</td><td>'+thirdf+'</td><td>'+fourf+'</td><td>'+fivef+'</td><td>'+sixf+'</td><td>'+sevenf+'</td><td><a href="/editseedplantdetails/'+zerof+'">Edit</a></td><td><a href="/ppvfra/download/'+elevenf+'" target="_blank">'+elevenf+'</a></td></tr>';
+                  	$("#tdata tbody").append(html_data);
+                  	
+              	}    
+
+        },
+            failure: function (response) {
+            alert(response.responseText);
+        },
+        error: function (response) {
+            alert(response.responseText);
+        }
+});
+}
+   </script> 
+   
+  <script type="text/javascript"  th:inline="javascript">
+   var dataval = [[${dataintab}]];
+	function typelinevalue(Obj,that){
+// $(that).closest('form').find('input[type=submit]').attr("disabled", false);
+	$(that).closest('form').find("#submitseedmodal"+Obj).attr("disabled", false);
+            			
+		
+    var typelinedata= document.getElementById("typeline"+Obj);
+    var response1 =null;
+  	
+    //DOES NOT WORK
+  	//var text= typelinedata.options[typelinedata.selectedIndex].text;
+    //ENDS
+   
+    //Commenting here on 18-02-2020
+    var selected = $(that).closest('form').find("#typeline"+Obj).val(); 
+   //var selected = $(that).closest('form').find("#typeline+Obj option:selected").text();
+   var text=selected;
+   
+   //alert("vvv"+text);
+   //alert("Selected val="+$(that).val());
+   //Commenting ends here------
+   
+   if(text !=null || text!= "")
+	   {
+   if(text=="Candidate"){text="4"}
+   else if(text=="A Line"){text="1"}
+   else if(text=="B Line"){text="2"}
+   else if(text=="R Line"){text="3"}
+	   }
+   
+    if(Obj != null)		 
+      	$.ajax({
+              type: "POST",
+              url: "/ppvfra/getdatasaved",
+              data:Obj,
+              success: function (response) {
+
+            	for(var k=0; k< response.length ; k++)
+            		{
+            	//alert("k="+k);
+            		var a = response[k][8];
+            	//alert("a="+a);
+            	//alert("text="+text);
+            		if(text == a)
+            			{
+            			alert("Value Already Exists.Please Select another Field Or Edit The Value Present in Table.");
+            			/*  $("#submitseedmodal").attr("disabled", true); */
+            			//$(that).closest('form').find('input[type=submit]').attr("disabled", true);
+            			$(that).closest('form').find("#submitseedmodal"+Obj).attr("disabled", true);
+            			return false;
+            			}
+            		 
+            			
+            		}
+          	},
+            failure: function (response) {
+            alert(response.responseText);
+        },
+        error: function (response) {
+            alert(response.responseText);
+        }
+      	});           
+         
+    
+                  
+    
+}
+</script> 
+
+<script type="text/javascript">
+        function uploadfilechkattachments1(Obj,that1) {
+        	if (Obj == null) 
+                Obj = window.event.srcElement;
+        	//$(that1).closest('form').find('input[type=submit]').attr("disabled", false);
+ 				
+        	if (Obj.value != "") 
+                {
+                var	filename = Obj;    
+             //alert(filename+"and that as ="+that1);
+			var iFileSize = document.getElementById('fileUpload_m/'+filename).files[0].size;
+           // alert(iFileSize);
+            
+            $.ajax({
+                type: "POST",
+                url: "/ppfvra/api/filesizecheck",
+                data:'filename='+filename+'&filesize='+iFileSize,
+               
+                success: function (data) {
+
+               if(data == false)
+				{ 
+        document.getElementById("docuploaderror2/"+filename).innerHTML = " <font color='red'>File size is greater than maximum allowed size of 500 KB.</font>";
+        var tst=document.getElementById("fileUpload/"+filename);
+       $(that1).closest('form').find('input[type=submit]').attr("disabled", true);
+		
+        		tst.value='';
+         return false;
+                }else if (data == true) {
+                	typelinevalue(Obj,that1);
+    		        document.getElementById("docuploaderror2/"+filename).innerHTML = " ";
+    			   }
+			
+                   
+                }
+            }); 
+            }
+  }
+    </script>
+    
+    <script type="text/javaScript">
+var formOK = false;
+
+function validatePDF(Obj_new,objFileControl){
+ var file = objFileControl.value;
+ var len = file.length;
+ var ext = file.slice(len - 4, len);
+ if(ext.toUpperCase() == ".PDF" || ext.toUpperCase() == ".PNG" || ext.toUpperCase() == ".JPG" || ext.toUpperCase() == ".GIF"){
+   formOK = true;
+ }
+ else{
+	 $("#submitseedmodal"+Obj_new).attr("disabled", true);
+	 formOK = false;
+   objFileControl.value =null;
+   alert("Only PDF/PNG/JPG/GIF files allowed.");
+ }
+}
+</script> 
+
+<script>
+function NumAndTwoDecimals(e , field) {
+    var val = field.value;
+    var re = /^([0-9]+[\.]?[0-9]?[0-9]?|[0-9]+)$/g;
+    var re1 = /^([0-9]+[\.]?[0-9]?[0-9]?|[0-9]+)/g;
+    if (re.test(val)) {
+        //do something here
+
+    } else {
+        val = re1.exec(val);
+        if (val) {
+            field.value = val[0];
+        } else {
+            field.value = "";
+        }
+    }
+}
+</script>
+
+
+
+ <script type="text/javascript" th:inline="javascript">
+  function getanualpaymentfee_details_pop(Obj)
+  {
+       var category=Obj;
+       //alert(category);
+       if(category != null)	
+       	$.ajax({
+               type: "POST",
+               url: "/ppvfra/getpaymentanual_fee_pop",
+               data: 'id='+category,
+               //dataType:'application/json',
+               success: function (response) {
+            	   $("#annualtable_pop tbody").html('');
+            	   for (var i=0;i<response.length;i++)
+                 	{
+            		   //alert(response);
+            		   var count=i+1;
+
+            		   var c1="";	
+            		   if(response[i][7] !=null)
+                	   c1= response[i][7].toString();
+            		   else c1=" ";
+            		   
+            		   var c2="";
+            		   if(response[i][3] !=null)
+            		   c2= response[i][3].toString();
+            		   else c2=" ";
+
+            		   var c3="";
+            		   if(response[i][4] !=null)
+            		   c3= response[i][4].toString();
+            		   else c3=" ";
+
+            		   var c4="";
+            		   if(response[i][5] !=null)
+                	   var c4= response[i][5].toString();
+            		   
+            		   var c5="";
+            		   if(response[i][6] !=null)
+                       c5= response[i][6].toString();
+            		   else c5=" ";
+                		   
+            		  var html_data = '<tr><td>'+count+'</td><td>'+c1+'</td><td>'+c2+'</td><td>'+c3+'</td><td>'+c4+'</td><td>'+c5+'</td></tr>';
+                      $("#annualtable_pop tbody").append(html_data);
+            		   
+                 	}
+            	   
+            	   
+                 },
+               failure: function (response) {
+            	   
+                   alert(response.responseText);
+					  
+               },
+               error: function (response) {
+                   alert(response.responseText);
+					   
+															
+              }
+      });
+   	
+   }
+ </script>
+ 
+
+</body>
+</html>

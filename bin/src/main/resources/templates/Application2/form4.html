@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+	<div th:fragment="formfour">
+<form class="form-horizontal" role="form" id="" th:action="@{/saveapplicationformiv}" th:object="${applications}" method="post">                                        
+														<div class="form-group">
+															<label class="col-md-6 "><h4>4.General Information of Candidate variety:</h4> </label>
+														</div>
+														<div class="form-group">
+															<label class="col-md-3 control-label">Crop Details </label>
+															<div class="col-md-3">
+																<input type="radio"  class="" value="Trees/Vines" name="trees"> Trees/Vines
+																<input type="radio"  class="" value="Other Crops" name="trees">Other Crops
+															</div>
+														</div>
+														<div class="form-group">
+															<label class="col-md-3 control-label">Common name of crop</label>
+															<div class="col-md-6 col-sm-6 col-xs-12">
+															<div th:if="${addcroplist != null}">
+														        <select id="ddlcrops" class="form-control col-md-7 col-xs-12" name="cropname">
+														        <option th:value="null" >---Select---</option>
+														            <option th:each="cropsitem : ${addcroplist}"
+														               th:value="${cropsitem.id}"
+														               th:text="${cropsitem.crop_common_name}" />
+														        </select>
+														        <!-- <div class="alert alert-danger" th:if="${#fields.hasErrors('seat_Countryid')}" th:errors="*{seat_Countryid}"></div> -->
+												     	</div>
+																
+															</div>
+														</div>
+														<div class="form-group">
+															<label class="col-md-3 control-label">Botanical name</label>
+															<div class="col-md-6 col-sm-6 col-xs-12">
+																<div th:if="${cropspecieslist != null}">
+														        <select id="ddlbotanicalname" class="form-control col-md-7 col-xs-12" name="botanicalname">
+														        <option th:value="null" >---Select---</option>
+														            <option th:each="speciesitem : ${cropspecieslist}"
+														               th:value="${speciesitem.id}"
+														               th:text="${speciesitem.crop_botanical_name}" />
+														        </select>
+														        <!-- <div class="alert alert-danger" th:if="${#fields.hasErrors('seat_Countryid')}" th:errors="*{seat_Countryid}"></div> -->
+												     	</div>
+															</div>
+															<a href="#" title="" data-toggle="popover" data-trigger="focus" data-content="Botanical name mean the scientific name approved by the International code nomenclature of cultivated plants,2004"><span class="badge">i</span></a>
+															
+														</div>
+														<div class="form-group">
+															<label class="col-md-3 control-label">Family</label>
+															<div class="col-md-6 col-sm-6 col-xs-12">
+															<div th:if="${cropspecieslist != null}">
+														        <select id="ddlfamilyname" class="form-control col-md-7 col-xs-12" name="cropfamily">
+														        <option th:value="null" >---Select---</option>
+														            <option th:each="speciesitem : ${cropspecieslist}"
+														               th:value="${speciesitem.id}"
+														               th:text="${speciesitem.Family}" />
+														        </select>
+														        <!-- <div class="alert alert-danger" th:if="${#fields.hasErrors('seat_Countryid')}" th:errors="*{seat_Countryid}"></div> -->
+												     	</div>
+												     	</div>
+														</div>
+														<div class="form-group">
+															<label class="col-md-3 control-label">Denomination(in Block letters)</label>
+															<div class="col-md-6">
+																<input type="text" class="form-control" value="" name="denomination">
+															</div>
+															
+														</div>
+														
+														
+														<hr/>
+														<div class="form-group ">
+															<div class="col-sm-offset-10 col-sm-12">
+															
+																<!-- <input type="hidden" id="applicationidfromiv" name="applicationidfromiv" th:value="*{id}">
+																<input type="hidden" id="applicantidformiv" name="applicantidformiv"  th:value="${userapplicant[0]}">
+																<input type="hidden" id="applicanttypeidformiv" name="applicanttypeidformiv" th:value="*{applicanttypeid}" />
+																 -->
+															
+																<button type="submit" class="btn btn-info waves-effect waves-light">Next</button>
+															</div>
+														</div>
+													</form>
+	</div>
+	</html>

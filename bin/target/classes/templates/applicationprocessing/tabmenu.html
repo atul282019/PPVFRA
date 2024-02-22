@@ -1,0 +1,367 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+	<div th:fragment="tabmenu">
+
+            <!-- ========== Left Sidebar Start ========== -->
+  										  
+						<div class="row">
+                            <div class="col-sm-12">
+                                <div class="panel panel-default">
+                                   <!-- <div class="panel-heading"><h3 class="panel-title">Add Company</h3></div>-->
+                                    <div class="panel-body">
+                                        <form class="form-horizontal" role="form">                                    
+                                            
+											<div class="table-responsive">
+													
+												<table class="table  table-bordered w-auto table-hover forward">
+
+													<!--Table head-->
+													<thead>
+														
+													</thead>
+													<!--Table head-->
+
+													<!--Table body-->
+													<tbody th:each="hdata : ${headerdata}">
+														 <tr>
+															<th>Name</th>
+															<span th:if="${hdata[0] != null}">
+															<td th:text="${hdata[0]}"></td>
+															</span>
+															<span th:unless="${hdata[0] != null}">
+															<td></td>
+															</span>
+														 </tr>
+														
+														<tr >
+															<th>Date</th>
+															<span th:if="${hdata[1] != null}">
+															<td th:text="${hdata[1]}"></td>
+															</span>
+															<span th:unless="${hdata[1] != null}">
+															<td></td>
+															</span>
+														</tr>
+													
+														<tr >
+															<th>PVP Number</th>
+															<span th:if="${hdata[2] != null}">
+															<td th:text="${hdata[2]}"></td>
+															</span>
+															<span th:unless="${hdata[2] != null}">
+															<td></td>
+															</span>
+														</tr>
+													
+														<tr >
+															<th>Type oF Variety</th>
+															<span th:if="${hdata[3] != null}">
+															<td th:text="${hdata[3]}"></td>
+															</span>
+															<span th:unless="${hdata[3] != null}">
+															<td></td>
+															</span>
+														</tr>
+													
+														<tr >
+															<th>Crop</th>
+															<span th:if="${hdata[4] != null}">
+															<td th:text="${hdata[4]}"></td>
+															</span>
+															<span th:unless="${hdata[4] != null}">
+															<td></td>
+															</span>
+														</tr>
+														<tr >
+															<th>Denomination of the Candidate Variety</th>
+															<span th:if="${hdata[5] != null}">
+															<td th:text="${hdata[5]}"></td>
+															</span>
+															<span th:unless="${hdata[5] != null}">
+															<td></td>
+															</span>
+														</tr>
+													</tbody>
+												<!--Table body-->
+												</table>
+												<!--Table-->
+												
+
+												</div>
+                                        </form>
+                                    </div> <!-- panel-body -->
+                                </div> <!-- panel -->
+                            </div> <!-- col -->
+                        </div> <!-- End row -->
+  										  
+  										  
+  								<div class="colspn_btn table-responsive col-sm-12">
+  								<button type="button" class="btn btn-info" data-toggle="collapse" data-target="#demo">
+  Application Processing &nbsp;<i class="fa fa-arrow-circle-o-down" aria-hidden="true" style="
+    font-size: 18px;
+    position: relative;
+    top: 2px;
+"></i>
+</button>
+  
+  
+  <div id="demo" class="collapse">
+    <table class="table table-striped  table-bordered table-hover">
+				<thead>
+				<tr>
+			     	<th>S.No</th>
+			     	<!-- <th>ApplicationId</th> -->
+			     	<th>Remarks</th>
+			     	<th>CreatedBy</th>
+			     	<th>CreatedOn</th> 
+			     </tr>
+			     </thead>
+			     
+			     <tbody>
+			      <tr class="table-info table-bordered" th:each="remarkdata,serial :${getremarks_datafortable}">
+			     <td th:text="${serial.count}"></td>
+			      <!-- <td th:text="${remarkdata[1]}"></td> -->
+			      <td th:text="${remarkdata[2]}"></td>
+			      <!-- <td th:text="${remarkdata[4]}+'('+${remarkdata[5]}+')'"></td> -->
+			      <td th:text="${remarkdata[4]}"></td>
+			      <td th:text="${remarkdata[6]}"></td>
+			     </tr>
+			     </tbody>
+				</table>
+  </div>
+  <br>
+  								
+  								</div>		  
+  										  
+  								 <div class="card">
+  										
+  										 
+  										  
+  										  <ul class="nav nav-tabs" role="tablist">
+										 
+										  
+  
+  
+  
+										 
+										 <!-- <button type="button" class="collapsible">Open Collapsible</button>
+										 <div class="hidden-xs">
+										  <p><table class="table table-striped  table-bordered table-hover">
+				<thead>
+				<tr>
+			     	<th>S.No</th>
+			     	
+			     	<th>Remarks</th>
+			     	<th>CreatedBy</th>
+			     	<th>CreatedOn</th> 
+			     </tr>
+			     </thead>
+			     
+			     <tbody>
+			      <tr class="table-info table-bordered" th:each="remarkdata,serial :${getremarks_datafortable}">
+			     <td th:text="${serial.count}"></td>
+			      
+			      <td th:text="${remarkdata[2]}"></td>
+			     
+			      <td th:text="${remarkdata[4]}"></td>
+			      <td th:text="${remarkdata[6]}"></td>
+			     </tr>
+			     </tbody>
+				</table></p>
+										</div>-->
+										 <li th:if="${ReceiveSeedPlantingMaterial != null && ReceiveSeedPlantingMaterial == 'ReceiveSeedPlantingMaterial' }" role="presentation" class="btn-border active">
+											<a href="#receive" aria-controls="receive"  role="tab" data-toggle="tab" id="receive_seeds" aria-expanded="true">
+												<span class="hidden-xs"> Receive Seeds/Planting Material </span>
+											</a>
+										</li>
+										
+										
+									 
+										
+											<li th:if="${ApplicationScrutiny != null && ApplicationScrutiny == 'ApplicationScrutiny' }" role="presentation" class="btn-border">
+											<a href="#licence" aria-controls="licence" role="tab" data-toggle="tab" id="license"  aria-expanded="true">
+												<span class="hidden-xs">Application Scrutiny</span>
+											</a>
+										</li>
+										 
+										 
+										 <li th:if="${DeficiencyReport != null && DeficiencyReport == 'DeficiencyReport' }" role="presentation" class="btn-border">
+											<a href="#defeciency" aria-controls="defeciency" role="tab" data-toggle="tab" id="defeciency_report" aria-expanded="true">
+												<span class="hidden-xs">Deficiency Report</span>
+											</a>
+										 </li>
+										  
+										 
+										
+										<li th:if="${AddRemarks != null && AddRemarks == 'AddRemarks' }" role="presentation" class="btn-border">
+											<a href="#staff" aria-controls="staff" id="tech_staff" role="tab" data-toggle="tab" aria-expanded="false">
+												<span class="hidden-xs">Add Remarks</span>
+											</a>
+										</li>
+										 
+										
+										<li th:if="${Forward != null && Forward == 'Forward' }" role="presentation" class="btn-border">
+											<a href="#forward" aria-controls="forward" id="tech_forward" role="tab" data-toggle="tab" aria-expanded="false">
+												<span class="hidden-xs">Forward</span>
+											</a>
+										</li>
+										 
+										
+										<li th:if="${SendAcknowledgementletter != null && SendAcknowledgementletter == 'SendAcknowledgementletter' }" role="presentation" class="btn-border">
+											<a href="#acknowledgement" aria-controls="acknowledgement" id="acknowledgement_letter" role="tab" data-toggle="tab" aria-expanded="false">
+												<span class="hidden-xs">Acknowledgement Letter</span>
+											</a>
+										</li>
+										 
+										
+										
+										 <li th:if="${ShortTermStorage != null && ShortTermStorage == 'ShortTermStorage' }" role="presentation" class="btn-border">
+											<a href="#drug" aria-controls="drug" id="drug_details" role="tab" data-toggle="tab" aria-expanded="false">
+												<span class="hidden-xs">Short Term Storage </span>
+											</a>
+										</li>
+										 
+										
+										<li th:if="${DusTestResults != null && DusTestResults == 'DusTestResults' }" role="presentation" class="btn-border">
+											<a href="#results" aria-controls="results" id="results_test" role="tab" data-toggle="tab" aria-expanded="false">
+												<span class="hidden-xs">DUS TEST Results</span>
+											</a>
+										</li>
+										 
+										
+											<li th:if="${DusTestAnalysis != null && DusTestAnalysis == 'DusTestAnalysis' }" role="presentation" class="btn-border">
+											<a href="#Analysis" aria-controls="Analysis" id="Analysis_test" role="tab" data-toggle="tab" aria-expanded="false">
+												<span class="hidden-xs">DUS Test Analysis</span>
+											</a>
+										</li>
+										 
+										
+										 <li th:if="${PublishToPVJ != null && PublishToPVJ == 'PublishToPVJ' }" role="presentation" class="btn-border">
+											<a href="#Publish" aria-controls="Publish" id="Publish_PVJ" role="tab" data-toggle="tab" aria-expanded="false">
+												<span class="hidden-xs">Publish to PVJ</span>
+											</a>
+										</li>
+										 
+										
+										<li th:if="${IssueCertificate != null && IssueCertificate == 'IssueCertificate' }" role="presentation" class="btn-border">
+											<a href="#issue" aria-controls="issue" id="issue_certificate" role="tab" data-toggle="tab" aria-expanded="false">
+												 <span class="hidden-xs">Issue Certificate</span>
+											</a>
+										</li>
+										 
+										
+										<li th:if="${TransferSeedsToMTS != null && TransferSeedsToMTS == 'TransferSeedsToMTS' }" role="presentation" class="btn-border">
+											<a href="#transfer" aria-controls="transfer" id="transfer_seeds" role="tab" data-toggle="tab" aria-expanded="false">
+												 <span class="hidden-xs">Transfer Seeds To MTS</span>
+											</a>
+										</li>
+										 
+										
+										<li th:if="${MediumTermStorage != null && MediumTermStorage == 'MediumTermStorage' }" role="presentation" class="btn-border">
+											<a href="#medium" aria-controls="medium" id="medium_term" role="tab" data-toggle="tab" aria-expanded="false">
+												 <span class="hidden-xs">Medium Term Storage</span>
+											</a>
+										</li>
+										 
+										
+										<li th:if="${ENationalEntry != null && ENationalEntry == 'ENationalEntry' }" role="presentation" class="btn-border">
+											<a href="#Register" aria-controls="Register" id="Register_national" role="tab" data-toggle="tab" aria-expanded="false">
+												<span class="hidden-xs">Entry in e-National Register</span>
+											</a>
+										</li>
+										 
+										
+										<li th:if="${Rejuvination != null && Rejuvination == 'Rejuvination' }" role="presentation" class="btn-border">
+											<a href="#Rejuvenation" aria-controls="Rejuvenation" id="Rejuvenation_national" role="tab" data-toggle="tab" aria-expanded="false">
+												<span class="hidden-xs">Rejuvenation</span>
+											</a>
+										</li>
+										 
+										
+											<li th:if="${Revocation != null && Revocation == 'Revocation' }" role="presentation" class="btn-border">
+											<a href="#Revocation" aria-controls="Revocation" id="Revocation_national" role="tab" data-toggle="tab" aria-expanded="false">
+												<span class="hidden-xs">Revocation</span>
+											</a>
+										</li>
+										 
+											
+									</ul> 
+                                     <div class="tab-content action-content">
+                                     
+                                     
+									 <div th:if="${ReceiveSeedPlantingMaterial != null && ReceiveSeedPlantingMaterial == 'ReceiveSeedPlantingMaterial' }" class="tab-pane dashboard-bg-color active" id="receive" role="tabpanel">
+                                        <div th:insert="applicationprocessing/receive_seeds_planting_materials.html :: receive_seed_detail"> </div> 
+                                     </div>
+                                     
+                                     <div th:if="${ApplicationScrutiny != null && ApplicationScrutiny == 'ApplicationScrutiny' }" class="tab-pane dashboard-bg-color" id="licence" role="tabpanel">
+                                       <div th:insert="applicationprocessing/application_scrutiny.html :: application_scrutiny"> </div> 
+                                    </div>
+                                    
+                                    <div th:if="${DeficiencyReport != null && DeficiencyReport == 'DeficiencyReport' }" class="tab-pane dashboard-bg-color" id="defeciency">
+                                       <div th:insert="applicationprocessing/deficiency_report.html :: deficiency_report"> </div> 
+                                    </div>
+                                         
+                                    <div th:if="${AddRemarks != null && AddRemarks == 'AddRemarks' }" class="tab-pane dashboard-bg-color" id="staff">
+                                      <div th:insert="applicationprocessing/add_remarks.html :: add_remarks"> </div> 
+                                    </div>
+                                      
+                                     <div th:if="${Forward != null && Forward == 'Forward' }" class="tab-pane dashboard-bg-color" id="forward">
+                                      <div th:insert="applicationprocessing/forwardaction.html :: forwardaction"> </div> 
+                                    </div>
+                                    
+                                    <div th:if="${SendAcknowledgementletter != null && SendAcknowledgementletter == 'SendAcknowledgementletter' }" class="tab-pane dashboard-bg-color" id="acknowledgement">
+                                      <div th:insert="applicationprocessing/send_acknowledgement_letter.html :: send_acknowledgement_letter"> </div> 
+                                    </div>
+                                    
+                                     <div th:if="${ShortTermStorage != null && ShortTermStorage == 'ShortTermStorage' }" class="tab-pane dashboard-bg-color" id="drug">
+                                      <div th:insert="applicationprocessing/short_term_storage.html :: short_term_storage"> </div> 
+                                    </div>
+                                    
+                                    <div th:if="${DusTestResults != null && DusTestResults == 'DusTestResults' }" class="tab-pane dashboard-bg-color" id="results">
+                                        <div th:insert="applicationprocessing/dus_test_result.html :: dus_test_results"> </div> 
+                                    </div>
+                                    
+                                     <div th:if="${DusTestAnalysis != null && DusTestAnalysis == 'DusTestAnalysis' }" class="tab-pane dashboard-bg-color" id="Analysis">
+                                       <div th:insert="applicationprocessing/dus_test_analysis.html :: dus_test_analysis"> </div> 
+                                    </div>
+                                     
+                                    <div th:if="${PublishToPVJ != null && PublishToPVJ == 'PublishToPVJ' }" class="tab-pane dashboard-bg-color" id="Publish">
+                                       <div th:insert="applicationprocessing/publish_to_pvj.html :: publish_to_pvj"> </div> 
+                                    </div> 
+                                       
+                                    <div th:if="${IssueCertificate != null && IssueCertificate == 'IssueCertificate' }" class="tab-pane dashboard-bg-color" id="issue">
+                                      <div th:insert="applicationprocessing/issue_certificate.html :: issue_certificate"> </div> 
+                                    </div>
+                                     
+                                    <div  th:if="${TransferSeedsToMTS != null && TransferSeedsToMTS == 'TransferSeedsToMTS' }" class="tab-pane dashboard-bg-color" id="transfer">
+                                      <div th:insert="applicationprocessing/transfer_seed_to_mts.html :: transfer_seeds_to_mts"> </div> 
+                                    </div>
+                                  
+                                     <div th:if="${MediumTermStorage != null && MediumTermStorage == 'MediumTermStorage' }" class="tab-pane dashboard-bg-color" id="medium">
+                                        <div th:insert="applicationprocessing/medium_term_storage.html :: medium_term_storage"> </div> 
+                                    </div>
+                                     
+                                     
+									<div th:if="${ENationalEntry != null && ENationalEntry == 'ENationalEntry' }" class="tab-pane dashboard-bg-color" id="Register">
+                                        <div th:insert="applicationprocessing/entry_in_enational_register.html :: enter_in_enational_register"> </div> 
+                                    </div>
+                                    
+                                    
+									<div th:if="${Rejuvination != null && Rejuvination == 'Rejuvination' }" class="tab-pane dashboard-bg-color" id="Rejuvenation">
+                                       <div th:insert="applicationprocessing/rejuvenation.html :: rejuvenation"> </div> 
+                                    </div>
+                                     
+                                     <div th:if="${Revocation != null && Revocation == 'Revocation' }" class="tab-pane dashboard-bg-color" id="Revocation">
+                                                 <div th:insert="applicationprocessing/revocation.html :: revocation"> </div> 
+                                    </div> 
+                                  
+                                       
+                                      </div>   
+                                         </div>
+                                             
+                                       
+            <!-- ========== Left Sidebar End ========== -->
+
+   </div>
+</html>

@@ -1,0 +1,434 @@
+  <!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+	<div th:fragment="question">
+ 
+ 												
+                                                <form class="form-horizontal" role="form"> 
+                                                    <div class="form-group">
+                                                        <label class="col-md-3 control-label">1. Name of the Applicant/breeder/company</label>
+                                                        <div class="col-md-9">
+                                                            <textarea class="form-control"></textarea>
+                                                        </div>
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label class="col-md-3 control-label">2. Year of Establishment</label>
+                                                        <div class="col-md-9">
+                                                            <input type="text" class="form-control" value="">
+                                                        </div>
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label class="col-md-3 control-label">3. If registered company under Company’s Act 1956 (Give details)</label>
+                                                        <div class="col-md-9">
+                                                            <textarea class="form-control"></textarea>
+                                                        </div>
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label class="col-md-3 control-label">4. Location of corporate office and address</label>
+                                                        <div class="col-md-6">
+                                                            <textarea class="form-control"></textarea>
+                                                        </div>
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label class="col-md-3 control-label">5.1 Telephone</label>
+                                                        <div class="col-md-9">
+                                                            <input type="text" class="form-control" value="">
+                                                        </div>
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label class="col-md-3 control-label">5.2 Fax</label>
+                                                        <div class="col-md-9">
+                                                            <input type="text" class="form-control" value="">
+                                                        </div>
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label class="col-md-3 control-label">5.3 Email</label>
+                                                        <div class="col-md-9">
+                                                            <input type="text" class="form-control" value="">
+                                                        </div>
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label class="col-md-3 control-label">6. Name of candidate variety</label>
+                                                        <div class="col-md-9">
+                                                            <input type="text" class="form-control" value="">
+                                                        </div>
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label class="col-md-3 control-label">(a). Has it been released in any Convention Country earlier</label>
+                                                        <div class="col-md-9">
+                                                            <input type="radio" name="radio" value=""> Yes 
+                                                            <input type="radio" name="radio" value=""> No    
+                                                            <br><sub>If yes give complete details in column number 13</sub>             
+                                                        </div>
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label class="col-md-3 control-label">(b). Pedigree/genealogy</label>
+                                                        <div class="col-md-9">
+                                                            <textarea class="form-control"></textarea>
+                                                            <sub>(Include schematic diagram giving details of varieties, lines, or clones used in the breeding of candidate variety)</sub> 
+															<input type="file" value="">
+                                                        </div>
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label class="col-md-12">(c). Breeding of Candidate Variety</label>
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label class="col-md-3 control-label">(i) Origination </label>
+                                                        <div class="col-md-9">
+                                                            <input type="radio" name="radio" value=""> Controlled pollination 
+                                                            <input type="radio" name="radio" value=""> open pollination    
+                                                            <input type="radio" name="radio" value=""> induced mutation
+                                                            <input type="radio" name="radio" value=""> spontaneous mutation
+                                                            <input type="radio" name="radio" value=""> introduction
+                                                            <input type="radio" name="radio" value=""> selection
+                                                            <input type="radio" name="radio" value=""> seedling selection
+                                                            <input type="radio" name="radio" value=""> any other (specify)
+                                                                        
+                                                        </div>
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label class="col-md-12">(ii) Parental material (name of the parental material, characteristics of the parental material,distinguishable from the candidate variety). If the variety was developed by selection, then the number of selection cycles completed before fixing it.</label>
+                                                    </div>
+												
+                                                    <div class="form-group">
+                                                        <label class="col-md-3 control-label"></label>
+                                                        <div class="col-md-6">
+                                                            <textarea class="form-control"></textarea>
+                                                        </div>
+														<div class="col-md-3">
+                                                            <a href="tqm-form.html" class="btn btn-primary-1 waves-effect waves-light">Table of Characteristics</a>
+                                                        </div>
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label class="col-md-3 control-label">(a). Breeding technique/procedure used</label>
+                                                        <div class="col-md-9">
+                                                            <textarea class="form-control"></textarea>
+                                                        </div>
+														
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label class="col-md-3 control-label">(b). Selection criteria used</label>
+                                                        <div class="col-md-9">
+                                                            <textarea class="form-control"></textarea>
+                                                        </div>
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label class="col-md-3 control-label">(c). Stage of selection and multiplication</label>
+                                                        <div class="col-md-9">
+                                                            <textarea class="form-control"></textarea>
+                                                        </div>
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label class="col-md-3 control-label">(d). Location where breeding was conducted</label>
+                                                        <div class="col-md-9">
+                                                            <textarea class="form-control"></textarea>
+                                                        </div>
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label class="col-md-8">7. Particulars of comparative trial conducted by the applicant, if any.</label>
+														<div class="col-md-4">
+															<input type="file" value="">
+														</div>
+													</div>
+													<div class="form-group">
+                                                        <label class="col-md-12">Information on the location, place, period and year/month of comparative trial conducted method of cultivation such as open field, facilities, planting, potting etc., scale of cultivation, reference varieties used, criteria for choice of the reference varieties, design of experiment, method of analysis of variance experimental error where applicable, and other details.</label>
+                                                        <label class="col-md-12">NOTE: Applicant may, furnish data, tables, copy (ies) of publication(s) related to the details of breeding, comparative trial and comparative data in addition to table of characteristics of candidate and reference varieties. This information provided under this item will not be published by the Authority but will be used to facilitate examination of candidate variety.</label>
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label class="col-md-3 control-label">i. Location</label>
+                                                        <div class="col-md-6">
+                                                            <input type="text" class="form-control" value="">
+                                                        </div>
+														<!--<div class="col-md-3">
+                                                            <a href="tqm-form.html" class="btn btn-primary-1 waves-effect waves-light">Table of Characteristics</a>
+                                                        </div>-->
+                                                    </div>
+													<div class="form-group">
+                                                        <label class="col-md-3 control-label">ii. Place</label>
+                                                        <div class="col-md-6">
+                                                            <input type="text" class="form-control" value="">
+                                                        </div>
+                                                    </div>
+													<div class="form-group">
+                                                        <label class="col-md-3 control-label">iii. Period</label>
+                                                        <div class="col-md-6">
+                                                           <input type="text" class="form-control" value="">
+                                                        </div>
+                                                    </div>
+													
+													<div class="form-group">
+                                                        <label class="col-md-3 control-label">iv. Year and month of comparative trial</label>
+                                                        <div class="col-md-3">
+                                                           <select class="form-control">
+															<option>Select Month</option>
+															<option>January</option>
+															<option>Fabruary</option>
+															<option>March</option>
+															<option>April</option>
+															<option>May</option>
+															<option>June</option>
+															<option>July</option>
+															<option>August</option>
+															<option>September</option>
+															<option>October</option>
+															<option>November</option>
+															<option>December</option>
+														   </select>
+                                                        </div>
+														<div class="col-md-3">
+                                                           <select class="form-control">
+															<option>Select Year</option>
+															<option>2011</option>
+															<option>2012</option>
+															<option>2013</option>
+															<option>2014</option>
+															<option>2015</option>
+															<option>2016</option>
+															<option>2017</option>
+															<option>2018</option>
+															<option>2019</option>
+															<option>2020</option>
+															<option>2021</option>
+															<option>2022</option>
+															<option>2023</option>
+															<option>2024</option>
+															<option>2025</option>
+															<option>2026</option>
+															<option>2027</option>
+															<option>2028</option>
+															<option>2029</option>
+															<option>2030</option>
+														   </select>
+                                                        </div>
+                                                    </div>
+													<div class="form-group">
+                                                        <label class="col-md-3 control-label">v. Conducted method of cultivation </label>
+                                                        <div class="col-md-6">
+                                                           <select class="form-control">
+															<option>Select</option>
+															<option>Open Field</option>
+															<option>Facilities</option>
+															<option>Planting</option>
+															<option>Potting</option>
+															<option>others</option>
+														   </select>
+                                                        </div>
+                                                    </div>
+													<div class="form-group">
+                                                        <label class="col-md-3 control-label">vi. Scale of Cultivation</label>
+                                                        <div class="col-md-6">
+                                                            <input type="text" class="form-control" value="">
+                                                        </div>
+                                                    </div>
+													<div class="form-group">
+                                                        <label class="col-md-3 control-label">vii. Reference Varieties Used </label>
+                                                        <div class="col-md-5">
+															<input type="text" class="form-control" value="">
+                                                        </div>
+														<div class="col-md-1">
+															<button type="submit" class="btn btn-danger pull-right" style="display: block;  border-radius:5px;height: 32px; padding: 5px; position:relative; right:14px; border-left: none;">Add</button>
+                                                        </div>
+                                                    </div>
+													<div class="form-group">
+                                                        <label class="col-md-3 control-label">viii.	Criteria for Choice of the reference varieties</label>
+                                                        <div class="col-md-6">
+                                                           <select class="form-control">
+															<option>Select</option>
+															<option>Option</option>
+														   </select>
+                                                        </div>
+                                                    </div>
+													<div class="form-group">
+                                                        <label class="col-md-3 control-label">ix. Design of experiment</label>
+                                                        <div class="col-md-6">
+                                                            <input type="text" class="form-control" value="">
+                                                        </div>
+                                                    </div>
+													<div class="form-group">
+                                                        <label class="col-md-3 control-label">x. Method of Analysis of variance experimental error</label>
+                                                        <div class="col-md-6">
+                                                            <input type="text" class="form-control" value="">
+                                                        </div>
+                                                    </div>
+													<div class="form-group">
+                                                        <label class="col-md-3 control-label">xi. Other Details</label>
+                                                        <div class="col-md-6">
+                                                            <input type="text" class="form-control" value="">
+                                                        </div>
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label class="col-md-12">8. Characteristics of the candidate variety</label>
+                                                        <label class="col-md-12">Please describe characteristics of the variety in the subheadings: Plant, Stem, Leaf, Inflorescence, Flower and flower parts, Fruit and fruit parts, Seed etc. Describe characters within subheadings generally in the following order: habit, height, length, width, size, shape, colour (RHS colour chart reference with edition). Refer the specific guideline wherever necessary for clarity of description.</label>
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label class="col-md-3 control-label">(a) (i) Give group characters.</label>
+                                                        <div class="col-md-6">
+                                                            <textarea class="form-control"></textarea>
+                                                        </div>
+														<div class="col-md-3">
+                                                            <a href="tqm-form.html" class="btn btn-primary-1 waves-effect waves-light">Table of Characteristics</a>
+                                                        </div>
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label class="col-md-3 control-label">(ii) Distinguishing characteristics (descriptive or elaborate)</label>
+                                                        <div class="col-md-6">
+                                                            <textarea class="form-control"></textarea>
+                                                        </div>
+														<div class="col-md-3">
+                                                            <a href="tqm-form.html" class="btn btn-primary-1 waves-effect waves-light">Table of Characteristics</a>
+                                                        </div>
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label class="col-md-12">(b) Table of characteristics between candidate denomination and reference variety</label>
+                                                        <label class="col-md-12">Please give replicated values for all of its distinguishing and other description for important characteristics along with the corresponding average values of the references varieties. <br> NOTE: Two or more reference varieties should be compared with the candidate variety in the characteristics table, including one deemed to be the most similar variety and other(s) as obvious/similar as possible. If you provide this information it will facilitate the Authority in their DUS test further in examination of the candidate variety.</label>
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label class="col-md-3 control-label"></label>
+                                                        <div class="col-md-6">
+                                                            <textarea class="form-control"></textarea>
+                                                        </div>
+														<div class="col-md-3">
+                                                            <a href="tqm-form.html" class="btn btn-primary-1 waves-effect waves-light">Table of Characteristics</a>
+                                                        </div>
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label class="col-md-12">9. Characteristics of the reference varieties</label>
+                                                        <label class="col-md-12">(a) Most similar variety</label>
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label class="col-md-3 control-label">(i) Denomination</label>
+                                                        <div class="col-md-8">
+                                                            <textarea class="form-control"></textarea>
+                                                        </div>
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label class="col-md-3 control-label">(ii) Basis of choice of this variety for comparison</label>
+                                                        <div class="col-md-9">
+                                                            <textarea class="form-control"></textarea>
+                                                        </div>
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label class="col-md-3 control-label">(iii) Distinguishable Characteristics</label>
+                                                        <div class="col-md-6">
+                                                            <textarea class="form-control"></textarea>
+                                                        </div>
+														<div class="col-md-3">
+                                                            <a href="tqm-form.html" class="btn btn-primary-1 waves-effect waves-light">Table of Characteristics</a>
+                                                        </div>
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label class="col-md-12">(b) Other reference variety</label>
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label class="col-md-3 control-label">(i) Denomination</label>
+                                                        <div class="col-md-9">
+                                                            <textarea class="form-control"></textarea>
+                                                        </div>
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label class="col-md-3 control-label">(ii) Basis of choice of this variety for comparison</label>
+                                                        <div class="col-md-9">
+                                                            <textarea class="form-control"></textarea>
+                                                        </div>
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label class="col-md-3 control-label">(iii) Distinguishable Characteristics</label>
+                                                        <div class="col-md-6">
+                                                            <textarea class="form-control"></textarea>
+                                                        </div>
+														<div class="col-md-3">
+                                                            <a href="tqm-form.html" class="btn btn-primary-1 waves-effect waves-light">Table of Characteristics</a>
+                                                        </div>
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label class="col-md-12">10. Statement of distinctiveness of candidate variety</label>
+                                                        <label class="col-md-12">Please give a distinctiveness statement covering a brief summary of the characteristics that distinguish the candidate variety from all varieties of common knowledge. The Distinctiveness statement should include, (i) names of reference variety (ies) that have been observed most similar to the candidate variety, and (ii) salient comparison for major distinguishing characteristics between the candidate variety and the similar/reference variety (ies).</label>
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label class="col-md-3 control-label"></label>
+                                                        <div class="col-md-6">
+                                                            <textarea class="form-control"></textarea>
+                                                        </div>
+														<div class="col-md-3">
+                                                            <a href="tqm-form.html" class="btn btn-primary-1 waves-effect waves-light">Table of Characteristics</a>
+                                                        </div>
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label class="col-md-12">11. Statement on uniformity and stability of candidate variety</label>
+                                                        <label class="col-md-12">Please give a brief statement describing any variation in the variety that may be regarded as part of its  normal uniform or stable expression, which is predictable, capable of being described in clear terms and commercially acceptable. This should include description and frequency of any off-types, variants or mutations. In your opinion what should be the frequency of off types or any other describable variation beyond which the candidate variety shall be deem to be non-uniform. Also please point out which are the traits that may be particularly referred to as indicators to determine an unstable expression of the phenotype of candidate variety.</label>
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label class="col-md-3 control-label">(i) Uniformity</label>
+                                                        <div class="col-md-6">
+                                                            <textarea class="form-control"></textarea>
+                                                        </div>
+                                                    </div>
+													<div class="form-group">
+                                                        <label class="col-md-3 control-label">(ii)Stability</label>
+                                                        <div class="col-md-6">
+                                                            <textarea class="form-control"></textarea>
+                                                        </div>
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label class="col-md-12">12. Methods for maintaining the candidate variety</label>
+                                                        <label class="col-md-12">Please provide in a brief statement as to how the propagating material will be maintained throughout the duration of the plant breeder’s right, and complete address where the variety will be maintained. This should include status of varieties that are not propagated by seeds including place and method of maintenance and storage of their vegetative material.<br>NOTE: The holder of a plant breeder’s right is responsible for ensuring that propagating material representative of the variety is maintained for the duration of the right.</label>
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label class="col-md-3 control-label"></label>
+                                                        <div class="col-md-9">
+                                                            <textarea class="form-control"></textarea>
+                                                        </div>
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label class="col-md-12">13. Information on variety registered in Convention Countries.</label>
+                                                        <label class="col-md-12">a. What were the grouping characters in that application for this candidate variety?</label>
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label class="col-md-3 control-label"></label>
+                                                        <div class="col-md-9">
+                                                            <textarea class="form-control"></textarea>
+                                                        </div>
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label class="col-md-12">b. What was the Distinctiveness Uniformity and Stability parameter on which it was registered?</label>
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label class="col-md-3 control-label"></label>
+                                                        <div class="col-md-9">
+                                                            <textarea class="form-control"></textarea>
+                                                        </div>
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label class="col-md-12">c. What is the variation in important trait with respect to first filing and the present one (Attach photograph)?</label>
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label class="col-md-3 control-label"></label>
+                                                        <div class="col-md-9">
+                                                            <input type="file" class="form-control">
+                                                        </div>
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label class="col-md-12">d. Has the Variety been withdrawn in the first filed country from cultivation or banned or from any of the subsequently released country?</label>
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label class="col-md-3 control-label"></label>
+                                                        <div class="col-md-9">
+                                                            <input type="radio" name="radio"> Yes 
+                                                            <input type="radio" name="radio"> No
+                                                        </div>
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label class="col-md-3 control-label">If so, the reasons (supplement with information)?</label>
+                                                        <div class="col-md-9">
+                                                            <input type="file" class="form-control">
+                                                        </div>
+                                                    </div>
+                                                    <div class="form-group m-b-0">
+                                                        <div class="col-sm-offset-3 col-sm-9">
+                                                            <button type="submit" class="btn btn-info waves-effect waves-light">Submit</button>
+                                                        </div>
+                                                    </div>
+                                                </form>    
+                                            </div> 
+   
+</html>

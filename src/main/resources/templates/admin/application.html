@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+	<head>
+	  <th:block th:include="adminfragment/headerlibs.html :: headerlibs"></th:block> 
+	   <style>
+            .dashboard_enrollment{
+              background: #f7f7f7;
+              padding: 40px 15px;
+              min-height: 200px;
+              font-size: 20px;
+              text-align: center;
+              border: 1px solid #3e7205;
+              color: #3e7205;
+              margin: 5px;
+            }
+          
+            .dashboard_enrollment:hover{
+              -moz-box-shadow: 0 1px 20px 3px #A39EA0; 
+              -webkit-box-shadow: 0 1px 20px 3px #A39EA0;
+              box-shadow: 0 1px 20px 3px #a29ea0;
+              border: 1px solid rgba(154, 151, 152, 0.18);
+            }
+          
+            .hover_effect{
+              border-color:none !important;
+              -moz-transition:all 0.2s ease-in;
+              -webkit-transition:all 0.2s ease-in;
+              transition:all 0.2s ease-in;
+            }
+          
+            .dashboard_enrollment:hover .hover_effect{
+              /* background-color:#0b9292; */
+              background-color:#92620E;
+             
+            }
+          
+            .padding-top-50{
+              padding-top:50px;
+            }
+          
+            .padding-top-prcb{
+              padding-top:84px;
+            }
+          </style>
+	</head>
+
+    <body class="fixed-left">
+        <!-- Begin page -->
+        <div id="wrapper">
+        
+            <!-- Top Bar Start -->
+           <header th:insert="adminfragment/header.html :: header"> </header>
+            <!-- Top Bar End -->
+
+
+            <!-- ========== Left Sidebar Start ========== -->
+			<header th:insert="adminfragment/sidenav.html :: sidevav"> </header>
+            <!-- Left Sidebar End --> 
+            <!-- ============================================================== -->
+            <!-- Start right Content here -->
+            <!-- ============================================================== -->                      
+            <div class="content-page">
+                <!-- Start content -->
+                <div class="content">
+                    <div class="container">
+
+                        <!-- Page-Title -->
+                        <div class="row">
+                            <div class="col-sm-12">
+                                <h4 class="pull-left page-title">Applications</h4>
+                                <ol class="breadcrumb pull-right">
+                                    <li><a href="/admin">Home</a></li>
+                                    <li class="active">Applications</li>
+                                </ol>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-sm-12">
+                                <div class="panel panel-default">
+                                    <div class="panel-heading"><h3 class="panel-title">Applications</h3></div>
+                                     <span th:if="${actd_viewtrue != null && actd_viewtrue == 'valpresent' }">
+											
+                                    <div class="panel-body">
+                                        <div class="col-md-12">
+                                            <div class="col-md-12 col-sm-12 col-xs-12">
+                                              <div class="pricing">
+                                                <div class="x_content">
+                                                  <div class="">
+                                                    <div class=" dashboard_enrollment">
+                                                         <strong>FORM I- APPLICATION FOR REGISTRATION OF NEW VARIETY AND EXTANT
+                                                            VARIETY UNDER PROTECTION OF PLANT VARIETY AND FARMERS'
+                                                            RIGHTS ACT, 2001 (In English)</strong>
+                                                         <div class="padding-top-50">
+                                                         <a href="/getnew_extend_edv_english" class="btn btn-success waves-effect waves-light w-lg m-b-5 hover_effect"> Apply </a>
+                                                         </div>
+                                                        
+                                                    </div>
+                                                  </div>
+                                                </div>
+                                              </div>
+                                            </div>
+                                            
+                                            <div class="col-md-12 col-sm-12 col-xs-12">
+                                              <div class="pricing">
+                                                <div class="x_content">
+                                                  <div class="">
+                                                    <div class=" dashboard_enrollment">
+                                                         <strong> FORM II- APPLICATION FOR REGISTRATION OF ESSENTIALLY DERIVED
+                                                            VARIETY (EDV) UNDER PROTECTION OF PLANT VARIETY AND
+                                                            FARMERS' RIGHTS ACT, 2001(In English)</strong>
+                                                         <div class="padding-top-50">
+                                                          <a href="/getnew_extend_edv_english2" class="btn btn-success waves-effect waves-light w-lg m-b-5 hover_effect"> Apply </a>
+                                                         </div>
+                                                        
+                                                    </div>
+                                                  </div>
+                                                </div>
+                                              </div>
+                                            </div>
+                                            
+                                           <!--  <div class="col-md-12 col-sm-12 col-xs-12">
+                                                <div class="pricing">
+                                                  <div class="x_content">
+                                                    <div class="">
+                                                      <div class=" dashboard_enrollment">
+                                                           <strong>FORM I- APPLICATION FOR REGISTRATION OF NEW VARIETY AND EXTANT
+                                                              VARIETY UNDER PROTECTION OF PLANT VARIETY AND FARMERS'
+                                                              RIGHTS ACT, 2001 (In Hindi)</strong>
+                                                           <div class="padding-top-50">
+                                                           <a href="new_extend_edv_english.html" class="btn btn-success waves-effect waves-light w-lg m-b-5 hover_effect"> Apply </a>
+                                                           </div>
+                                                          
+                                                      </div>
+                                                    </div>
+                                                  </div>
+                                                </div>
+                                              </div>
+                                              
+                                              <div class="col-md-12 col-sm-12 col-xs-12">
+                                                <div class="pricing">
+                                                  <div class="x_content">
+                                                    <div class="">
+                                                      <div class=" dashboard_enrollment">
+                                                           <strong> FORM II- APPLICATION FOR REGISTRATION OF ESSENTIALLY DERIVED
+                                                              VARIETY (EDV) UNDER PROTECTION OF PLANT VARIETY AND
+                                                              FARMERS' RIGHTS ACT, 2001(In Hindi)</strong>
+                                                           <div class="padding-top-50">
+                                                            <a href="#" class="btn btn-success waves-effect waves-light w-lg m-b-5 hover_effect"> Apply </a>
+                                                           </div>
+                                                          
+                                                      </div>
+                                                    </div>
+                                                  </div>
+                                                </div>
+                                              </div>
+ -->
+                                            <div class="col-md-12 col-sm-12 col-xs-12">
+                                              <div class="pricing">
+                                                <div class="x_content">
+                                                  <div class="">
+                                                    <div class=" dashboard_enrollment">
+                                                         <strong> FORM III - APPLICATION FOR REGISTRATION OF FARMERS' VARIETY UNDER
+                                                            PROTECTION OF PLANT VARIETY AND FARMERS' RIGHTS ACT, 2001.(In English)</strong>
+                                                        <div class="padding-top-50">
+                                                          <a href="/getnew_extend_edv_english3" class="btn btn-success waves-effect waves-light w-lg m-b-5 hover_effect"> Apply </a>
+                                                        </div>
+                                                         
+                                                    </div>
+                                                  </div>
+                                                </div>
+                                              </div>
+                                            </div>
+
+                                            <!-- <div class="col-md-12 col-sm-12 col-xs-12">
+                                                <div class="pricing">
+                                                  <div class="x_content">
+                                                    <div class="">
+                                                      <div class=" dashboard_enrollment">
+                                                           <strong> APPLICATION FOR REGISTRATION OF FARMERS' VARIETY UNDER
+                                                            PROTECTION OF PLANT VARIETY AND FARMERS' RIGHTS ACT, 2001.(In Hindi)</strong>
+                                                          <div class="padding-top-50">
+                                                            <a href="#" class="btn btn-success waves-effect waves-light w-lg m-b-5 hover_effect"> Apply </a>
+                                                          </div>
+                                                           
+                                                      </div>
+                                                    </div>
+                                                  </div>
+                                                </div>
+                                            </div> -->
+                                            
+                                          </div>
+                                    </div> <!-- panel-body -->
+                                    
+                                    </span>
+                                    <span th:unless="${actd_viewtrue != null && actd_viewtrue == 'valpresent' }">
+									 <label>YOU ARE NOT AUTHORISED TO VIEW THIS PAGE.PLEASE CONTACT ADMINISTRATOR</label>
+									 </span>
+                                </div> <!-- panel -->
+                            </div> <!-- col -->
+                        </div> <!-- End row -->
+
+                    </div> <!-- container -->
+                               
+                </div> <!-- content -->
+<!-- 
+                <footer class="footer text-right">
+                    2019 © PPVFRA.
+                </footer> -->
+
+            </div>
+            <!-- ============================================================== -->
+            <!-- End Right content here -->
+            <!-- ============================================================== -->
+ <div th:replace="adminfragment/footer.html :: footer"></div>
+           </div> <!-- container -->
+                               
+                <!-- content -->
+
+			<!-- start footer content here -->
+			
+			<!-- end footer content here -->
+
+      
+        <!-- END wrapper -->
+
+<!-- footer lib start here-->
+
+<div th:replace="adminfragment/footerlibs.html :: footerlibs"></div>
+<!-- end footer lib -->
+    
+    </body>
+</html>

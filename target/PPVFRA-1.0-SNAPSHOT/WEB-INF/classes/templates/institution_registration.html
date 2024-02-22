@@ -1,0 +1,845 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+	<head>
+	  <th:block th:include="fragments/headerlibs.html :: headerlibs"></th:block> 
+      	<style>
+			html{
+				overflow-x: hidden;
+			}
+			#login .container #login-row #login-column #login-box {
+  				margin: 0 auto;
+				height: auto;
+				border: 1px solid #3e7205;
+				background-color: #f7f7f7;
+				color:#3e7205;
+			}
+			#login .container #login-row #login-column #login-box #login-form {
+				padding: 20px;
+			}
+			
+			.login-form-padding{
+				padding: 20px;
+			}
+			
+			
+			#login .container #login-row #login-column #login-box #login-form #register-link {
+				margin-top: -85px;
+			}
+			
+			.captcha-refresh-btn{
+				padding: 0;
+    			position: relative;
+    			top: 10px;
+			}
+		</style>	
+	</head>
+	<body>
+	<header th:insert="fragments/header.html :: header"> </header>
+			<div class="container">
+				<div class="row">
+						<div id="login">
+								<h3 class="text-center">&nbsp;</h3>
+								<meta name="viewport" content="width=device-width, initial-scale=1">
+								<div align="right" style="position: relative;top: -20px; right: 65px;">
+									<button action="action" type="button" onclick="history.go(-1);" style="background-color: green; border-color: white;    text-align: center; border: none; border-radius: 2px; font-size: 14px; color: #fff; padding: 6px 12px;">Back</button>
+								</div>
+								<div class="container">
+								
+								<div id="login-row" class="justify-content-center align-items-center">
+										<div id="login-column" style="width: 80%; margin:0 auto; display:block;">
+											<div id="login-box" >
+												
+												<form id="register-form" class="form form-horizontal login-form-padding" th:action="@{/newinstitutionregistration}" th:object="${institutionregistration}" data-toggle="validator" method="post">
+													<h3 class="text-center"><b>Institution Registration</b></h3><br>
+													<div class="form-group">
+														<label class="col-md-3 control-label">Name <span style="color:red">*</span></label>
+														<div class="col-md-9">
+															<input type="text" th:field="*{InstituteName}" id="institutename" onblur='javascript:institutenamecheck()' class="form-control">
+															<div class="alert alert-danger" th:if="${#fields.hasErrors('InstituteName')}" th:errors="*{InstituteName}"></div>
+														    <div class="help-block with-errors" id="institutenameerror"></div>
+														    <div style="color:red" id="institutenameerror2"></div>
+														</div>
+													</div>
+													<div class="form-group">
+														<label class="col-md-3 control-label">Abbreviation <span style="color:red">*</span></label>
+														<div class="col-md-9">
+															<input type="text" th:field="*{abbreviation}" id="abbreviation" onblur='javascript:abbrcheck()' class="form-control">
+															<div class="alert alert-danger" th:if="${#fields.hasErrors('abbreviation')}" th:errors="*{abbreviation}"></div>
+														     <div class="help-block with-errors" id="abbreviationerror"></div>
+														     <div style="color:red" id="abbreviationerror2"></div>
+														</div>
+													</div>
+													<div class="form-group">
+														<label class="col-md-3 control-label">Place <span style="color:red">*</span></label>
+														<div class="col-md-9">
+															<input type="text" id="instituteplace" th:field="*{place}" class="form-control">
+															<div class="alert alert-danger" th:if="${#fields.hasErrors('place')}" th:errors="*{place}"></div>
+															<div style="color:red" id="instituteplaceerror2"></div>
+														</div>
+													</div>
+
+													<div class="form-group">
+														<label class="col-md-3 control-label">Type <span style="color:red">*</span></label>
+														   <div class="col-md-9">
+														    <div th:if="${InstitutionType != null}">
+														        <select th:field="*{Type}" class="form-control" id="institutetype">
+														        <option th:value="-1" >---Select---</option>
+														            <option th:each="dropDownItem : ${InstitutionType}"
+														               th:value="${dropDownItem.id}"
+														               th:text="${dropDownItem.typename}" />
+														        </select>
+														        <div class="alert alert-danger" th:if="${#fields.hasErrors('Type')}" th:errors="*{Type}"></div>
+														   		<div style="color:red" id="institutetypeerror2"></div>
+														   	</div>
+													   	</div>
+														</div> 
+									
+													<div class="form-group">
+														<label class="col-md-3 control-label">Contact Person Name <span style="color:red">*</span></label>
+														<div class="col-md-9">
+															<input type="text" id="authorname" th:field="*{Author_Name}" onblur='javascript:authornamecheck()'class="form-control">
+															<div class="alert alert-danger" th:if="${#fields.hasErrors('Author_Name')}" th:errors="*{Author_Name}"></div>
+														 <div class="help-block with-errors" id="authornameerror"></div>
+														 <div style="color:red" id="authornameerror2"></div>
+														</div>
+													</div>
+													<div class="form-group">
+														<label class="col-md-3 control-label">Designation <span style="color:red">*</span></label>
+														<div class="col-md-9">
+															<input type="text" id="designation" th:field="*{Author_Designation}" onblur='javascript:designationcheck()' class="form-control">
+															<div class="alert alert-danger" th:if="${#fields.hasErrors('Author_Designation')}" th:errors="*{Author_Designation}"></div>
+														<div class="help-block with-errors" id="designationerror"></div>
+														 <div style="color:red" id="designationerror2"></div>
+														</div>
+													</div>
+													<div class="form-group">
+														<label class="col-md-3 control-label">Address <span style="color:red">*</span></label>
+														<div class="col-md-9">
+															<textarea id="authuraddress" th:field="*{Author_Address}" class="form-control"></textarea>
+															<div class="alert alert-danger" th:if="${#fields.hasErrors('Author_Address')}" th:errors="*{Author_Address}"></div>
+															<div style="color:red" id="authuraddresserror2"></div>
+														</div>
+													</div>
+													
+													 <div class="form-group">
+														<label class="col-md-3 control-label">Country <span style="color:red">*</span></label>
+														   <div class="col-md-9">
+														    <div th:if="${Country != null}">
+														        <select th:field="*{Author_Countryid}" id="ddlcountry_ins"  name="ddlcountry" class="form-control">
+														        <option th:value="-1" >---Select---</option>
+														            <option th:each="dropDownItem : ${Country}"
+														               th:value="${dropDownItem.id}"
+														               th:text="${dropDownItem.country}" />
+														        </select>
+														        <div class="alert alert-danger" th:if="${#fields.hasErrors('Author_Countryid')}" th:errors="*{Author_Countryid}"></div>
+														   		<div style="color:red" id="ddlcountryerror2"></div>
+														   	</div>
+													   	</div>
+														</div> 
+													
+
+												<div id="dvPassport" style="display: none">
+ 											 <div class="form-group">
+														<label class="col-md-3 control-label">State <span style="color:red">*</span></label>
+														   <div class="col-md-9">
+														    <div th:if="${State != null}">
+														        <select onchange="GetDistricts();" id="statecode"  th:field="*{author_statecode}" class="form-control">
+														        <option th:value="-1" >Select</option>
+														            <option th:each="dropDownItem : ${State}"
+														               th:value="${dropDownItem.statecode}"
+														               th:text="${dropDownItem.statename_inenglish}" />
+														        </select>
+														        <div class="alert alert-danger" th:if="${#fields.hasErrors('author_statecode')}" th:errors="*{author_statecode}"></div>
+														   	</div>
+														   	
+														   	</div>
+														</div> 
+														
+														
+														
+														
+														 <div class="form-group">
+														<label class="col-md-3 control-label">District <span style="color:red">*</span></label>
+														   <div class="col-md-9">
+														    <div  th:if="${District != null}">
+														        <select id="districtcode" th:name="districtcode" th:field="*{author_districtcode}" class="form-control">
+														        <option th:value="-1" >Select</option>
+														            <option th:each="dropDownItem : ${District}"
+														               th:value="${dropDownItem.districtcode}"
+														               th:text="${dropDownItem.districtname_inenglish}" />
+														        </select>
+														       <div class="alert alert-danger" th:if="${#fields.hasErrors('author_districtcode')}" th:errors="*{author_districtcode}"></div>
+														   	</div>
+														   	
+														   	</div>
+														</div> 
+ 											</div>
+ 											
+ 													<div class="form-group">
+														<label class="col-md-3 control-label">City/Town/Village <span style="color:red">*</span></label>
+														<div class="col-md-9">
+															<input type="text" id="cityvillagetown" th:field="*{Author_CityVillageTown}" class="form-control">
+															<div class="alert alert-danger" th:if="${#fields.hasErrors('Author_CityVillageTown')}" th:errors="*{Author_CityVillageTown}"></div>
+															<div style="color:red" id="cityvillagetownerror2"></div>
+														</div>
+													</div>
+													<div class="form-group">
+														<label class="col-md-3 control-label">Pincode/Zipcode <span style="color:red">*</span></label>
+														<div class="col-md-9">
+															<input type="text" id="pincodezipcode" th:field="*{Author_Pincode}" class="form-control">
+															<div class="alert alert-danger" th:if="${#fields.hasErrors('Author_Pincode')}" th:errors="*{Author_Pincode}"></div>
+															<div style="color:red" id="pincodezipcodeerror2"></div>
+														</div>
+													</div>
+													
+													<div class="form-group">
+														<label class="col-md-3 control-label">Mobile <span style="color:red">*</span></label>
+														<div class="col-md-1">
+															<input type="text" id="authormobilecode" th:field="*{author_mobilecountrycode}" class="form-control" placeholder="91">
+															<div style="color:red" id="authormobilecodeerror2"></div>
+														</div>
+														<div class="col-md-8">
+															<input type="text" th:field="*{Author_Mobile}" id="mobilenocheck" onblur='javascript:mobilecheck()' class="form-control">
+															<div class="alert alert-danger" th:if="${#fields.hasErrors('Author_Mobile')}" th:errors="*{Author_Mobile}"></div>
+														    <div style="color:red" id="mobilenoerror"></div>
+														    <div style="color:red" id="mobilenocheckerror2"></div>
+														</div>
+													</div>
+													
+													<div class="form-group">
+														<label class="col-md-3 control-label">Fax <span style="color:red"></span></label>
+														<div class="col-md-1">
+															<input type="text" id="authorfaxcode" th:field="*{author_faxcountrycode}" class="form-control">
+															<!-- <div style="color:red" id="authorfaxcodeerror2"></div> -->
+														</div>
+														<div class="col-md-8">
+														<input type="text" id="authorfax" th:field="*{Author_Fax}" class="form-control">
+															<div class="alert alert-danger" th:if="${#fields.hasErrors('Author_Fax')}" th:errors="*{Author_Fax}"></div>
+															<!-- <div style="color:red" id="authorfaxerror2"></div> -->
+														</div>
+													</div>
+													
+													<div class="form-group">
+														<label class="col-md-3 control-label">Email <span style="color:red">*</span></label>
+														<div class="col-md-9">
+															<input type="text" th:field="*{Author_Email}" id="emailidcheck" onblur='javascript:emailcheck()' class="form-control">
+															<div class="alert alert-danger" th:if="${#fields.hasErrors('Author_Email')}" th:errors="*{Author_Email}"></div>
+															<div class="help-block with-errors" id="emailiderror"></div>
+															<div style="color:red" id="emailidcheckerror2"></div>
+														</div>
+													</div>
+													
+													<div class="form-group">
+														<label class="col-md-3 control-label">Username <span style="color:red">*</span></label>
+														<div class="col-md-9">
+															<input type="text" th:field="*{username}" id="username" name="username" onblur='javascript:usernamecheck()'class="form-control">
+														    <div class="alert alert-danger" th:if="${#fields.hasErrors('username')}" th:errors="*{username}"></div> 
+														    <div class="help-block with-errors" id="emailerror"></div> 
+														    <div style="color:red" id="usernameerror2"></div>
+														</div>
+													</div>
+													<div class="form-group">
+														<label class="col-md-3 control-label">Captcha<span style="color:red">*</span></label>
+															<div id="captchaBlock">
+														        <div id="resource1" class="captchaWrap">  
+														            <div class="captcha-input">
+													                <input type="hidden" name="enc">
+													                <input type="hidden" name="salt">
+													                <div class="col-md-5">
+													                <input type="text" name="code" class="form-control" placeholder="Enter Captcha">
+													                </div>
+													                <div class="col-md-2">
+													                <div class="c-img">
+													                <div class="captchaContainer">
+													                </div>
+														            </div>
+														            </div>
+													                <span style="color:red" id="captchaMessage"></span>
+													                <input type="hidden" name="redirect" value="/signup">
+														            </div>
+														            <div class="col-md-1 captcha-refresh-btn" >
+														            <div class="refresh-wrap">
+														             <span id="searchButton"><i class="fa fa-refresh" aria-hidden="true"></i></span>
+														            </div>
+														            </div>
+															 </div>
+															 </div>
+															</div>
+													
+													<div class="form-group">
+														<label class="col-md-3 control-label"></label>
+														<div class="col-md-9">
+															<input type="submit" id="btnsubmitcgp" name="submit" class="btn btn-info btn-md" value="Submit" onclick="return validateInstituteRegistration();" style="background-color:#3e7205;">
+														</div>
+													</div>
+													
+													
+												</form>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+				</div>
+			</div>
+	
+
+	<section class="p_40" ></section>
+	
+
+	<div th:replace="fragments/footer.html :: footer"></div>
+	<div th:replace="fragments/footerlibs.html :: footerlibs"></div>
+	
+	 <script>
+	$(document).ready(function() {
+			$('[data-toggle="tooltip"]').tooltip();
+			if($('#errorModal').length > 0){
+				$('#errorModal').modal('show');
+			}
+		});
+							   
+						  
+	    $( document ).ready(function() {
+	        getCaptcha();
+	         validateCaptcha();
+	        $("#searchButton").click(function(){
+	            console.log('inside call');
+	            getCaptcha();
+	        });
+	
+	    });
+	
+	    function getCaptcha(){
+	        var html = "<h2>Loading Captcha</h2>"
+	        console.log("/bin/captcha");
+	        var url = "/bin/captcha"; 
+	
+	        console.log(url);
+	
+	        $.ajax({
+	            url: url, 
+	            type: 'get',
+												 
+							   
+	            success: function (result) {
+	                html = "";
+	                var captchaImg = "", captcha="",salt="";
+	                if(result !== undefined || result !== null){
+	                    captchaImg  = result.image;
+	                    captcha = result.captcha;
+	                    salt = result.salt;
+	                     $('#resource1').find('.captchaContainer').html("<img id='captchaImage' src='data:image/png;base64,"+ captchaImg+"'></img>");
+	
+	                    $('#resource1').find('[name="enc"]').val(captcha);
+	                    $('#resource1').find('[name="salt"]').val(salt);
+	                }
+	
+	
+	            },
+	            error: function() {
+	                console.log("Error while creating captcha");
+	            }
+	        });
+	
+	
+	    }
+	   
+	   function validateCaptcha() {
+	        var isValid = false;
+	        $('#register-form').find('[type="submit"]').on('click', function(event) {
+	            if(event.hasOwnProperty('originalEvent')){
+	            $('#captchaMessage').html("");
+	            event.preventDefault();
+	                if($("[name='code']").val() != ""){
+	                var salt = $('[name="salt"]').val();
+	                var code = $('[name="code"]').val();
+	                var enc = $('[name="enc"]').val();
+	
+	                $.ajax({
+	                    url: '/bin/validateCaptcha',
+	                    type: 'post',
+	                    data: $('#register-form').find('[name="salt"], [name="code"], [name="enc"], [name="${_csrf.parameterName}"]').serialize(),    
+	                    success: function(data){
+	                        console.log("Inside success");
+	                        console.log(data.valid);
+	                        if(!data.valid){
+	                            $("#captchaMessage").html("You entered wrong captcha code, please enter again");
+	                            return false;
+	
+	                        }
+	                        else{
+	                            console.log("now submit");
+	                            isValid = true;
+	                            //$('#' + "${formId}").submit();
+	                              $('#register-form').find('[type="submit"]').trigger('click');
+	                        }
+	                        return false;
+	                    },
+	                    error: function() {
+	                        console.log("An error occured while validating captcha");
+	                    },
+	                    complete: function(){
+	                        console.log("ajax completed ");
+	                    }
+	                });
+	
+	            }
+	
+	            else{
+	
+	                $("#captchaMessage").html("Please enter captcha code");
+	
+	                return false;
+	            }
+	        }
+	        });
+	
+	       return false;							  
+	    }
+	</script>
+	<script type="text/javascript">
+   function GetDistricts()
+  {
+       var ddlState= document.getElementById("statecode");
+       var district=document.getElementById("districtcode");
+       var district1=$("#districtcode");
+       if(ddlState.value != null)	
+       	$.ajax({
+               type: "POST",
+               url: "/ppvfra/getDistricts",
+               data: 'stateCode='+ddlState.value,
+               dataType:"json",
+               success: function (response) {
+               	
+              district1.empty().append('<option selected="selected" value="">Please select</option>');
+                for(var k=0;k<response.length;k++)
+     	  {
+     	  var opt = response[k];
+     	   var el = document.createElement("option");
+     	   el.textContent = opt[1];
+     	   el.value = opt[0];
+     	   district.appendChild(el);
+     	}
+               },
+               failure: function (response) {
+                   alert(response.responseText);
+               },
+               error: function (response) {
+                   alert(response.responseText);
+               }
+      });
+   	
+   }
+ </script>
+ 
+ <script type="text/javascript">
+    $(function () {
+        $("#ddlcountry_ins").change(function () {
+            if ($(this).val() == "1") {
+                $("#dvPassport").show();
+                $("#statecode").prop("disabled", false);
+                $("#districtcode").prop("disabled", false);
+
+            } else {
+                $("#dvPassport").hide();
+                $("#statecode").prop("disabled", true);
+        		$('#statecode').val('');
+        		$("#districtcode").prop("disabled", true);
+         		$('#districtcode').val('');
+            }
+        });
+    });
+</script>
+<script>
+    $(document).ready(function(){
+   	        if(document.getElementById("ddlcountry_ins").value="1"){
+   	         $("#dvPassport").show();
+            }
+   	        else{
+   	    	$("#dvPassport").hide();
+            }
+    });
+</script>
+
+
+
+
+<script type="text/javascript">
+        function emailcheck() {
+            var emailid =document.getElementById("emailidcheck").value;
+          // alert(emailid);
+            $.ajax({
+                type: "POST",
+                url: "/ppvfra/checkmail",
+                data:emailid,
+                contentType:'application/json',
+                success: function (data) {
+                 
+                if(data == 'taken')
+				{
+                //Email not available.
+        		document.getElementById("emailiderror").innerHTML = " <font color='red'>Email already exists.</font>";
+        		document.forms["register-form"]["emailidcheck"].focus();
+        		return false;
+                }
+				else if (data == 'not taken') 
+				{
+				document.getElementById("emailiderror").innerHTML = " ";
+			     return true;
+                    }
+                   
+                }
+            }); 
+  }
+        </script>
+        <script type="text/javascript">
+        function mobilecheck() {
+            var emailid =document.getElementById("mobilenocheck").value;
+            //alert(emailid);
+            $.ajax({
+                type: "POST",
+                url: "/ppvfra/checkmobile",
+                data:emailid,
+                contentType:'application/json',
+                success: function (data) {
+                 
+                if(data == 'taken')
+				{
+        		document.getElementById("mobilenoerror").innerHTML = " <font color='red'> Mobile Number already exists.</font>";
+        		document.forms["register-form"]["mobilenocheck"].focus();
+        		return false;
+                }
+				else if (data == 'not taken') 
+				{
+				document.getElementById("mobilenoerror").innerHTML = " ";
+			     return true;
+                    }
+                   
+                }
+            }); 
+  }
+    </script>
+    	    	<script type="text/javascript">
+        function usernamecheck() {
+        	var letter = /^[a-zA-Z0-9]+$/;
+            var emailid =document.getElementById("username").value;
+          // alert(emailid);
+            $.ajax({
+                type: "POST",
+                url: "/ppvfra/checkusername",
+                data:emailid,
+                contentType:'application/json',
+                success: function (data) {
+                 
+                if(data == 'taken')
+				{
+                //Email not available.
+        		document.getElementById("emailerror").innerHTML = " <font color='red'>Username already exists.</font>";
+        		document.forms["register-form"]["username"].focus();
+        		return false;
+                }
+				else if (data == 'not taken') 
+				{
+
+					if(isNaN(emailid))
+	    			{
+						if(letter.test(emailid))
+						{
+							document.getElementById("emailerror").innerHTML = " ";
+							return true;  
+						} 
+		    			else
+						{
+							document.getElementById("emailerror").innerHTML = " <font color='red'>Special characters are not allowed.</font>";
+							document.forms["register-form"]["username"].focus();
+			        		return false;  
+						} 
+	    			}
+					else
+					{
+						document.getElementById("emailerror").innerHTML = " <font color='red'>Username cannot be fully numeric.</font>";
+						document.forms["register-form"]["username"].focus();
+		        		return false;  
+					}
+				
+			     
+                    }
+                   
+                }
+            }); 
+  }
+    </script>
+    
+<script type="text/javascript">
+        function institutenamecheck() {
+        	var letter = /^[a-zA-Z0-9 ]*$/;
+            var name =document.getElementById("institutename").value;
+            $.ajax({
+                type: "POST",
+                url: "/ppvfra/checkinstitute",
+                data:name,
+                contentType:'application/json',
+                success: function (data) {
+                if(data == 'taken')
+				{
+	                document.getElementById("institutenameerror").innerHTML = " <font color='red'>Institute Name already exists.</font>";
+	        		document.forms["register-form"]["institutename"].focus();
+	        		return false;
+                }
+				else if (data == 'not taken') 
+				{
+					if(isNaN(name))
+	    			{
+						if(letter.test(name))
+						{
+							document.getElementById("institutenameerror").innerHTML = " ";
+							 
+							return true;   
+						}
+					   else
+            	       {
+							document.getElementById("institutenameerror").innerHTML = " <font color='red'>Special characters are not allowed.</font>";
+							document.forms["register-form"]["institutename"].focus();
+			        		return false;  
+            	       } 
+					}
+					else
+					{
+						document.getElementById("institutenameerror").innerHTML = " <font color='red'>Institute Name cannot be fully numeric or blank.</font>";
+						document.forms["register-form"]["institutename"].focus();
+		        		return false;  
+					}
+			     	
+			     	
+                }
+                   
+                }
+            }); 
+  }
+    </script>
+    
+    <script type="text/javascript">
+        function abbrcheck() {
+            var emailid =document.getElementById("abbreviation").value;
+          // alert(emailid);
+            $.ajax({
+                type: "POST",
+                url: "/ppvfra/abbreviation",
+                data:emailid,
+                contentType:'application/json',
+                success: function (data) {
+                 
+                if(data == 'taken')
+				{
+                //Email not available.
+        		document.getElementById("abbreviationerror").innerHTML = " <font color='red'>Abbreviation already exists.</font>";
+        		document.forms["register-form"]["abbreviation"].focus();
+        		return false;
+                }
+				else if (data == 'not taken') 
+				{
+				
+					if(isNaN(emailid))
+	    			{
+						document.getElementById("abbreviationerror").innerHTML = " ";
+						return true;  
+	    			}
+					else
+					{
+						document.getElementById("abbreviationerror").innerHTML = " <font color='red'>Abbreviation cannot be fully numeric.</font>";
+						document.forms["register-form"]["abbreviation"].focus();
+		        		return false;  
+					}
+					
+			     
+			     
+			     
+			     
+                    }
+                   
+                }
+            }); 
+  }
+    </script>
+  <script type="text/javascript">
+        function designationcheck() {
+            var emailid =document.getElementById("designation").value;
+            var letters = /^[ A-Za-z_@./#&+-]*$/;
+				 var format = /^[!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?]*$/;
+				 if(format.test(emailid)){
+					 document.getElementById("designationerror").innerHTML = " <font color='red'>Special characters and numbers are not allowed.</font>";
+					 document.forms["register-form"]["designation"].focus();
+		        		return false;  
+					 
+				 }else if(letters.test(emailid))
+            	     {
+            		   document.getElementById("designationerror").innerHTML = " ";
+					   return true;
+            	     }
+            	   else
+            	     {
+            		   document.getElementById("designationerror").innerHTML = " <font color='red'>Special characters and numbers are not allowed.</font>";
+            		   document.forms["register-form"]["designation"].focus();
+		        		return false;  
+            	     }
+            	}
+</script>
+<script type="text/javascript">
+        function authornamecheck() {
+            var emailid =document.getElementById("authorname").value;
+            var letters = /^[a-zA-Z ]*$/;
+				
+				  if(letters.test(emailid))
+            	     {
+            		   document.getElementById("authornameerror").innerHTML = " ";
+            		   return true;
+            	     }
+            	   else
+            	     {
+            		   document.getElementById("authornameerror").innerHTML = " <font color='red'>Name in special characters or in numeric format is not accepted..</font>";
+            		   document.forms["register-form"]["authorname"].focus();
+            		   return false;  
+            	     }
+            	}
+</script>
+
+  <script type = "text/javascript">
+      function validateInstituteRegistration() {
+         if(document.getElementById("institutename").value == "" ) {
+        	 document.getElementById("institutenameerror2").innerHTML="Please Enter Institute Name";
+        	 document.getElementById("institutename").focus() ;
+            return false;
+         }
+         else{
+        	 document.getElementById("institutenameerror2").innerHTML="";
+         }
+         if(document.getElementById("abbreviation").value == "" ) {
+        	 document.getElementById("abbreviationerror2").innerHTML="Please Enter Abbreviation";
+        	 document.getElementById("abbreviation").focus() ;
+            return false;
+         }
+         else
+        	 {
+        	 document.getElementById("abbreviationerror2").innerHTML="";
+        	 }
+         if(document.getElementById("instituteplace").value == "" ) {
+        	 document.getElementById("instituteplaceerror2").innerHTML="Please Enter Place";
+        	 document.getElementById("instituteplace").focus() ;
+            return false;
+         }
+         else{
+        	 document.getElementById("instituteplaceerror2").innerHTML="";
+         }
+        
+         if(document.getElementById("institutetype").value == "-1" ) {
+        	 document.getElementById("institutetypeerror2").innerHTML="Please select a type";
+        	 document.getElementById("institutetype").focus() ;
+            return false;
+         }
+         else{
+        	 document.getElementById("institutetypeerror2").innerHTML="";
+         }
+        
+         if(document.getElementById("authorname").value == "" ) {
+        	 document.getElementById("authornameerror2").innerHTML="Please Enter Name";
+        	 document.getElementById("authorname").focus() ;
+            return false;
+         }
+         else{
+        	 document.getElementById("authornameerror2").innerHTML="";
+         }
+         if(document.getElementById("designation").value == "") {
+        	 document.getElementById("designationerror2").innerHTML="please Enter Designation.";
+        	 document.getElementById("designation").focus() ;
+            return false;
+         }
+         else{
+        	 document.getElementById("designationerror2").innerHTML="";
+         }
+         if(document.getElementById("authuraddress").value == "" ) {
+        	 document.getElementById("authuraddresserror2").innerHTML="Please Enter Address ";
+        	 document.getElementById("authuraddress").focus() ;
+            return false;
+         }
+         else{
+        	 document.getElementById("authuraddresserror2").innerHTML="";
+         }
+         
+         if(document.getElementById("ddlcountry_ins").value == "-1" ) {
+        	 document.getElementById("ddlcountryerror2").innerHTML="Please Select a country";
+        	 document.getElementById("ddlcountry_ins").focus() ;
+            return false;
+         }
+         else{
+        	 document.getElementById("ddlcountryerror2").innerHTML="";
+         }
+         if(document.getElementById("cityvillagetown").value == "" ) {
+        	 document.getElementById("cityvillagetownerror2").innerHTML="Please Enter City/Town/Village";
+        	 document.getElementById("cityvillagetown").focus() ;
+            return false;
+         }
+         else{
+        	 document.getElementById("cityvillagetownerror2").innerHTML="";
+         }
+         if(document.getElementById("pincodezipcode").value == "" || isNaN(document.getElementById("pincodezipcode").value ) || document.getElementById("pincodezipcode").value.length != 6 ) {
+        	 document.getElementById("pincodezipcodeerror2").innerHTML="Please Enter a valid 6 digits pincode";
+        	 document.getElementById("pincodezipcode").focus() ;
+            return false;
+         }
+         else{
+        	 document.getElementById("pincodezipcodeerror2").innerHTML="";
+         }
+         if(document.getElementById("authormobilecode").value == ""  || isNaN(document.getElementById("authormobilecode").value ) || document.getElementById("authormobilecode").value.length != 2) {
+        	 document.getElementById("authormobilecodeerror2").innerHTML="Please Enter 2 digit contry code";
+        	 document.getElementById("authormobilecode").focus() ;
+            return false;
+         }
+         else{
+        	 document.getElementById("authormobilecodeerror2").innerHTML="";
+         }
+         if(document.getElementById("mobilenocheck").value == ""  || isNaN(document.getElementById("mobilenocheck").value ) || document.getElementById("mobilenocheck").value.length != 10) {
+        	 document.getElementById("mobilenocheckerror2").innerHTML="Please Enter 10 digits mobile number";
+        	 document.getElementById("mobilenocheck").focus() ;
+            return false;
+         }
+         else{
+        	 document.getElementById("mobilenocheckerror2").innerHTML="";
+         }
+        /*  if(document.getElementById("authorfaxcode").value == ""  || isNaN(document.getElementById("authorfaxcode").value ) || document.getElementById("authorfaxcode").value.length != 2) {
+        	 document.getElementById("authorfaxcodeerror2").innerHTML="Please Enter 2 dight country fax code";
+        	 document.getElementById("authorfaxcode").focus() ;
+            return false;
+         }
+         else{
+        	 document.getElementById("authorfaxcodeerror2").innerHTML="";
+         }
+         if(document.getElementById("authorfax").value == ""  || isNaN(document.getElementById("authorfax").value ) || document.getElementById("authorfax").value.length != 8) {
+        	 document.getElementById("authorfaxerror2").innerHTML="Please Enter 8 digit fax number";
+        	 document.getElementById("authorfax").focus() ;
+            return false;
+         }
+         else{
+        	 document.getElementById("authorfaxerror2").innerHTML="";
+         } */
+         if(document.getElementById("emailidcheck").value == "") {
+        	 document.getElementById("emailidcheckerror2").innerHTML="Please Enter a valid email";
+        	 document.getElementById("emailidcheck").focus() ;
+            return false;
+         }
+         else{
+        	 document.getElementById("emailidcheckerror2").innerHTML="";
+         }
+         if(document.getElementById("username").value == "") {
+        	 document.getElementById("usernameerror2").innerHTML="Please Enter username";
+        	 document.getElementById("username").focus() ;
+            return false;
+         }
+         else{
+        	 document.getElementById("usernameerror2").innerHTML="";
+         }
+         return( true );
+      }
+</script>
+     
+</body>
+</html>

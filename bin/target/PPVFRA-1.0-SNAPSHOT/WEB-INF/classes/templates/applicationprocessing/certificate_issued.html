@@ -1,0 +1,164 @@
+  
+  <!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+	<head>
+	  <th:block th:include="adminfragment/headerlibs.html :: headerlibs"></th:block> 
+	</head>
+
+    <body class="fixed-left">
+        <!-- Begin page -->
+        <div id="wrapper">
+        
+            <!-- Top Bar Start -->
+           <header th:insert="adminfragment/header.html :: header"> </header>
+            <!-- Top Bar End -->
+
+
+            <!-- ========== Left Sidebar Start ========== -->
+			<header th:insert="adminfragment/sidenav.html :: sidevav"> </header>
+            <!-- Left Sidebar End --> 
+
+   			 <!-- Start right Content here -->
+            <!-- ============================================================== -->                      
+             <div class="content-page">
+                <!-- Start content -->
+                <div class="content">
+                    <div class="container">
+
+                        <!-- Page-Title -->
+                        <div class="row">
+                            <div class="col-sm-12">
+                                <h4 class="pull-left page-title">Action</h4>
+                                <ol class="breadcrumb pull-right">
+                                    <li><a href="/admin">Home</a></li>
+                                    <li>
+                                        <a href="applicationprocessing.html" class="btn btn-purple waves-effect waves-light btn-xs m-b-5"><b>Back</b></a>
+                                    </li>
+                                </ol>
+                            </div>
+                        </div>
+						
+						<div class="col-md-12"> 
+							<div class="card">
+								<div class=" action-content pull-right" style=" margin-bottom:20px;">
+									<input type="button" onclick="printDiv('printableArea1')" value="print" style="background: #3e7205; border-color: transparent; color: #fff;" />
+								</div>
+							</div>
+						</div>
+						
+						
+						
+						<div class="row" >
+							<div class="col-md-12"> 
+										<!-- Nav tabs -->
+								<div class="card">
+									<div class=" action-content">
+											<!-- <input type="button" onclick="printDiv('printableArea1')" value="print" /> -->
+										<div id="printableArea1" style="background:#fff; padding:20px; ">
+											
+											<div class="">
+												
+												<div class="">
+													
+													<div style="width:100%; margin-bottom: 26px; ">
+													
+													<div style="width: 100%;">
+														<h5 style="text-align:center;margin: 3px 0;">Form O - 2</h5>
+														<h5 style="text-align:center;margin: 3px 0;">[See rules 36 and 37]</h5>
+														<br>
+														<br>
+														<h5 style="text-align:center;margin: 3px 0;">GOVERNMENT OF INDIA, PLANT VARIETY REGISTRY</h5>
+														<h5 style="text-align:center;margin: 3px 0;">CERTIFICATE OF REGISTRATION</h5>
+														<h5 style="text-align:center;margin: 3px 0;">REGISTRATION NO.<u>&nbsp&nbsp<span th:text="${app_cert_show[2]}"></span>&nbsp&nbsp</u> OF <u>&nbsp&nbsp<span th:text="${app_cert_show[4]}"></span>&nbsp&nbsp</u></h5>
+												    </div>
+												    
+													 </div>
+													
+													<div style="width: 20%;float:left;">
+													</div>
+													 
+													
+													<hr style="border-top: 1px solid #b9b9b9;">
+													
+													 <div style="width:92%; margin-bottom: 26px; margin:0 auto;  line-height: 30px;">
+														<p>Whereas <u>&nbsp&nbsp<span th:text="${app_cert_show[13]}"></span>&nbsp&nbsp</u> has declared that he has developed <u>&nbsp&nbsp<span th:text="${app_cert_show[12]}"></span>&nbsp&nbsp</u> plant variety/essentially derived plant variety and that he is the true breeder thereof (or the legal representative or assignee of the true breeder) and that he is entitled to a plant variety right </p>
+														<p>on the said variety, having regard to the provisions of the Protection of Plant Varieties and Farmer's Right Act, 2001 and that there</p>
+														<p>is no objection to the registration of plant variety in favour of him.</p>
+														 
+														<p>And whereas he has, by an application, requested that registration of plant variety/essentially derived plant variety may be allowed to him for the said plant Variety.</p>
+													 
+														<p>And whereas he has, by and in his application, particularly described the various distinctive features and mentioned the denomination of the said plant variety</p>
+														 
+														<p>Now, these presents that the above said applicant (including his legal representatives and assignees or any of them) shall, subject to the provisions of the Protection of Plant Varieties and Farmers Rights Act, 2001 and the conditions specified in section 47 of the said Act,</p>
+														<p>and to the conditions and provisions specified by any other law for the time being in force, have the exclusive right to produce, sell, market, distribute, import or export the variety for a term of <u>&nbsp<span th:text="${app_cert_show[11]}"></span>&nbsp</u> years(<u>&nbsp<span th:text="${app_cert_show[7]}"></span>&nbsp</u>) from the <u>&nbsp&nbsp<span th:text="${app_cert_show[6]}"></span>&nbsp</u>th day of <u>&nbsp<span th:text="${app_cert_show[5]}"></span>&nbsp</u> month , <u>&nbsp<span th:text="${app_cert_show[4]}"></span>&nbsp</u> year. And of authorizing any other</p>
+														 
+														<p>person to do so, subject to the conditions that the validity of this registration is not guaranteed and that the fee prescribed for the</p>
+														<p>continuance of this registration are duly paid.</p>
+														<p>In witness thereof, the Registrar has caused this registration to be sealed as of the <u>&nbsp<span th:text="${app_cert_show[17]}"></span>&nbsp</u>th day of <u>&nbsp<span th:text="${app_cert_show[16]}"></span>&nbsp</u> month <u>&nbsp<span th:text="${app_cert_show[15]}"></span>&nbsp</u> year.</p>
+														
+															 
+													</div>
+													
+													
+													<div style="width:100%;margin-top: 75px;padding-bottom: 35px;">
+													 <div style="width: 40%;float:right;">
+														<h5 style="text-align:center; margin:1px 0;">Seal and Signature of the Registrar,</h5>
+														<h5 style="text-align:center; margin:1px 0;">Plant Varieties Registry</h5>
+														<h5 style="text-align:center; margin:1px 0;">Date of Grant<u>&nbsp&nbsp<span th:text="${app_cert_show[3]}"></span>&nbsp&nbsp</u></h5>
+													</div>
+													
+													</div>
+													<br>
+													<br>
+													
+													<p>Note: - The fees for maintenance of this registration, if it is to be maintained, will fall due on---- day of ---- ---- and on the same day in every year thereafter.</p>
+													
+												<hr style="border-top: 1px dotted #b9b9b9;">
+													
+												 </div>
+												
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>	  
+					</div>
+				</div> <!-- container -->
+            </div> <!-- content -->
+
+                
+
+            </div>
+            <!-- ============================================================== -->          
+            <!-- End Right content here -->
+           </div> <!-- container -->
+                               
+                <!-- content -->
+
+			<!-- start footer content here -->
+			
+			<!-- end footer content here -->
+
+      
+        <!-- END wrapper -->
+
+<!-- footer lib start here-->
+
+<div th:replace="adminfragment/footerlibs.html :: footerlibs"></div>
+<!-- end footer lib -->
+    
+      <script src="../js/jquery.app.js"></script>
+		<script>
+			function printDiv(divName) {
+				 var printContents = document.getElementById(divName).innerHTML;
+				 var originalContents = document.body.innerHTML;
+				 document.body.innerHTML = printContents;
+				 window.print();
+				 document.body.innerHTML = originalContents;
+			}
+		</script>
+ 
+    	        
+    </body>
+</html>

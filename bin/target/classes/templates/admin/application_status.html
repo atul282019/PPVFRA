@@ -1,0 +1,139 @@
+  
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+	<head>
+	  <th:block th:include="adminfragment/headerlibs.html :: headerlibs"></th:block> 
+	</head>
+
+    <body class="fixed-left">
+        <!-- Begin page -->
+        <div id="wrapper">
+        
+            <!-- Top Bar Start -->
+           <header th:insert="adminfragment/header.html :: header"> </header>
+            <!-- Top Bar End -->
+
+
+            <!-- ========== Left Sidebar Start ========== -->
+			<header th:insert="adminfragment/sidenav.html :: sidevav"> </header>
+            <!-- Left Sidebar End --> 
+
+   		
+            <!-- Start right Content here -->
+            <!-- ============================================================== -->                      
+           <div class="content-page">
+                <!-- Start content -->
+                <div class="content">
+                    <div class="container">
+
+                        <!-- Page-Title -->
+                        <div class="row">
+                            <div class="col-sm-12">
+                                <h4 class="pull-left page-title">Application Status</h4>
+                                <ol class="breadcrumb pull-right">
+                                    <li><a href="/admin">Home</a></li>
+                                    <li class="active">Application Status</li>
+                                </ol>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="panel panel-default">
+                                    <div class="panel-heading">
+                                        <h3 class="panel-title">Application Status</h3>
+                                    </div>
+                                    <div class="panel-body">
+                                        <div class="row">
+                                            <div class="col-md-12 col-sm-12 col-xs-12">
+                                             <span th:if="${actd_viewtrue != null && actd_viewtrue == 'valpresent' }">
+									
+                                                <table id="shortstorage" class="table table-hover table-bordered">
+                                                    <thead>
+                                                        <tr>
+                                                          	<th>S.No</th>
+                                                            <th>Application  ID</th>
+                                                            <th>Application Date</th>
+															<th>Name</th>
+                                                            <th>Crop</th>
+                                                            <th>Crop Group</th>
+                                                            <th>Denomination</th>
+                                                            <th>Application status</th>
+                                                             <span th:each="sec_chk : ${actd}">
+															<span th:if="${sec_chk == 'View'}">
+															<th>view</th>
+															</span>
+															</span>
+															<th>View Processing</th>
+														  </tr>
+                                                    </thead>
+                                                    <tbody>
+                          <tr th:each="admin_view,serial :${admin_viewapplication}">
+                              <td th:text="${serial.count}"></td>
+                              <td th:text="${admin_view[6]}"></td>
+							  <td th:text="${admin_view[1]}"></td>
+                              <td th:text="${admin_view[2]}"></td>
+                              <td th:text="${admin_view[4]}"></td>
+                              <td th:text="${admin_view[5]}"></td>
+                              <td th:text="${admin_view[3]}"></td>
+							  <td th:text="${admin_view[7]}"></td>
+							   <span th:each="sec_chk : ${actd}">
+								<span th:if="${sec_chk == 'View'}">
+								<td><a class="btn btn-success btn-xs" th:href="@{'/show_application_details/'+${admin_view[6]}}"  target="_blank">View Application</a></td>
+								</span>
+								</span>
+								<td>
+								<span th:each="sec_chk : ${actd}">
+								<span th:if="${sec_chk == 'View'}">
+								<a th:href="@{'/getactions/'+${admin_view[6]}}">ViewProcessing</a>
+								</span>
+								</span>
+								</td>
+								
+								 </tr>
+                                                    </tbody>
+                                                </table>
+                                                </span>
+                                                <span th:unless="${actd_viewtrue != null && actd_viewtrue == 'valpresent' }">
+												 <label>YOU ARE NOT AUTHORISED TO VIEW THIS PAGE.PLEASE CONTACT ADMINISTRATOR</label>
+												 </span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div> <!-- End Row -->
+
+
+                    </div> <!-- container -->
+                               
+                </div> <!-- content -->
+
+            <!--     <footer class="footer text-right">
+                    2019 © PPVFRA.
+                </footer>
+
+            </div> -->
+            <!-- ============================================================== -->
+                 
+            <!-- End Right content here -->
+          <div th:replace="adminfragment/footer.html :: footer"></div>
+           </div> <!-- container -->
+                               
+                <!-- content -->
+
+			<!-- start footer content here -->
+			
+			<!-- end footer content here -->
+
+      
+        <!-- END wrapper -->
+
+<!-- footer lib start here-->
+
+<div th:replace="adminfragment/footerlibs.html :: footerlibs"></div>
+</div>
+<!-- end footer lib -->
+    
+    </body>
+</html>

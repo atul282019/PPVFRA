@@ -1,0 +1,65 @@
+
+
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+	<div th:fragment="formsix">
+
+<form class="form-horizontal" role="form" id="form_6" th:action="@{/saveapplicationformvi}" th:object="${applications}" method="post">   <!--form_6 start -->                                       
+														<div class="form-group">
+															<label class="col-md-6 "><h4>6.(a)Classification of the Candidate Variety:<h4></label>
+														</div>
+														<div class="form-group">
+															<label class="col-md-3 control-label"></label>
+															<div class="col-md-9">
+																<input class="other-1" type="checkbox" name="checkbox" value="1">TYPICAL VARIETY <a href="#" title="" data-toggle="popover" data-trigger="focus" data-content=" Typical variety means a variety, which is not a hybrid or an essentially derived variety and normally propagated by using propagules saved from previous crop production cycles (Example: pure lines including parental lines/composite varieties or vegetative propagated varieties)."><span class="badge">i</span></a><br>
+																
+																<input class="other-1" type="checkbox" name="checkbox" value="2">HYBRID VARIETY <a href="#" title="" data-toggle="popover" data-trigger="focus" data-content="The hybrid and not a transgenic hybrid. In case of transgenic attach copy of the Genetic Engineering Approval Committee clearances for cultivation and seed productions."><span class="badge">i</span></a><br>
+																<input class="other-1" type="checkbox" name="checkbox" value="3">TRANSGENIC<br>
+																<input class="other" type="checkbox" name="checkbox" value="4">OTHER (SPECIFY)<br>
+															</div>
+														</div>
+														<div class="form-group other-textbox">
+															<label class="col-md-3 control-label"></label>
+															<div class="col-md-6">
+																<input type="text" class="form-control" name="othervalue" value="">
+															</div>
+														</div>
+														<div class="form-group">
+															<label class="col-md-6 control-label">(b.) What is (are) the Distinctiveness Uniformity Stability feature on the basis of which registration is sought. Explain in detail the group characters (see specific guidelines for details). Attach 'Technical Questionnaire' sheet with all needed details duly signed with seal.</label>
+														</div>
+														<div class="form-group">
+															<label class="col-md-3 control-label"></label>
+															<div class="col-md-9">
+																<textarea class="form-control" name="feature"></textarea>
+															</div>
+														</div>
+														<div class="form-group">
+															<label class="col-md-6 control-label">(c.) Whether the authorisation of the breeder of initial variety has been taken.</label>
+															<div class="col-md-3">
+																<input type="radio" name="radio" value="">Yes
+																<input type="radio" name="radio" value="">No   
+															</div>
+														</div>
+														
+														<div class="form-group">
+															<label class="col-md-6 control-label">(d.) If yes please attach the copy of Authorization.</label>
+															<div class="col-md-3">
+																<input type="file" class="form-control">
+															</div>
+														</div>
+														
+														<hr/>
+														<div class="form-group ">
+															<div class="col-sm-offset-10 col-sm-12">
+															   <!--  <input type="hidden" id="applicationidfromvi" name="applicationidfromvi" th:value="*{id}">
+																<input type="hidden" id="applicantidformvi" name="applicantidformvi"  th:value="${userapplicant[0]}">
+																<input type="hidden" id="applicanttypeidformvi" name="applicanttypeidformvi" th:value="*{applicanttypeid}" />
+																 -->
+																<button type="submit" class="btn btn-info waves-effect waves-light">Save</button>
+																<button type="submit" class="btn btn-info waves-effect waves-light">Next</button>
+															</div>
+														</div>
+													</form>
+						</div>
+	</html>

@@ -1,0 +1,375 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<div th:fragment="issue_certificate">
+<span th:if="${IssueCertificate != null && IssueCertificate == 'IssueCertificate' }"> 
+ <form class="form-horizontal" th:action="@{/issue_certificate}" th:object="${issue_cert}" role="form" id="issue_certificate"  method="post" enctype="multipart/form-data"> 
+ 	<span th:if="${acs == 0 && datasaved_once ==0}">
+	 
+	<div class="panel panel-success">
+		<div class="panel-heading">Issue Certificate</div>
+		<div class="panel-body">
+			<div class="form-group">
+				<label class="col-md-3 control-label">Pre grant opposition received<span style="color:red">*</span></label>
+				<div class="col-md-6">
+					<input th:field="*{is_pre_grant_opposition_received}" class="received" type="radio" id="is_pre_grant_opposition_received1" name="radio1"  value="Yes">Yes
+					<input th:field="*{is_pre_grant_opposition_received}" class="oppositionn-1" type="radio" id="is_pre_grant_opposition_received2" name="radio1" value="No">No
+					<span id="is_pre_grant_opposition_received_error" style="color:red"></span>
+				</div>
+			</div>
+			
+			<div class="form-group opposition">
+				<label class="col-md-3 control-label">Opposition Filed By <span style="color:red">*</span></label>
+				<div class="col-md-6">
+					<input id="opposition_filed_by" th:field="*{opposition_filed_by}" type="text" class="form-control">
+					<span id="opposition_filed_by_error" style="color:red"></span>
+				</div>
+			</div>
+			
+			<div class="form-group opposition-1">
+				<label class="col-md-3 control-label">Status <span style="color:red">*</span></label>
+				<div class="col-md-6">
+				<input th:field="*{opposition_status}" class="oppositionn" type="radio" name="radio" id="opposition_status_radio1" value="R" >Opposition Rejected
+			 	<input th:field="*{opposition_status}" class="oppositiony" type="radio" name="radio" id="opposition_status_radio2" value="A" >Opposition Accepted
+				<span id="opposition_status_radio_error" style="color:red"></span>
+				</div>
+			</div>
+			<!--div Work Done-->			
+			<div class="oppositionn" style="display: block;"> 
+			
+			</div>
+			<!--div ends here  -->
+			
+			<div class="opposition">
+			<div class="form-group opposition">
+				<label class="col-md-3 control-label">Date of Decision <span style="color:red">*</span></label>
+				<div class="col-md-6">
+					<input id="date_of_deceision" name="date_of_deceision" type="date" class="form-control">
+					<span id="date_of_deceision_error" style="color:red"></span>
+				</div>
+			</div>
+			
+			<br>
+			</div>
+		 	<div class="form-group m-b-0 save-1">
+				<label class="col-md-3 control-label">&nbsp;</label>
+				<div class="col-sm-7">
+				<span th:if="${role_granted != 'Super Administrator' && role_granted != 'PPVFRA Admin'}">
+				<span th:if="${sub11 == 'addpresent'}">
+					<button type="submit" id="savebutton1" onclick="return validate_Issue_Certificate_Form();" class="btn btn-info waves-effect waves-light">Save</button>
+				</span>
+				</span>
+				</div>
+			</div>
+			<div class="certificate">
+				<div class="form-group">
+					<label class="col-md-3 control-label">Certificate no <span style="color:red">*</span></label>
+					<div class="col-md-6">
+						<input type="number" id="certificateno" name="certificateno" th:value="0" class="form-control" readonly="readonly">
+						<span id="certificateno_error" style="color:red"></span>
+					</div>
+				</div>
+				
+				<div class="form-group">
+					<label class="col-md-3 control-label">Date of  issue <span style="color:red">*</span></label>
+					<div class="col-md-6">
+						<input type="date" id="date_of_issue" name="date_of_issue" class="form-control">
+						<span id="date_of_issue_error" style="color:red"></span>
+					</div>
+				</div>
+				
+				<div class="form-group">
+					<label class="col-md-3 control-label">Start Date of Protection <span style="color:red">*</span></label>
+					<div class="col-md-6">
+						<input type="date" id="startdate" name="startdate" class="form-control">
+						<span id="startdate_error" style="color:red"></span>
+					</div>
+				</div>
+				
+				<div class="form-group">
+					<label class="col-md-3 control-label">Expiry date of Protection <span style="color:red">*</span></label>
+					<div class="col-md-6">
+						<input type="date" id="enddate" name="enddate" class="form-control">
+						<span id="enddate_error" style="color:red"></span>
+					</div>
+				</div>
+			</div>
+			
+			<input type="hidden" id="editmode_issuecerty" name="editmode_issuecerty" th:value="${editmode_issuecerty}">
+			<input type="hidden" id="id" name="id" th:value="${datasaved_once}">
+			<input type="hidden" id="applicationid" name="applicationid" th:value="${applicationid}"/>
+			<span th:if="${acs == 0}">
+			<input type="hidden" id="acsid" name="acsid" th:value="${acs}">
+			</span>
+			<span th:unless="${acs == 0}">
+			<input type="hidden" id="acsid" name="acsid" th:value="${acs[0]}">
+			</span>
+				
+			<div class="form-group m-b-0 certificate">
+				<label class="col-md-3 control-label">&nbsp;</label>
+				<div class="col-sm-7">
+				<span th:if="${role_granted != 'Super Administrator' && role_granted != 'PPVFRA Admin'}">
+				<span th:if="${sub11 == 'addpresent'}">
+				<button type="submit" id="btncertificate" class="btn btn-info waves-effect waves-light" onclick="return validate_Issue_Certificate_Form();">Save</button>
+				<!-- <a th:href="@{'/issue_certificate_number/'+${applicationid}}" onclick="return validate_Issue_Certificate_Form();" type="submit" class="btn btn-purple waves-effect waves-light">Issue Certificate</a> -->
+				</span>
+				</span> 
+				<!-- <button type="button" onclick="window.open('utilities/form-o-2.html')" class="btn btn-info waves-effect waves-light">View Certificate</button> -->
+				</div>
+			</div>  
+			<br>    
+		</div>
+	</div>
+	</span>
+	
+<span th:unless="${acs == 0 && datasaved_once ==0}">
+	 <div class="panel panel-success">
+		<div class="panel-heading">Issue Certificate</div>
+		<div class="panel-body">
+			<div class="form-group">
+				<label class="col-md-3 control-label">Pre grant opposition received <span style="color:red">*</span> </label>
+				<div class="col-md-6">
+					<input class="received" type="radio" th:name="radio2" id="is_pre_grant_opposition_received1"  th:value="Y" th:checked="${datasaved_once[2] =='Y'}">Yes
+					<input class="oppositionn-1" type="radio" th:name="radio2" id="is_pre_grant_opposition_received2"  th:value="N" th:checked="${datasaved_once[2] =='N'}">No
+					<span id="is_pre_grant_opposition_received_error" style="color:red"></span>
+				</div>
+			</div>
+			
+			<div class="form-group opposition">
+				<label class="col-md-3 control-label">Opposition Filed By  <span style="color:red">*</span> </label>
+				<div class="col-md-6">
+				<input id="opposition_filed_by" name="opposition_filed_by" th:value="${datasaved_once[4]}" type="text" class="form-control">
+				<span id="opposition_filed_by_error" style="color:red"></span>
+				</div>
+			</div>
+			
+			<div class="form-group opposition-1">
+				<label class="col-md-3 control-label">Status <span style="color:red">*</span></label>
+				<div class="col-md-6">
+				<input name="opposition_status" class="oppositionn" type="radio" id="opposition_status_radio1" value="R" th:checked="${datasaved_once[3] =='R'}" >Opposition Rejected
+			 	<input name="opposition_status" class="oppositiony" type="radio" id="opposition_status_radio2" value="A"  th:checked="${datasaved_once[3] =='A'}">Opposition Accepted
+				<span id="opposition_status_radio_error" style="color:red"></span>
+				</div>	
+			</div>
+			<div class="oppositionn" style="display: block;"> 
+			</div>
+			<div class="opposition">
+			<div class="form-group">
+				<label class="col-md-3 control-label">Date of Decision <span style="color:red">*</span> </label>
+				<div class="col-md-6">
+					<input id="date_of_deceision" name="date_of_deceision" type="date" class="form-control" th:value="${datasaved_once[5]}">
+					<span id="date_of_deceision_error" style="color:red"></span>
+				</div>
+			</div>
+			
+			<br>
+			</div>
+			<div class="form-group m-b-0 save-1">
+				<label class="col-md-3 control-label">&nbsp;</label>
+				<div class="col-sm-7">
+				<span th:if="${role_granted != 'Super Administrator' && role_granted != 'PPVFRA Admin'}">
+				<span th:if="${sub11 == 'addpresent'}">
+				<button type="submit" id="savebutton2" class="btn btn-info waves-effect waves-light" onclick="return validate_Issue_Certificate_Form();">Save</button>
+				</span>
+				</span>
+				</div>
+			</div>
+			</div>
+			<div class="certificate panel-body">
+				<div class="form-group">
+					<label class="col-md-3 control-label">Certificate no <span style="color:red">*</span></label>
+					<div class="col-md-6">
+					 <span th:if="${acs_list == null}">
+					<input type="text" id="certificateno" name="certificateno" value="" class="form-control">
+					</span>
+					<span th:unless="${acs_list == null}">
+					<input type="text" id="certificateno" name="certificateno" th:value="${acs[5]}" class="form-control">
+					</span>
+					<span id="certificateno_error" style="color:red"></span>
+					
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="col-md-3 control-label">Date of  issue <span style="color:red">*</span> </label>
+					<div class="col-md-6">
+					 <span th:if="${localdate == null}">
+					<input type="date" id="date_of_issue" name="date_of_issue" class="form-control">
+					</span>
+					<span th:unless="${localdate == null}">
+					<input type="date" id="date_of_issue" name="date_of_issue" class="form-control" th:value="${localdate}" readonly>
+					</span>
+					<span id="date_of_issue_error" style="color:red"></span>
+					</div>
+				</div>
+				
+				<div class="form-group">
+					<label class="col-md-3 control-label">Start Date of Protection <span style="color:red">*</span> </label>
+					<div class="col-md-6">
+						 <span th:if="${acs_list == null}">
+							<input type="date" id="startdate" name="startdate" class="form-control">
+							</span>
+							<span th:unless="${acs_list == null}">
+							<input type="date" id="startdate" name="startdate" class="form-control" th:value="${acs[7]}">
+						</span> 
+						<span id="startdate_error" style="color:red"></span>
+					</div>
+				</div>
+				
+				<div class="form-group">
+					<label class="col-md-3 control-label">Expiry date of Protection <span style="color:red">*</span></label>
+					<div class="col-md-6">
+					 <span th:if="${acs_list == null}">
+						<input type="date" id="enddate" name="enddate" class="form-control">
+						</span>
+						<span th:unless="${acs_list == null}">
+						<input type="date" id="enddate" name="enddate" class="form-control" th:value="${acs[11]}">
+						</span> 
+						<span id="enddate_error" style="color:red"></span>
+					</div>
+				</div>
+			 
+			<input type="hidden" id="editmode_issuecerty" name="editmode_issuecerty" th:value="${editmode_issuecerty}">
+			<input type="hidden" id="id" name="id" th:value="${datasaved_once[0]}">
+			<input type="hidden" id="applicationid" name="applicationid" th:value="${applicationid}">
+			
+			<span th:if="${acs == 0}">
+			<input type="hidden" id="acsid" name="acsid" th:value="${acs}">
+			</span>
+			<span th:unless="${acs == 0}">
+			<input type="hidden" id="acsid" name="acsid" th:value="${acs[0]}">
+			</span>
+				
+			<div class="form-group m-b-0 certificate">
+				<label class="col-md-3 control-label">&nbsp;</label>
+				
+				<div class="col-sm-7">
+				<span th:if="${role_granted != 'Super Administrator' && role_granted != 'PPVFRA Admin'}">
+				<span th:if="${datasaved_once == null}">
+				<span th:if="${sub11 == 'addpresent'}">
+				 <button type="submit" id="editbutton" class="btn btn-info waves-effect waves-light" onclick="return validate_Issue_Certificate_Form();">Save</button>
+				
+				 </span>
+				 </span>
+				 </span>
+				 
+				 <span th:if="${role_granted != 'Super Administrator' && role_granted != 'PPVFRA Admin'}">
+				 <span th:if="${acs[5] == null || acs[5] == '0' }">
+					<a th:href="@{'/issue_certificate_number/'+${applicationid}}" type="submit" onclick="return validate_Issue_Certificate_Form();" class="btn btn-purple waves-effect waves-light">Issue Certificate</a>
+					</span>
+					</span>
+				 <a th:href="@{'/view_cert_issued/'+${applicationid}}" class="btn btn-info waves-effect waves-light" target="_blank">View Certificate</a>
+			
+					<!-- <button type="button" onclick="window.open('utilities/form-o-2.html')" class="btn btn-info waves-effect waves-light">View Certificate</button> -->
+				</div>
+			</div>
+			<br>    
+		</div>
+	</div>
+		
+</span>
+</form>
+<script>
+	    function validate_Issue_Certificate_Form() {
+	    if(document.getElementById("is_pre_grant_opposition_received1").checked == true || document.getElementById("is_pre_grant_opposition_received2").checked == true){
+	    	if(document.getElementById("is_pre_grant_opposition_received1").checked == true){
+           if( document.getElementById("opposition_filed_by").value =="") {
+          	 document.getElementById("opposition_filed_by_error").innerHTML="Please enter opposition";
+          	 document.getElementById("opposition_filed_by").focus() ;
+              return false;
+           }
+           else{
+        	   document.getElementById("opposition_filed_by_error").innerHTML="";
+           }
+           if( document.getElementById("opposition_status_radio1").checked ==true || document.getElementById("opposition_status_radio2").checked ==true){
+           if( document.getElementById("opposition_status_radio1").checked ==true) {
+        	   if( document.getElementById("date_of_deceision").value =="") {
+                	 document.getElementById("date_of_deceision_error").innerHTML="Please enter date";
+                	 document.getElementById("date_of_deceision").focus() ;
+                    return false;
+                 }
+                 else{
+              	   document.getElementById("date_of_deceision_error").innerHTML="";
+                 }
+	        	   if( document.getElementById("date_of_issue").value =="") {
+	              	 document.getElementById("date_of_issue_error").innerHTML="Please enter issue date";
+	              	 document.getElementById("date_of_issue").focus() ;
+	                  return false;
+	               }
+	               else{
+	            	   document.getElementById("date_of_issue_error").innerHTML="";
+	               }
+        	   if( document.getElementById("startdate").value =="") {
+              	 document.getElementById("startdate_error").innerHTML="Please enter start date";
+              	 document.getElementById("date_of_deceision").focus() ;
+                  return false;
+               }
+               else{
+            	   document.getElementById("startdate_error").innerHTML="";
+               }
+        	   if( document.getElementById("enddate").value =="") {
+                	 document.getElementById("enddate_error").innerHTML="Please enter end date";
+                	 document.getElementById("enddate").focus() ;
+                    return false;
+                 }
+                 else{
+              	   document.getElementById("enddate_error").innerHTML="";
+                 }
+                return true;
+             }
+           
+           if( document.getElementById("opposition_status_radio2").checked ==true) {
+        	   if( document.getElementById("date_of_deceision").value =="") {
+                	 document.getElementById("date_of_deceision_error").innerHTML="Please enter date";
+                	 document.getElementById("date_of_deceision").focus() ;
+                    return false;
+                 }
+                 else{
+              	   document.getElementById("date_of_deceision_error").innerHTML="";
+                 }
+                return true;
+             }
+           }
+             else{
+          	   document.getElementById("opposition_status_radio_error").innerHTML="Please select status";
+          	   return false;
+             }
+           return false;
+    	  }
+    	
+    	  if(document.getElementById("is_pre_grant_opposition_received2").checked == true){
+              if( document.getElementById("startdate").value =="") {
+             	 document.getElementById("startdate_error").innerHTML="Please select date start date";
+             	 document.getElementById("startdate").focus() ;
+                 return false;
+              }
+              else{
+           	   document.getElementById("startdate_error").innerHTML="";
+              }
+              if( document.getElementById("enddate").value =="") {
+               	 document.getElementById("enddate_error").innerHTML="Please select expiry date";
+               	 document.getElementById("enddate").focus() ;
+                   return false;
+                }
+                else{
+             	   document.getElementById("enddate_error").innerHTML="";
+                }
+       	  }
+	    }
+	    else{
+		  document.getElementById("dus_test_completed_error").innerHTML="Please select yes or no";
+		  return false;
+	  }
+         return( true);
+   }
+</script>
+</span>
+<span th:unless="${IssueCertificate != null && IssueCertificate == 'IssueCertificate' }">
+ <label>YOU ARE NOT AUTHORISED TO VIEW THIS PAGE.PLEASE CONTACT ADMINISTRATOR</label>
+ </span>
+
+
+
+
+</div>
+
+
+</html>

@@ -1,0 +1,163 @@
+  
+  <!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+	<head>
+	  <th:block th:include="adminfragment/headerlibs.html :: headerlibs"></th:block> 
+	</head>
+
+    <body class="fixed-left">
+        <!-- Begin page -->
+        <div id="wrapper">
+        
+            <!-- Top Bar Start -->
+           <header th:insert="adminfragment/header.html :: header"> </header>
+            <!-- Top Bar End -->
+
+
+            <!-- ========== Left Sidebar Start ========== -->
+			<header th:insert="adminfragment/sidenav.html :: sidevav"> </header>
+            <!-- Left Sidebar End --> 
+
+  
+            <!-- Start right Content here -->  
+            <!-- ============================================================== -->                      
+            <div class="content-page">
+                <!-- Start content -->
+                <div class="content">
+                    <div class="container">
+
+                        <!-- Page-Title -->
+                        <div class="row">
+                            <div class="col-sm-12">
+                                <h4 class="pull-left page-title">Master</h4>
+                                <ol class="breadcrumb pull-right">
+                                    <li><a href="/admin">Home</a></li>
+                                    <li class="active">Registrar Jurisdiction</li>
+                                    <li>
+                                        <a href="/addnewregistrar" class="btn btn-purple waves-effect waves-light btn-xs m-b-5"><b>Add Registrar Jurisdiction</b></a>
+                                    </li>
+                                </ol>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="panel panel-default">
+                                    <div class="panel-heading">
+                                        <h3 class="panel-title">Registrar Jurisdiction List</h3>
+                                    </div>
+                                    <div class="panel-body">
+                                        <div class="row">
+                                            <div class="col-md-12 col-sm-12 col-xs-12">
+                                            <div class="table-responsive">
+                                            <span th:if="${actd_viewtrue != null && actd_viewtrue == 'valpresent' }">
+											
+                                                <table id="mtsdetails" class="table table-hover table-bordered">
+                                                    <thead>
+                                                        <tr>
+                                                            <th>Serial No.</th>
+                                                            <th>User</th>
+															<th>Crop wise Jurisdiction</th>
+															<th>Branch office</th>
+                                                             <span th:each="sec_chk : ${actd}">
+																<span th:if="${sec_chk == 'Edit'}">
+																	<th>Action</th>
+																</span>
+															 </span>
+															 
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+            
+										            <tr th:each="jurisdictionlist,serial : ${registrarjurisdictionlist}">
+										            <td th:text="${serial.count}"> </td> 
+										            <td th:text="${jurisdictionlist[3]}">  </td> 
+										            <td th:text="${jurisdictionlist[1]}">  </td> 
+										            <td th:text="${jurisdictionlist[2]}"> </td> 
+										            <!-- <td><div th:each="user : ${userselections}">
+														<span th:if="${jurisdictionlist.userid == user.id}" th:text="${user.usrname}"></span></div></td> 
+														-->
+											       <span th:each="sec_chk : ${actd}">
+													<span th:if="${sec_chk == 'Edit'}">
+											           <td> 
+									                     <a th:href="@{'/editregistrarjurisdictioncrops/'+${jurisdictionlist[0]}}">Edit</a> 
+									                    </td>
+											            </span>
+											            </span>
+											            
+										            </tr>
+          
+                                                    </tbody>
+                                                </table>
+                                                </span>
+                                                <span th:unless="${actd_viewtrue != null && actd_viewtrue == 'valpresent' }">
+												<label>YOU ARE NOT AUTHORISED TO VIEW THIS PAGE.PLEASE CONTACT ADMINISTRATOR</label>
+												</span>
+                                                </div>
+                                                
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div> <!-- End Row -->
+
+
+                    </div> <!-- container -->
+                               
+                </div> <!-- content -->
+
+               <!--  <footer class="footer text-right">
+                    2019 © PPVFRA.
+                </footer>
+
+            </div> -->
+            <!-- ============================================================== -->
+            <!-- End Right content here -->
+          <div th:replace="adminfragment/footer.html :: footer"></div>
+           </div> <!-- container -->
+                               
+                <!-- content -->
+
+			<!-- start footer content here -->
+			
+			<!-- end footer content here -->
+
+      
+        <!-- END wrapper -->
+
+<!-- footer lib start here-->
+
+<div th:replace="adminfragment/footerlibs.html :: footerlibs"></div>
+</div>
+<!-- end footer lib -->
+<script>
+			$(document).ready(function() {
+				$('#mtsdetails').DataTable( {
+					dom: 'Bfrtip',
+					buttons: [
+						'csv', 'excel', 'pdf', 'print'
+					]
+				} );
+			} );
+</script> 
+<div th:if="${message != null}">
+ <div id="myModal1" class="modal fade">
+   <div class="modal-dialog">
+    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+        <div class="modal-content">
+         <div class="modal-body">
+				<p align="center" th:text="${message}" />
+            </div>
+        </div>
+    </div>
+</div>
+</div>
+
+    <script type="text/javascript">
+	      $(document).ready(function(){
+		  $("#myModal1").modal('show');
+	     });
+        </script>
+    </body>
+</html>

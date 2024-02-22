@@ -1,0 +1,208 @@
+  
+  <!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+	<head>
+	  <th:block th:include="adminfragment/headerlibs.html :: headerlibs"></th:block> 
+	  
+	  <style>
+	  	.dataTables_wrapper>.dt-buttons {
+    width: 50%;
+    float: left;
+    position: relative;
+    margin-bottom: 5px;
+}
+
+.dataTables_filter>label {
+    float: right;
+    position: relative;
+    top: 4px;
+}
+
+
+.buttons-search {
+    padding: 2px 8px !important;
+    background: #2b94d2;
+	border: none;
+    border-radius: 2px;
+    font-size: 14px;
+    color: #fff;
+}
+
+.margin_top_25{
+	margin-top: 25px;
+}
+	  	
+	  </style>
+	  
+	</head>
+
+    <body class="fixed-left">
+        <!-- Begin page -->
+        <div id="wrapper">
+        
+            <!-- Top Bar Start -->
+           <header th:insert="adminfragment/header.html :: header"> </header>
+            <!-- Top Bar End -->
+
+
+            <!-- ========== Left Sidebar Start ========== -->
+			<header th:insert="adminfragment/sidenav.html :: sidevav"> </header>
+            <!-- Left Sidebar End --> 
+
+  
+            <!-- Start right Content here -->  
+             
+        <!-- ============================================================== -->                      
+            <div class="content-page">
+                <!-- Start content -->
+               <div class="content">
+                    <div class="container">
+
+                        <!-- Page-Title -->
+                        <div class="row">
+                            <div class="col-sm-12">
+                                <h4 class="pull-left page-title">Reports</h4>
+                                <ol class="breadcrumb pull-right">
+                                    <li><a href="/admin">Home</a></li>
+                                    <li class="active">Status of the Total Applications received (Crop Wise).</li>
+                                </ol>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="panel panel-default">
+                                    <div class="panel-heading">
+                                        <h3 class="panel-title">Status of the Total Applications received (Crop Wise).</h3>
+                                    </div>
+                                    <div class="panel-body">
+                                        <div class="row">
+                                            <div class="col-md-12 col-sm-12 col-xs-12">
+                                            	
+                                            	<div class="col-lg-12">
+													<div class="panel panel-border panel-success">
+														<div class="panel-body" style="padding: 10px 0 0 0;">
+															<form action="" method="post" accept-charset="utf-8">
+																<div class="col-lg-3">
+																	<div class="form-group">
+																		<label>From Date:</label>
+																		<input type="date" class="form-control" id="fromdate" name="fromDate">                                                     
+																	</div>
+																</div>
+																<div class="col-lg-3">
+																	<div class="form-group">
+																		<label>To Date:</label>
+																		<input type="date" class="form-control" name="todate" id="todate">                                                    
+																	</div>
+																</div>
+																		   
+																<div class="col-lg-3">
+																	<div class="form-group">
+																		<button type="button" class="btn btn-success waves-effect waves-light margin_top_25" onclick='getfromDateData()'>Search</button>
+																	</div>
+																</div>
+															</form>
+														</div>
+													</div>
+												</div>	
+												
+                                              
+                                             		
+                                              <div class="col-md-12 col-sm-12 col-xs-12">
+                                              <div class="table-responsive">
+												 
+													<table id="datatable1" class="table table-hover table-bordered">
+														<thead>
+															
+															<tr>
+																<!-- <th>Id</th> -->
+																<th>Status</th>
+																<th>Count of Application</th>
+																<th>View</th>
+															</tr>
+														</thead>
+														<tbody>
+														
+														</tbody>
+													</table>
+												</div>
+												</div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div> <!-- End Row -->
+
+
+                    </div> <!-- container -->
+                               
+                </div> <!-- content -->
+
+            </div>
+            <!-- ============================================================== -->
+             
+            <!-- End Right content here -->
+          <div th:replace="adminfragment/footer.html :: footer"></div>
+           </div> <!-- container -->
+                               
+                <!-- content -->
+
+			<!-- start footer content here -->
+			
+			<!-- end footer content here -->
+
+      
+        <!-- END wrapper -->
+
+<!-- footer lib start here-->
+
+<div th:replace="adminfragment/footerlibs.html :: footerlibs"></div>
+<!-- end footer lib -->
+
+   <script type="text/javascript">
+        function getfromDateData() {
+        	$("#shortstorage tbody").empty();
+            var f_date =document.getElementById("fromdate").value;
+            var to_date =document.getElementById("todate").value;
+           // alert(f_date);
+            $.ajax({
+                type: "POST",
+                url: "/getReportData",
+                data: {
+           			
+                	f_date: f_date,
+                	to_date :to_date
+            	}, 
+                success: function (data) { 
+                	/* $("#datatable1 tbody").html(''); 
+	                   for (var i=0;i<response.length;i++)
+	               	{
+	                   	var str = i+1;
+	                   	var str1 = response[i][1];
+	                   	var str2 = response[i][0];
+	                   	var html_data = '<tr><td>'+str+'</td><td> '+str1+'</td><td>'+str2+'</td></tr>';
+	                   
+					 	$("#shortstorage tbody").append(html_data);
+	                   	
+	               	}    */ 
+                	$('#datatable1').DataTable().clear().draw();
+                    var table;
+                  table = $('#datatable1').DataTable();    
+                  if(data!='' || data!=null) {               
+                   $.each(data, function(i, item) {
+                      table.row.add([data[i][1], data[i][0],"<a href=/show_application_details/"+data[i][0]+" target='_blank'>view</a>"]);
+                  });              
+                  }
+                  else {
+                  $('#datatable1').html('<p>No data available in search</p>');
+                  }
+                  table.draw();
+                }
+            }); 
+  }
+    </script> 
+    
+     
+</body>
+</html>

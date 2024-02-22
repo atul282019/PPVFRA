@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<div th:fragment="enter_in_enational_register">
+<span th:if="${ENationalEntry != null && ENationalEntry == 'ENationalEntry' }"> 
+ 
+<form class="form-horizontal" role="form" th:action="@{/nationalregister}" th:object="${nationalregister}" method="post">  
+												<span th:if="${nationalreg_edit == 0}">
+												<div class="panel panel-success">
+													<div class="panel-heading">Entry in e-National Register</div>
+													<div class="panel-body">
+															
+															<div class="form-group">
+				                                                <label class="col-md-2 control-label" > </label>
+				                                                <div class="col-md-10">
+				                                 				<input type="text" id="applicationid" th:name="applicationid"  th:value="${applicationid}" readonly="readonly" hidden="true" />
+				                                                </div>
+				                                            </div>
+															
+															<div class="form-group">
+																<label class="col-md-3 ">Entered in National Register </label>
+																<div class="col-md-6">
+																	<input th:field="*{entered_in_national_register}" class="received" type="radio" id="radio" name="radio" value="Y">Yes &nbsp;
+																	<input th:field="*{entered_in_national_register}" class="oppositionn-1" type="radio" id="radio" name="radio" value="N">No
+																</div>
+															</div>
+															
+															<div class="form-group">
+																<label class="col-md-3 control-label">Date  </label>
+																<div class="col-md-6">
+																	<input type="date" th:field="*{date_of_entry}" class="form-control" >
+																</div>
+															</div>
+														
+															
+															<div class="form-group">
+																<label class="col-md-3 control-label">Register Number </label>
+																<div class="col-md-6">
+																	<input type="text" th:field="*{register_number}" class="form-control" >
+																</div>
+															</div>
+															
+															<div class="form-group">
+																<label class="col-md-3 control-label">Page Number</label>
+																<div class="col-md-6">
+																	<input type="text" th:field="*{page_number}" class="form-control" >
+																</div>
+															</div>
+														<br> 
+														<input type="hidden" name="id" id="id" th:value="0">
+														
+														<div class="form-group m-b-0">
+															<label class="col-md-3 control-label">&nbsp;</label>
+															<div class="col-sm-7">
+															<span th:if="${sub14 == 'addpresent'}">
+																<button type="submit" class="btn btn-info waves-effect waves-light">Save</button>
+																</span>
+															</div>
+															
+														</div>
+													</div>
+												</div>
+												</span>
+												<span th:unless="${nationalreg_edit == 0}">
+												<div class="panel panel-success">
+													<div class="panel-heading">Entry in e-National Register</div>
+													<div class="panel-body">
+															
+															<div class="form-group">
+				                                                <label class="col-md-2 control-label" > </label>
+				                                                <div class="col-md-10">
+				                                 				<input type="text" id="applicationid" th:name="applicationid"  th:value="${applicationid}" readonly="readonly" hidden="true" />
+				                                                </div>
+				                                            </div>
+															
+															<div class="form-group">
+																<label class="col-md-3 ">Entered in National Register </label>
+																<div class="col-md-6">
+																	<input name="entered_in_national_register" id="entered_in_national_register" class="received" type="radio"    value="Y" th:checked="${national_rep[2] == 'Y'}">Yes &nbsp;
+																	<input name="entered_in_national_register" id="entered_in_national_register" class="oppositionn-1" type="radio"    value="N" th:checked="${national_rep[2] == 'N'}">No
+																</div>
+															</div>
+															
+															<div class="form-group">
+																<label class="col-md-3 control-label">Date  </label>
+																<div class="col-md-6">
+																	<input type="date" name="date_of_entry" id="date_of_entry" th:value="${national_rep[3]}" class="form-control" >
+																</div>
+															</div>
+														
+															
+															<div class="form-group">
+																<label class="col-md-3 control-label">Register Number </label>
+																<div class="col-md-6">
+																	<input type="text" name="register_number" id="register_number" th:value="${national_rep[4]}" class="form-control" >
+																</div>
+															</div>
+															
+															<div class="form-group">
+																<label class="col-md-3 control-label">Page Number</label>
+																<div class="col-md-6">
+																	<input type="text" name="page_number" id="page_number" th:value="${national_rep[5]}" class="form-control" >
+																</div>
+															</div>
+														<br> 
+														
+														<input type="hidden" name="id" id="id" th:value="${national_rep[0]}">
+														<div class="form-group m-b-0">
+															<label class="col-md-3 control-label">&nbsp;</label>
+															<div class="col-sm-7">
+															<span th:if="${sub14 == 'addpresent'}">
+																<button type="submit" class="btn btn-info waves-effect waves-light">Save</button>
+																</span>
+															</div>
+															
+														</div>
+													</div>
+												</div>
+												</span>
+											</form>
+</span>
+<span th:unless="${ENationalEntry != null && ENationalEntry == 'ENationalEntry' }">
+ <label>YOU ARE NOT AUTHORISED TO VIEW THIS PAGE.PLEASE CONTACT ADMINISTRATOR</label>
+ </span>
+
+</div>
+
+
+</html>

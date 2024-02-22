@@ -1,0 +1,945 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+	<head>
+	  <th:block th:include="adminfragment/headerlibs.html :: headerlibs"></th:block> 
+	</head>
+
+    <body class="fixed-left">
+        <!-- Begin page -->
+        <div id="wrapper">
+        
+            <!-- Top Bar Start -->
+           <header th:insert="adminfragment/header.html :: header"> </header>
+            <!-- Top Bar End -->
+
+
+            <!-- ========== Left Sidebar Start ========== -->
+			<header th:insert="adminfragment/sidenav.html :: sidevav"> </header>
+            <!-- Left Sidebar End --> 
+
+  
+             <!-- Start right Content here -->
+            <!-- ============================================================== -->                      
+            <div class="content-page">
+                <!-- Start content -->
+                <div class="content">
+                    <div class="container">
+
+                        <!-- Page-Title -->
+                        <div class="row">
+                            <div class="col-sm-12">
+                                <h4 class="pull-left page-title">User Management</h4>
+                                <ol class="breadcrumb pull-right">
+                                    <li><a href="/admin">Home</a></li>
+		                            <li>
+		                              <button type="button" onclick="history.go(-1);" class="btn btn-purple waves-effect waves-light btn-xs m-b-5">Back</button>
+		                            </li>
+                                </ol>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-sm-12">
+                                <div class="panel panel-default">
+                                    <div class="panel-heading"><h3 class="panel-title">Company Registration View</h3></div>
+                                    
+                                    
+                                     <div th:if="${actd_viewtrue != null && actd_viewtrue == 'valpresent' }">
+									
+                                    		<div class="panel-body">
+                                     
+											
+												<form id="register-form17" class="form form-horizontal login-form-padding" th:action="@{/editcompanyregistration}" th:object="${companyregistration}" data-toggle="validator" method="post">
+												
+													<h3 class="text-center"><b>Company Registration</b></h3><br>
+													
+													<div class="form-group">
+                                                <label class="col-md-2 control-label" > </label>
+                                                <div class="col-md-10">
+                                                    <input type="text" th:field="*{id}" readonly="readonly" hidden="true" />
+                                                    
+                                                </div>
+                                            </div>
+                                                    <div class="form-group">
+														<label class="col-md-3 control-label">Name of Company<span style="color:red">*</span></label>
+														<div class="col-md-9">
+															<input type="text" th:id="companyname" onblur='javascript:companycheck()' th:field="*{companyname}" class="form-control">
+															 <div class="alert alert-danger" th:if="${#fields.hasErrors('companyname')}" th:errors="*{companyname}"></div>
+															 <div class="help-block with-errors" id="companyerror"></div>
+															
+														</div>
+													</div>
+													
+													<div class="form-group">
+														<label class="col-md-3 control-label">Acronym<span style="color:red">*</span></label>
+														<div class="col-md-9">
+															<input type="text" id="acronym" th:field="*{acronym}" onblur='javascript:acronymcheck()' class="form-control">
+													 		<div class="alert alert-danger" th:if="${#fields.hasErrors('acronym')}" th:errors="*{acronym}"></div>
+															<div class="help-block with-errors" id="acronymerror"></div>
+														</div>
+													</div>
+													
+													<div class="form-group">
+														<label class="col-md-3 control-label"> Year of Incorporation<span style="color:red">*</span></label>
+														<div class="col-md-9">
+															<input type="text" th:field="*{Year_of_Incorporation}" class="form-control">
+															<div class="alert alert-danger" th:if="${#fields.hasErrors('Year_of_Incorporation')}" th:errors="*{Year_of_Incorporation}"></div>
+														</div>
+													</div>
+													
+													<div class="form-group">
+														<label class="col-md-3 control-label">CIN Number<span style="color:red">*</span></label>
+														<div class="col-md-9">
+															<input type="text" id="cinnumber" onblur='javascript:cinnumbercheck()' th:field="*{cin_number}" class="form-control">
+													        <div class="alert alert-danger" th:if="${#fields.hasErrors('cin_number')}" th:errors="*{cin_number}"></div>
+														    <div class="help-block with-errors" id="cinnumbererror"></div>
+														</div>
+													</div>
+													
+													<div class="form-group">
+														<label class="col-md-12 text-center"> Address of its seat or establishment</label>
+													</div>
+													
+													<div class="form-group">
+														<label class="col-md-3 control-label">Address<span style="color:red">*</span></label>
+														<div class="col-md-9">
+															<textarea class="form-control" th:field="*{seat_address}" name="seataddress"></textarea>
+															<div class="alert alert-danger" th:if="${#fields.hasErrors('seat_address')}" th:errors="*{seat_address}"></div>
+														    
+														</div>
+													</div>
+
+												 <div class="form-group">
+														<label class="col-md-3 control-label">Country<span style="color:red">*</span></label>
+														   <div class="col-md-9">
+														    <div th:if="${Country != null}">
+														        <select th:field="*{seat_Countryid}" id="ddlcountry" class="form-control">
+														        <option th:value="null" >---Select---</option>
+														            <option th:each="dropDownItem : ${Country}"
+														               th:value="${dropDownItem.id}"
+														               th:text="${dropDownItem.country}" />
+														        </select>
+														        <div class="alert alert-danger" th:if="${#fields.hasErrors('seat_Countryid')}" th:errors="*{seat_Countryid}"></div>
+												     	</div>
+													   	</div>
+														</div> 
+						
+												<div id="dvPassport" style="display: none">
+											     <div class="form-group">
+														<label class="col-md-3 control-label">State<span style="color:red">*</span></label>
+														   <div class="col-md-9">
+														    <div th:if="${State != null}">
+														        <select onchange="GetDistricts();" id="statecode"  th:field="*{seat_state}" class="form-control">
+														        <option th:value="null" >Select</option>
+														            <option th:each="dropDownItem : ${State}"
+														               th:value="${dropDownItem.statecode}"
+														               th:text="${dropDownItem.statename_inenglish}" />
+														        </select>
+														        <div class="alert alert-danger" th:if="${#fields.hasErrors('seat_state')}" th:errors="*{seat_state}"></div>
+														   	</div>
+														   	
+														   	</div>
+														</div> 
+
+														 <div class="form-group">
+														<label class="col-md-3 control-label">District<span style="color:red">*</span></label>
+														   <div class="col-md-9">
+														    <div  th:if="${District != null}">
+														        <select id="districtcode" th:name="districtcode" th:field="*{seat_districts}" class="form-control">
+														        <option th:value="null" >Select</option>
+														            <option th:each="dropDownItem : ${District}"
+														               th:value="${dropDownItem.districtcode}"
+														               th:text="${dropDownItem.districtname_inenglish}" />
+														        </select>
+														       <div class="alert alert-danger" th:if="${#fields.hasErrors('seat_districts')}" th:errors="*{seat_districts}"></div>
+														   	</div>
+														   	
+														   	</div>
+														</div> 													
+													</div>
+												    <div class="form-group">
+														<label class="col-md-3 control-label">City/Town/Village<span style="color:red">*</span></label>
+														<div class="col-md-9">
+															<input type="text" th:field="*{seat_CityVillageTown}" class="form-control">
+														<div class="alert alert-danger" th:if="${#fields.hasErrors('seat_CityVillageTown')}" th:errors="*{seat_CityVillageTown}"></div>
+														</div>
+														</div>
+													
+													
+													<div class="form-group">
+														<label class="col-md-3 control-label">Pincode/ZipCode<span style="color:red">*</span></label>
+														<div class="col-md-9">
+															<input type="text" th:field="*{seat_Pincode}" class="form-control">
+															<div class="alert alert-danger" th:if="${#fields.hasErrors('seat_Pincode')}" th:errors="*{seat_Pincode}"></div>
+														</div>
+													</div>
+													
+													<div class="form-group">
+														<label class="col-md-12 text-center"> Registered Address</label>
+													</div>
+
+													<div class="form-group">
+														<label class="col-md-3 control-label"></label>
+														<div class="col-md-9">
+														<input type="checkbox" id="chkPassport" name="billingtoo" onclick="FillRegisteredAddress(this.form)">
+													    Same as Above address
+														</div>
+													</div>
+													
+													
+													<div class="form-group">
+														<label class="col-md-3 control-label">Address<span style="color:red">*</span></label>
+														<div class="col-md-9">
+															<textarea class="form-control" th:field="*{registered_address}" name="registeredaddress"></textarea>
+															<div class="alert alert-danger" th:if="${#fields.hasErrors('registered_address')}" th:errors="*{registered_address}"></div>
+													
+														</div>
+													</div>
+													
+													<div class="form-group">
+														<label class="col-md-3 control-label">Country <span style="color:red">*</span></label>
+														   <div class="col-md-9">
+														    <div th:if="${Country != null}">
+														        <select th:field="*{Registeredoffice_Countryid}" id="ddlregisteredcountry" class="form-control">
+														        <option th:value="-1" >---Select---</option>
+														            <option th:each="dropDownItem : ${Country}"
+														               th:value="${dropDownItem.id}"
+														               th:text="${dropDownItem.country}" />
+														        </select>
+														        <div class="alert alert-danger" th:if="${#fields.hasErrors('Registeredoffice_Countryid')}" th:errors="*{Registeredoffice_Countryid}"></div>
+														   	</div>
+													   	</div>
+														</div> 
+													<div id="registedstatediv" style="display: none">
+													<div class="form-group">
+														<label class="col-md-3 control-label">State <span style="color:red">*</span></label>
+														   <div class="col-md-9">
+														    <div th:if="${State != null}">
+														        <select onchange="GetRegDistricts();" id="regstatecode"  th:field="*{registeredoffice_state}" class="form-control">
+														        <option th:value="null" >Select</option>
+														            <option th:each="dropDownItem : ${State}"
+														               th:value="${dropDownItem.statecode}"
+														               th:text="${dropDownItem.statename_inenglish}" />
+														        </select>
+														        <div class="alert alert-danger" th:if="${#fields.hasErrors('registeredoffice_state')}" th:errors="*{registeredoffice_state}"></div>
+														   	</div>
+														   	
+														   	</div>
+														</div> 
+
+														 <div class="form-group">
+														<label class="col-md-3 control-label">District <span style="color:red">*</span></label>
+														   <div class="col-md-9">
+														    <div  th:if="${District != null}">
+														        <select id="regdistrictcode" th:name="regdistrictcode" th:field="*{registeredoffice_districts}" class="form-control">
+														        <option th:value="null" >Select</option>
+														            <option th:each="dropDownItem : ${District}"
+														               th:value="${dropDownItem.districtcode}"
+														               th:text="${dropDownItem.districtname_inenglish}" />
+														        </select>
+														       <div class="alert alert-danger" th:if="${#fields.hasErrors('registeredoffice_districts')}" th:errors="*{registeredoffice_districts}"></div>
+														   	</div>
+														   	
+														   	</div>
+														</div> 					
+													</div>
+													<div class="form-group">
+														<label class="col-md-3 control-label">City/Town/Village <span style="color:red">*</span></label>
+														<div class="col-md-9">
+															<input type="text" th:field="*{Registeredoffice_CityVillageTown}" class="form-control">
+															<div class="alert alert-danger" th:if="${#fields.hasErrors('Registeredoffice_CityVillageTown')}" th:errors="*{Registeredoffice_CityVillageTown}"></div>
+														</div>
+													</div>
+													<div class="form-group">
+														<label class="col-md-3 control-label">Pincode/ZipCode <span style="color:red">*</span></label>
+														<div class="col-md-9">
+															<input type="text" th:field="*{Registeredoffice_Pincode}" class="form-control">
+															<div class="alert alert-danger" th:if="${#fields.hasErrors('Registeredoffice_Pincode')}" th:errors="*{Registeredoffice_Pincode}"></div>
+														</div>
+													</div>
+
+													<div class="form-group">
+														<label class="col-md-12 text-center"> Contact Details of Authorized Signatory</label>
+													</div>
+													
+													<div class="form-group">
+														<label class="col-md-3 control-label"></label>
+														<div class="col-md-9">
+															<input type="checkbox" id="authorisecheckbox" name="Authorize" onclick="FillAuthorizedSignatory(this.form)"> Same as Above address
+														</div>
+													</div>
+													
+													<div class="form-group">
+														<label class="col-md-3 control-label">Name<span style="color:red">*</span></label>
+														<div class="col-md-9">
+															<input type="text" id="authorname" th:field="*{Author_Name}" onblur='javascript:authornamecheck()' class="form-control">
+															<div class="alert alert-danger" th:if="${#fields.hasErrors('Author_Name')}" th:errors="*{Author_Name}"></div>
+															 <div class="help-block with-errors" id="authornameerror"></div>
+														</div>
+													</div>
+													
+													
+													<div class="form-group">
+														<label class="col-md-3 control-label">Designation<span style="color:red">*</span></label>
+														<div class="col-md-9">
+															<input type="text" id="designation" th:field="*{Author_Designation}" onblur='javascript:designationcheck()' class="form-control">
+															<div class="alert alert-danger" th:if="${#fields.hasErrors('Author_Designation')}" th:errors="*{Author_Designation}"></div>
+														<div class="help-block with-errors" id="designationerror"></div>
+														</div>
+													</div>
+													
+													
+													<div class="form-group">
+														<label class="col-md-3 control-label">Address <span style="color:red">*</span></label>
+														<div class="col-md-9">
+															<textarea th:field="*{Author_Address}" name="authoraddress" class="form-control"></textarea>
+															<div class="alert alert-danger" th:if="${#fields.hasErrors('Author_Address')}" th:errors="*{Author_Address}">Author_Address Error</div>
+														</div>
+													</div>
+													
+													
+													 <div class="form-group">
+														<label class="col-md-3 control-label">Country <span style="color:red">*</span></label>
+														   <div class="col-md-9">
+														    <div th:if="${Country != null}">
+														        <select th:field="*{Author_Countryid}" class="form-control">
+														        <option th:value="null" >---Select---</option>
+														            <option th:each="dropDownItem : ${Country}"
+														               th:value="${dropDownItem.id}"
+														               th:text="${dropDownItem.country}" />
+														        </select>
+														        <div class="alert alert-danger" th:if="${#fields.hasErrors('Author_Countryid')}" th:errors="*{Author_Countryid}"></div>
+														   	</div>
+													   	</div>
+														</div> 
+																									
+													<div id="authorisestatediv" style="display: none">
+													<div class="form-group">
+														<label class="col-md-3 control-label">State <span style="color:red">*</span></label>
+														   <div class="col-md-9">
+														    <div th:if="${State != null}">
+														        <select onchange="GetAuthorisedDistricts();" id="authorisedstatecode"  th:field="*{author_statecode}" class="form-control">
+														        <option th:value="null" >Select</option>
+														            <option th:each="dropDownItem : ${State}"
+														               th:value="${dropDownItem.statecode}"
+														               th:text="${dropDownItem.statename_inenglish}" />
+														        </select>
+														        <div class="alert alert-danger" th:if="${#fields.hasErrors('author_statecode')}" th:errors="*{author_statecode}"></div>
+														   	</div>
+														   	
+														   	</div>
+														</div> 
+
+														 <div class="form-group">
+														<label class="col-md-3 control-label">District <span style="color:red">*</span></label>
+														   <div class="col-md-9">
+														    <div  th:if="${District != null}">
+														        <select id="authoriseddistrictcode" th:name="authoriseddistrictcode" th:field="*{author_districtcode}" class="form-control">
+														        <option th:value="null" >Select</option>
+														            <option th:each="dropDownItem : ${District}"
+														               th:value="${dropDownItem.districtcode}"
+														               th:text="${dropDownItem.districtname_inenglish}" />
+														        </select>
+														       <div class="alert alert-danger" th:if="${#fields.hasErrors('author_districtcode')}" th:errors="*{author_districtcode}"></div>
+														   	</div>
+														   	
+														   	</div>
+														</div>
+													</div>
+													<div class="form-group">
+														<label class="col-md-3 control-label">City/Town/Village <span style="color:red">*</span></label>
+														<div class="col-md-9">
+															<input type="text" th:field="*{Author_CityVillageTown}" class="form-control">
+															<div class="alert alert-danger" th:if="${#fields.hasErrors('Author_CityVillageTown')}" th:errors="*{Author_CityVillageTown}"></div>
+														</div>
+													</div>
+													<div class="form-group">
+														<label class="col-md-3 control-label">Pincode/ZipCode <span style="color:red">*</span></label>
+														<div class="col-md-9">
+															<input type="text" th:field="*{Author_Pincode}" class="form-control">
+															<div class="alert alert-danger" th:if="${#fields.hasErrors('Author_Pincode')}" th:errors="*{Author_Pincode}"></div>
+														</div>
+													</div>
+												
+													<div class="form-group">
+														<label class="col-md-3 control-label">Mobile <span style="color:red">*</span></label>
+														<div class="col-md-1">
+															<input type="text" th:field="*{author_mobilecountrycode}" class="form-control" placeholder="+91">
+														</div>
+														<div class="col-md-8">
+															<input type="text" id="mobilenocheck" onblur='javascript:mobilecheck()' th:field="*{Author_Mobile}" class="form-control">
+															<div class="alert alert-danger" th:if="${#fields.hasErrors('Author_Mobile')}" th:errors="*{Author_Mobile}"></div>
+														  <div class="help-block with-errors" id="mobilenoerror"></div>
+														</div>
+														
+													</div>
+													
+													<div class="form-group">
+														<label class="col-md-3 control-label">Fax </label>
+														<div class="col-md-1">
+															<input type="text" th:field="*{author_faxcountrycode}" class="form-control" maxlength="4">
+														</div>
+														<div class="col-md-8">
+															<input type="text" th:field="*{Author_Fax}" class="form-control" maxlength="8">
+															<div class="alert alert-danger" th:if="${#fields.hasErrors('Author_Fax')}" th:errors="*{Author_Fax}" ></div>
+														
+														</div>
+													</div>
+													
+													<div class="form-group">
+														<label class="col-md-3 control-label">Email <span style="color:red">*</span></label>
+														<div class="col-md-9">
+															<input type="text" id="emailidcheck" onblur='javascript:emailcheck()' th:field="*{Author_Email}" class="form-control" />
+															<div class="alert alert-danger" th:if="${#fields.hasErrors('Author_Email')}" th:errors="*{Author_Email}"></div>
+														    <div class="help-block with-errors" id="emailiderror"></div>
+														</div>
+													</div>
+													<div class="form-group">
+														<label class="col-md-3 control-label">Username <span style="color:red">*</span></label>
+														<div class="col-md-9">
+															<textarea  rows="1" th:field="*{username}" th:text="${username11}"  id="username" name="username" onblur='javascript:usernamecheck()' class="form-control"></textarea>
+															<div class="alert alert-danger" th:if="${#fields.hasErrors('username')}" th:errors="*{username}"></div>
+														 <div class="help-block with-errors" id="emailerror"></div>
+														 </div>
+														
+													</div>
+												
+													<div class="form-group">
+														<label class="col-md-3 control-label"></label>
+														<div class="col-md-9">
+														<span th:each="sec_chk : ${actd}">
+														     <span th:if="${sec_chk == 'Edit'}">
+															<input type="submit" id="btnsubmitcgp2" name="submit" class="btn btn-info btn-md" value="Submit" style="background-color:#3e7205;">
+															</span>
+														</span>
+														</div>
+													</div>
+													
+												</form>
+                                           </div>
+                                           
+                                           </div>
+                                           <span th:unless="${actd_viewtrue != null && actd_viewtrue == 'valpresent' }">
+											<label>YOU ARE NOT AUTHORISED TO VIEW THIS PAGE.PLEASE CONTACT ADMINISTRATOR</label>
+											</span>
+											
+										</div>
+									</div>
+								</div>
+							</div>
+				</div>
+			</div>
+	
+<div th:replace="adminfragment/footer.html :: footer"></div>
+           </div> <!-- container -->
+                               
+                <!-- content -->
+
+			<!-- start footer content here -->
+			
+			<!-- end footer content here -->
+
+      
+        <!-- END wrapper -->
+
+<!-- footer lib start here-->
+
+<div th:replace="adminfragment/footerlibs.html :: footerlibs"></div>
+<!-- end footer lib -->
+	
+<script type="text/javascript">
+   function GetDistricts()
+  {
+       var ddlState= document.getElementById("statecode");
+       var district=document.getElementById("districtcode");
+       var district1=$("#districtcode");
+       if(ddlState.value != null)	
+       	$.ajax({
+               type: "POST",
+               url: "/ppvfra/getDistricts",
+               data: 'stateCode='+ddlState.value,
+               dataType:"json",
+               success: function (response) {
+               	
+              district1.empty().append('<option selected="selected" value="">Please select</option>');
+                for(var k=0;k<response.length;k++)
+     	  {
+     	  var opt = response[k];
+     	   var el = document.createElement("option");
+     	   el.textContent = opt[1];
+     	   el.value = opt[0];
+     	   district.appendChild(el);
+																	 
+     	}
+ 
+ 
+               },
+               failure: function (response) {
+                   alert(response.responseText);
+					  
+               },
+               error: function (response) {
+                   alert(response.responseText);
+					   
+										  
+														
+               }
+      });
+   	
+   }
+ </script>	
+<script type="text/javascript">
+   function GetRegDistricts()
+  {
+       var ddlState= document.getElementById("regstatecode");
+       var district=document.getElementById("regdistrictcode");
+       var district1=$("#regdistrictcode");
+       if(ddlState.value != null)	
+       	$.ajax({
+               type: "POST",
+               url: "/ppvfra/getDistricts",
+               data: 'stateCode='+ddlState.value,
+               dataType:"json",
+               success: function (response) {
+               	
+              district1.empty().append('<option selected="selected" value="">Please select</option>');
+                for(var k=0;k<response.length;k++)
+     	  {
+     	  var opt = response[k];
+     	   var el = document.createElement("option");
+     	   el.textContent = opt[1];
+     	   el.value = opt[0];
+     	   district.appendChild(el);
+     	}
+               },
+               failure: function (response) {
+                   alert(response.responseText);
+               },
+               error: function (response) {
+                   alert(response.responseText);
+               }
+      });
+   	
+   }
+ </script>	
+
+
+<script type="text/javascript">
+   function GetAuthorisedDistricts()
+  {
+       var ddlState= document.getElementById("authorisedstatecode");
+       var district=document.getElementById("authoriseddistrictcode");
+       var district1=$("#authoriseddistrictcode");
+       if(ddlState.value != null)	
+       	$.ajax({
+               type: "POST",
+               url: "/ppvfra/getDistricts",
+               data: 'stateCode='+ddlState.value,
+               dataType:"json",
+               success: function (response) {
+               	
+              district1.empty().append('<option selected="selected" value="">Please select</option>');
+                for(var k=0;k<response.length;k++)
+     	  {
+     	  var opt = response[k];
+     	   var el = document.createElement("option");
+     	   el.textContent = opt[1];
+     	   el.value = opt[0];
+     	   district.appendChild(el);
+     	}
+               },
+               failure: function (response) {
+                   alert(response.responseText);
+               },
+               error: function (response) {
+                   alert(response.responseText);
+               }
+      });
+   	
+   }
+ </script>	
+ 
+ 	
+	<script type="text/javascript" th:inline="javascript">
+        function emailcheck() {
+        	var chk =  [[${companyregistration}]];
+            var emailid =document.getElementById("emailidcheck").value;
+            
+          // alert(emailid);
+            $.ajax({
+                type: "POST",
+                url: "/ppvfra/checkmail",
+                data:emailid,
+                contentType:'application/json',
+                success: function (data) {
+                 
+                if((data == 'taken')&& (chk.author_Email.trimRight() == emailid))
+                	{
+                	document.getElementById("emailiderror").innerHTML = " ";
+   			     return true;
+                	}else if((data == 'taken')&& (chk != emailid))
+                	{
+                	
+                //Email not available.
+        		document.getElementById("emailiderror").innerHTML = " <font color='red'>Email is already present.</font>";
+        		document.forms["register-form17"]["emailidcheck"].focus();
+        		return false;
+                }
+				else (data == 'not taken') 
+				{
+				document.getElementById("emailiderror").innerHTML = " ";
+			     return true;
+                    }
+                   
+                }
+            }); 
+  }
+        </script>
+        <script type="text/javascript" th:inline="javascript">
+        function mobilecheck() {
+        	var chk =  [[${companyregistration}]];
+        	var emailid =document.getElementById("mobilenocheck").value;
+            //alert(emailid);
+            $.ajax({
+                type: "POST",
+                url: "/ppvfra/checkmobile",
+                data:emailid,
+                contentType:'application/json',
+                success: function (data) {
+                 
+                if((data == 'taken')&& (chk.author_Mobile == emailid))
+                	{
+                		document.getElementById("mobilenoerror").innerHTML = " ";
+       			        return true;
+                	}
+                else if((data == 'taken')&& (chk != emailid))
+				{
+                //Email not available.
+        		document.getElementById("mobilenoerror").innerHTML = " <font color='red'>Mobile Number is already present.</font>";
+        		document.forms["register-form17"]["mobilenocheck"].focus();
+        		return false;
+                }
+				else if (data == 'not taken') 
+				{
+				document.getElementById("mobilenoerror").innerHTML = " ";
+			     return true;
+                    }
+                   
+                }
+            }); 
+  }
+</script>
+    <script type="text/javascript" th:inline="javascript">
+        function usernamecheck() {
+        	var chk =  [[${username11}]];
+        	var letter = /^[a-zA-Z0-9]+$/;
+            var emailid =document.getElementById("username").value;
+            var bt=document.getElementById("btnsubmitcgp2").value;
+            document.getElementById("btnsubmitcgp2").disabled = false; 
+           //alert(emailid);
+           if(emailid == null || emailid == "" )
+        	   {
+        	   alert("Please Enter UserName.");
+        	   document.getElementById("btnsubmitcgp2").disabled = true; 
+        	   return false;
+        	   }
+            $.ajax({
+                type: "POST",
+                url: "/ppvfra/checkusername",
+                data:emailid,
+                contentType:'application/json',
+                success: function (data) {
+                 
+                	if((data == 'taken')&& (chk == emailid))
+                		{
+                		document.getElementById("emailerror").innerHTML = " ";
+                		document.getElementById("btnsubmitcgp2").disabled = false; 
+        				return true;
+                		}
+                	else if((data == 'taken')&& (chk != emailid))
+				{
+                //Email not available.
+        		document.getElementById("emailerror").innerHTML = " <font color='red'>Username is already present.</font>";
+        		document.forms["register-form17"]["username"].focus();
+        		document.getElementById("btnsubmitcgp2").disabled = true; 
+        		return false;
+                }
+				else (data == 'not taken') 
+				{
+					if(isNaN(emailid))
+	    			{
+						if(letter.test(emailid))
+						{
+							document.getElementById("emailerror").innerHTML = " ";
+							document.getElementById("btnsubmitcgp2").disabled = false; 
+							return true;  
+						} 
+						else
+						{
+							document.getElementById("emailerror").innerHTML = " <font color='red'>Special characters are not allowed.</font>";
+							document.forms["register-form17"]["username"].focus();
+							document.getElementById("btnsubmitcgp2").disabled = true; 
+			        		return false;  
+						}
+	    			}
+					else
+					{
+						document.getElementById("emailerror").innerHTML = " <font color='red'>Username cannot be fully numeric.</font>";
+						document.forms["register-form17"]["username"].focus();
+						document.getElementById("btnsubmitcgp2").disabled = true; 
+		        		return false;  
+					}
+                    }
+                   
+                }
+            }); 
+  }
+    </script>
+    
+    <script type="text/javascript" th:inline="javascript">
+        function cinnumbercheck() {
+        	var chk =  [[${companyregistration}]];
+        	var emailid =document.getElementById("cinnumber").value;
+            //alert(emailid);
+            $.ajax({
+                type: "POST",
+                url: "/ppvfra/cinnumber",
+                data:emailid,
+                contentType:'application/json',
+                success: function (data) {
+                 
+                	 if((data == 'taken')&& (chk.cin_number == emailid))
+                		 {
+                		 document.getElementById("cinnumbererror").innerHTML = " ";
+        			     return true;
+                		 }
+                	 else if((data == 'taken')&& (chk != emailid))
+				{
+                //Email not available.
+        		document.getElementById("cinnumbererror").innerHTML = " <font color='red'>CIN number is already present.</font>";
+        		document.forms["register-form17"]["cinnumber"].focus();
+        		return false;
+                }
+				else if (data == 'not taken') 
+				{
+				document.getElementById("cinnumbererror").innerHTML = " ";
+			     return true;
+                    }
+                   
+                }
+            }); 
+  }
+    </script>
+     <script type="text/javascript" th:inline="javascript">
+        function companycheck() {
+        	var chk =  [[${companyregistration}]];
+        	var letter = /^[a-zA-Z ]*$/;
+        	var emailid =document.getElementById("companyname").value;
+            //alert(emailid);
+            $.ajax({
+                type: "POST",
+                url: "/ppvfra/company",
+                data:emailid,
+                contentType:'application/json',
+                success: function (data) {
+                 
+                	 if((data == 'taken')&& (chk.companyname == emailid))
+				{
+                		 document.getElementById("companyerror").innerHTML = " ";
+        			     return true;	 
+				}
+                	 else if((data == 'taken')&& (chk != emailid))
+                	 {
+                //Email not available.
+        		document.getElementById("companyerror").innerHTML = " <font color='red'>Company Name is already present.</font>";
+        		document.forms["register-form17"]["companyname"].focus();
+        		return false;
+                }
+				else if (data == 'not taken') 
+				{
+					if(isNaN(emailid))
+	    			{
+						if(letter.test(emailid))
+							{
+								document.getElementById("companyerror").innerHTML = " ";
+								return true;  
+							}
+						else
+	            	     {
+							document.getElementById("companyerror").innerHTML = " <font color='red'>Special characters are not allowed.</font>";
+							document.forms["register-form17"]["companyname"].focus();
+			        		return false;  
+	            	     }
+						
+	    			}
+					else
+					{
+						document.getElementById("companyerror").innerHTML = " <font color='red'>Company Name cannot be fully numeric.</font>";
+						document.forms["register-form17"]["companyname"].focus();
+		        		return false;  
+					}
+                    }
+                   
+                }
+            }); 
+  }
+    </script>
+    
+     <script type="text/javascript" th:inline="javascript">
+        function acronymcheck() {
+        	var chk =  [[${companyregistration}]];
+        	var emailid =document.getElementById("acronym").value;
+           // alert(emailid);
+            $.ajax({
+                type: "POST",
+                url: "/ppvfra/acronym",
+                data:emailid,
+                contentType:'application/json',
+                success: function (data) {
+                 
+                	if((data == 'taken')&& (chk.acronym == emailid))
+                		{
+                		  document.getElementById("acronymerror").innerHTML = " ";
+       			         return true;
+                		}
+                	 else if((data == 'taken')&& (chk != emailid))
+				{
+                //Email not available.
+        		document.getElementById("acronymerror").innerHTML = " <font color='red'>Acronym is already present.</font>";
+        		document.forms["register-form17"]["acronymname"].focus();
+        		return false;
+                }
+				else if (data == 'not taken') 
+				{
+					if(isNaN(emailid))
+	    			{
+						document.getElementById("acronymerror").innerHTML = " ";
+						return true;  
+	    			}
+					else
+					{
+						document.getElementById("acronymerror").innerHTML = " <font color='red'>Acronym must have atleast one alphabet.</font>";
+						document.forms["register-form17"]["acronymname"].focus();
+		        		return false;  
+					}
+                    }
+                   
+                }
+            }); 
+  }
+    </script>
+    
+    <script type="text/javascript">
+	    function FillRegisteredAddress(f) {
+	  if(f.billingtoo.checked == true) {
+	    f.Registeredoffice_CityVillageTown.value = f.seat_CityVillageTown.value;
+	    f.Registeredoffice_Pincode.value = f.seat_Pincode.value;
+	    f.Registeredoffice_Countryid.value = f.seat_Countryid.value;
+	    f.registeredoffice_state.value = f.seat_state.value;
+	   f.registeredoffice_districts.value = f.seat_districts.value;
+	   f.registered_address.value = f.seat_address.value;
+	  
+	  }
+	}
+    </script>
+     
+    <script type="text/javascript">
+	    function FillAuthorizedSignatory(f) {
+	  if(f.Authorize.checked == true) {
+	    f.Author_CityVillageTown.value = f.Registeredoffice_CityVillageTown.value;
+	    f.Author_Pincode.value = f.Registeredoffice_Pincode.value;
+	    f.Author_Countryid.value = f.Registeredoffice_Countryid.value;
+	    f.author_statecode.value =  f.registeredoffice_state.value;
+	    f.author_districtcode.value = f.registeredoffice_districts.value;
+	    f.Author_Address.value = f.registered_address.value;
+	  }
+	}
+    </script>
+    
+    <script type="text/javascript">
+    $(function () {
+        $("#ddlcountry").change(function () {
+            if ($(this).val() == "1") {
+                $("#dvPassport").show();
+            } else {
+                $("#dvPassport").hide();
+            }
+        });
+        $("#ddlregisteredcountry").change(function () {
+            if ($(this).val() == "1") {
+                $("#registedstatediv").show();
+            } else {
+                $("#registedstatediv").hide();
+            }
+        });
+    });
+</script>
+   <script type="text/javascript">
+    $(function () {
+        $("#chkPassport").click(function () {
+            if ($(this).is(":checked")) {
+                $("#registedstatediv").show();
+            } else {
+                $("#registedstatediv").hide();
+            }
+        });
+    });
+</script>
+ <script type="text/javascript">
+    $(function () {
+        $("#authorisecheckbox").click(function () {
+            if ($(this).is(":checked")) {
+                $("#authorisestatediv").show();
+            } else {
+                $("#authorisestatediv").hide();
+            }
+        });
+    });
+</script>
+ <script type="text/javascript">
+        function designationcheck() {
+            var emailid =document.getElementById("designation").value;
+            var letters = /^[ A-Za-z_@./#&+-]*$/;
+				 var format = /^[!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?]*$/;
+				 if(format.test(emailid)){
+					 document.getElementById("designationerror").innerHTML = " <font color='red'>Designation in special characters and numbers is not accepted.</font>";
+					 document.forms["register-form17"]["designation"].focus();
+		        		return false;  
+					 
+				 }else if(letters.test(emailid))
+            	     {
+            		   document.getElementById("designationerror").innerHTML = " ";
+					  
+						return true;
+            	     }
+            	   else
+            	     {
+            		   document.getElementById("designationerror").innerHTML = " <font color='red'>Designation in special characters and numbers is not accepted.</font>";
+            		   document.forms["register-form17"]["designation"].focus();
+		        		return false;  
+            	     }
+            	}
+</script>
+      
+      
+<script type="text/javascript">
+        function authornamecheck() {
+            var emailid =document.getElementById("authorname").value;
+            var letters = /^[a-zA-Z ]*$/;
+				
+				  if(letters.test(emailid))
+            	     {
+            		   document.getElementById("authornameerror").innerHTML = " ";
+            		   return true;
+            	     }
+            	   else
+            	     {
+            		   document.getElementById("authornameerror").innerHTML = " <font color='red'>Name in special characters or in numeric format is not accepted.</font>";
+            		   document.forms["register-form17"]["authorname"].focus();
+            		   return false;  
+            	     }
+            	}
+</script>
+ 
+</body>
+</html>

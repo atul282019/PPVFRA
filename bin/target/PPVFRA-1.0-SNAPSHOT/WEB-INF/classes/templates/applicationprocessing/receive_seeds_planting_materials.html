@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<div th:fragment="receive_seed_detail">
+ <span th:if="${ReceiveSeedPlantingMaterial != null && ReceiveSeedPlantingMaterial == 'ReceiveSeedPlantingMaterial' }"> 
+								
+ <form class="form-horizontal active" th:action="@{/applicationstsseedreceived}" th:object="${applicationstsseedreceived}" role="form" id="form_seed_details1"  method="post" enctype="multipart/form-data">                                      
+
+<div class="panel panel-success">
+	<div class="panel-heading">Seeds/ Planting Material Submission</div>
+	<div class="panel-body">
+		
+		<div class="form-group">
+          <label class="col-md-2 control-label" ></label>
+            <!-- <div class="col-md-10">
+              <input id="id" name="id" type="text" th:field="*{id}" readonly="readonly" hidden="true"/>
+              </div> -->
+         </div>
+                  
+         <div class="form-group">
+			<label class="col-md-2 control-label" > </label>
+				<div class="col-md-10">
+				   <input type="text" id="applicationid" th:name="applicationid"  th:value="${applicationid}" readonly="readonly" hidden="true" />
+				</div>
+		</div>         
+                                 
+		<div class="form-group">
+		<div class="table-responsive col-sm-12">
+		
+	<table id="tdata" class="table table-striped  table-bordered table-hover">
+<!--Table head-->
+<thead>
+   <tr>
+     <th>S.No</th>
+     <th>Line Type</th>
+     <th>SeedOrPlant</th>
+     <th>Date of Submission</th>
+	<th>Seeds Requirement as per guidelines</th>
+    <th>Approx weight of packet</th>
+    <th>Quantity of seeds(g)</th>
+    <th>Number of packets</th>
+	<th>Moisture %</th>
+	<th>Germination %</th>
+	<th>Purity %</th>
+	<!-- <th>Action</th> -->
+	<th>PDF Uploaded</th>
+ </tr>
+                                      </thead>
+						
+						
+						
+						<tbody>
+					
+						<tr class="table-info">
+						</tr>
+						</tbody>
+						</table> 
+		
+		</div>
+		</div>
+	</div>
+	</div>
+	<script src="https://code.jquery.com/jquery-1.9.1.min.js"></script>
+	 <script type="text/javascript"  th:inline="javascript">
+	 $(document).ready(function() {
+		 var applicationid = ''+[[${applicationid}]]+''; 
+		 //alert(applicationid);
+		populatedata(applicationid);	 
+	});
+ </script> 
+ <script>
+   function populatedata(applicationid) {  
+  var tabledata=$("#tdata");
+  if(applicationid != null)		 
+  	$.ajax({
+          type: "POST",
+          url: "/ppvfra/getdatasaved",
+          data:applicationid,
+          success: function (response) {
+
+        	  $("#tdata tbody").html(''); 
+              for (var i=0;i<response.length;i++)
+          	{
+              	
+            	  if(response[i][1] !=null)
+            	  var str = response[i][1].toString();
+              	
+              	if(response[i][8] !=null)
+              	var linetype = response[i][8].toString();
+              	if(linetype !=null)
+              		{
+              	if(linetype =="C"){linetype ="Candidate Variety";}
+              	else if(linetype =="R"){linetype ="R Line (Male)";}
+              	else if(linetype =="A"){linetype ="A Line (female)";}
+              	else if(linetype =="B"){linetype ="B Line (Maintainer)";}
+              		}
+              	
+              	var count= i+1;
+               
+              	if(response[i][0] !=null)
+                var zerof = response[i][0].toString();
+              	else var zerof ='';
+              	
+              	if(response[i][2] !=null)
+              	var secondf = response[i][2].toString();
+            	else var secondf ='';
+              	
+              	if(response[i][9] !=null)
+                var ninef = response[i][9].toString();
+              	else var ninef ='';
+              	
+              	if(response[i][3] !=null)
+                var thirdf = response[i][3].toString();
+              	else var thirdf ='';
+              	
+              	
+              	if(response[i][4] !=null)
+                var fourf = response[i][4].toString();
+              	else var fourf ='';
+              	
+              	if(response[i][5] !=null)
+                var fivef = response[i][5].toString();
+              	else var fivef ='';
+              	
+              	if(response[i][6] !=null)
+                var sixf = response[i][6].toString();
+              	else var sixf ='';
+              	
+              	if(response[i][7] !=null)
+                var sevenf = response[i][7].toString();
+              	else var sevenf ='';
+              	
+              	if(response[i][10] !=null)
+                 var tenf = response[i][10].toString();
+              	else var tenf ='';
+              	
+              	if(response[i][11] !=null && response[i][11] !="" && response[i][11] !="undefined")
+                    var elevenf = response[i][11].toString();
+              	else var elevenf ='';
+              	
+              	//var html_data = '<tr><td>'+count+'</td><td>'+linetype+'</td><td>'+tenf+'</td><td>'+str+'</td><td>'+secondf+'</td><td>'+ninef+'</td><td>'+thirdf+'</td><td>'+fourf+'</td><td>'+fivef+'</td><td>'+sixf+'</td><td>'+sevenf+'</td><td><a href="/editseedplantdetails/'+zerof+'">Edit</a></td><td><a href="/ppvfra/download/'+elevenf+'" target="_blank">'+elevenf+'</a></td></tr>';
+              	var html_data = '<tr><td>'+count+'</td><td>'+linetype+'</td><td>'+tenf+'</td><td>'+str+'</td><td>'+secondf+'</td><td>'+ninef+'</td><td>'+thirdf+'</td><td>'+fourf+'</td><td>'+fivef+'</td><td>'+sixf+'</td><td>'+sevenf+'</td><td><a href="/ppvfra/download/'+elevenf+'" target="_blank">'+elevenf+'</a></td></tr>';
+              	$("#tdata tbody").append(html_data);
+              	
+          	}    
+
+    },
+        failure: function (response) {
+        alert(response.responseText);
+    },
+    error: function (response) {
+        alert(response.responseText);
+    }
+});
+}
+ </script>
+<!--  Checked By  <input  id ="checkedby" name ="checkedby"  type="text" class="form-control" value=""> -->
+ Remarks  <span th:if="${remark_stsreceived !=null}">
+ <input  id="remarks" name="remarks" th:value="${remark_stsreceived}" type="text" class="form-control"/>
+ </span>
+ <span th:unless="${remark_stsreceived !=null}">
+ <input  id="remarks" name="remarks" type="text" class="form-control"/>
+ </span>
+ <br>
+ <br>
+ 
+<div class="col-md-12 text-center">
+ <span th:if = "${remark_stsreceived ==null}">
+	<button type="submit" class="btn btn-info waves-effect waves-light">Submit</button>
+ </span>	
+</div>		
+																 
+</form>
+</span>
+ <span th:unless="${ReceiveSeedPlantingMaterial != null && ReceiveSeedPlantingMaterial == 'ReceiveSeedPlantingMaterial' }">
+ <label>YOU ARE NOT AUTHORISED TO VIEW THIS PAGE.PLEASE CONTACT ADMINISTRATOR</label>
+ </span>
+
+          
+          </div>
+
+<div th:replace="applicationprocessing/footerlibs.html :: footerlibs"></div>
+<!-- end footer lib -->
+
+
+</html>
